@@ -256,6 +256,114 @@ export default function HormonePage() {
         </div>
       </section>
 
+      {/* Hormone-palette divider */}
+      <div className="relative py-8">
+        <div
+          className="mx-auto h-px max-w-4xl"
+          style={{
+            background: "linear-gradient(to right, transparent 0%, hsl(331,95%,72%) 25%, hsl(271,74%,55%) 50%, hsl(188,88%,54%) 75%, transparent 100%)",
+            boxShadow: "0 0 24px 2px hsla(301,80%,60%,0.25)",
+          }}
+        />
+      </div>
+
+      {/* ── PATHWAYS ── */}
+      <section className="py-20 lg:py-24">
+        <div className="container mx-auto px-5 lg:px-8 max-w-6xl">
+          <div className="grid gap-5 md:grid-cols-3">
+            {/* Women's Health */}
+            <Link
+              href="/hormone/womens-health"
+              className="group relative overflow-hidden rounded-3xl border p-7 hover:-translate-y-1 transition-all duration-300 block"
+              style={{
+                background: "linear-gradient(135deg, hsla(331,95%,72%,0.14), hsla(271,74%,55%,0.18), hsla(210,32%,14%,0.92))",
+                borderColor: "hsla(331,95%,72%,0.28)",
+                boxShadow: "0 24px 80px rgba(2,6,23,0.28)",
+              }}
+            >
+              <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"
+                style={{ background: "radial-gradient(circle at top right, rgba(255,255,255,0.07), transparent 30%)" }} aria-hidden="true" />
+              <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "hsl(331,95%,78%)", opacity: 0.8 }}>Women&apos;s Hormone Health</p>
+              <div className="h-0.5 w-14 rounded-full mb-4" style={{ background: "linear-gradient(135deg, hsl(331,95%,72%), hsl(271,74%,55%))" }} />
+              <h3 className="text-xl font-black mb-3 text-white">Perimenopause &amp; Menopause Care</h3>
+              <p className="text-sm leading-relaxed mb-5" style={{ color: "rgba(255,255,255,0.75)" }}>
+                HRT, hormonal symptom management, and long-term care for women who have been dismissed, minimized, or left without answers.
+              </p>
+              <div className="flex flex-wrap gap-2 mb-5">
+                {["Hot flashes", "Brain fog", "Low libido", "Sleep", "Mood"].map((t) => (
+                  <span key={t} className="px-2.5 py-1 rounded-full text-xs font-medium"
+                    style={{ background: "hsla(331,80%,55%,0.14)", border: "1px solid hsla(331,80%,55%,0.28)", color: "hsl(331,95%,82%)" }}>{t}</span>
+                ))}
+              </div>
+              <div className="inline-flex rounded-full px-5 py-2.5 text-sm font-semibold group-hover:opacity-90 transition-opacity"
+                style={{ background: "rgba(255,255,255,0.1)", color: "#fff", border: "1px solid rgba(255,255,255,0.16)" }}>
+                Learn more →
+              </div>
+            </Link>
+
+            {/* Men's Health */}
+            <Link
+              href="/hormone/mens-health"
+              className="group relative overflow-hidden rounded-3xl border p-7 hover:-translate-y-1 transition-all duration-300 block"
+              style={{
+                background: "linear-gradient(135deg, hsla(188,88%,54%,0.16), hsla(216,79%,46%,0.2), hsla(210,32%,14%,0.92))",
+                borderColor: "hsla(188,88%,54%,0.28)",
+                boxShadow: "0 24px 80px rgba(2,6,23,0.28)",
+              }}
+            >
+              <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"
+                style={{ background: "radial-gradient(circle at top right, rgba(255,255,255,0.07), transparent 30%)" }} aria-hidden="true" />
+              <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "hsl(188,88%,72%)", opacity: 0.8 }}>Men&apos;s Hormone Health</p>
+              <div className="h-0.5 w-14 rounded-full mb-4" style={{ background: "linear-gradient(135deg, hsl(188,88%,54%), hsl(216,79%,46%))" }} />
+              <h3 className="text-xl font-black mb-3 text-white">Men&apos;s Health + TRT</h3>
+              <p className="text-sm leading-relaxed mb-5" style={{ color: "rgba(255,255,255,0.75)" }}>
+                Low testosterone, fatigue, poor recovery, low libido — a full evaluation before deciding whether TRT or another path makes sense.
+              </p>
+              <div className="flex flex-wrap gap-2 mb-5">
+                {["Low T", "Fatigue", "Low libido", "Recovery", "Brain fog"].map((t) => (
+                  <span key={t} className="px-2.5 py-1 rounded-full text-xs font-medium"
+                    style={{ background: "hsla(188,80%,55%,0.14)", border: "1px solid hsla(188,80%,55%,0.28)", color: "hsl(188,88%,78%)" }}>{t}</span>
+                ))}
+              </div>
+              <div className="inline-flex rounded-full px-5 py-2.5 text-sm font-semibold group-hover:opacity-90 transition-opacity"
+                style={{ background: "rgba(255,255,255,0.1)", color: "#fff", border: "1px solid rgba(255,255,255,0.16)" }}>
+                Learn more →
+              </div>
+            </Link>
+
+            {/* GLP-1 */}
+            <Link
+              href="/hormone/glp1"
+              className="group relative overflow-hidden rounded-3xl border p-7 hover:-translate-y-1 transition-all duration-300 block"
+              style={{
+                background: "linear-gradient(135deg, hsla(188,88%,54%,0.12), hsla(271,74%,55%,0.18), hsla(210,32%,14%,0.92))",
+                borderColor: "hsla(271,74%,55%,0.25)",
+                boxShadow: "0 24px 80px rgba(2,6,23,0.28)",
+              }}
+            >
+              <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"
+                style={{ background: "radial-gradient(circle at top right, rgba(255,255,255,0.07), transparent 30%)" }} aria-hidden="true" />
+              <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "hsl(271,74%,75%)", opacity: 0.8 }}>Metabolic Care</p>
+              <div className="h-0.5 w-14 rounded-full mb-4" style={{ background: "linear-gradient(135deg, hsl(188,88%,54%), hsl(271,74%,55%))" }} />
+              <h3 className="text-xl font-black mb-3 text-white">GLP-1 Weight Loss</h3>
+              <p className="text-sm leading-relaxed mb-5" style={{ color: "rgba(255,255,255,0.75)" }}>
+                Semaglutide and tirzepatide with a full metabolic review, hormone integration, and a long-term plan — not just a prescription and a refill.
+              </p>
+              <div className="flex flex-wrap gap-2 mb-5">
+                {["Semaglutide", "Tirzepatide", "Metabolic review", "Body composition"].map((t) => (
+                  <span key={t} className="px-2.5 py-1 rounded-full text-xs font-medium"
+                    style={{ background: "hsla(271,70%,60%,0.14)", border: "1px solid hsla(271,70%,60%,0.28)", color: "hsl(271,74%,82%)" }}>{t}</span>
+                ))}
+              </div>
+              <div className="inline-flex rounded-full px-5 py-2.5 text-sm font-semibold group-hover:opacity-90 transition-opacity"
+                style={{ background: "rgba(255,255,255,0.1)", color: "#fff", border: "1px solid rgba(255,255,255,0.16)" }}>
+                Learn more →
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }
