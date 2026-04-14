@@ -270,6 +270,12 @@ export default function HormonePage() {
       {/* ── PATHWAYS ── */}
       <section className="py-20 lg:py-24">
         <div className="container mx-auto px-5 lg:px-8 max-w-6xl">
+          <div className="text-center mb-10">
+            <p className="text-xs font-bold uppercase tracking-widest" style={{ color: "hsl(331,95%,72%)" }}>
+              Additional Therapies
+            </p>
+          </div>
+
           <div className="grid gap-5 md:grid-cols-2 max-w-4xl mx-auto">
             {/* Men's Health */}
             <div
