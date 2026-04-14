@@ -1,26 +1,111 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-brand-teal: hsl(177, 70%, 59%);
+  --color-brand-dark: hsl(210, 32%, 12%);
+  --color-brand-darker: hsl(210, 32%, 9%);
+  --color-brand-card: hsla(210, 22%, 28%, 0.75);
+  --color-primary-bg: hsl(210, 32%, 12%);
+  --color-secondary-bg: hsl(210, 28%, 16%);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* gradient shorthand used across all pages — transparent so mountain shows */
+.page-bg {
+  background: transparent;
+  min-height: 100vh;
+}
+
+/* Section divider — gradient line between sections */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    hsla(177, 70%, 59%, 0.5) 30%,
+    hsla(200, 70%, 59%, 0.4) 50%,
+    hsla(30, 75%, 60%, 0.3) 70%,
+    transparent 100%
+  );
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: hsl(210, 32%, 12%);
+  color: hsl(0, 0%, 92%);
+  min-height: 100vh;
+}
+
+/* Mountain Background — fixed, full-page, soft-light blend */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  opacity: 0.40;
+  mix-blend-mode: soft-light;
+  z-index: -2;
+  pointer-events: none;
+  will-change: transform;
+}
+
+@media (max-width: 768px) {
+  body::before {
+    background-attachment: scroll;
+  }
+}
+
+.hero-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at top, hsla(177, 70%, 40%, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Marquee — reviews auto-scroll */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Glass morphism helpers */
+.glass-effect {
+  background: hsla(210, 32%, 12%, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid hsla(177, 70%, 59%, 0.1);
+}
+
+.content-glass {
+  background: hsla(210, 22%, 22%, 0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid hsla(177, 70%, 59%, 0.1);
+}
+
+/* Service card — glass with teal glow on hover */
+.service-card-transparent {
+  background: hsla(210, 22%, 22%, 0.5);
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  border: 1px solid hsla(177, 70%, 59%, 0.2);
+  transition: all 0.3s ease;
+}
+
+.service-card-transparent:hover {
+  background: hsla(210, 22%, 22%, 0.65);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-color: hsla(177, 70%, 59%, 0.5);
+  box-shadow: 0 0 35px hsla(177, 70%, 59%, 0.4), 0 0 70px hsla(177, 70%, 59%, 0.2);
+  transform: translateY(-2px);
 }

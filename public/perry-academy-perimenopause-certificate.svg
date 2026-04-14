@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 360" role="img" aria-labelledby="title desc">
+  <title id="title">Perry Academy Perimenopause Certificate</title>
+  <desc id="desc">A teal hexagon certificate badge for Perry Academy perimenopause training.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#345d66"/>
+      <stop offset="1" stop-color="#284750"/>
+    </linearGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#739ea5"/>
+      <stop offset="1" stop-color="#5c8991"/>
+    </linearGradient>
+  </defs>
+  <path d="M180 16 311 78v190l-131 76-131-76V78L180 16Z" fill="url(#bg)"/>
+  <path d="M180 40 287 91v153l-107 62L73 244V91L180 40Z" fill="none" stroke="#f4f7f4" stroke-width="7" stroke-linejoin="round"/>
+  <text x="180" y="112" fill="#ed2f84" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" text-anchor="middle" letter-spacing="1">perry.</text>
+  <text x="180" y="132" fill="#ed2f84" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" text-anchor="middle" letter-spacing="1.5">Academy</text>
+  <rect x="24" y="148" width="312" height="67" rx="10" fill="url(#bar)"/>
+  <text x="180" y="190" fill="#f7fbfb" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="800" text-anchor="middle" letter-spacing="4">PERIMENOPAUSE</text>
+  <text x="180" y="248" fill="#f7fbfb" font-family="Arial, Helvetica, sans-serif" font-size="29" font-weight="800" text-anchor="middle" letter-spacing="4">CERTIFICATE</text>
+  <path d="M161 288h38l-19 8-19-8Zm11 10h16v7h-16v-7Zm-12-7 20 8 20-8 6 3-26 11-26-11 6-3Z" fill="#f7fbfb" opacity=".92"/>
+  <text x="180" y="324" fill="#f7fbfb" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="800" text-anchor="middle">2025</text>
+</svg>
