@@ -5,7 +5,6 @@ const NCI_ENDPOINT = "https://bcrisktool.cancer.gov/calculate";
 export async function POST(req: NextRequest) {
   const body = await req.json();
 
-  // Map incoming JSON to NCI form-encoded fields
   const params = new URLSearchParams();
   params.set("age", String(body.age));
   params.set("race", body.race);
@@ -31,7 +30,16 @@ export async function POST(req: NextRequest) {
     }
 
     const data = await nciRes.json();
-    return NextResponse.json(data);
+
+    // NCI returns results as a stringified JSON inside data.message, not data.results
+    let results;
+    try {
+      results = typeof data.message === "string" ? JSON.parse(data.message) : data.message;
+    } catch {
+      return NextResponse.json({ error: "Could not parse NCI response." }, { status: 502 });
+    }
+
+    return NextResponse.json({ success: true, results });
   } catch {
     return NextResponse.json(
       { error: "Could not reach the NCI calculation service. Please try again." },

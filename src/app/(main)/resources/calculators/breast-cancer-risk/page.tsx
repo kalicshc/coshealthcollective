@@ -72,10 +72,15 @@ export default function BreastCancerRiskPage() {
   const resultsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (step === "results" && resultsRef.current) {
-      setTimeout(() => {
-        resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-      }, 80);
+    if (step === "results") {
+      // Wait for the results DOM node to paint, then scroll it into view
+      const id = setTimeout(() => {
+        const el = resultsRef.current;
+        if (!el) return;
+        const top = el.getBoundingClientRect().top + window.scrollY - window.innerHeight / 2 + el.offsetHeight / 2;
+        window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+      }, 120);
+      return () => clearTimeout(id);
     }
   }, [step]);
 
@@ -628,6 +633,26 @@ export default function BreastCancerRiskPage() {
             >
               {loading ? "Calculating…" : "Calculate my risk"}
             </button>
+
+            {loading && (
+              <div className="mt-5 flex flex-col items-center gap-3">
+                <div className="flex gap-1.5">
+                  {[0, 1, 2].map((i) => (
+                    <span
+                      key={i}
+                      className="w-2 h-2 rounded-full animate-bounce"
+                      style={{
+                        background: "hsl(331,95%,72%)",
+                        animationDelay: `${i * 0.15}s`,
+                      }}
+                    />
+                  ))}
+                </div>
+                <p className="text-xs" style={{ color: "hsl(0,0%,50%)" }}>
+                  Calculating your risk — this takes a few seconds…
+                </p>
+              </div>
+            )}
 
             <p className="mt-4 text-xs text-center leading-6" style={{ color: "hsl(0,0%,38%)" }}>
               No data is stored. Results appear only on your screen.
