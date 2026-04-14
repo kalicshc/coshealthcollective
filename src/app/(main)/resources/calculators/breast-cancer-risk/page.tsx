@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 
 type Step = "eligibility" | "form" | "results" | "ineligible";
@@ -40,13 +40,22 @@ const initialForm: FormData = {
   relatives: "",
 };
 
-function riskColor(tier: string) {
+// The NCI API returns phrases like "presented in green since hers is lower than"
+// Parse them to extract the risk tier
+function parseRiskTier(phrase: string): "lower" | "slightly higher" | "higher" {
+  const p = phrase.toLowerCase();
+  if (p.includes("lower")) return "lower";
+  if (p.includes("slightly")) return "slightly higher";
+  return "higher";
+}
+
+function riskColor(tier: "lower" | "slightly higher" | "higher") {
   if (tier === "lower") return "hsl(140, 60%, 55%)";
   if (tier === "slightly higher") return "hsl(45, 90%, 60%)";
   return "hsl(331, 95%, 72%)";
 }
 
-function riskLabel(tier: string) {
+function riskLabel(tier: "lower" | "slightly higher" | "higher") {
   if (tier === "lower") return "Below average";
   if (tier === "slightly higher") return "Slightly above average";
   return "Above average";
@@ -60,6 +69,15 @@ export default function BreastCancerRiskPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>("");
   const [results, setResults] = useState<Results | null>(null);
+  const resultsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (step === "results" && resultsRef.current) {
+      setTimeout(() => {
+        resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 80);
+    }
+  }, [step]);
 
   function handleEligibility() {
     if (cancerHistory === "yes" || brcaStatus === "yes") {
@@ -618,109 +636,126 @@ export default function BreastCancerRiskPage() {
         )}
 
         {/* ── RESULTS ── */}
-        {step === "results" && results && (
-          <div className="space-y-5">
-            <div
-              className="rounded-[28px] border p-7 lg:p-9"
-              style={{ background: "hsla(210,22%,16%,0.9)", borderColor: "hsla(331,95%,72%,0.18)" }}
-            >
-              <p className="text-xs font-bold uppercase tracking-widest mb-6" style={{ color: "hsl(331,95%,72%)" }}>
-                Your Results
-              </p>
-
-              <div className="grid gap-5 sm:grid-cols-2 mb-8">
-                {/* 5-year risk */}
-                <div
-                  className="rounded-[20px] border p-6"
-                  style={{ borderColor: "hsla(0,0%,100%,0.1)", background: "hsla(0,0%,0%,0.2)" }}
-                >
-                  <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "hsl(0,0%,50%)" }}>
-                    5-Year Risk
-                  </p>
-                  <p className="text-4xl font-black text-white">{results.risk}%</p>
-                  <p className="text-xs mt-2" style={{ color: "hsl(0,0%,55%)" }}>
-                    Population average: {results.averageFiveRisk}%
-                  </p>
-                  <span
-                    className="mt-3 inline-block rounded-full px-3 py-1 text-xs font-semibold"
-                    style={{
-                      background: `${riskColor(results.patientColorPresented5Year)}22`,
-                      color: riskColor(results.patientColorPresented5Year),
-                      border: `1px solid ${riskColor(results.patientColorPresented5Year)}44`,
-                    }}
-                  >
-                    {riskLabel(results.patientColorPresented5Year)}
-                  </span>
-                </div>
-
-                {/* Lifetime risk */}
-                <div
-                  className="rounded-[20px] border p-6"
-                  style={{ borderColor: "hsla(0,0%,100%,0.1)", background: "hsla(0,0%,0%,0.2)" }}
-                >
-                  <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "hsl(0,0%,50%)" }}>
-                    Lifetime Risk
-                  </p>
-                  <p className="text-4xl font-black text-white">{results.lifetime_patient_risk}%</p>
-                  <p className="text-xs mt-2" style={{ color: "hsl(0,0%,55%)" }}>
-                    Population average: {results.lifetime_average_risk}%
-                  </p>
-                  <span
-                    className="mt-3 inline-block rounded-full px-3 py-1 text-xs font-semibold"
-                    style={{
-                      background: `${riskColor(results.patientColorPresentedLifetime)}22`,
-                      color: riskColor(results.patientColorPresentedLifetime),
-                      border: `1px solid ${riskColor(results.patientColorPresentedLifetime)}44`,
-                    }}
-                  >
-                    {riskLabel(results.patientColorPresentedLifetime)}
-                  </span>
-                </div>
-              </div>
-
+        {step === "results" && results && (() => {
+          const tier5 = parseRiskTier(results.patientColorPresented5Year);
+          const tierLife = parseRiskTier(results.patientColorPresentedLifetime);
+          const color5 = riskColor(tier5);
+          const colorLife = riskColor(tierLife);
+          return (
+            <div ref={resultsRef} className="space-y-4">
+              {/* Main result card */}
               <div
-                className="rounded-2xl border p-5 mb-6"
-                style={{ borderColor: "hsla(0,0%,100%,0.08)", background: "hsla(0,0%,0%,0.15)" }}
-              >
-                <p className="text-sm leading-7 text-slate-300">{results.message}</p>
-                <p className="mt-3 text-sm leading-7 text-slate-300">{results.lifetime_message}</p>
-              </div>
-
-              <div
-                className="rounded-2xl border p-5"
-                style={{ borderColor: "hsla(331,95%,72%,0.15)", background: "hsla(331,95%,72%,0.06)" }}
-              >
-                <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "hsl(331,95%,72%)" }}>
-                  Important
-                </p>
-                <p className="text-xs leading-6 text-slate-400">
-                  This estimate is based on the NCI Gail Model and is for informational purposes only. It does not account for BRCA status, paternal family history, or all individual risk factors. Discuss these results with your provider before making any screening or treatment decisions.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <button
-                onClick={restart}
-                className="flex-1 rounded-full border border-white/15 bg-white/5 py-3 text-sm font-semibold text-white hover:opacity-80 transition-opacity"
-              >
-                Start over
-              </button>
-              <Link
-                href="https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 rounded-full py-3 text-center text-sm font-semibold transition-opacity hover:opacity-85"
+                className="rounded-[28px] p-7 lg:p-10"
                 style={{
-                  background: "linear-gradient(135deg, hsl(331,95%,72%), hsl(271,74%,55%))",
-                  color: "hsl(210,32%,10%)",
+                  background: "linear-gradient(160deg, hsla(294,34%,10%,0.98), hsla(244,28%,10%,0.98))",
+                  border: "1px solid hsla(331,95%,72%,0.35)",
+                  boxShadow: "0 0 60px hsla(331,95%,72%,0.12), 0 32px 80px rgba(0,0,0,0.5)",
                 }}
               >
-                Discuss with your provider
-              </Link>
+                <div className="flex items-center gap-3 mb-7">
+                  <div className="h-px flex-1" style={{ background: "linear-gradient(90deg, hsla(331,95%,72%,0.5), transparent)" }} />
+                  <p className="text-xs font-bold uppercase tracking-widest" style={{ color: "hsl(331,95%,72%)" }}>
+                    Your Results
+                  </p>
+                  <div className="h-px flex-1" style={{ background: "linear-gradient(270deg, hsla(331,95%,72%,0.5), transparent)" }} />
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-2 mb-7">
+                  {/* 5-year */}
+                  <div
+                    className="rounded-[20px] p-6"
+                    style={{
+                      background: "hsla(0,0%,0%,0.35)",
+                      border: `1px solid ${color5}33`,
+                      boxShadow: `0 0 24px ${color5}18`,
+                    }}
+                  >
+                    <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "hsl(0,0%,45%)" }}>
+                      5-Year Risk
+                    </p>
+                    <p className="text-5xl font-black text-white leading-none">{results.risk}<span className="text-2xl">%</span></p>
+                    <p className="text-xs mt-3" style={{ color: "hsl(0,0%,48%)" }}>
+                      Average for your age &amp; race: {results.averageFiveRisk}%
+                    </p>
+                    <span
+                      className="mt-4 inline-block rounded-full px-3 py-1.5 text-xs font-bold"
+                      style={{
+                        background: `${color5}1a`,
+                        color: color5,
+                        border: `1px solid ${color5}44`,
+                      }}
+                    >
+                      {riskLabel(tier5)}
+                    </span>
+                  </div>
+
+                  {/* Lifetime */}
+                  <div
+                    className="rounded-[20px] p-6"
+                    style={{
+                      background: "hsla(0,0%,0%,0.35)",
+                      border: `1px solid ${colorLife}33`,
+                      boxShadow: `0 0 24px ${colorLife}18`,
+                    }}
+                  >
+                    <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "hsl(0,0%,45%)" }}>
+                      Lifetime Risk
+                    </p>
+                    <p className="text-5xl font-black text-white leading-none">{results.lifetime_patient_risk}<span className="text-2xl">%</span></p>
+                    <p className="text-xs mt-3" style={{ color: "hsl(0,0%,48%)" }}>
+                      Average for your age &amp; race: {results.lifetime_average_risk}%
+                    </p>
+                    <span
+                      className="mt-4 inline-block rounded-full px-3 py-1.5 text-xs font-bold"
+                      style={{
+                        background: `${colorLife}1a`,
+                        color: colorLife,
+                        border: `1px solid ${colorLife}44`,
+                      }}
+                    >
+                      {riskLabel(tierLife)}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Disclaimer */}
+                <div
+                  className="rounded-2xl p-5"
+                  style={{ borderColor: "hsla(331,95%,72%,0.12)", background: "hsla(331,95%,72%,0.05)", border: "1px solid hsla(331,95%,72%,0.12)" }}
+                >
+                  <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "hsl(331,95%,72%)" }}>
+                    Important
+                  </p>
+                  <p className="text-xs leading-6 text-slate-400">
+                    Based on the NCI Gail Model — for informational purposes only. Does not account for BRCA status, paternal family history, or prior chest radiation. Discuss with your provider before making screening or treatment decisions.
+                  </p>
+                </div>
+              </div>
+
+              {/* Actions */}
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <button
+                  onClick={restart}
+                  className="flex-1 rounded-full border border-white/15 bg-white/5 py-3.5 text-sm font-semibold text-white hover:opacity-80 transition-opacity"
+                >
+                  Start over
+                </button>
+                <Link
+                  href="https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 rounded-full py-3.5 text-center text-sm font-semibold transition-opacity hover:opacity-85"
+                  style={{
+                    background: "linear-gradient(135deg, hsl(331,95%,72%), hsl(271,74%,55%))",
+                    color: "hsl(210,32%,10%)",
+                  }}
+                >
+                  Discuss with your provider
+                </Link>
+              </div>
             </div>
-          </div>
-        )}
+          );
+        })()}
       </div>
     </div>
   );
