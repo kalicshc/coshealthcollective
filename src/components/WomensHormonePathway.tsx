@@ -102,7 +102,7 @@ function RatingButton({
     <button
       type="button"
       onClick={onClick}
-      className={`h-9 w-9 shrink-0 rounded-xl text-sm font-bold transition-all duration-150 border ${
+      className={`h-12 w-full sm:h-9 sm:w-9 shrink-0 rounded-xl text-sm font-bold transition-all duration-150 border ${
         selected
           ? "border-transparent text-white shadow-[0_0_16px_rgba(217,70,239,0.35)]"
           : "border-white/10 bg-white/[0.04] text-slate-500 hover:border-fuchsia-300/30 hover:bg-fuchsia-400/[0.06] hover:text-white"
@@ -134,28 +134,39 @@ function SymptomRow({
   const answered = score !== undefined;
   return (
     <div
-      className={`flex items-center gap-3 rounded-2xl border px-4 py-3.5 transition-all duration-150 ${
+      className={`rounded-2xl border px-4 py-3 sm:py-3.5 transition-all duration-150 ${
         answered
           ? "border-fuchsia-300/15 bg-fuchsia-400/[0.04]"
-          : "border-white/[0.06] bg-white/[0.02] hover:border-white/10"
+          : "border-white/[0.06] bg-white/[0.02]"
       }`}
     >
+      {/* Mobile: label above buttons */}
       <span
-        className={`flex-1 min-w-0 text-sm leading-6 transition-colors ${
+        className={`block sm:hidden text-sm leading-6 mb-3 transition-colors ${
           answered ? "text-white" : "text-slate-300"
         }`}
       >
         {label}
       </span>
-      <div className="flex shrink-0 items-center gap-1.5">
-        {([0, 1, 2, 3] as const).map((v) => (
-          <RatingButton
-            key={v}
-            value={v}
-            selected={score === v}
-            onClick={() => onSelect(v)}
-          />
-        ))}
+      {/* Desktop: label left, buttons right — Mobile: just buttons in grid */}
+      <div className="flex items-center gap-3">
+        <span
+          className={`hidden sm:block flex-1 min-w-0 text-sm leading-6 transition-colors ${
+            answered ? "text-white" : "text-slate-300"
+          }`}
+        >
+          {label}
+        </span>
+        <div className="grid grid-cols-4 gap-2 w-full sm:flex sm:w-auto sm:gap-1.5">
+          {([0, 1, 2, 3] as const).map((v) => (
+            <RatingButton
+              key={v}
+              value={v}
+              selected={score === v}
+              onClick={() => onSelect(v)}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -524,17 +535,31 @@ export default function WomensHormonePathway() {
                 </div>
 
                 {/* Rating legend */}
-                <div className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-slate-500">
-                  {(["Not at all", "A little", "Quite a bit", "Extremely"] as const).map(
-                    (l, i) => (
-                      <span key={l} className="flex items-center gap-1.5">
-                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-[10px] font-bold text-slate-400">
-                          {i}
+                <div className="mb-3">
+                  {/* Mobile: grid matching the 4-col button layout */}
+                  <div className="grid grid-cols-4 gap-2 sm:hidden">
+                    {(["Not at all", "A little", "Quite a bit", "Extremely"] as const).map(
+                      (l, i) => (
+                        <div key={l} className="text-center text-[10px] font-semibold leading-tight text-slate-500">
+                          <span className="block text-[11px] font-bold text-slate-400 mb-0.5">{i}</span>
+                          {l}
+                        </div>
+                      ),
+                    )}
+                  </div>
+                  {/* Desktop: inline row */}
+                  <div className="hidden sm:flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-slate-500">
+                    {(["Not at all", "A little", "Quite a bit", "Extremely"] as const).map(
+                      (l, i) => (
+                        <span key={l} className="flex items-center gap-1.5">
+                          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-[10px] font-bold text-slate-400">
+                            {i}
+                          </span>
+                          {l}
                         </span>
-                        {l}
-                      </span>
-                    ),
-                  )}
+                      ),
+                    )}
+                  </div>
                 </div>
 
                 {/* Symptom rows */}

@@ -245,14 +245,15 @@ export default function PortalPillars() {
                         <span>Pending</span>
                       </div>
                     </div>
-                    <div className="clinic-pillars__quiz-row" onClick={(e) => e.stopPropagation()}>
-                      <a href="/hormone/mens-health/quiz" className="clinic-pillars__quiz-btn clinic-pillars__quiz-btn--mens" onClick={(e) => e.stopPropagation()}>
+                    <div className="clinic-pillars__quiz-combined" onClick={(e) => e.stopPropagation()}>
+                      <a href="/hormone/mens-health/quiz" className="clinic-pillars__quiz-half clinic-pillars__quiz-half--trt" onClick={(e) => e.stopPropagation()}>
                         <span>Do I need TRT?</span>
-                        <em>Men&apos;s hormone quiz →</em>
+                        <em>Take the quiz →</em>
                       </a>
-                      <a href="/hormone/womens-health/quiz" className="clinic-pillars__quiz-btn clinic-pillars__quiz-btn--womens" onClick={(e) => e.stopPropagation()}>
+                      <div className="clinic-pillars__quiz-divider" />
+                      <a href="/hormone/womens-health/quiz" className="clinic-pillars__quiz-half clinic-pillars__quiz-half--hrt" onClick={(e) => e.stopPropagation()}>
                         <span>Do I need HRT?</span>
-                        <em>Women&apos;s hormone quiz →</em>
+                        <em>Take the quiz →</em>
                       </a>
                     </div>
                   </>
@@ -419,75 +420,75 @@ export default function PortalPillars() {
           letter-spacing: 0;
         }
 
-        .clinic-pillars__quiz-row {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 8px;
+        .clinic-pillars__quiz-combined {
+          display: flex;
+          border-radius: 10px;
+          overflow: hidden;
+          border: 1px solid transparent;
+          background:
+            linear-gradient(rgba(5, 10, 22, 0.72), rgba(5, 10, 22, 0.72)) padding-box,
+            linear-gradient(90deg, hsla(210, 85%, 60%, 0.55), hsla(270, 68%, 64%, 0.85), hsla(330, 62%, 62%, 0.55)) border-box;
         }
 
-        .clinic-pillars__quiz-btn {
+        .clinic-pillars__quiz-half {
+          flex: 1;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
           gap: 4px;
-          min-height: 64px;
-          border-radius: 10px;
+          min-height: 70px;
+          padding: 14px 10px;
           text-decoration: none;
           text-align: center;
-          padding: 12px 10px;
-          cursor: pointer;
-          transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+          transition: background 240ms ease;
         }
 
-        .clinic-pillars__quiz-btn span {
-          font-size: 0.85rem;
+        .clinic-pillars__quiz-half span {
+          font-size: 0.9rem;
           font-weight: 900;
           line-height: 1.2;
           letter-spacing: 0;
         }
 
-        .clinic-pillars__quiz-btn em {
+        .clinic-pillars__quiz-half em {
           font-style: normal;
           font-size: 0.7rem;
           font-weight: 700;
           letter-spacing: 0;
-          opacity: 0.82;
+          opacity: 0.75;
         }
 
-        .clinic-pillars__quiz-btn:hover {
-          transform: translateY(-2px);
-          opacity: 0.92;
+        .clinic-pillars__quiz-half--trt {
+          color: hsl(210, 88%, 76%);
+          background: hsla(210, 85%, 52%, 0.07);
         }
 
-        .clinic-pillars__quiz-btn--mens {
-          border: 1px solid hsla(210, 85%, 60%, 0.5);
-          background: linear-gradient(135deg, hsla(210, 85%, 52%, 0.28), hsla(220, 80%, 46%, 0.22));
-          color: hsl(210, 90%, 80%);
-          box-shadow: 0 6px 20px hsla(210, 85%, 44%, 0.22);
+        .clinic-pillars__quiz-half--trt:hover {
+          background: hsla(210, 85%, 52%, 0.2);
         }
 
-        .clinic-pillars__quiz-btn--mens em {
-          color: hsla(210, 80%, 78%, 0.85);
+        .clinic-pillars__quiz-half--hrt {
+          color: hsl(330, 72%, 78%);
+          background: hsla(330, 62%, 52%, 0.07);
         }
 
-        .clinic-pillars__quiz-btn--mens:hover {
-          box-shadow: 0 8px 28px hsla(210, 85%, 44%, 0.38);
+        .clinic-pillars__quiz-half--hrt:hover {
+          background: hsla(330, 62%, 52%, 0.2);
         }
 
-        .clinic-pillars__quiz-btn--womens {
-          border: 1px solid hsla(330, 80%, 65%, 0.55);
-          background: linear-gradient(135deg, hsla(330, 85%, 58%, 0.32), hsla(308, 75%, 52%, 0.26));
-          color: hsl(330, 90%, 85%);
-          box-shadow: 0 6px 20px hsla(330, 80%, 50%, 0.25);
-        }
-
-        .clinic-pillars__quiz-btn--womens em {
-          color: hsla(330, 80%, 82%, 0.85);
-        }
-
-        .clinic-pillars__quiz-btn--womens:hover {
-          box-shadow: 0 8px 28px hsla(330, 80%, 50%, 0.42);
+        .clinic-pillars__quiz-divider {
+          width: 1px;
+          flex-shrink: 0;
+          background: linear-gradient(
+            180deg,
+            transparent 0%,
+            hsla(210, 85%, 68%, 0.55) 20%,
+            hsla(270, 68%, 72%, 1) 50%,
+            hsla(330, 62%, 68%, 0.55) 80%,
+            transparent 100%
+          );
+          box-shadow: 0 0 10px 2px hsla(270, 68%, 65%, 0.3);
         }
 
         .clinic-pillars__cta,
