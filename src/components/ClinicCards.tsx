@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight, CheckCircle, ExternalLink } from "lucide-react";
-import { submitDpcInquiry, submitHbotEarlyAccess, submitHormoneWaitlist } from "@/lib/api";
+import { submitDpcInquiry, submitHbotEarlyAccess, submitHormoneInquiry } from "@/lib/api";
 
 type FormType = "dpc" | "hormone" | "hbot";
 
@@ -113,30 +113,30 @@ const CARDS = [
     pills: ["Primary Care", "Telehealth", "Labs at Cost", "IV Therapy"],
     ctaLabel: "Explore DPC",
     formCta: "Ask a Question",
-    gradient: "linear-gradient(135deg, hsl(45,90%,60%), hsl(177,70%,59%))",
-    topBar: "linear-gradient(90deg, hsl(45,90%,60%), hsl(177,70%,59%))",
-    accentColor: "hsl(45,90%,67%)",
+    gradient: "linear-gradient(135deg, hsl(45,90%,60%), hsl(22,90%,55%))",
+    topBar: "linear-gradient(90deg, hsl(48,96%,60%), hsl(28,92%,56%), hsl(15,88%,53%))",
+    accentColor: "hsl(45,96%,67%)",
     borderResting: "hsla(210,22%,22%,0.7)",
-    borderHover: "hsla(45,90%,60%,0.4)",
-    glowHover: "0 0 0 1px hsla(45,90%,60%,0.22), 0 20px 60px hsla(45,80%,40%,0.3), 0 0 100px hsla(177,70%,30%,0.14)",
-    badgeStyle: { background: "linear-gradient(135deg, hsl(45,90%,55%), hsl(177,70%,52%))", color: "hsl(210,32%,10%)" } as React.CSSProperties,
-    pillStyle: { background: "hsla(45,70%,55%,0.11)", border: "1px solid hsla(45,70%,55%,0.22)", color: "hsl(45,80%,72%)" } as React.CSSProperties,
-    ctaStyle: { background: "linear-gradient(135deg, hsl(45,90%,60%), hsl(177,70%,59%))", color: "hsl(210,32%,12%)" } as React.CSSProperties,
-    ctaSecondaryStyle: { border: "1px solid hsla(45,90%,60%,0.35)", color: "hsl(45,90%,67%)" } as React.CSSProperties,
-    formBtnStyle: { background: "linear-gradient(135deg, hsl(45,90%,58%), hsl(177,70%,55%))", color: "hsl(210,32%,12%)" } as React.CSSProperties,
-    dividerColor: "hsla(45,70%,55%,0.2)",
+    borderHover: "hsla(28,90%,58%,0.4)",
+    glowHover: "0 0 0 1px hsla(28,90%,55%,0.22), 0 20px 60px hsla(28,85%,40%,0.3), 0 0 100px hsla(15,80%,30%,0.14)",
+    badgeStyle: { background: "linear-gradient(135deg, hsl(45,90%,55%), hsl(22,90%,52%))", color: "hsl(210,32%,10%)" } as React.CSSProperties,
+    pillStyle: { background: "hsla(35,80%,55%,0.11)", border: "1px solid hsla(35,80%,55%,0.22)", color: "hsl(40,90%,74%)" } as React.CSSProperties,
+    ctaStyle: { background: "linear-gradient(135deg, hsl(45,90%,60%), hsl(22,90%,55%))", color: "hsl(210,32%,12%)" } as React.CSSProperties,
+    ctaSecondaryStyle: { border: "1px solid hsla(35,90%,60%,0.35)", color: "hsl(45,96%,67%)" } as React.CSSProperties,
+    formBtnStyle: { background: "linear-gradient(135deg, hsl(45,90%,58%), hsl(22,90%,53%))", color: "hsl(210,32%,12%)" } as React.CSSProperties,
+    dividerColor: "hsla(28,80%,52%,0.2)",
   },
   {
     id: "hormone",
     formType: "hormone" as FormType,
-    href: "https://hormonewebsite.vercel.app",
+    href: "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-5688330a3b52e266",
     external: true,
     badge: "Coming Soon",
     name: "Hormone + GLP Clinic",
     tagline: "Perimenopause, menopause, HRT, and GLP-1 weight loss — all in one practice.",
     pills: ["HRT", "GLP-1 / Semaglutide", "Menopause", "Weight Loss"],
-    ctaLabel: "Visit Clinic Site",
-    formCta: "Join the Waitlist",
+    ctaLabel: "Book a Consult",
+    formCta: "Ask a Question",
     gradient: "linear-gradient(135deg, hsl(340,100%,70%), hsl(281,86%,65%), hsl(189,100%,68%))",
     topBar: "linear-gradient(90deg, hsl(340,100%,65%), hsl(281,86%,60%), hsl(189,100%,65%))",
     accentColor: "hsl(340,100%,80%)",
@@ -201,7 +201,8 @@ export default function ClinicCards() {
       } else if (formType === "hbot") {
         await submitHbotEarlyAccess({ firstName: d.firstName || "", lastName: d.lastName || "", email: d.email || "" });
       } else {
-        await submitHormoneWaitlist({ name: d.name || "", email: d.email || "" });
+        const parts = (d.name || "").trim().split(" ");
+        await submitHormoneInquiry({ firstName: parts[0] || "", lastName: parts.slice(1).join(" ") || "", email: d.email || "", question: d.question || "Hormone clinic inquiry", sourcePage: "/" });
       }
     } catch { /* non-blocking */ }
     setSubmitting(prev => ({ ...prev, [id]: false }));
@@ -385,6 +386,9 @@ export default function ClinicCards() {
                       <input type="text" placeholder="Your name" required autoFocus value={formData[card.id]?.name || ""} onChange={e => handleChange(card.id, "name", e.target.value)} className="w-full px-2.5 py-1.5 rounded-lg text-xs bg-white/[0.06] border border-white/15 text-white placeholder:text-white/30 focus:outline-none focus:border-white/30" />
                     )}
                     <input type="email" placeholder="Email address" required value={formData[card.id]?.email || ""} onChange={e => handleChange(card.id, "email", e.target.value)} className="w-full px-2.5 py-1.5 rounded-lg text-xs bg-white/[0.06] border border-white/15 text-white placeholder:text-white/30 focus:outline-none focus:border-white/30" />
+                    {card.formType === "hormone" && (
+                      <textarea placeholder="Your question (optional)..." rows={2} value={formData[card.id]?.question || ""} onChange={e => handleChange(card.id, "question", e.target.value)} className="w-full px-2.5 py-1.5 rounded-lg text-xs bg-white/[0.06] border border-white/15 text-white placeholder:text-white/30 focus:outline-none focus:border-white/30 resize-none" />
+                    )}
                     {card.formType === "hbot" && <p className="text-[10px]" style={{ color: "hsl(210,20%,50%)" }}>No commitment required.</p>}
                     <div className="flex gap-1.5">
                       <button type="submit" disabled={isSubmitting} className="flex-1 py-1.5 rounded-lg text-xs font-bold disabled:opacity-60" style={card.formBtnStyle}>{isSubmitting ? "Sending…" : "Submit"}</button>

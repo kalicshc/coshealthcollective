@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { Menu, X, Users, ArrowLeft } from "lucide-react";
 
@@ -51,10 +52,13 @@ export function Navbar() {
 
             {/* Logo + wordmark */}
             <Link href="/" className="flex items-center gap-3 hover:opacity-85 transition-opacity">
-              <img
+              <Image
                 src="/logo-main.png"
                 alt="Colorado Springs Health Collective"
-                className="w-9 h-9 object-contain"
+                width={36}
+                height={36}
+                className="object-contain"
+                priority
               />
               <div className="leading-tight">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.2em]" style={{ color: "hsl(177, 70%, 65%)" }}>

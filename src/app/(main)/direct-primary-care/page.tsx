@@ -155,7 +155,7 @@ export default function DirectPrimaryCare() {
         className="hero-overlay relative min-h-screen flex items-center justify-center"
         style={{ background: "transparent" }}
       >
-        <h1 className="sr-only">Colorado Springs Direct Primary Care</h1>
+        <h1 className="sr-only">Direct Primary Care Colorado Springs — Unlimited Visits, No Copays, $100/Month DPC Membership</h1>
         <div className="container mx-auto px-5 lg:px-8 z-10 py-32 pt-40">
 
           <div className="text-center mb-16">

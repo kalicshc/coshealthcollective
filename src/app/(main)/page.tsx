@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Stethoscope, MapPin, Star, Phone, Mail, ChevronLeft, ChevronRight } from "lucide-react";
 import OurStoryCarousel from "@/components/OurStoryCarousel";
 import PortalPillars from "@/components/PortalPillars";
@@ -75,15 +76,18 @@ export default function Home() {
       {/* Hero */}
       <section
         id="main-content"
-        className="hero-overlay relative min-h-screen flex items-center justify-center pt-28 lg:pt-36"
+        className="hero-overlay relative flex items-start justify-center pt-28 pb-20 sm:pt-32 sm:pb-24 lg:pt-48 lg:pb-28"
         style={{ background: "linear-gradient(to bottom, hsla(210, 32%, 8%, 0.45), hsla(210, 28%, 12%, 0.2) 60%, transparent)" }}
       >
         <div className="container mx-auto px-5 lg:px-8 text-center z-10">
           <div className="mb-8 flex justify-center">
-            <img
+            <Image
               src="/logo-main.png"
               alt="Colorado Springs Health Collective Logo"
+              width={128}
+              height={128}
               className="w-24 h-24 lg:w-32 lg:h-32 object-contain drop-shadow-2xl"
+              priority
             />
           </div>
 
@@ -91,6 +95,7 @@ export default function Home() {
             className="text-4xl lg:text-6xl font-bold mb-6 leading-tight"
             style={{ color: "hsl(0, 0%, 100%)", textShadow: "0 2px 8px rgba(0,0,0,0.6)" }}
           >
+            <span className="sr-only">Colorado Springs Health Collective — Direct Primary Care, Hormone Therapy &amp; Hyperbaric Oxygen in Colorado Springs, CO. </span>
             The Colorado Springs<br />
             <span style={{
               background: "linear-gradient(135deg, hsl(177, 70%, 59%), hsl(200, 70%, 59%))",
@@ -124,6 +129,7 @@ export default function Home() {
       </section>
 
       {/* Three Clinics */}
+      <div className="section-divider" />
       <section className="py-16">
         <div className="container mx-auto px-5 lg:px-8">
           <div className="max-w-5xl mx-auto">
@@ -216,6 +222,7 @@ export default function Home() {
           <button
             onClick={() => scrollReviews("left")}
             disabled={reviewsAtStart}
+            aria-label="Scroll reviews left"
             className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 disabled:opacity-0 disabled:pointer-events-none"
             style={{
               background: "hsla(210, 22%, 11%, 0.95)",
@@ -230,6 +237,7 @@ export default function Home() {
           <button
             onClick={() => scrollReviews("right")}
             disabled={reviewsAtEnd}
+            aria-label="Scroll reviews right"
             className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 disabled:opacity-0 disabled:pointer-events-none"
             style={{
               background: "hsla(210, 22%, 11%, 0.95)",

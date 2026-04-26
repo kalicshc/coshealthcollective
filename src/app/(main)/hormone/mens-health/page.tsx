@@ -58,7 +58,7 @@ const pricingFeatures = [
 ];
 
 const BOOKING_URL =
-  "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207";
+  "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-5688330a3b52e266";
 
 export default function MensHealthPage() {
   return (
@@ -96,6 +96,7 @@ export default function MensHealthPage() {
                 className="mt-6 text-4xl font-bold text-white lg:text-6xl"
                 style={{ textShadow: "0 10px 34px rgba(0,0,0,0.42)" }}
               >
+                <span className="sr-only">Men's Hormone Therapy &amp; TRT Colorado Springs — Testosterone Replacement, Low T Treatment. </span>
                 Modern men&apos;s health
                 <span
                   className="mt-2 block"

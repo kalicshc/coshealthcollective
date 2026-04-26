@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import { Phone, Mail, ArrowLeft, Syringe, CheckCircle, AlertTriangle, Users } from "lucide-react";
+import { Phone, Mail, ArrowLeft, CheckCircle, AlertTriangle, Users } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "How the Flu Shot Works: Safety, Risks & Why You Should Get Vaccinated | Colorado Springs Health Collective",
@@ -12,141 +13,113 @@ const MEET_GREET_URL = "https://colorado-springs-health-collective-direct-primar
 export default function BlogFluShotGuide() {
   return (
     <div className="min-h-screen">
-      <section
-        className="relative min-h-screen"
-        style={{ background: "transparent" }}
-      >
-        <div className="container mx-auto px-5 lg:px-8 py-20">
-          <div className="flex items-center justify-center gap-4 mb-8 flex-wrap pt-20">
-            {[
-              { href: "/direct-primary-care", label: "Direct Primary Care" },
-              { href: "/about", label: "About Us" },
-              { href: "/faq", label: "FAQ" },
-              { href: "/blog", label: "Blog" },
-            ].map((link, i, arr) => (
-              <span key={link.href} className="flex items-center gap-4">
-                <Link href={link.href} className="hover:opacity-80 transition-opacity text-sm" style={{ color: "hsl(177, 70%, 59%)" }}>
-                  {link.label}
-                </Link>
-                {i < arr.length - 1 && <span style={{ color: "hsl(0, 0%, 50%)" }}>|</span>}
-              </span>
-            ))}
-          </div>
+      <section className="relative" style={{ background: "hsl(210, 32%, 8%)" }}>
 
-          <Link href="/blog" className="inline-flex items-center gap-2 mb-8 hover:opacity-80 transition-opacity" style={{ color: "hsl(177, 70%, 59%)" }}>
-            <ArrowLeft className="w-4 h-4" />
-            Back to All Articles
-          </Link>
-
-          <article className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <div className="mb-6 flex justify-center">
-                <div className="w-20 h-20 rounded-full flex items-center justify-center" style={{ background: "linear-gradient(135deg, hsl(280, 70%, 65%), hsl(320, 70%, 65%))" }}>
-                  <Syringe className="w-10 h-10" style={{ color: "hsl(210, 32%, 12%)" }} />
-                </div>
-              </div>
-              <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4" style={{ background: "hsl(280, 70%, 65%)", color: "hsl(210, 32%, 12%)" }}>
-                Preventive Care
-              </span>
-              <h1 className="text-3xl lg:text-4xl font-bold mb-4 leading-tight" style={{ color: "hsl(0, 0%, 100%)" }}>
+        <div className="relative h-[60vh] min-h-[420px] overflow-hidden">
+          <Image src="/blog/flu-shot-hero.jpg" alt="Flu vaccine preventive care" fill className="object-cover" priority />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, hsla(210,32%,8%,0.65) 0%, hsla(210,32%,8%,0.93) 55%, hsl(210,32%,8%) 85%)" }} />
+          <div className="absolute inset-0 flex flex-col justify-end pb-12 px-5 lg:px-8">
+            <div className="container mx-auto max-w-4xl">
+              <Link href="/blog" className="inline-flex items-center gap-1.5 mb-6 text-sm hover:opacity-80" style={{ color: "hsl(177, 70%, 65%)" }}>
+                <ArrowLeft className="w-4 h-4" /> Back to All Articles
+              </Link>
+              <span className="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4" style={{ background: "hsl(280, 70%, 65%)", color: "hsl(210, 32%, 10%)" }}>Preventive Care</span>
+              <h1 className="text-3xl lg:text-5xl font-bold leading-tight mb-4" style={{ color: "hsl(0, 0%, 100%)" }}>
                 How the Flu Shot Works: Safety, Risks &amp; Why You Should Get Vaccinated
               </h1>
-              <p style={{ color: "hsl(0, 0%, 60%)" }}>December 7, 2025 | 8 min read</p>
+              <p className="text-sm" style={{ color: "hsl(0, 0%, 60%)" }}>December 2025 · 8 min read</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="container mx-auto px-5 lg:px-8 py-12">
+          <article className="max-w-4xl mx-auto">
+
+            {/* Safety stats */}
+            <div className="grid grid-cols-3 gap-4 mb-10">
+              {[
+                { stat: "80+", label: "Years of clinical use" },
+                { stat: "Billions", label: "Doses given globally" },
+                { stat: "1 in 1M", label: "Serious reaction rate" },
+              ].map((item) => (
+                <div key={item.stat} className="text-center p-5 rounded-2xl" style={{ background: "hsla(280, 70%, 60%, 0.1)", border: "1px solid hsla(280, 70%, 60%, 0.25)" }}>
+                  <div className="text-2xl font-black mb-1" style={{ color: "hsl(280, 70%, 70%)" }}>{item.stat}</div>
+                  <div className="text-xs" style={{ color: "hsl(0, 0%, 65%)" }}>{item.label}</div>
+                </div>
+              ))}
             </div>
 
-            <div className="rounded-3xl p-8 lg:p-10 mb-8" style={{ background: "hsla(210, 22%, 28%, 0.75)" }}>
-              <p className="text-lg leading-relaxed mb-6" style={{ color: "hsl(0, 0%, 92%)" }}>
-                Every year as temperatures drop and cold and flu season arrives in Colorado Springs, one question comes up repeatedly: &ldquo;Should I get a flu shot?&rdquo; At Colorado Springs Health Collective, we believe in empowering our members with knowledge so you can make informed decisions about your health.
-              </p>
+            <p className="text-lg leading-relaxed mb-10" style={{ color: "hsl(210, 25%, 85%)" }}>
+              Every fall in Colorado Springs, the same question comes up: should I actually get the flu shot? The short answer is yes — and the evidence behind it is stronger than most people realize. Here&apos;s how it works, what the risks actually are, and who benefits most.
+            </p>
 
-              <h2 className="text-2xl font-bold mb-4 mt-8" style={{ color: "hsl(177, 70%, 65%)" }}>
-                How Does the Flu Shot Actually Work?
-              </h2>
-              <p className="leading-relaxed mb-4" style={{ color: "hsl(0, 0%, 85%)" }}>
-                The flu vaccine works by training your immune system to recognize and fight influenza viruses before they can make you seriously ill. Think of it as a practice drill for your body&apos;s defense system.
-              </p>
-              <p className="leading-relaxed mb-4" style={{ color: "hsl(0, 0%, 85%)" }}>
-                When you receive a flu shot, your body is exposed to either inactivated (killed) virus particles or specific proteins from the flu virus surface. These cannot cause the flu because they&apos;re not complete, living viruses. However, your immune system doesn&apos;t know the difference and responds as if facing a real threat.
-              </p>
+            <h2 className="text-2xl lg:text-3xl font-bold mb-6" style={{ color: "hsl(177, 70%, 65%)" }}>How the Flu Shot Actually Works</h2>
+            <p className="leading-relaxed mb-6" style={{ color: "hsl(210, 25%, 82%)" }}>
+              The flu vaccine trains your immune system to recognize influenza proteins before the real virus arrives. It exposes your body to inactivated viral particles — enough to trigger an immune response, not enough to cause illness.
+            </p>
 
-              <div className="rounded-2xl p-6 mb-6" style={{ background: "hsla(177, 70%, 59%, 0.1)" }}>
-                <h3 className="font-bold mb-4" style={{ color: "hsl(177, 70%, 65%)" }}>Here&apos;s what happens inside your body:</h3>
-                <ol className="space-y-3">
-                  {[
-                    ["Recognition", "Your immune cells detect the foreign viral proteins"],
-                    ["Response", "Your body produces antibodies specifically designed to target those proteins"],
-                    ["Memory", "Special memory cells \"remember\" how to make these antibodies quickly"],
-                    ["Protection", "If you encounter the real flu virus later, your immune system can respond rapidly"],
-                  ].map(([term, desc], i) => (
-                    <li key={i} className="flex gap-3" style={{ color: "hsl(0, 0%, 85%)" }}>
-                      <span className="font-bold" style={{ color: "hsl(177, 70%, 59%)" }}>{i + 1}.</span>
-                      <span><strong>{term}:</strong> {desc}</span>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-
-              <h2 className="text-2xl font-bold mb-4 mt-8" style={{ color: "hsl(177, 70%, 65%)" }}>
-                Flu Vaccine Safety: What the Evidence Shows
-              </h2>
-              <p className="leading-relaxed mb-6" style={{ color: "hsl(0, 0%, 85%)" }}>
-                The flu vaccine is one of the most studied vaccines in existence, with decades of safety data from hundreds of millions of doses administered worldwide.
-              </p>
-              <div className="grid md:grid-cols-3 gap-4 mb-6">
-                {[
-                  { stat: "80+", label: "Years of flu vaccine use" },
-                  { stat: "Billions", label: "Doses administered globally" },
-                  { stat: "0.001%", label: "Serious reaction rate" },
-                ].map((item, i) => (
-                  <div key={i} className="text-center p-4 rounded-2xl" style={{ background: "hsla(177, 70%, 59%, 0.1)" }}>
-                    <div className="text-3xl font-bold" style={{ color: "hsl(177, 70%, 59%)" }}>{item.stat}</div>
-                    <div style={{ color: "hsl(0, 0%, 75%)" }}>{item.label}</div>
-                  </div>
-                ))}
-              </div>
-
-              <h2 className="text-2xl font-bold mb-4 mt-8" style={{ color: "hsl(177, 70%, 65%)" }}>
-                Common Side Effects (Mild and Temporary)
-              </h2>
-              <ul className="space-y-2 mb-6">
-                {["Soreness at injection site (most common, ~60% of recipients)", "Low-grade fever", "Muscle aches", "Fatigue for a day or two", "Mild headaches"].map((item, i) => (
-                  <li key={i} className="flex items-start gap-3" style={{ color: "hsl(0, 0%, 85%)" }}>
-                    <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: "hsl(177, 70%, 59%)" }} />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="rounded-2xl p-6 mb-6" style={{ background: "hsla(45, 90%, 60%, 0.1)", borderLeft: "4px solid hsl(45, 90%, 60%)" }}>
-                <div className="flex items-start gap-3">
-                  <AlertTriangle className="w-6 h-6 flex-shrink-0" style={{ color: "hsl(45, 90%, 60%)" }} />
-                  <div>
-                    <h4 className="font-bold mb-2" style={{ color: "hsl(45, 90%, 60%)" }}>Rare but Serious Reactions</h4>
-                    <p style={{ color: "hsl(0, 0%, 85%)" }}>
-                      Severe allergic reactions (anaphylaxis) can occur but are extremely rare, happening in approximately 1 in 1 million doses.
-                    </p>
-                  </div>
+            <div className="grid sm:grid-cols-2 gap-4 mb-10">
+              {[
+                { step: "01", title: "Recognition", desc: "Immune cells detect the foreign viral proteins introduced by the vaccine.", color: "hsl(280, 70%, 65%)" },
+                { step: "02", title: "Response", desc: "Your body manufactures antibodies specifically shaped to neutralize those proteins.", color: "hsl(300, 70%, 65%)" },
+                { step: "03", title: "Memory", desc: "Specialized memory cells store the blueprint to reproduce antibodies rapidly.", color: "hsl(320, 70%, 65%)" },
+                { step: "04", title: "Protection", desc: "When the real flu arrives, your immune system fires within hours — not days.", color: "hsl(340, 70%, 65%)" },
+              ].map((s) => (
+                <div key={s.step} className="rounded-2xl p-5" style={{ background: "hsla(280, 70%, 60%, 0.08)", borderLeft: `3px solid ${s.color}` }}>
+                  <div className="text-xs font-black uppercase tracking-widest mb-1" style={{ color: s.color }}>{s.step}</div>
+                  <h3 className="font-bold mb-1" style={{ color: "hsl(0, 0%, 95%)" }}>{s.title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: "hsl(0, 0%, 75%)" }}>{s.desc}</p>
                 </div>
-              </div>
+              ))}
+            </div>
 
-              <h2 className="text-2xl font-bold mb-4 mt-8" style={{ color: "hsl(177, 70%, 65%)" }}>
-                Who Should Get Vaccinated?
-              </h2>
-              <div className="grid md:grid-cols-2 gap-4 mb-6">
-                {["Adults 65 and older", "Pregnant women", "Children under 5", "People with chronic conditions", "Healthcare workers", "Caregivers of vulnerable individuals"].map((item, i) => (
-                  <div key={i} className="flex items-center gap-3 p-3 rounded-xl" style={{ background: "hsla(177, 70%, 59%, 0.1)" }}>
-                    <Users className="w-5 h-5" style={{ color: "hsl(177, 70%, 59%)" }} />
-                    <span style={{ color: "hsl(0, 0%, 92%)" }}>{item}</span>
-                  </div>
-                ))}
-              </div>
+            <h2 className="text-2xl lg:text-3xl font-bold mb-6" style={{ color: "hsl(177, 70%, 65%)" }}>Safety: What the Data Shows</h2>
 
-              <h2 className="text-2xl font-bold mb-4 mt-8" style={{ color: "hsl(177, 70%, 65%)" }}>The Bottom Line</h2>
-              <p className="mb-6" style={{ color: "hsl(0, 0%, 85%)" }}>
-                The flu vaccine is a safe, well-studied tool for protecting yourself and your community from a potentially serious illness. The evidence overwhelmingly supports that the benefits outweigh the risks for most people.
+            <div className="grid md:grid-cols-2 gap-4 mb-8">
+              <div className="rounded-2xl p-6" style={{ background: "hsla(177, 70%, 50%, 0.08)", border: "1px solid hsla(177, 70%, 50%, 0.2)" }}>
+                <h3 className="font-bold mb-4" style={{ color: "hsl(177, 70%, 65%)" }}>Common Side Effects</h3>
+                <div className="space-y-2">
+                  {["Sore arm at injection site (~60%)", "Low-grade fever (uncommon)", "Muscle aches for 1–2 days", "Mild fatigue"].map((item, i) => (
+                    <div key={i} className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: "hsl(177, 70%, 59%)" }} />
+                      <span className="text-sm" style={{ color: "hsl(0, 0%, 82%)" }}>{item}</span>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs mt-3" style={{ color: "hsl(0, 0%, 55%)" }}>These are signs your immune system is responding — not illness.</p>
+              </div>
+              <div className="rounded-2xl p-6" style={{ background: "hsla(45, 90%, 55%, 0.08)", border: "1px solid hsla(45, 90%, 55%, 0.25)" }}>
+                <div className="flex items-center gap-2 mb-4">
+                  <AlertTriangle className="w-4 h-4" style={{ color: "hsl(45, 90%, 60%)" }} />
+                  <h3 className="font-bold" style={{ color: "hsl(45, 90%, 65%)" }}>Rare Reactions</h3>
+                </div>
+                <div className="text-3xl font-black mb-1" style={{ color: "hsl(45, 90%, 65%)" }}>1 in 1M</div>
+                <p className="text-sm leading-relaxed" style={{ color: "hsl(0, 0%, 75%)" }}>
+                  Severe allergic reactions (anaphylaxis) occur in approximately 1 per million doses — all managed on-site. Guillain-Barré syndrome risk is 1–2 per million, comparable to the risk from influenza infection itself.
+                </p>
+              </div>
+            </div>
+
+            <div className="rounded-2xl p-7 mb-10 text-center" style={{ background: "linear-gradient(135deg, hsla(280,70%,55%,0.12), hsla(177,70%,50%,0.12))", border: "1px solid hsla(280,70%,55%,0.25)" }}>
+              <p className="text-lg font-bold italic" style={{ color: "hsl(0, 0%, 95%)" }}>
+                &ldquo;The flu shot doesn&apos;t give you the flu. The soreness means it&apos;s working.&rdquo;
               </p>
-              <p className="mb-8" style={{ color: "hsl(0, 0%, 85%)" }}>
-                At Colorado Springs Health Collective, we take the time to discuss your individual health situation and answer any questions you have about vaccination.
+            </div>
+
+            <h2 className="text-2xl lg:text-3xl font-bold mb-5" style={{ color: "hsl(177, 70%, 65%)" }}>Who Should Get Vaccinated?</h2>
+            <div className="grid md:grid-cols-2 gap-3 mb-10">
+              {["Adults 65 and older", "Pregnant women", "Children under 5", "People with chronic conditions", "Healthcare workers", "Caregivers of vulnerable individuals"].map((item, i) => (
+                <div key={i} className="flex items-center gap-3 p-4 rounded-xl" style={{ background: "hsla(280, 70%, 60%, 0.08)", border: "1px solid hsla(280, 70%, 60%, 0.15)" }}>
+                  <Users className="w-4 h-4 flex-shrink-0" style={{ color: "hsl(280, 70%, 65%)" }} />
+                  <span className="text-sm font-medium" style={{ color: "hsl(0, 0%, 90%)" }}>{item}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="rounded-2xl p-6 mb-8" style={{ background: "hsla(210, 22%, 18%, 0.8)" }}>
+              <h2 className="text-xl font-bold mb-3" style={{ color: "hsl(177, 70%, 65%)" }}>The Bottom Line</h2>
+              <p className="text-sm leading-relaxed" style={{ color: "hsl(0, 0%, 82%)" }}>
+                The flu vaccine is extraordinarily well-studied. Benefits overwhelmingly outweigh risks for nearly everyone. At Colorado Springs Health Collective, we take the time to discuss your individual situation — no rushed 7-minute visit, no pressure, just honest information.
               </p>
             </div>
 
@@ -181,13 +154,13 @@ export default function BlogFluShotGuide() {
             </div>
           </article>
 
-          <div className="text-center mb-8">
+          <div className="text-center mt-8 mb-4">
             <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-              <a href="tel:+17198244716" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+              <a href="tel:+17198244716" className="flex items-center gap-2 hover:opacity-80">
                 <Phone className="w-5 h-5" style={{ color: "hsl(177, 70%, 59%)" }} />
                 <span style={{ color: "hsl(0, 0%, 92%)" }}>(719) 824-4716</span>
               </a>
-              <a href="mailto:dpc@coshealthcollective.com" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+              <a href="mailto:dpc@coshealthcollective.com" className="flex items-center gap-2 hover:opacity-80">
                 <Mail className="w-5 h-5" style={{ color: "hsl(177, 70%, 59%)" }} />
                 <span style={{ color: "hsl(0, 0%, 92%)" }}>dpc@coshealthcollective.com</span>
               </a>
@@ -198,3 +171,4 @@ export default function BlogFluShotGuide() {
     </div>
   );
 }
+

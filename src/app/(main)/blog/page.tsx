@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Phone, Mail, BookOpen, Syringe, Stethoscope, Sparkles, Mountain, DollarSign } from "lucide-react";
+import Image from "next/image";
+import { Phone, Mail } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Healthcare Blog | Colorado Springs Health Collective",
@@ -9,143 +10,157 @@ export const metadata: Metadata = {
 
 const articles = [
   {
-    slug: "save-money-healthcare",
-    title: "How to Save Money on Healthcare: 7 Smart Strategies Most People Don't Know",
-    description: "Learn practical ways to save money on healthcare—from cash-pay options and discount pharmacies to imaging price shopping and avoiding surprise bills.",
-    date: "February 9, 2026",
-    category: "Smart Savings",
-    icon: DollarSign,
-    color: "hsl(140, 70%, 55%)",
-  },
-  {
-    slug: "flu-shot-guide",
-    title: "How the Flu Shot Works: Safety, Risks & Why You Should Get Vaccinated",
-    description: "Learn how the flu vaccine works to protect you, its proven safety profile, potential risks, and why getting vaccinated each flu season matters for you and your community.",
-    date: "December 7, 2025",
-    category: "Preventive Care",
-    icon: Syringe,
-    color: "hsl(280, 70%, 65%)",
-  },
-  {
-    slug: "dpc-vs-concierge",
-    title: "Direct Primary Care vs. Concierge Medicine: Colorado Springs Guide",
-    description: "Understanding the differences between Direct Primary Care and concierge medicine in Colorado Springs. Compare costs, services, and which model best fits your healthcare needs.",
-    date: "January 14, 2025",
-    category: "Featured",
-    icon: Stethoscope,
-    color: "hsl(177, 70%, 59%)",
-  },
-  {
-    slug: "why-direct-primary-care",
-    title: "Why Direct Primary Care Is the Future of Health (And Why It Matters for You)",
-    description: "Discover how Direct Primary Care in Colorado Springs is redefining healthcare: no insurance hoops, no rushed visits, just real care when you need it.",
-    date: "August 5, 2025",
-    category: "Popular",
-    icon: Sparkles,
-    color: "hsl(45, 90%, 60%)",
+    slug: "hyperbaric-oxygen-therapy-colorado-springs",
+    title: "Hyperbaric Oxygen Therapy in Colorado Springs: What the Clinical Evidence Shows",
+    description: "How HBOT delivers 15× normal oxygen levels to accelerate healing, reduce inflammation, and reverse cellular aging — backed by peer-reviewed research.",
+    date: "April 2026",
+    category: "HBOT",
+    categoryColor: "hsl(177, 70%, 59%)",
+    image: "/blog/hbot-hero.jpg",
+    featured: true,
   },
   {
     slug: "skiing-longevity",
     title: "Skiing Into Your 70s: A Colorado Springs Guide to Longevity on the Slopes",
-    description: "Learn how to keep skiing for decades with proper strength training, nutrition, sleep, and recovery. Colorado Springs longevity tips for lifelong skiers.",
-    date: "January 14, 2026",
+    description: "Learn how to keep skiing for decades with proper strength training, nutrition, sleep, and recovery.",
+    date: "January 2026",
     category: "Longevity",
-    icon: Mountain,
-    color: "hsl(200, 70%, 60%)",
+    categoryColor: "hsl(200, 70%, 60%)",
+    image: "/blog/skiing-hero.jpg",
+    featured: false,
+  },
+  {
+    slug: "save-money-healthcare",
+    title: "How to Save Money on Healthcare: 7 Smart Strategies Most People Don't Know",
+    description: "Cash-pay options, discount pharmacies, imaging price shopping, and how to avoid surprise bills.",
+    date: "February 2026",
+    category: "Smart Savings",
+    categoryColor: "hsl(140, 70%, 55%)",
+    image: "/blog/save-money-hero.jpg",
+    featured: false,
+  },
+  {
+    slug: "dpc-vs-concierge",
+    title: "Direct Primary Care vs. Concierge Medicine: Colorado Springs Guide",
+    description: "Compare costs, services, and which healthcare model best fits your life.",
+    date: "January 2025",
+    category: "DPC",
+    categoryColor: "hsl(177, 70%, 59%)",
+    image: "/blog/dpc-hero.jpg",
+    featured: false,
+  },
+  {
+    slug: "why-direct-primary-care",
+    title: "Why Direct Primary Care Is the Future of Health (And Why It Matters for You)",
+    description: "No insurance hoops, no rushed visits — how DPC is redefining healthcare in Colorado Springs.",
+    date: "August 2025",
+    category: "DPC",
+    categoryColor: "hsl(45, 90%, 60%)",
+    image: "/blog/why-dpc-hero.jpg",
+    featured: false,
+  },
+  {
+    slug: "flu-shot-guide",
+    title: "How the Flu Shot Works: Safety, Risks & Why You Should Get Vaccinated",
+    description: "The proven safety profile, potential risks, and why vaccination matters every flu season.",
+    date: "December 2025",
+    category: "Preventive Care",
+    categoryColor: "hsl(280, 70%, 65%)",
+    image: "/blog/flu-shot-hero.jpg",
+    featured: false,
   },
 ];
 
-const comingSoon = [
-  "Getting Off Medications Naturally",
-  "Root Cause Medicine Approach",
-  "Mental Wellbeing in Primary Care",
-  "Preventive Care That Works",
-  "Colorado Springs Wellness Guide",
-];
+const featured = articles[0];
+const grid = articles.slice(1);
 
 export default function Blog() {
   return (
     <div className="min-h-screen">
-      <section
-        className="hero-overlay relative min-h-screen flex items-center justify-center"
-        style={{ background: "transparent" }}
-      >
-        <div className="container mx-auto px-5 lg:px-8 z-10 py-32 pt-40">
+      <section className="relative min-h-screen" style={{ background: "hsl(210, 32%, 8%)" }}>
+        <div className="container mx-auto px-5 lg:px-8 py-32 pt-40">
+
           <div className="text-center mb-16">
-            <h1 className="text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+            <h1 className="text-4xl lg:text-5xl font-bold mb-4 leading-tight">
               <span style={{ color: "hsl(0, 0%, 100%)" }}>Healthcare </span>
               <span style={{ color: "hsl(177, 70%, 65%)" }}>Insights &amp; Wellness</span>
             </h1>
-            <p className="text-xl lg:text-2xl font-light mb-8 max-w-3xl mx-auto leading-relaxed" style={{ color: "hsl(210, 40%, 89%)" }}>
-              Discover how Direct Primary Care is transforming healthcare in Colorado Springs.
+            <p className="text-xl font-light max-w-2xl mx-auto" style={{ color: "hsl(210, 40%, 75%)" }}>
+              Evidence-based guides from Colorado Springs Health Collective.
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto mb-16">
-            <div className="space-y-6">
-              {articles.map((article) => (
-                <Link key={article.slug} href={`/blog/${article.slug}`} className="block">
-                  <div
-                    className="rounded-3xl p-6 lg:p-8 hover:scale-[1.02] transition-transform cursor-pointer"
-                    style={{ background: "hsla(210, 22%, 28%, 0.75)" }}
-                  >
-                    <div className="flex flex-col md:flex-row gap-6">
-                      <div
-                        className="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0"
-                        style={{ background: `linear-gradient(135deg, ${article.color}, hsl(200, 70%, 59%))` }}
-                      >
-                        <article.icon className="w-8 h-8" style={{ color: "hsl(210, 32%, 12%)" }} />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-2">
-                          <span
-                            className="px-2 py-0.5 rounded-full text-xs font-semibold"
-                            style={{ background: article.color, color: "hsl(210, 32%, 12%)" }}
-                          >
-                            {article.category}
-                          </span>
-                          <span className="text-sm" style={{ color: "hsl(0, 0%, 60%)" }}>
-                            {article.date}
-                          </span>
-                        </div>
-                        <h2 className="text-xl lg:text-2xl font-bold mb-2" style={{ color: "hsl(0, 0%, 100%)" }}>
-                          {article.title}
-                        </h2>
-                        <p className="leading-relaxed" style={{ color: "hsl(0, 0%, 75%)" }}>
-                          {article.description}
-                        </p>
-                        <span className="inline-block mt-4 font-medium" style={{ color: "hsl(177, 70%, 59%)" }}>
-                          Read Full Article →
-                        </span>
-                      </div>
-                    </div>
+          {/* Featured article */}
+          <Link href={`/blog/${featured.slug}`} className="block max-w-6xl mx-auto mb-12 group">
+            <div className="relative rounded-3xl overflow-hidden" style={{ minHeight: "420px" }}>
+              <Image
+                src={featured.image}
+                alt={featured.title}
+                fill
+                className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                priority
+              />
+              <div className="absolute inset-0" style={{ background: "linear-gradient(to right, hsla(210, 32%, 8%, 0.95) 40%, hsla(210, 32%, 8%, 0.3) 100%)" }} />
+              <div className="absolute inset-0 flex items-center p-10 lg:p-16">
+                <div className="max-w-xl">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider" style={{ background: featured.categoryColor, color: "hsl(210, 32%, 10%)" }}>
+                      {featured.category}
+                    </span>
+                    <span className="text-sm" style={{ color: "hsl(0, 0%, 60%)" }}>{featured.date}</span>
                   </div>
-                </Link>
-              ))}
+                  <h2 className="text-2xl lg:text-4xl font-bold mb-4 leading-tight" style={{ color: "hsl(0, 0%, 100%)" }}>
+                    {featured.title}
+                  </h2>
+                  <p className="text-lg mb-6 leading-relaxed" style={{ color: "hsl(210, 30%, 80%)" }}>
+                    {featured.description}
+                  </p>
+                  <span className="inline-flex items-center gap-2 font-semibold" style={{ color: featured.categoryColor }}>
+                    Read Full Article →
+                  </span>
+                </div>
+              </div>
             </div>
+          </Link>
+
+          {/* Article grid */}
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            {grid.map((article) => (
+              <Link key={article.slug} href={`/blog/${article.slug}`} className="group block">
+                <div className="rounded-2xl overflow-hidden h-full flex flex-col" style={{ background: "hsla(210, 22%, 18%, 0.8)" }}>
+                  <div className="relative h-48 overflow-hidden flex-shrink-0">
+                    <Image
+                      src={article.image}
+                      alt={article.title}
+                      fill
+                      className="object-cover group-hover:scale-[1.05] transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 50%, hsla(210, 22%, 18%, 0.9) 100%)" }} />
+                  </div>
+                  <div className="p-6 flex flex-col flex-1">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="px-2 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider" style={{ background: article.categoryColor, color: "hsl(210, 32%, 10%)" }}>
+                        {article.category}
+                      </span>
+                      <span className="text-xs" style={{ color: "hsl(0, 0%, 55%)" }}>{article.date}</span>
+                    </div>
+                    <h2 className="text-lg font-bold mb-2 leading-snug flex-1" style={{ color: "hsl(0, 0%, 100%)" }}>
+                      {article.title}
+                    </h2>
+                    <p className="text-sm leading-relaxed mb-4" style={{ color: "hsl(0, 0%, 68%)" }}>
+                      {article.description}
+                    </p>
+                    <span className="text-sm font-semibold" style={{ color: article.categoryColor }}>
+                      Read Article →
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
 
-          <div className="max-w-4xl mx-auto mb-16">
-            <div className="rounded-3xl p-8 lg:p-10" style={{ background: "hsla(210, 22%, 28%, 0.75)" }}>
-              <h2 className="text-2xl font-bold mb-6 text-center" style={{ color: "hsl(177, 70%, 65%)" }}>
-                More Articles Coming Soon
-              </h2>
-              <p className="text-center mb-6" style={{ color: "hsl(0, 0%, 85%)" }}>
-                We&apos;re working on comprehensive guides covering:
-              </p>
-              <ul className="space-y-2 max-w-md mx-auto">
-                {comingSoon.map((topic, index) => (
-                  <li key={index} className="flex items-center gap-2" style={{ color: "hsl(0, 0%, 75%)" }}>
-                    <span style={{ color: "hsl(177, 70%, 59%)" }}>•</span>
-                    {topic}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div className="text-center mb-8">
-            <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-6">
+          <div className="text-center">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6">
               <a href="tel:+17198244716" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                 <Phone className="w-5 h-5" style={{ color: "hsl(177, 70%, 59%)" }} />
                 <span style={{ color: "hsl(0, 0%, 92%)" }}>(719) 824-4716</span>
@@ -156,6 +171,7 @@ export default function Blog() {
               </a>
             </div>
           </div>
+
         </div>
       </section>
     </div>

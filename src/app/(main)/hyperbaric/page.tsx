@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { submitHbotEarlyAccess } from "@/lib/api";
 
@@ -217,7 +218,7 @@ export default function HyperbaricPage() {
                 backdropFilter: "blur(16px)",
               }}
             >
-              <img src="/logo-main.png" alt="CSHC" className="h-9 w-9 object-contain" />
+              <Image src="/logo-main.png" alt="CSHC" width={36} height={36} className="object-contain" />
               <div className="text-left">
                 <p className="text-xs font-medium uppercase tracking-widest" style={{ color: "hsl(210,25%,62%)" }}>
                   Colorado Springs Health Collective
@@ -264,6 +265,7 @@ export default function HyperbaricPage() {
               style={{ fontSize: "clamp(1.5rem, 4vw, 2.75rem)", fontWeight: 900 }}
             >
               Hyperbaric Oxygen Therapy
+              <span className="sr-only"> Colorado Springs — 2.0 ATA HBOT for Fibromyalgia, Long COVID, Wound Healing &amp; Anti-Aging</span>
             </span>
           </h1>
 

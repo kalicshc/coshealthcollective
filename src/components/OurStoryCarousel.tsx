@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const slides = [
   {
@@ -217,10 +218,12 @@ export default function OurStoryCarousel() {
                       />
 
                       <div className="lg:w-1/2 flex items-center justify-center" style={{ background: "hsla(210, 32%, 7%, 0.7)" }}>
-                        <img
+                        <Image
                           src={slide.image}
                           alt={slide.alt}
-                          loading={index === 0 ? "eager" : "lazy"}
+                          width={600}
+                          height={450}
+                          priority={index === 0}
                           className="w-full h-80 lg:h-[450px] object-contain"
                           style={{
                             transition: "transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)",

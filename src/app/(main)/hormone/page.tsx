@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
+import AskForm from "./AskForm";
 
 export const metadata: Metadata = {
   title: "Hormone + Metabolic Care | Colorado Springs Health Collective",
@@ -95,7 +97,7 @@ export default function HormonePage() {
                       background: "radial-gradient(circle at 30% 25%, hsla(331,80%,72%,0.14), transparent 40%), linear-gradient(180deg, hsla(215,30%,20%,0.95), hsla(220,28%,14%,0.9))",
                     }}
                   >
-                    <img src="/logo-main.png" alt="CSHC" className="h-10 w-10 object-contain lg:h-8 lg:w-8 xl:h-10 xl:w-10" />
+                    <Image src="/logo-main.png" alt="CSHC" width={40} height={40} className="object-contain" />
                   </div>
                   <div>
                     <p className="text-xs font-medium uppercase tracking-widest lg:text-[10px] xl:text-xs" style={{ color: "hsl(210,25%,68%)", letterSpacing: 0 }}>
@@ -137,6 +139,7 @@ export default function HormonePage() {
                 style={{ color: "hsl(0,0%,100%)", textShadow: "0 10px 34px rgba(0,0,0,0.42)" }}
               >
                 Dedicated to
+                <span className="sr-only"> Hormone Therapy Colorado Springs — HRT, Perimenopause, Menopause, TRT &amp; GLP-1 Weight Loss. </span>
                 <span
                   className="block"
                   style={{
@@ -155,7 +158,7 @@ export default function HormonePage() {
                 You&apos;ve been told to live with it. You don&apos;t have to.
               </p>
 
-              <p className="mt-4 max-w-2xl text-base leading-relaxed lg:mt-3 lg:max-w-xl lg:text-sm lg:leading-6 xl:max-w-2xl xl:text-base xl:leading-relaxed" style={{ color: "hsl(210,22%,68%)", textShadow: "0 4px 16px rgba(0,0,0,0.32)" }}>
+              <p className="mt-4 max-w-2xl text-base leading-relaxed lg:mt-3 lg:max-w-xl lg:text-sm lg:leading-6 xl:max-w-2xl xl:text-base xl:leading-relaxed" style={{ color: "hsl(210,22%,75%)", textShadow: "0 4px 16px rgba(0,0,0,0.32)" }}>
                 Evidence-informed hormone care for women who are tired of being dismissed, told everything is normal, or treated like hot flashes are the whole story. Men&apos;s TRT and GLP-1 support too.
               </p>
 
@@ -176,7 +179,7 @@ export default function HormonePage() {
                 ))}
               </div>
 
-              <div className="mt-10 flex flex-col gap-4 sm:flex-row lg:mt-6 lg:gap-3 xl:mt-8">
+              <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-start lg:mt-6 lg:gap-3 xl:mt-8">
                 <Link
                   href="/hormone/womens-health"
                   className="px-7 py-4 rounded-full text-sm font-semibold text-white hover:opacity-90 transition-opacity lg:px-6 lg:py-3 xl:px-7 xl:py-4"
@@ -187,15 +190,7 @@ export default function HormonePage() {
                 >
                   See How We Can Help
                 </Link>
-                <a
-                  href="https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-7 py-4 rounded-full text-sm font-semibold hover:bg-white/10 transition-colors lg:px-6 lg:py-3 xl:px-7 xl:py-4"
-                  style={{ border: "1px solid rgba(255,255,255,0.15)", color: "hsl(0,0%,88%)" }}
-                >
-                  Ask Questions
-                </a>
+                <AskForm />
               </div>
             </div>
 

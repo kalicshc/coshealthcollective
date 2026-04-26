@@ -64,7 +64,10 @@ export default function UrgentCare() {
         <span className="inline-block px-6 py-2 text-sm font-medium rounded-full mb-8" style={{ background: "linear-gradient(135deg, hsl(30, 80%, 60%), hsl(177, 70%, 59%))", color: "hsl(210, 32%, 12%)" }}>
           Simple, Transparent, Local
         </span>
-        <h1 className="text-4xl lg:text-5xl font-bold mb-6" style={{ color: "hsl(0, 0%, 100%)" }}>Urgent Care</h1>
+        <h1 className="text-4xl lg:text-5xl font-bold mb-6" style={{ color: "hsl(0, 0%, 100%)" }}>
+          Urgent Care Colorado Springs
+          <span className="sr-only"> — Same-Day Telehealth, In-Home Visits &amp; Mobile Urgent Care</span>
+        </h1>
         <p className="text-2xl lg:text-3xl font-bold mb-4" style={{ color: "hsl(0, 0%, 98%)" }}>Life happens.</p>
         <p className="text-xl lg:text-2xl font-light mb-4 max-w-3xl mx-auto" style={{ color: "hsl(0, 0%, 95%)" }}>
           From weekend cuts to sudden infections, we make it easy to get fast, reliable care — in-home, in-office, or by telehealth.

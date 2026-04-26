@@ -81,15 +81,15 @@ export type PathwayResult = {
 export const mensHormoneCtas = {
   scheduleConsult: {
     label: "Schedule a consult",
-    href: "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207",
+    href: "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-5688330a3b52e266",
   },
   comprehensiveTesting: {
     label: "Talk with us about comprehensive hormone testing",
-    href: "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207",
+    href: "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-5688330a3b52e266",
   },
   fertilityOptions: {
     label: "Talk with us about fertility-preserving options",
-    href: "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207",
+    href: "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-5688330a3b52e266",
   },
   glp1Support: {
     label: "Ask about weight-loss / GLP-1 support",

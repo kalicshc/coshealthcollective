@@ -57,7 +57,7 @@ const pricingFeatures = [
 ];
 
 const BOOKING_URL =
-  "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207";
+  "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-5688330a3b52e266";
 
 export default function GLP1Page() {
   return (
@@ -95,7 +95,8 @@ export default function GLP1Page() {
                 className="mt-6 text-4xl font-bold text-white lg:text-6xl"
                 style={{ textShadow: "0 10px 34px rgba(0,0,0,0.42)" }}
               >
-                GLP-1 support
+                GLP-1 Weight Loss Colorado Springs
+                <span className="sr-only"> — Semaglutide (Ozempic/Wegovy) and Tirzepatide (Mounjaro/Zepbound) with Metabolic Review</span>
                 <span
                   className="mt-2 block"
                   style={{
@@ -128,12 +129,6 @@ export default function GLP1Page() {
                   }}
                 >
                   Book a Free Consult
-                </Link>
-                <Link
-                  href="/hormone"
-                  className="rounded-full border border-white/15 bg-white/5 px-7 py-4 text-sm font-semibold text-white backdrop-blur"
-                >
-                  Back to Hormone Clinic
                 </Link>
               </div>
             </div>
@@ -247,7 +242,7 @@ export default function GLP1Page() {
               >
                 <div className="h-0.5 w-14 rounded-full mb-4" style={{ background: med.gradient }} />
                 <h3 className="text-2xl font-black text-white">{med.name}</h3>
-                <p className="text-sm mb-4" style={{ color: "hsl(210,20%,55%)" }}>{med.brand}</p>
+                <p className="text-sm mb-4" style={{ color: "hsl(210,20%,68%)" }}>{med.brand}</p>
                 <p className="text-sm leading-7 text-slate-300">{med.body}</p>
               </div>
             ))}

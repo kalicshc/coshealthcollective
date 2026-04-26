@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { SiInstagram, SiYoutube, SiTiktok, SiFacebook, SiGoogle } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa6";
 import { Phone, Mail } from "lucide-react";
@@ -40,13 +41,13 @@ export function Footer() {
           {/* Brand column */}
           <div className="flex flex-col items-start gap-4">
             <Link href="/" className="hover:opacity-80 transition-opacity">
-              <img src="/logo-main.png" alt="Colorado Springs Health Collective" className="w-14 h-14 object-contain" />
+              <Image src="/logo-main.png" alt="Colorado Springs Health Collective" width={56} height={56} className="object-contain" />
             </Link>
             <div>
               <p className="font-bold text-base mb-1" style={{ color: "hsl(177, 70%, 65%)" }}>
                 Colorado Springs Health Collective
               </p>
-              <p className="text-sm leading-relaxed" style={{ color: "hsl(0, 0%, 50%)" }}>
+              <p className="text-sm leading-relaxed" style={{ color: "hsl(0, 0%, 68%)" }}>
                 Mobile &amp; virtual Direct Primary Care.<br />
                 Affordable care for longevity, wellness, and community.
               </p>
@@ -55,7 +56,7 @@ export function Footer() {
               <a
                 href="tel:+17198244716"
                 className="inline-flex items-center gap-2 text-sm hover:opacity-75 transition-opacity"
-                style={{ color: "hsl(0, 0%, 65%)" }}
+                style={{ color: "hsl(0, 0%, 72%)" }}
               >
                 <Phone className="w-3.5 h-3.5 flex-shrink-0" style={{ color: "hsl(177, 70%, 59%)" }} />
                 (719) 824-4716
@@ -63,7 +64,7 @@ export function Footer() {
               <a
                 href="mailto:dpc@coshealthcollective.com"
                 className="inline-flex items-center gap-2 text-sm hover:opacity-75 transition-opacity"
-                style={{ color: "hsl(0, 0%, 65%)" }}
+                style={{ color: "hsl(0, 0%, 72%)" }}
               >
                 <Mail className="w-3.5 h-3.5 flex-shrink-0" style={{ color: "hsl(177, 70%, 59%)" }} />
                 dpc@coshealthcollective.com
@@ -82,7 +83,7 @@ export function Footer() {
                   <Link
                     href={link.href}
                     className="text-sm hover:opacity-75 transition-opacity"
-                    style={{ color: "hsl(0, 0%, 65%)" }}
+                    style={{ color: "hsl(0, 0%, 72%)" }}
                   >
                     {link.label}
                   </Link>
@@ -104,7 +105,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 hover:scale-110"
+                  className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-200 hover:scale-110"
                   style={{
                     background: "hsla(210, 22%, 22%, 0.9)",
                     border: "1px solid hsla(0, 0%, 100%, 0.08)",
@@ -124,7 +125,7 @@ export function Footer() {
                 </a>
               ))}
             </div>
-            <p className="text-xs leading-relaxed" style={{ color: "hsl(0, 0%, 40%)" }}>
+            <p className="text-xs leading-relaxed" style={{ color: "hsl(0, 0%, 62%)" }}>
               Leave us a Google review — it helps other patients in Colorado Springs find us.
             </p>
           </div>
@@ -135,17 +136,17 @@ export function Footer() {
           className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3"
           style={{ borderTop: "1px solid hsla(0, 0%, 100%, 0.06)" }}
         >
-          <p className="text-xs" style={{ color: "hsl(0, 0%, 35%)" }}>
+          <p className="text-xs" style={{ color: "hsl(0, 0%, 58%)" }}>
             © {new Date().getFullYear()} Colorado Springs Health Collective. All rights reserved.
           </p>
-          <div className="flex items-center gap-4">
-            <Link href="/privacy-policy" className="text-xs hover:opacity-75 transition-opacity" style={{ color: "hsl(0, 0%, 35%)" }}>
+          <div className="flex items-center gap-2">
+            <Link href="/privacy-policy" className="text-xs px-2 py-2 hover:opacity-75 transition-opacity" style={{ color: "hsl(0, 0%, 58%)" }}>
               Privacy Policy
             </Link>
-            <Link href="/hipaa-notice" className="text-xs hover:opacity-75 transition-opacity" style={{ color: "hsl(0, 0%, 35%)" }}>
+            <Link href="/hipaa-notice" className="text-xs px-2 py-2 hover:opacity-75 transition-opacity" style={{ color: "hsl(0, 0%, 58%)" }}>
               HIPAA Notice
             </Link>
-            <Link href="/terms-of-service" className="text-xs hover:opacity-75 transition-opacity" style={{ color: "hsl(0, 0%, 35%)" }}>
+            <Link href="/terms-of-service" className="text-xs px-2 py-2 hover:opacity-75 transition-opacity" style={{ color: "hsl(0, 0%, 58%)" }}>
               Terms of Service
             </Link>
           </div>

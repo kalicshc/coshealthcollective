@@ -68,7 +68,7 @@ const pricingFeatures = [
 ];
 
 const BOOKING_URL =
-  "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207";
+  "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-5688330a3b52e266";
 
 export default function WomensHealthPage() {
   return (
@@ -103,6 +103,7 @@ export default function WomensHealthPage() {
                 className="mt-6 text-4xl font-bold text-white lg:text-6xl"
                 style={{ textShadow: "0 10px 34px rgba(0,0,0,0.42)" }}
               >
+                <span className="sr-only">Women's Hormone Therapy Colorado Springs — Perimenopause, Menopause &amp; HRT Care. </span>
                 You&apos;re not imagining it.
                 <span
                   className="mt-2 block"
@@ -125,22 +126,22 @@ export default function WomensHealthPage() {
               </p>
               <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                 <Link
-                  href={BOOKING_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/hormone/womens-health/quiz"
                   className="rounded-full px-7 py-4 text-sm font-semibold text-white"
                   style={{
                     background: "linear-gradient(135deg, hsl(331,95%,72%), hsl(271,74%,55%))",
                     boxShadow: "0 0 40px rgba(217,70,239,0.22)",
                   }}
                 >
-                  Book a Free Consult
+                  Take the Quiz
                 </Link>
                 <Link
-                  href="/hormone"
+                  href={BOOKING_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="rounded-full border border-white/15 bg-white/5 px-7 py-4 text-sm font-semibold text-white backdrop-blur"
                 >
-                  Back to Hormone Clinic
+                  Book a Free Consult
                 </Link>
               </div>
             </div>
@@ -474,11 +475,17 @@ export default function WomensHealthPage() {
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link
+                href="/hormone/womens-health/quiz"
+                className="rounded-full px-7 py-4 text-sm font-semibold text-white hover:opacity-90 transition-opacity"
+                style={{ background: "linear-gradient(135deg, hsl(331,95%,72%), hsl(271,74%,55%))" }}
+              >
+                Take the Free Quiz
+              </Link>
+              <Link
                 href={BOOKING_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full px-7 py-4 text-sm font-semibold text-white hover:opacity-90 transition-opacity"
-                style={{ background: "linear-gradient(135deg, hsl(331,95%,72%), hsl(271,74%,55%))" }}
+                className="rounded-full border border-white/15 bg-white/5 px-7 py-4 text-sm font-semibold text-white hover:bg-white/10 transition-colors"
               >
                 Book a Free Consult
               </Link>

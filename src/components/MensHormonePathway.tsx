@@ -11,6 +11,14 @@ import {
   type ResultCategory,
 } from "@/lib/mensHormonePathway";
 
+type MensLeadForm = {
+  firstName: string;
+  lastName: string;
+  age: string;
+  email: string;
+  question: string;
+};
+
 // ─── Education moments ─────────────────────────────────────────────────────────
 
 const educationMoments: Partial<Record<string, { title: string; text: string }>> = {
@@ -137,6 +145,15 @@ export default function MensHormonePathway() {
   const [analyzing, setAnalyzing] = useState(false);
   const topRef = useRef<HTMLDivElement>(null);
 
+  // Lead capture state
+  const [mostBothersome, setMostBothersome] = useState("");
+  const [leadForm, setLeadForm] = useState<MensLeadForm>({
+    firstName: "", lastName: "", age: "", email: "", question: "",
+  });
+  const [leadSubmitting, setLeadSubmitting] = useState(false);
+  const [leadSubmitted, setLeadSubmitted] = useState(false);
+  const [leadError, setLeadError] = useState("");
+
   const visibleQuestions = useMemo(() => getVisibleMensHormoneQuestions(answers), [answers]);
   const currentQuestion = visibleQuestions[index];
   const educationMoment = currentQuestion ? educationMoments[currentQuestion.id] : null;
@@ -212,10 +229,39 @@ export default function MensHormonePathway() {
     setIndex((i) => Math.max(i - 1, 0));
   }
 
+  async function handleLeadSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!leadForm.firstName || !leadForm.email || !result) return;
+    setLeadSubmitting(true);
+    setLeadError("");
+    try {
+      const res = await fetch("/api/hormone/mens-quiz", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...leadForm,
+          mostBothersome,
+          leadBucket: result.leadBucket,
+          symptomLabels: result.symptomLabels,
+        }),
+      });
+      if (!res.ok) throw new Error("failed");
+      setLeadSubmitted(true);
+    } catch {
+      setLeadError("Something went wrong. Please try again.");
+    } finally {
+      setLeadSubmitting(false);
+    }
+  }
+
   function reset() {
     setComplete(false);
     setIndex(0);
     setAnswers(starterAnswers);
+    setMostBothersome("");
+    setLeadForm({ firstName: "", lastName: "", age: "", email: "", question: "" });
+    setLeadSubmitted(false);
+    setLeadError("");
   }
 
   // ── Analyzing overlay ────────────────────────────────────────────────────────
@@ -528,6 +574,126 @@ export default function MensHormonePathway() {
                   </Link>
                 </div>
               </div>
+
+              {/* Lead capture */}
+              {!leadSubmitted ? (
+                <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-300">
+                    Send Your Results to Our Team
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-slate-300">
+                    Share your results and get a personalized response from our hormone care team.
+                  </p>
+
+                  {/* Most bothersome */}
+                  {result.symptomLabels.length > 0 && (
+                    <div className="mt-4">
+                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400 mb-2.5">
+                        What&apos;s been bothering you most?
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {result.symptomLabels.map((label) => (
+                          <button
+                            key={label}
+                            type="button"
+                            onClick={() => setMostBothersome(label)}
+                            className={`rounded-full border px-3.5 py-2 text-xs font-medium transition-all duration-150 ${
+                              mostBothersome === label
+                                ? "border-cyan-300/50 bg-cyan-400/10 text-white shadow-[0_0_16px_rgba(0,212,255,0.15)]"
+                                : "border-white/10 bg-white/[0.03] text-slate-400 hover:border-white/20 hover:text-white"
+                            }`}
+                          >
+                            {label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <form onSubmit={handleLeadSubmit} className="mt-5 space-y-3">
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      {[
+                        { label: "First Name", key: "firstName", placeholder: "John", required: true },
+                        { label: "Last Name", key: "lastName", placeholder: "Smith", required: false },
+                      ].map(({ label, key, placeholder, required }) => (
+                        <div key={key}>
+                          <label className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500 mb-1.5">
+                            {label}{required && <span className="ml-1 text-cyan-400">*</span>}
+                          </label>
+                          <input
+                            type="text"
+                            value={leadForm[key as keyof MensLeadForm]}
+                            onChange={(e) => setLeadForm((p) => ({ ...p, [key]: e.target.value }))}
+                            placeholder={placeholder}
+                            required={required}
+                            className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-2.5 text-sm text-white placeholder-slate-600 outline-none transition focus:border-cyan-400/40 focus:bg-cyan-400/[0.05] focus:shadow-[0_0_0_3px_rgba(0,212,255,0.1)]"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      <div>
+                        <label className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500 mb-1.5">Age</label>
+                        <input
+                          type="number"
+                          value={leadForm.age}
+                          onChange={(e) => setLeadForm((p) => ({ ...p, age: e.target.value }))}
+                          placeholder="38"
+                          className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-2.5 text-sm text-white placeholder-slate-600 outline-none transition focus:border-cyan-400/40 focus:bg-cyan-400/[0.05] focus:shadow-[0_0_0_3px_rgba(0,212,255,0.1)]"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500 mb-1.5">
+                          Email <span className="text-cyan-400">*</span>
+                        </label>
+                        <input
+                          type="email"
+                          value={leadForm.email}
+                          onChange={(e) => setLeadForm((p) => ({ ...p, email: e.target.value }))}
+                          placeholder="john@email.com"
+                          required
+                          className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-2.5 text-sm text-white placeholder-slate-600 outline-none transition focus:border-cyan-400/40 focus:bg-cyan-400/[0.05] focus:shadow-[0_0_0_3px_rgba(0,212,255,0.1)]"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500 mb-1.5">
+                        Any questions for our team?
+                      </label>
+                      <textarea
+                        rows={2}
+                        value={leadForm.question}
+                        onChange={(e) => setLeadForm((p) => ({ ...p, question: e.target.value }))}
+                        placeholder="Anything specific you want us to know…"
+                        className="w-full resize-none rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-2.5 text-sm text-white placeholder-slate-600 outline-none transition focus:border-cyan-400/40 focus:bg-cyan-400/[0.05] focus:shadow-[0_0_0_3px_rgba(0,212,255,0.1)]"
+                      />
+                    </div>
+
+                    {leadError && (
+                      <p className="rounded-xl border border-rose-400/20 bg-rose-400/[0.06] px-4 py-2.5 text-xs text-rose-300">
+                        {leadError}
+                      </p>
+                    )}
+
+                    <div className="flex justify-end pt-1">
+                      <button
+                        type="submit"
+                        disabled={leadSubmitting || !leadForm.firstName || !leadForm.email}
+                        className="rounded-full bg-[linear-gradient(135deg,#00D4FF,#8B2FE8)] px-6 py-2.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-30"
+                      >
+                        {leadSubmitting ? "Sending…" : "Send My Results →"}
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              ) : (
+                <div className="mt-8 rounded-2xl border border-cyan-400/20 bg-cyan-400/[0.06] p-6 text-center">
+                  <p className="text-sm font-semibold text-cyan-300">Results sent.</p>
+                  <p className="mt-1.5 text-sm text-slate-300">
+                    Our team will be in touch at {leadForm.email}.
+                  </p>
+                </div>
+              )}
 
               {/* Disclaimer */}
               <p className="mt-6 text-xs leading-5 text-slate-600">

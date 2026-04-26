@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Phone, Mail, CheckCircle } from "lucide-react";
 import { FaLinkedin } from "react-icons/fa6";
 
@@ -56,9 +57,11 @@ export default function About() {
               {/* Logan */}
               <div className="rounded-3xl p-8" style={{ background: "hsla(210, 22%, 28%, 0.75)" }}>
                 <div className="w-full aspect-square rounded-2xl overflow-hidden mb-6">
-                  <img
+                  <Image
                     src="/logan-photo.png"
                     alt="Logan Crist, PA-C with the Colorado Springs Health Collective mobile care vehicle"
+                    width={600}
+                    height={600}
                     className="w-full h-full object-cover"
                     style={{ objectPosition: "55% 15%" }}
                   />
