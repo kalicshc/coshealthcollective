@@ -129,6 +129,20 @@ const PRINT_PAGES = [
     description: '5" × 7" HBOT Early-Access Discount Flyer',
   },
   {
+    name: 'free-consult-flyer',
+    path: '/free-consult-flyer',
+    viewport: { width: 480, height: 672 },   // 5" × 7" portrait
+    printSize: { width: '5in', height: '7in' },
+    description: '5" × 7" Free Consult + $50 Credit Flyer (DPC / HRT / TRT)',
+  },
+  {
+    name: 'grip-strength-banner',
+    path: '/grip-strength-banner',
+    viewport: { width: 1632, height: 1056 },  // 17in × 11in landscape at 96 DPI
+    printSize: { width: '17in', height: '11in' },
+    description: '17" × 11" Grip Strength Challenge Whiteboard Topper',
+  },
+  {
     name: 'event-banner',
     path: '/event-banner',
     viewport: { width: 2880, height: 1152 }, // 30" × 12" scaled (half of 60"×24")

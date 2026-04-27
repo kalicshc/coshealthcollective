@@ -35,3 +35,7 @@ export async function submitHbotEarlyAccess(data: { firstName: string; lastName:
 export async function submitHormoneInquiry(data: { firstName: string; lastName: string; email: string; question: string; sourcePage: string }) {
   return post("/api/hormone/intake", data);
 }
+
+export async function submitFreeConsult(data: { firstName: string; lastName: string; email: string; interest: string }) {
+  return post("/api/free-consult", { ...data, sourcePage: "/free-consult" });
+}

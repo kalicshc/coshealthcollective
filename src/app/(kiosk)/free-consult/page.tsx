@@ -3,21 +3,34 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { submitHbotEarlyAccess } from "@/lib/api";
-import { clinicFacts } from "@/lib/clinicFacts";
+import { submitFreeConsult } from "@/lib/api";
 
-function EarlyAccessForm() {
+const INTEREST_OPTIONS = [
+  { value: "", label: "What are you interested in?" },
+  { value: "Direct Primary Care (DPC)", label: "Direct Primary Care (DPC)" },
+  { value: "Women's Hormone Care (HRT)", label: "Women's Hormone Care (HRT)" },
+  { value: "Men's Health / Testosterone (TRT)", label: "Men's Health / Testosterone (TRT)" },
+  { value: "Multiple / Not sure yet", label: "Multiple / Not sure yet" },
+];
+
+function FreeConsultForm() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [interest, setInterest] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!firstName.trim() || !lastName.trim() || !email.trim()) return;
+    if (!firstName.trim() || !lastName.trim() || !email.trim() || !interest) return;
     setStatus("loading");
     try {
-      await submitHbotEarlyAccess({ firstName: firstName.trim(), lastName: lastName.trim(), email: email.trim() });
+      await submitFreeConsult({
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
+        email: email.trim(),
+        interest,
+      });
       setStatus("success");
     } catch {
       setStatus("error");
@@ -31,10 +44,10 @@ function EarlyAccessForm() {
         style={{ background: "hsla(177,60%,20%,0.4)", border: "1px solid hsla(177,70%,59%,0.35)" }}
       >
         <p className="text-2xl font-bold mb-2" style={{ color: "hsl(177,70%,72%)" }}>
-          You&apos;re on the list.
+          You&apos;re all set.
         </p>
         <p className="text-base" style={{ color: "hsl(210,25%,72%)" }}>
-          We&apos;ll contact you when we open with your {clinicFacts.hbot.earlyAccessDiscountPercent}% discount locked in.
+          We&apos;ll reach out to schedule your free consult — your $25 enrollment credit is locked in.
         </p>
       </div>
     );
@@ -86,6 +99,25 @@ function EarlyAccessForm() {
           textAlign: "center",
         }}
       />
+      <select
+        value={interest}
+        onChange={(e) => setInterest(e.target.value)}
+        required
+        className="rounded-full px-4 py-2.5 text-base text-center outline-none appearance-none"
+        style={{
+          background: "hsla(210,22%,18%,0.9)",
+          border: "1px solid hsla(177,70%,59%,0.22)",
+          color: interest ? "hsl(0,0%,92%)" : "hsl(210,25%,55%)",
+          textAlign: "center",
+          textAlignLast: "center",
+        }}
+      >
+        {INTEREST_OPTIONS.map((opt) => (
+          <option key={opt.value} value={opt.value} disabled={opt.value === ""}>
+            {opt.label}
+          </option>
+        ))}
+      </select>
       <button
         type="submit"
         disabled={status === "loading"}
@@ -95,22 +127,21 @@ function EarlyAccessForm() {
           color: "hsl(210,32%,10%)",
         }}
       >
-        {status === "loading" ? "Saving your spot…" : `Lock In My ${clinicFacts.hbot.earlyAccessDiscountPercent}% Discount →`}
+        {status === "loading" ? "Saving your spot…" : "Book My Free Consult →"}
       </button>
       {status === "error" && (
         <p className="text-center text-sm" style={{ color: "hsl(0,80%,70%)" }}>
-          Something went wrong. Try again or call{" "}
-          <a href={`tel:${clinicFacts.contact.phoneTel}`} style={{ color: "hsl(177,70%,65%)" }}>{clinicFacts.contact.phoneDashed}</a>.
+          Something went wrong. Please try again.
         </p>
       )}
       <p className="text-center text-[11px]" style={{ color: "hsl(210,25%,55%)" }}>
-        No commitment, no payment. We&apos;ll reach out when we open.
+        We&apos;ll reach out to schedule. No payment, no commitment.
       </p>
     </form>
   );
 }
 
-export default function HbotEarlyAccessLandingPage() {
+export default function FreeConsultLandingPage() {
   return (
     <section
       className="relative overflow-hidden flex items-center justify-center w-full"
@@ -124,7 +155,7 @@ export default function HbotEarlyAccessLandingPage() {
     >
       {/* Switch offer pill — top-right, kiosk-only nav between offers */}
       <Link
-        href="/free-consult"
+        href="/hbot-25"
         className="absolute top-4 right-4 z-20 rounded-full px-3.5 py-1.5 text-xs font-semibold hover:opacity-80 transition-opacity"
         style={{
           background: "hsla(210,22%,18%,0.85)",
@@ -133,7 +164,7 @@ export default function HbotEarlyAccessLandingPage() {
           backdropFilter: "blur(8px)",
         }}
       >
-        ↔ Free Consult Offer
+        ↔ HBOT 25% Offer
       </Link>
 
       {/* Radial glows */}
@@ -177,7 +208,7 @@ export default function HbotEarlyAccessLandingPage() {
             fontSize: "clamp(0.7rem, 1.6vw, 0.85rem)",
           }}
         >
-          Early-Access Offer
+          Free Consult + $25 Enrollment Credit
         </p>
 
         {/* Headline */}
@@ -195,7 +226,7 @@ export default function HbotEarlyAccessLandingPage() {
               lineHeight: 0.95,
             }}
           >
-            {clinicFacts.hbot.earlyAccessDiscountPercent}% OFF
+            $25 OFF
           </span>
           <span
             className="block font-black"
@@ -206,11 +237,11 @@ export default function HbotEarlyAccessLandingPage() {
               marginTop: "0.4rem",
             }}
           >
-            Your First HBOT Program<br />or Punch Card
+            Thinking about DPC, HRT, or TRT?
           </span>
         </h1>
 
-        {/* Coming summer line */}
+        {/* Coming line */}
         <p
           className="font-semibold"
           style={{
@@ -219,23 +250,10 @@ export default function HbotEarlyAccessLandingPage() {
             margin: 0,
           }}
         >
-          Coming {clinicFacts.hbot.openingDate}
+          Free consult today · $25 off when you enroll
         </p>
 
-        <EarlyAccessForm />
-
-        <Link
-          href="/hyperbaric"
-          className="rounded-full font-semibold hover:opacity-80 transition-opacity"
-          style={{
-            border: "1px solid hsla(177,70%,59%,0.45)",
-            color: "hsl(177,70%,72%)",
-            padding: "0.55rem 1.4rem",
-            fontSize: "clamp(0.78rem, 1.5vw, 0.9rem)",
-          }}
-        >
-          Learn more about HBOT →
-        </Link>
+        <FreeConsultForm />
       </div>
     </section>
   );
