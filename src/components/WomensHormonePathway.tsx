@@ -66,26 +66,93 @@ const severityStyle: Record<string, { badge: string; dot: string }> = {
 
 // ─── Hormone bar colors ───────────────────────────────────────────────────────
 
-const hormoneBar: Record<HormoneType, { gradient: string; glow: string; label: string; dot: string }> = {
+const hormoneBar: Record<HormoneType, { gradient: string; glow: string; label: string; dot: string; solid: string }> = {
   progesterone: {
     gradient: "linear-gradient(90deg, hsl(331,95%,72%), hsl(311,80%,62%))",
     glow: "rgba(217,70,239,0.25)",
     label: "Progesterone",
     dot: "bg-fuchsia-400",
+    solid: "hsl(331,95%,65%)",
   },
   estrogen: {
     gradient: "linear-gradient(90deg, hsl(271,74%,65%), hsl(251,80%,70%))",
     glow: "rgba(139,92,246,0.25)",
     label: "Estrogen",
     dot: "bg-violet-400",
+    solid: "hsl(271,74%,60%)",
   },
   testosterone: {
-    gradient: "linear-gradient(90deg, hsl(350,90%,68%), hsl(330,85%,60%))",
-    glow: "rgba(251,113,133,0.25)",
+    gradient: "linear-gradient(90deg, hsl(195,90%,62%), hsl(215,85%,55%))",
+    glow: "rgba(56,189,248,0.28)",
     label: "Testosterone",
-    dot: "bg-rose-400",
+    dot: "bg-sky-400",
+    solid: "hsl(205,90%,58%)",
   },
 };
+
+// ─── Attribution donut ────────────────────────────────────────────────────────
+
+function AttributionDonut({
+  shares,
+  totalScore,
+  animated,
+}: {
+  shares: { progesterone: number; estrogen: number; testosterone: number };
+  totalScore: number;
+  animated: boolean;
+}) {
+  const r = 70;
+  const circumference = 2 * Math.PI * r;
+  const order: HormoneType[] = ["progesterone", "estrogen", "testosterone"];
+  let cumulative = 0;
+
+  return (
+    <div className="flex flex-col items-center">
+      <div className="relative">
+        <svg viewBox="0 0 200 200" className="block h-44 w-44 sm:h-52 sm:w-52">
+          <g transform="rotate(-90 100 100)">
+            <circle cx="100" cy="100" r={r} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="22" />
+            {order.map((h) => {
+              const value = shares[h];
+              const length = animated ? (value / 100) * circumference : 0;
+              const offset = -((cumulative / 100) * circumference);
+              cumulative += value;
+              return (
+                <circle
+                  key={h}
+                  cx="100"
+                  cy="100"
+                  r={r}
+                  fill="none"
+                  stroke={hormoneBar[h].solid}
+                  strokeWidth="22"
+                  strokeDasharray={`${length} ${circumference - length}`}
+                  strokeDashoffset={offset}
+                  strokeLinecap="butt"
+                  style={{ transition: "stroke-dasharray 900ms ease-out" }}
+                />
+              );
+            })}
+          </g>
+        </svg>
+        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+          <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-slate-400">Total</p>
+          <p className="mt-1 text-3xl font-black leading-none text-white">{totalScore}</p>
+          <p className="mt-0.5 text-[10px] text-slate-500">/ 63</p>
+        </div>
+      </div>
+      <div className="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-1.5 text-[11px]">
+        {order.map((h) => (
+          <span key={h} className="flex items-center gap-1.5 text-slate-300">
+            <span className="inline-block h-2 w-2 rounded-full" style={{ background: hormoneBar[h].solid }} />
+            <span className="font-medium">{HORMONE_INFO[h].name.split(" ")[0]}</span>
+            <span className="text-slate-500">{shares[h]}%</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 // ─── Rating button ────────────────────────────────────────────────────────────
 
@@ -692,10 +759,21 @@ export default function WomensHormonePathway() {
                     Hormone Pattern Breakdown
                   </p>
                   <p className="text-[10px] text-slate-600">
-                    % of symptoms linked to each hormone
+                    Share of your symptom load by hormone
                   </p>
                 </div>
-                <div className="space-y-3">
+                <div className="rounded-2xl border border-white/10 bg-white/[0.02] px-5 py-6">
+                  <AttributionDonut
+                    shares={{
+                      progesterone: result.progesteronePct,
+                      estrogen: result.estrogenPct,
+                      testosterone: result.testosteronePct,
+                    }}
+                    totalScore={result.totalScore}
+                    animated={barsAnimated}
+                  />
+                </div>
+                <div className="mt-4 space-y-3">
                   {(["progesterone", "estrogen", "testosterone"] as HormoneType[]).map((h) => {
                     const pct =
                       h === "progesterone"
@@ -857,7 +935,7 @@ export default function WomensHormonePathway() {
                   P: {result.progesteronePct}%
                   <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
                   E: {result.estrogenPct}%
-                  <span className="h-1.5 w-1.5 rounded-full bg-rose-400" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-sky-400" />
                   T: {result.testosteronePct}%
                 </div>
               </div>
@@ -998,7 +1076,7 @@ export default function WomensHormonePathway() {
                       <div className="flex flex-col justify-center gap-1 text-xs text-slate-400">
                         <span><span className="inline-block h-1.5 w-1.5 rounded-full bg-fuchsia-400 mr-1" />P: {result.progesteronePct}%</span>
                         <span><span className="inline-block h-1.5 w-1.5 rounded-full bg-violet-400 mr-1" />E: {result.estrogenPct}%</span>
-                        <span><span className="inline-block h-1.5 w-1.5 rounded-full bg-rose-400 mr-1" />T: {result.testosteronePct}%</span>
+                        <span><span className="inline-block h-1.5 w-1.5 rounded-full bg-sky-400 mr-1" />T: {result.testosteronePct}%</span>
                       </div>
                     </div>
                   </div>
