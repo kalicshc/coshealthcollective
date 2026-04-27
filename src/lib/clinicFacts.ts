@@ -32,6 +32,10 @@ export const clinicFacts = {
     telehealth: 85,
     inPerson: 115,
   },
+  hormone: {
+    initialConsult: 249,
+    monthlyManagement: 149,
+  },
   hbot: {
     pressure: "2.0 ATA",
     openingDate: "Summer 2026",

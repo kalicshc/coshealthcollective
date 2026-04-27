@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { clinicFacts, usd } from "@/lib/clinicFacts";
 
 export const metadata: Metadata = {
   title: "GLP-1 Weight Loss | Colorado Springs Health Collective",
@@ -190,11 +191,11 @@ export default function GLP1Page() {
             <h3 className="mt-6 text-2xl font-black text-white">GLP-1 Metabolic Care</h3>
             <div className="mt-5 flex flex-wrap gap-x-8 gap-y-3">
               <div>
-                <span className="text-4xl font-black text-white">$249</span>
+                <span className="text-4xl font-black text-white">{usd(clinicFacts.hormone.initialConsult)}</span>
                 <span className="ml-2 text-sm text-slate-400">initial consult</span>
               </div>
               <div>
-                <span className="text-3xl font-black text-white">$149</span>
+                <span className="text-3xl font-black text-white">{usd(clinicFacts.hormone.monthlyManagement)}</span>
                 <span className="ml-2 text-sm text-slate-400">/ month ongoing management</span>
               </div>
             </div>
