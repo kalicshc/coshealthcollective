@@ -335,20 +335,22 @@ export default function PortalPillars() {
           box-shadow: 0 18px 46px rgba(0,0,0,0.34), -16px 0 36px hsla(278, 62%, 52%, 0.14);
         }
 
-        .clinic-pillars__card:hover {
-          transform: translateY(-6px);
-          border-color: color-mix(in srgb, var(--pillar-accent) 68%, white);
-          box-shadow: var(--pillar-glow);
-          filter: saturate(1.12);
-        }
+        @media (hover: hover) {
+          .clinic-pillars__card:hover {
+            transform: translateY(-6px);
+            border-color: color-mix(in srgb, var(--pillar-accent) 68%, white);
+            box-shadow: var(--pillar-glow);
+            filter: saturate(1.12);
+          }
 
-        .clinic-pillars__card:hover::before {
-          opacity: 0.86;
-        }
+          .clinic-pillars__card:hover::before {
+            opacity: 0.86;
+          }
 
-        .clinic-pillars__grid:has(.clinic-pillars__card:hover) .clinic-pillars__card:not(:hover) {
-          opacity: 0.45;
-          filter: saturate(0.5) brightness(0.8);
+          .clinic-pillars__grid:has(.clinic-pillars__card:hover) .clinic-pillars__card:not(:hover) {
+            opacity: 0.45;
+            filter: saturate(0.5) brightness(0.8);
+          }
         }
 
         .clinic-pillars__topline {

@@ -34,6 +34,18 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Prevent iOS Safari from auto-zooming when focusing form fields.
+   iOS only zooms when the input's font-size is below 16px. We keep the
+   visual size unchanged on desktop and bump it just on touch widths so
+   pinch-zoom still works for users who want it. */
+@media (max-width: 768px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
 body {
   background: hsl(210, 32%, 12%);
   color: hsl(0, 0%, 92%);
