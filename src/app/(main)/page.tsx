@@ -3,14 +3,12 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Stethoscope, MapPin, Star, Phone, Mail, ChevronLeft, ChevronRight } from "lucide-react";
+import { MapPin, Star, Phone, Mail, ChevronLeft, ChevronRight } from "lucide-react";
 import OurStoryCarousel from "@/components/OurStoryCarousel";
 import PortalPillars from "@/components/PortalPillars";
-import { clinicFacts, usd } from "@/lib/clinicFacts";
+import { clinicFacts } from "@/lib/clinicFacts";
 
 const GOOGLE_REVIEWS_URL = "https://share.google/A5V615VuXhaDQytso";
-const TELEHEALTH_URL = "https://colorado-springs-health-collective-direct-primary-care.hint.com/signup/telehealth";
-const INPERSON_URL = "https://colorado-springs-health-collective-direct-primary-care.hint.com/signup/urgentcarevisit";
 
 const reviewsData = [
   {
@@ -135,50 +133,6 @@ export default function Home() {
         <div className="container mx-auto px-5 lg:px-8">
           <div className="max-w-5xl mx-auto">
             <PortalPillars />
-
-            {/* Urgent Care Strip */}
-            <div
-              className="mt-6 rounded-xl p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
-              style={{
-                background: "hsla(210, 22%, 22%, 0.5)",
-                backdropFilter: "blur(12px)",
-                borderLeft: "3px solid hsl(177, 70%, 59%)",
-                border: "1px solid hsla(177, 70%, 59%, 0.2)",
-                borderLeftWidth: "3px",
-              }}
-            >
-              <div className="flex items-start gap-3">
-                <Stethoscope className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: "hsl(177, 70%, 59%)" }} />
-                <div>
-                  <p className="font-semibold text-sm" style={{ color: "hsl(0, 0%, 95%)" }}>
-                    Mobile Urgent Care &amp; Telehealth — No membership needed
-                  </p>
-                  <p className="text-xs mt-0.5" style={{ color: "hsl(210, 25%, 65%)" }}>
-                    Telehealth {usd(clinicFacts.urgentCare.telehealth)} · In-home visit {usd(clinicFacts.urgentCare.inPerson)} · Free for DPC members
-                  </p>
-                </div>
-              </div>
-              <div className="flex gap-3 flex-shrink-0">
-                <a
-                  href={TELEHEALTH_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-full text-xs font-semibold transition-opacity hover:opacity-85"
-                  style={{ background: "linear-gradient(135deg, hsl(177, 70%, 59%), hsl(200, 70%, 59%))", color: "hsl(210, 32%, 12%)" }}
-                >
-                  Book Telehealth →
-                </a>
-                <a
-                  href={INPERSON_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-full text-xs font-semibold transition-opacity hover:opacity-85"
-                  style={{ background: "hsla(210, 22%, 30%, 0.8)", color: "hsl(177, 70%, 65%)", border: "1px solid hsla(177, 70%, 59%, 0.3)" }}
-                >
-                  Book In-Home →
-                </a>
-              </div>
-            </div>
           </div>
         </div>
       </section>

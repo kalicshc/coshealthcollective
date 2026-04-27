@@ -157,6 +157,11 @@ export default function PortalPillars() {
           >
             <div className="clinic-pillars__topline" />
 
+            {/* Top-right "Learn more" tag — desktop only, signals card is clickable */}
+            <span className="clinic-pillars__top-tag" aria-hidden="true">
+              Learn more →
+            </span>
+
             {/* Mobile accordion header — always visible */}
             <button
               className="clinic-pillars__mobile-header"
@@ -357,6 +362,34 @@ export default function PortalPillars() {
           height: 4px;
           flex: 0 0 auto;
           background: var(--pillar-line);
+        }
+
+        .clinic-pillars__top-tag {
+          position: absolute;
+          top: 14px;
+          right: 14px;
+          z-index: 2;
+          display: none;
+          padding: 4px 10px;
+          border-radius: 999px;
+          border: 1px solid color-mix(in srgb, var(--pillar-accent) 38%, transparent);
+          background: color-mix(in srgb, var(--pillar-accent) 12%, rgba(15, 22, 35, 0.6));
+          color: color-mix(in srgb, var(--pillar-accent) 75%, white);
+          font-size: 0.68rem;
+          font-weight: 800;
+          letter-spacing: 0.01em;
+          text-transform: uppercase;
+          backdrop-filter: blur(6px);
+          transition: background 220ms ease, border-color 220ms ease, color 220ms ease, transform 220ms ease;
+        }
+
+        @media (hover: hover) {
+          .clinic-pillars__card:hover .clinic-pillars__top-tag {
+            background: color-mix(in srgb, var(--pillar-accent) 28%, rgba(15, 22, 35, 0.6));
+            border-color: color-mix(in srgb, var(--pillar-accent) 70%, white);
+            color: white;
+            transform: translateX(2px);
+          }
         }
 
         .clinic-pillars__body {
@@ -826,6 +859,13 @@ export default function PortalPillars() {
           /* Hide learn more on desktop — card is clickable */
           .clinic-pillars__learn-more {
             display: none;
+          }
+
+          /* Show the top-right "Learn more" tag on desktop so the card's
+             clickability is obvious — the chevron handles this on mobile. */
+          .clinic-pillars__top-tag {
+            display: inline-flex;
+            align-items: center;
           }
         }
 
