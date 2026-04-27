@@ -41,19 +41,20 @@ function EarlyAccessForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-full max-w-md mx-auto">
-      <div className="flex flex-col sm:flex-row gap-3">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-2 w-full max-w-md mx-auto">
+      <div className="flex flex-col sm:flex-row gap-2">
         <input
           type="text"
           placeholder="First name"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
           required
-          className="flex-1 rounded-full px-5 py-3 text-base outline-none"
+          className="flex-1 rounded-full px-4 py-2.5 text-base text-center outline-none"
           style={{
             background: "hsla(210,22%,18%,0.9)",
             border: "1px solid hsla(177,70%,59%,0.22)",
             color: "hsl(0,0%,92%)",
+            textAlign: "center",
           }}
         />
         <input
@@ -62,11 +63,12 @@ function EarlyAccessForm() {
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
           required
-          className="flex-1 rounded-full px-5 py-3 text-base outline-none"
+          className="flex-1 rounded-full px-4 py-2.5 text-base text-center outline-none"
           style={{
             background: "hsla(210,22%,18%,0.9)",
             border: "1px solid hsla(177,70%,59%,0.22)",
             color: "hsl(0,0%,92%)",
+            textAlign: "center",
           }}
         />
       </div>
@@ -76,17 +78,18 @@ function EarlyAccessForm() {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
-        className="rounded-full px-5 py-3 text-base outline-none"
+        className="rounded-full px-4 py-2.5 text-base text-center outline-none"
         style={{
           background: "hsla(210,22%,18%,0.9)",
           border: "1px solid hsla(177,70%,59%,0.22)",
           color: "hsl(0,0%,92%)",
+          textAlign: "center",
         }}
       />
       <button
         type="submit"
         disabled={status === "loading"}
-        className="rounded-full px-8 py-4 text-base font-bold hover:opacity-90 transition-opacity disabled:opacity-50"
+        className="rounded-full px-6 py-3 text-base font-bold hover:opacity-90 transition-opacity disabled:opacity-50"
         style={{
           background: "linear-gradient(135deg, hsl(177,70%,59%), hsl(210,70%,55%))",
           color: "hsl(210,32%,10%)",
@@ -100,8 +103,8 @@ function EarlyAccessForm() {
           <a href={`tel:${clinicFacts.contact.phoneTel}`} style={{ color: "hsl(177,70%,65%)" }}>{clinicFacts.contact.phoneDashed}</a>.
         </p>
       )}
-      <p className="text-center text-xs mt-1" style={{ color: "hsl(210,25%,55%)" }}>
-        No commitment required. No payment. We&apos;ll reach out when we open.
+      <p className="text-center text-[11px]" style={{ color: "hsl(210,25%,55%)" }}>
+        No commitment, no payment. We&apos;ll reach out when we open.
       </p>
     </form>
   );
@@ -110,10 +113,13 @@ function EarlyAccessForm() {
 export default function HbotEarlyAccessLandingPage() {
   return (
     <section
-      className="relative overflow-hidden pt-28 pb-16 lg:pt-36 lg:pb-24 flex items-center"
+      className="relative overflow-hidden flex items-center justify-center w-full"
       style={{
-        background: "linear-gradient(180deg, hsla(210,32%,11%,0.95), hsla(210,32%,12%,0.85))",
-        minHeight: "calc(100vh - 80px)",
+        background: "linear-gradient(180deg, hsl(210,32%,11%) 0%, hsl(210,32%,8%) 100%)",
+        minHeight: "100dvh",
+        height: "100dvh",
+        paddingTop: "clamp(0.75rem, 2.5vh, 2rem)",
+        paddingBottom: "clamp(0.75rem, 2.5vh, 2rem)",
       }}
     >
       {/* Radial glows */}
@@ -137,87 +143,85 @@ export default function HbotEarlyAccessLandingPage() {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 mx-auto max-w-3xl px-5 lg:px-8 text-center w-full">
-        {/* Brand badge */}
-        <div className="flex justify-center mb-8">
-          <div
-            className="inline-flex items-center gap-3 rounded-2xl border px-5 py-3"
-            style={{
-              borderColor: "hsla(177,70%,59%,0.2)",
-              background: "linear-gradient(180deg, hsla(215,30%,16%,0.92), hsla(215,28%,13%,0.88))",
-              backdropFilter: "blur(16px)",
-            }}
-          >
-            <Image src="/logo-main.png" alt="CSHC" width={36} height={36} className="object-contain" />
-            <div className="text-left">
-              <p className="text-xs font-medium uppercase tracking-widest" style={{ color: "hsl(210,25%,62%)" }}>
-                Colorado Springs Health Collective
-              </p>
-              <p
-                className="text-sm font-semibold leading-tight mt-0.5"
-                style={{
-                  background: "linear-gradient(135deg, hsl(177,70%,65%), hsl(210,70%,62%))",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                Hyperbaric Clinic — Opening {clinicFacts.hbot.openingDate}
-              </p>
-            </div>
-          </div>
-        </div>
+      <div className="relative z-10 mx-auto max-w-md px-5 text-center w-full flex flex-col items-center gap-[clamp(0.5rem,2vh,1rem)]">
+        {/* Logo */}
+        <Image
+          src="/logo-main.png"
+          alt="Colorado Springs Health Collective"
+          width={56}
+          height={56}
+          className="object-contain"
+          style={{ filter: "drop-shadow(0 0 14px hsla(177,70%,59%,0.45))" }}
+        />
 
-        {/* Headline */}
+        {/* Eyebrow */}
         <p
-          className="text-sm font-bold uppercase tracking-widest mb-3"
-          style={{ color: "hsl(210,40%,75%)", letterSpacing: "0.06em" }}
+          className="font-bold uppercase"
+          style={{
+            color: "hsl(210,40%,75%)",
+            letterSpacing: "0.18em",
+            fontSize: "clamp(0.7rem, 1.6vw, 0.85rem)",
+          }}
         >
           Early-Access Offer
         </p>
-        <h1 style={{ color: "#fff", textShadow: "0 2px 24px rgba(0,0,0,0.5)", lineHeight: 1 }}>
+
+        {/* Headline */}
+        <h1 style={{ color: "#fff", textShadow: "0 2px 24px rgba(0,0,0,0.5)", lineHeight: 1, margin: 0 }}>
           <span
             className="block font-black"
             style={{
-              fontSize: "clamp(4rem, 14vw, 9rem)",
+              fontSize: "clamp(3.5rem, 13vw, 7rem)",
               fontWeight: 900,
               background: "linear-gradient(135deg, hsl(177,88%,62%), hsl(188,88%,54%), hsl(210,70%,58%))",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
-              filter: "drop-shadow(0 0 40px hsla(177,80%,55%,0.35))",
+              filter: "drop-shadow(0 0 36px hsla(177,80%,55%,0.35))",
+              lineHeight: 0.95,
             }}
           >
             {clinicFacts.hbot.earlyAccessDiscountPercent}% OFF
           </span>
           <span
-            className="block font-black mt-2"
-            style={{ fontSize: "clamp(1.4rem, 3.6vw, 2.5rem)", fontWeight: 900 }}
+            className="block font-black"
+            style={{
+              fontSize: "clamp(1.05rem, 3vw, 1.6rem)",
+              fontWeight: 800,
+              lineHeight: 1.15,
+              marginTop: "0.4rem",
+            }}
           >
-            Your First HBOT Program or Punch Card
+            Your First HBOT Program<br />or Punch Card
           </span>
         </h1>
 
-        <p className="mt-6 mb-2 font-semibold" style={{ color: "hsl(177,70%,65%)", fontSize: "clamp(1rem, 2vw, 1.2rem)" }}>
-          Coming {clinicFacts.hbot.openingDate} — Lock In Your {clinicFacts.hbot.earlyAccessDiscountPercent}% Discount Today.
+        {/* Coming summer line */}
+        <p
+          className="font-semibold"
+          style={{
+            color: "hsl(177,70%,65%)",
+            fontSize: "clamp(0.85rem, 1.8vw, 1.05rem)",
+            margin: 0,
+          }}
+        >
+          Coming {clinicFacts.hbot.openingDate}
         </p>
 
-        <p className="mb-8 max-w-xl mx-auto" style={{ color: "hsl(210,25%,62%)", fontSize: "17px", lineHeight: "1.65" }}>
-          We&apos;re opening a clinical-grade <strong style={{ color: "#fff" }}>{clinicFacts.hbot.pressure}</strong> hyperbaric chamber in Colorado Springs.
-          Drop your info to lock in your founding-member discount — no payment, no commitment.
-        </p>
+        <EarlyAccessForm />
 
-        <div className="flex flex-col items-center gap-6">
-          <EarlyAccessForm />
-
-          <Link
-            href="/hyperbaric"
-            className="rounded-full px-7 py-3 text-sm font-semibold hover:opacity-80 transition-opacity mt-2"
-            style={{ border: "1px solid hsla(177,70%,59%,0.45)", color: "hsl(177,70%,72%)" }}
-          >
-            Learn more about HBOT →
-          </Link>
-        </div>
+        <Link
+          href="/hyperbaric"
+          className="rounded-full font-semibold hover:opacity-80 transition-opacity"
+          style={{
+            border: "1px solid hsla(177,70%,59%,0.45)",
+            color: "hsl(177,70%,72%)",
+            padding: "0.55rem 1.4rem",
+            fontSize: "clamp(0.78rem, 1.5vw, 0.9rem)",
+          }}
+        >
+          Learn more about HBOT →
+        </Link>
       </div>
     </section>
   );
