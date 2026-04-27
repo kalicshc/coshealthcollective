@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { submitHbotEarlyAccess } from "@/lib/api";
+import { clinicFacts } from "@/lib/clinicFacts";
 
 const conditions = [
   {
@@ -103,7 +104,7 @@ function EarlyAccessForm() {
           You&apos;re on the list.
         </p>
         <p className="text-sm" style={{ color: "hsl(210,25%,65%)" }}>
-          We&apos;ll contact you when we open with your 25% discount locked in.
+          We&apos;ll contact you when we open with your {clinicFacts.hbot.earlyAccessDiscountPercent}% discount locked in.
         </p>
       </div>
     );
@@ -163,12 +164,12 @@ function EarlyAccessForm() {
           color: "hsl(210,32%,10%)",
         }}
       >
-        {status === "loading" ? "Saving your spot…" : "Lock In My 25% Discount →"}
+        {status === "loading" ? "Saving your spot…" : `Lock In My ${clinicFacts.hbot.earlyAccessDiscountPercent}% Discount →`}
       </button>
       {status === "error" && (
         <p className="text-center text-xs" style={{ color: "hsl(0,80%,70%)" }}>
           Something went wrong. Try again or call{" "}
-          <a href="tel:7198244716" style={{ color: "hsl(177,70%,65%)" }}>719-824-4716</a>.
+          <a href={`tel:${clinicFacts.contact.phoneTel}`} style={{ color: "hsl(177,70%,65%)" }}>{clinicFacts.contact.phoneDashed}</a>.
         </p>
       )}
       <p className="text-center text-xs" style={{ color: "hsl(210,25%,48%)" }}>
@@ -232,7 +233,7 @@ export default function HyperbaricPage() {
                     backgroundClip: "text",
                   }}
                 >
-                  Hyperbaric Clinic — Opening Summer 2026
+                  Hyperbaric Clinic — Opening {clinicFacts.hbot.openingDate}
                 </p>
               </div>
             </div>
@@ -270,7 +271,7 @@ export default function HyperbaricPage() {
           </h1>
 
           <p className="mt-6 mb-2 font-semibold" style={{ color: "hsl(177,70%,65%)", fontSize: "clamp(1rem, 2vw, 1.2rem)" }}>
-            Coming Summer 2026 — Lock In Your 25% Discount Today.
+            Coming {clinicFacts.hbot.openingDate} — Lock In Your {clinicFacts.hbot.earlyAccessDiscountPercent}% Discount Today.
           </p>
 
           <p className="mb-10 max-w-xl mx-auto" style={{ color: "hsl(210,25%,60%)", fontSize: "17px", lineHeight: "1.65" }}>
@@ -497,7 +498,7 @@ export default function HyperbaricPage() {
                 backgroundClip: "text",
               }}
             >
-              Save 25%.
+              Save {clinicFacts.hbot.earlyAccessDiscountPercent}%.
             </span>
           </h2>
           <p className="mb-10" style={{ color: "hsl(210,25%,60%)", fontSize: "17px" }}>
@@ -507,11 +508,11 @@ export default function HyperbaricPage() {
           <p className="mt-8" style={{ color: "hsl(210,25%,48%)", fontSize: "15px" }}>
             Questions?{" "}
             <a
-              href="tel:7198244716"
+              href={`tel:${clinicFacts.contact.phoneTel}`}
               className="font-semibold hover:opacity-80 transition-opacity"
               style={{ color: "hsl(177,70%,65%)" }}
             >
-              Call or text 719-824-4716
+              Call or text {clinicFacts.contact.phoneDashed}
             </a>
           </p>
         </div>

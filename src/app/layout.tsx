@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { clinicFacts, usd } from "@/lib/clinicFacts";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
     template: "%s | Colorado Springs Health Collective",
   },
   description:
-    "Colorado Springs Health Collective — Direct Primary Care ($100/mo), Hormone & Metabolic Clinic, and Hyperbaric Oxygen Therapy. Modern healthcare built for Colorado Springs.",
+    `Colorado Springs Health Collective — Direct Primary Care (${usd(clinicFacts.dpc.individualMonthly)}/mo), Hormone & Metabolic Clinic, and Hyperbaric Oxygen Therapy. Modern healthcare built for Colorado Springs.`,
   keywords: [
     "direct primary care Colorado Springs",
     "DPC Colorado Springs",
@@ -78,8 +79,8 @@ const structuredData = {
       image: "https://coshealthcollective.com/logo-main.png",
       description:
         "Colorado Springs Health Collective offers Direct Primary Care, Hormone & Metabolic Clinic, and Hyperbaric Oxygen Therapy in Colorado Springs, Colorado.",
-      telephone: "+17198244716",
-      email: "dpc@coshealthcollective.com",
+      telephone: clinicFacts.contact.phoneTel,
+      email: clinicFacts.contact.email,
       address: {
         "@type": "PostalAddress",
         addressLocality: "Colorado Springs",
@@ -116,7 +117,7 @@ const structuredData = {
             itemOffered: {
               "@type": "MedicalTherapy",
               name: "Direct Primary Care Membership",
-              description: "Unlimited visits, same-day access, no copays, labs and meds at cost. $100/month.",
+              description: `Unlimited visits, same-day access, no copays, labs and meds at cost. ${usd(clinicFacts.dpc.individualMonthly)}/month.`,
             },
           },
           {
@@ -132,7 +133,7 @@ const structuredData = {
             itemOffered: {
               "@type": "MedicalTherapy",
               name: "Hyperbaric Oxygen Therapy",
-              description: "2.0 ATA hyperbaric oxygen therapy opening Summer 2026 in Colorado Springs.",
+              description: `${clinicFacts.hbot.pressure} hyperbaric oxygen therapy opening ${clinicFacts.hbot.openingDate} in Colorado Springs.`,
             },
           },
         ],

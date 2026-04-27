@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Stethoscope, MapPin, Star, Phone, Mail, ChevronLeft, ChevronRight } from "lucide-react";
 import OurStoryCarousel from "@/components/OurStoryCarousel";
 import PortalPillars from "@/components/PortalPillars";
+import { clinicFacts, usd } from "@/lib/clinicFacts";
 
 const GOOGLE_REVIEWS_URL = "https://share.google/A5V615VuXhaDQytso";
 const TELEHEALTH_URL = "https://colorado-springs-health-collective-direct-primary-care.hint.com/signup/telehealth";
@@ -153,7 +154,7 @@ export default function Home() {
                     Mobile Urgent Care &amp; Telehealth — No membership needed
                   </p>
                   <p className="text-xs mt-0.5" style={{ color: "hsl(210, 25%, 65%)" }}>
-                    Telehealth $85 · In-home visit $115 · Free for DPC members
+                    Telehealth {usd(clinicFacts.urgentCare.telehealth)} · In-home visit {usd(clinicFacts.urgentCare.inPerson)} · Free for DPC members
                   </p>
                 </div>
               </div>
@@ -360,7 +361,7 @@ export default function Home() {
 
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                     <a
-                      href="tel:+17198244716"
+                      href={`tel:${clinicFacts.contact.phoneTel}`}
                       className="w-full sm:w-auto flex items-center justify-center gap-3 px-7 py-4 rounded-xl font-semibold transition-all duration-200 hover:scale-[1.02] hover:shadow-lg"
                       style={{
                         background: "linear-gradient(135deg, hsl(177, 70%, 59%), hsl(200, 70%, 59%))",
@@ -369,10 +370,10 @@ export default function Home() {
                       }}
                     >
                       <Phone className="w-5 h-5 flex-shrink-0" />
-                      <span>(719) 824-4716</span>
+                      <span>{clinicFacts.contact.phone}</span>
                     </a>
                     <a
-                      href="mailto:dpc@coshealthcollective.com"
+                      href={`mailto:${clinicFacts.contact.email}`}
                       className="w-full sm:w-auto flex items-center justify-center gap-3 px-7 py-4 rounded-xl font-semibold transition-all duration-200 hover:scale-[1.02]"
                       style={{
                         background: "hsla(210, 22%, 20%, 0.8)",
@@ -381,7 +382,7 @@ export default function Home() {
                       }}
                     >
                       <Mail className="w-5 h-5 flex-shrink-0" />
-                      <span>dpc@coshealthcollective.com</span>
+                      <span>{clinicFacts.contact.email}</span>
                     </a>
                   </div>
                 </div>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { submitDpcInquiry } from "@/lib/api";
+import { clinicFacts, usd } from "@/lib/clinicFacts";
 import Link from "next/link";
 import {
   CheckCircle, Phone, Mail, ChevronDown, Heart, Video, Clock, MessageCircle,
@@ -66,7 +67,7 @@ const dpcFaqs = [
   {
     id: "pricing",
     question: "How much does membership cost?",
-    answer: "Individual membership is $100/month. Couples are $180/month. Families add $60/month per child over age 2. There is a one-time $50 registration fee per household for new members. No contracts — cancel anytime.",
+    answer: `Individual membership is ${usd(clinicFacts.dpc.individualMonthly)}/month. Couples are ${usd(clinicFacts.dpc.couplesMonthly)}/month. Families add ${usd(clinicFacts.dpc.childAddOnMonthly)}/month per child over age ${clinicFacts.dpc.childAgeMin}. There is a one-time ${usd(clinicFacts.dpc.registrationFee)} registration fee per household for new members. No contracts — cancel anytime.`,
   },
   {
     id: "still-need-insurance",
@@ -106,7 +107,7 @@ const dpcFaqs = [
   {
     id: "how-to-join",
     question: "How do I become a member?",
-    answer: "The easiest first step is a free Meet & Greet with Logan or Sarah — a no-commitment conversation to see if CSHC DPC is the right fit for you. From there, enrollment is simple and handled through our online portal. You can also call or text us at (719) 824-4716 or email dpc@coshealthcollective.com with any questions.",
+    answer: `The easiest first step is a free Meet & Greet with Logan or Sarah — a no-commitment conversation to see if CSHC DPC is the right fit for you. From there, enrollment is simple and handled through our online portal. You can also call or text us at ${clinicFacts.contact.phone} or email ${clinicFacts.contact.email} with any questions.`,
   },
 ];
 
@@ -155,7 +156,7 @@ export default function DirectPrimaryCare() {
         className="hero-overlay relative min-h-screen flex items-center justify-center"
         style={{ background: "transparent" }}
       >
-        <h1 className="sr-only">Direct Primary Care Colorado Springs — Unlimited Visits, No Copays, $100/Month DPC Membership</h1>
+        <h1 className="sr-only">Direct Primary Care Colorado Springs — Unlimited Visits, No Copays, {usd(clinicFacts.dpc.individualMonthly)}/Month DPC Membership</h1>
         <div className="container mx-auto px-5 lg:px-8 z-10 py-32 pt-40">
 
           <div className="text-center mb-16">
@@ -318,9 +319,9 @@ export default function DirectPrimaryCare() {
             </h2>
             <div className="grid md:grid-cols-3 gap-6">
               {[
-                { title: "Individual", desc: "Single member", price: "$100", suffix: "/month", extra: null },
-                { title: "Couples", desc: "2 individuals under the same household", price: "$180", suffix: "/month", extra: null },
-                { title: "Family", desc: "Up to 6 members", price: "+$60", suffix: "/child", extra: "over age 2" },
+                { title: "Individual", desc: "Single member", price: usd(clinicFacts.dpc.individualMonthly), suffix: "/month", extra: null },
+                { title: "Couples", desc: "2 individuals under the same household", price: usd(clinicFacts.dpc.couplesMonthly), suffix: "/month", extra: null },
+                { title: "Family", desc: "Up to 6 members", price: `+${usd(clinicFacts.dpc.childAddOnMonthly)}`, suffix: "/child", extra: `over age ${clinicFacts.dpc.childAgeMin}` },
               ].map((plan, index) => (
                 <div
                   key={index}
@@ -337,7 +338,7 @@ export default function DirectPrimaryCare() {
               ))}
             </div>
             <p className="text-center text-sm mt-6" style={{ color: "hsl(210, 25%, 60%)" }}>
-              One-time $50 registration fee per household for new members.
+              One-time {usd(clinicFacts.dpc.registrationFee)} registration fee per household for new members.
             </p>
             <div className="text-center mt-8">
               <a
@@ -474,13 +475,13 @@ export default function DirectPrimaryCare() {
 
           <div className="text-center mb-8">
             <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-6">
-              <a href="tel:+17198244716" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+              <a href={`tel:${clinicFacts.contact.phoneTel}`} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                 <Phone className="w-5 h-5" style={{ color: "hsl(177, 70%, 59%)" }} />
-                <span style={{ color: "hsl(0, 0%, 92%)" }}>(719) 824-4716</span>
+                <span style={{ color: "hsl(0, 0%, 92%)" }}>{clinicFacts.contact.phone}</span>
               </a>
-              <a href="mailto:dpc@coshealthcollective.com" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+              <a href={`mailto:${clinicFacts.contact.email}`} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                 <Mail className="w-5 h-5" style={{ color: "hsl(177, 70%, 59%)" }} />
-                <span style={{ color: "hsl(0, 0%, 92%)" }}>dpc@coshealthcollective.com</span>
+                <span style={{ color: "hsl(0, 0%, 92%)" }}>{clinicFacts.contact.email}</span>
               </a>
             </div>
             <div className="flex items-center justify-center gap-4 mb-8">

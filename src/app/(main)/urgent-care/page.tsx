@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Stethoscope, CheckCircle, AlertTriangle, Phone, Mail, ArrowLeft } from "lucide-react";
+import { clinicFacts, usd } from "@/lib/clinicFacts";
+
+const { telehealth, inPerson } = clinicFacts.urgentCare;
 
 export const metadata: Metadata = {
-  title: "Urgent Care Colorado Springs | Telehealth $85, In-Person $115",
-  description: "Skip the ER. Urgent care and telehealth visits in Colorado Springs for UTIs, strep, flu, COVID, lacerations, infections, and minor injuries. Flat rate pricing: $85 telehealth, $115 in-person or in-home. Same-day appointments available.",
+  title: `Urgent Care Colorado Springs | Telehealth ${usd(telehealth)}, In-Person ${usd(inPerson)}`,
+  description: `Skip the ER. Urgent care and telehealth visits in Colorado Springs for UTIs, strep, flu, COVID, lacerations, infections, and minor injuries. Flat rate pricing: ${usd(telehealth)} telehealth, ${usd(inPerson)} in-person or in-home. Same-day appointments available.`,
   keywords: "urgent care Colorado Springs, telehealth Colorado Springs, virtual doctor visit, urgent care near me, same day appointments Colorado Springs, in-home doctor visits",
 };
 
@@ -119,18 +122,18 @@ export default function UrgentCare() {
             <p className="text-lg mb-6" style={{ color: "hsl(0, 0%, 92%)" }}>Schedule your appointment online</p>
             <div className="flex flex-col md:flex-row gap-4 justify-center mb-4">
               <a href="https://colorado-springs-health-collective-direct-primary-care.hint.com/signup/urgentcarevisit" target="_blank" rel="noopener noreferrer" className="px-6 py-3 rounded-full font-semibold" style={{ background: "linear-gradient(135deg, hsl(177, 70%, 59%), hsl(220, 70%, 59%))", color: "hsl(210, 32%, 12%)" }}>
-                Book Now (In Person) $115
+                Book Now (In Person) {usd(inPerson)}
               </a>
               <a href="https://colorado-springs-health-collective-direct-primary-care.hint.com/signup/telehealth" target="_blank" rel="noopener noreferrer" className="px-6 py-3 rounded-full font-semibold" style={{ background: "linear-gradient(135deg, hsl(30, 80%, 60%), hsl(15, 85%, 55%))", color: "hsl(210, 32%, 12%)" }}>
-                Book Now (Telehealth) $85
+                Book Now (Telehealth) {usd(telehealth)}
               </a>
             </div>
             <p className="mb-4" style={{ color: "hsl(0, 0%, 85%)" }}>Or contact us directly</p>
             <div className="flex flex-col md:flex-row gap-4 justify-center">
-              <a href="tel:719-824-4716" className="flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold" style={{ background: "linear-gradient(135deg, hsl(177, 70%, 59%), hsl(220, 70%, 59%))", color: "hsl(210, 32%, 12%)" }}>
-                <Phone className="w-5 h-5" /> (719) 824-4716
+              <a href={`tel:${clinicFacts.contact.phoneDashed}`} className="flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold" style={{ background: "linear-gradient(135deg, hsl(177, 70%, 59%), hsl(220, 70%, 59%))", color: "hsl(210, 32%, 12%)" }}>
+                <Phone className="w-5 h-5" /> {clinicFacts.contact.phone}
               </a>
-              <a href="mailto:dpc@coshealthcollective.com" className="flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold" style={{ background: "linear-gradient(135deg, hsl(30, 80%, 60%), hsl(15, 85%, 55%))", color: "hsl(210, 32%, 12%)" }}>
+              <a href={`mailto:${clinicFacts.contact.email}`} className="flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold" style={{ background: "linear-gradient(135deg, hsl(30, 80%, 60%), hsl(15, 85%, 55%))", color: "hsl(210, 32%, 12%)" }}>
                 <Mail className="w-5 h-5" /> Email Us
               </a>
             </div>
