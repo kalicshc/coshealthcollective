@@ -134,6 +134,7 @@ function SymptomRow({
   const answered = score !== undefined;
   return (
     <div
+      data-symptom-row={itemId}
       className={`rounded-2xl border px-4 py-3 sm:py-3.5 transition-all duration-150 ${
         answered
           ? "border-fuchsia-300/15 bg-fuchsia-400/[0.04]"
@@ -305,7 +306,38 @@ export default function WomensHormonePathway() {
   }, [scores]);
 
   function setScore(itemId: number, value: GreeneScore) {
-    setScores((prev) => ({ ...prev, [itemId]: value }));
+    setScores((prev) => {
+      const next = { ...prev, [itemId]: value };
+
+      // Smooth-scroll to the next unanswered row in the same section.
+      // We only run this on the section steps. If everything in the section
+      // is now answered, scroll to the section's continue button instead.
+      if (step === "section1" || step === "section2" || step === "section3") {
+        const ids = SECTION_IDS[step];
+        const currentIndex = ids.indexOf(itemId);
+        const nextUnansweredId = ids
+          .slice(currentIndex + 1)
+          .find((id) => next[id] === undefined)
+          ?? ids.find((id) => next[id] === undefined);
+
+        const target: string = nextUnansweredId !== undefined
+          ? `[data-symptom-row="${nextUnansweredId}"]`
+          : `[data-section-advance="true"]`;
+
+        // Wait one frame so the just-clicked row finishes its color transition
+        // and React commits the state update before we measure positions.
+        window.requestAnimationFrame(() => {
+          window.requestAnimationFrame(() => {
+            document.querySelector(target)?.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+          });
+        });
+      }
+
+      return next;
+    });
   }
 
   function isSectionComplete(sec: SectionKey) {
@@ -595,6 +627,7 @@ export default function WomensHormonePathway() {
                     </span>
                     <button
                       type="button"
+                      data-section-advance="true"
                       onClick={() => advanceSection(step as SectionKey)}
                       disabled={!complete}
                       className="rounded-full px-6 py-2.5 text-sm font-semibold text-white transition disabled:cursor-not-allowed disabled:opacity-30 hover:opacity-90"
