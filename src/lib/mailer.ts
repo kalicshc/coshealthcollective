@@ -3,6 +3,10 @@ import nodemailer from "nodemailer";
 const EMAIL_USER = (process.env.EMAIL_USER ?? "").trim();
 const EMAIL_PASS = (process.env.EMAIL_PASS ?? "").trim();
 const NOTIFICATION_EMAIL = (process.env.NOTIFICATION_EMAIL ?? "dpc@coshealthcollective.com").trim();
+const NOTIFICATION_EMAILS = (process.env.NOTIFICATION_EMAILS ?? NOTIFICATION_EMAIL)
+  .split(",")
+  .map((email) => email.trim())
+  .filter(Boolean);
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -15,7 +19,7 @@ const transporter = nodemailer.createTransport({
 export async function sendNotification(subject: string, html: string) {
   await transporter.sendMail({
     from: `"CSHC Dashboard" <${EMAIL_USER}>`,
-    to: NOTIFICATION_EMAIL,
+    to: NOTIFICATION_EMAILS,
     subject,
     html,
   });

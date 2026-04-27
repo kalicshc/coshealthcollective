@@ -644,11 +644,11 @@ export default function WomensHormonePathway() {
                       {result.severityLabel}
                     </span>
                   </div>
-                  {result.totalScore > 12 && (
-                    <p className="mt-3 text-xs text-slate-400">
-                      Scores above 12 typically indicate a hormone deficiency pattern worth evaluating.
-                    </p>
-                  )}
+                  <p className="mt-3 text-xs text-slate-400">
+                    {result.totalScore > 12
+                      ? "Scores above 12 typically indicate a hormone deficiency pattern worth evaluating."
+                      : "A lower score doesn't rule out a hormone issue. Symptoms often appear before scores do, and labs catch what a self-report can't."}
+                  </p>
                 </div>
               </div>
 

@@ -9,11 +9,15 @@ export async function POST(req: NextRequest) {
   const data = await req.json();
 
   const fullName = `${data.firstName ?? ""} ${data.lastName ?? ""}`.trim();
+  const primaryConcerns =
+    data.question?.trim()
+    || data.mostBothersome?.trim()
+    || "Completed men's hormone quiz";
 
   // ── Send to backend platform ─────────────────────────────────────────────
   if (BACKEND) {
     try {
-      await fetch(`${BACKEND}/api/hormone/intake`, {
+      const backendRes = await fetch(`${BACKEND}/api/hormone/intake`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -24,7 +28,7 @@ export async function POST(req: NextRequest) {
           dateOfBirth: "1900-01-01",
           sex: "male",
           serviceInterest: "HORMONE_MENS_QUIZ",
-          primaryConcerns: data.question ?? "",
+          primaryConcerns,
           currentMedications: "",
           heardAboutUs: "",
           consentToContact: true,
@@ -35,10 +39,14 @@ export async function POST(req: NextRequest) {
           symptomLabels: Array.isArray(data.symptomLabels) ? data.symptomLabels.join(", ") : "",
           mostBothersome: data.mostBothersome ?? "",
           question: data.question ?? "",
+          interest: "Men's Hormone Quiz",
         }),
       });
-    } catch {
-      // non-blocking
+      if (!backendRes.ok) {
+        console.error("Men's hormone quiz backend save failed:", backendRes.status, await backendRes.text());
+      }
+    } catch (err) {
+      console.error("Men's hormone quiz backend save failed:", err);
     }
   }
 

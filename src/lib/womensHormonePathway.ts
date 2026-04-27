@@ -108,7 +108,7 @@ export function scoreGreene(scores: GreeneScores): GreeneResult {
 
   let severity: SeverityLevel;
   let severityLabel: string;
-  if (totalScore <= 12) { severity = "low"; severityLabel = "Below Threshold"; }
+  if (totalScore <= 12) { severity = "low"; severityLabel = "Mild"; }
   else if (totalScore <= 25) { severity = "moderate"; severityLabel = "Moderate"; }
   else if (totalScore <= 40) { severity = "significant"; severityLabel = "Significant"; }
   else { severity = "severe"; severityLabel = "Severe"; }
@@ -135,7 +135,7 @@ export function scoreGreene(scores: GreeneScores): GreeneResult {
   let interpretation: string;
   if (totalScore <= 12) {
     interpretation =
-      "Your total score falls below the clinical threshold for hormone deficiency. That doesn't mean symptoms aren't real — it means a different conversation may be right for you. If something has shifted, that's worth exploring.";
+      "Your total score is on the lower end of the Greene scale. The threshold is a guide, not a hard line — questionnaires miss things that labs and a real conversation catch. If something feels off, that's worth taking seriously, and a consult is still the right next step.";
   } else if (primaryHormone === "combination") {
     const parts = [
       progSig && "progesterone",

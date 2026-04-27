@@ -46,11 +46,15 @@ export async function POST(req: NextRequest) {
   const progPct: number = data.progesteronePct ?? 0;
   const estrPct: number = data.estrogenPct ?? 0;
   const testPct: number = data.testosteronePct ?? 0;
+  const primaryConcerns =
+    data.question?.trim()
+    || data.mostBothersome?.trim()
+    || "Completed women's hormone quiz";
 
   // ── Send to backend platform ─────────────────────────────────────────────
   if (BACKEND) {
     try {
-      await fetch(`${BACKEND}/api/hormone/intake`, {
+      const backendRes = await fetch(`${BACKEND}/api/hormone/intake`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -61,7 +65,7 @@ export async function POST(req: NextRequest) {
           dateOfBirth: "1900-01-01",
           sex: "female",
           serviceInterest: "HORMONE_WOMENS_QUIZ",
-          primaryConcerns: data.question ?? "",
+          primaryConcerns,
           currentMedications: "",
           heardAboutUs: "",
           consentToContact: true,
@@ -75,10 +79,15 @@ export async function POST(req: NextRequest) {
           primaryPattern: data.primaryHormone ?? "",
           mostBothersome: data.mostBothersome ?? "",
           question: data.question ?? "",
+          interest: "Women's Hormone Quiz",
+          scores: data.scores ?? {},
         }),
       });
-    } catch {
-      // non-blocking
+      if (!backendRes.ok) {
+        console.error("Women's hormone quiz backend save failed:", backendRes.status, await backendRes.text());
+      }
+    } catch (err) {
+      console.error("Women's hormone quiz backend save failed:", err);
     }
   }
 
@@ -109,7 +118,7 @@ export async function POST(req: NextRequest) {
     const firstName = data.firstName ?? "there";
 
     const severityContext: Record<string, string> = {
-      low: "Your total score falls below the clinical threshold for hormone deficiency. That doesn't mean symptoms aren't real — it means a different conversation may be warranted.",
+      low: "Your total score is on the lower end of the Greene scale, but a score is just one signal. Symptoms often show up before the questionnaire does, and labs can reveal what a self-report can't. A consult is still worth having — we'll look at the full picture, not just a number.",
       moderate: "Your score suggests moderate hormone involvement. This is a meaningful signal that a full evaluation is worth having.",
       significant: "Your score reflects a significant hormone deficiency pattern. This level of symptom burden responds well to treatment.",
       severe: "Your score reflects a severe hormone deficiency pattern with significant quality-of-life impact. This is exactly the kind of picture that responds to personalized hormone care.",
