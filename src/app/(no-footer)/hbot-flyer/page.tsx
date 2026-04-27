@@ -1,0 +1,330 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import QRCode from "qrcode";
+import { clinicFacts } from "@/lib/clinicFacts";
+
+const SIGNUP_URL = "https://coshealthcollective.com/hbot-25";
+
+export default function HbotFlyer() {
+  const qrRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    if (qrRef.current) {
+      QRCode.toCanvas(qrRef.current, SIGNUP_URL, {
+        width: 200,
+        margin: 0,
+        color: { dark: "#0a0e14", light: "#ffffff" },
+        errorCorrectionLevel: "H",
+      });
+    }
+  }, []);
+
+  return (
+    <div className="hf-shell">
+      <style>{`
+        @media print {
+          @page { size: 5in 7in; margin: 0; }
+          html, body { print-color-adjust: exact; -webkit-print-color-adjust: exact; margin: 0 !important; padding: 0 !important; }
+          .no-print { display: none !important; }
+          .hf-shell { background: white !important; padding: 0 !important; min-height: auto !important; }
+          .hf-preview-label { display: none !important; }
+        }
+
+        .hf-shell {
+          background: #0a0e14;
+          min-height: 100vh;
+          padding: 2.5rem 1rem 5rem;
+          font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .hf-preview-label {
+          color: #4a5568; font-size: 11px; font-weight: 600;
+          letter-spacing: 2.5px; text-transform: uppercase;
+          margin-bottom: 0.8rem;
+        }
+        .hf-print-btn {
+          background: linear-gradient(135deg, #4fd1c7, #63b3ed);
+          color: #0a0e14; border: none; padding: 0.7rem 1.6rem;
+          border-radius: 8px; font-weight: 700; font-size: 0.95rem;
+          cursor: pointer; margin-bottom: 1.5rem;
+          box-shadow: 0 6px 22px rgba(79,209,199,0.35);
+        }
+
+        /* ─── Page ──────────────────────────────────────────────── */
+        .hf-page {
+          width: 5in; height: 7in;
+          position: relative; overflow: hidden;
+          background:
+            radial-gradient(ellipse 90% 55% at 50% 0%, rgba(79,209,199,0.20) 0%, rgba(99,179,237,0.12) 35%, transparent 70%),
+            radial-gradient(ellipse 110% 60% at 50% 105%, rgba(167,139,250,0.18) 0%, rgba(79,209,199,0.10) 30%, transparent 65%),
+            linear-gradient(180deg, #0a0e14 0%, #0f1622 35%, #131a28 65%, #0a0e14 100%);
+          box-shadow: 0 14px 60px rgba(0,0,0,0.55);
+        }
+
+        /* Subtle grid overlay (matches /hyperbaric clinical aesthetic) */
+        .hf-grid {
+          position: absolute; inset: 0;
+          background-image:
+            linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+          background-size: 0.32in 0.32in;
+          mask-image: linear-gradient(180deg, rgba(0,0,0,0.85), transparent 95%);
+          -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0.85), transparent 95%);
+          pointer-events: none;
+        }
+        .hf-glow-tl, .hf-glow-br {
+          position: absolute; border-radius: 50%; filter: blur(60px); pointer-events: none;
+        }
+        .hf-glow-tl { top: -1.2in; left: -1in; width: 3.2in; height: 3.2in; background: radial-gradient(circle, rgba(79,209,199,0.4), transparent 70%); }
+        .hf-glow-br { bottom: -1.2in; right: -1in; width: 3.6in; height: 3.6in; background: radial-gradient(circle, rgba(99,179,237,0.32), transparent 70%); }
+
+        .hf-content {
+          position: relative; z-index: 5;
+          width: 100%; height: 100%;
+          padding: 0.28in 0.4in 0.22in 0.4in;
+          display: flex; flex-direction: column;
+          align-items: center;
+        }
+
+        /* ─── Top lockup: logo + Hyperbaric Oxygen Therapy ───────── */
+        .hf-lockup {
+          display: flex; align-items: center; justify-content: center;
+          gap: 0.12in; margin-bottom: 0.14in;
+        }
+        .hf-lockup-logo-wrap { position: relative; flex-shrink: 0; display: inline-block; }
+        .hf-lockup-logo-glow {
+          position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+          width: 0.95in; height: 0.95in;
+          background: radial-gradient(circle, rgba(79,209,199,0.5) 0%, rgba(99,179,237,0.32) 35%, transparent 72%);
+          border-radius: 50%; filter: blur(12px); z-index: 0;
+        }
+        .hf-lockup-logo {
+          position: relative; z-index: 1;
+          width: 0.6in; height: auto; display: block;
+          filter: drop-shadow(0 0 8px rgba(79,209,199,0.5));
+        }
+        .hf-lockup-text {
+          font-size: 18pt; font-weight: 900;
+          line-height: 1.0;
+          letter-spacing: -0.01em;
+          text-align: left;
+          background: linear-gradient(180deg, #ffffff 0%, #e3faf6 35%, #93e6dc 75%, #4fd1c7 100%);
+          -webkit-background-clip: text; background-clip: text;
+          -webkit-text-fill-color: transparent;
+          filter:
+            drop-shadow(0 1px 0 rgba(255,255,255,0.5))
+            drop-shadow(0 0 14px rgba(79,209,199,0.45))
+            drop-shadow(0 4px 10px rgba(0,0,0,0.55));
+        }
+
+        /* ─── Headline stack ──────────────────────────────────────── */
+        .hf-eyebrow {
+          font-size: 8.5pt; font-weight: 800;
+          color: rgba(186,209,232,0.85);
+          letter-spacing: 3.5px; text-transform: uppercase;
+          margin: 0 0 0.02in 0;
+        }
+        .hf-headline-svg {
+          display: block;
+          width: 3.1in; height: auto;
+          overflow: visible;
+          margin: 0 auto 0.02in auto;
+        }
+        .hf-subhead {
+          font-size: 14pt; font-weight: 800;
+          color: white; line-height: 1.15;
+          margin: 0 0 0.06in 0;
+          text-align: center;
+          text-shadow: 0 2px 18px rgba(0,0,0,0.55);
+          width: 100%;
+        }
+        .hf-tag-teal {
+          font-size: 9pt; font-weight: 700;
+          color: #5fe0d3;
+          margin: 0 0 0.05in 0;
+        }
+        .hf-blurb {
+          font-size: 8pt; font-weight: 400;
+          color: rgba(255,255,255,0.75);
+          line-height: 1.35; margin: 0 0 0.1in 0;
+          max-width: 3.8in;
+        }
+        .hf-blurb strong { color: white; font-weight: 800; }
+
+        /* ─── Scan card ───────────────────────────────────────────── */
+        .hf-scan {
+          position: relative;
+          background: rgba(255,255,255,0.97);
+          border-radius: 14px;
+          padding: 0.13in 0.16in;
+          display: flex; align-items: center; gap: 0.16in;
+          box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+          width: 100%;
+        }
+        .hf-scan::before {
+          content: ''; position: absolute; inset: -2.5px;
+          border-radius: 16px; z-index: -1;
+          background: linear-gradient(135deg, #4fd1c7 0%, #63b3ed 50%, #a78bfa 100%);
+        }
+        .hf-scan-info { flex: 1; display: flex; flex-direction: column; gap: 0.04in; min-width: 0; }
+        .hf-scan-eyebrow {
+          font-size: 7.5pt; font-weight: 800;
+          color: #4a5568; letter-spacing: 1.5px;
+          text-transform: uppercase;
+        }
+        .hf-scan-cta {
+          font-size: 14pt; font-weight: 800;
+          color: #0a0e14; line-height: 1.1;
+          letter-spacing: -0.01em;
+        }
+        .hf-scan-url {
+          font-size: 8.5pt; font-weight: 600;
+          color: #2d3748; margin-top: 0.04in;
+          word-break: break-all;
+        }
+        .hf-qr-wrap {
+          background: white; border-radius: 8px;
+          padding: 0.05in; flex-shrink: 0;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.08) inset;
+        }
+        .hf-qr { display: block; width: 1.15in; height: 1.15in; }
+
+        /* ─── Footer ──────────────────────────────────────────────── */
+        .hf-footer {
+          margin-top: auto; padding-top: 0.16in;
+          display: flex; flex-direction: column; align-items: center; gap: 0.04in;
+          width: 100%;
+          position: relative;
+        }
+        .hf-footer::before {
+          content: '';
+          position: absolute; top: 0; left: 15%; right: 15%; height: 1px;
+          background: linear-gradient(90deg, transparent, rgba(79,209,199,0.45), rgba(99,179,237,0.45), transparent);
+        }
+        .hf-footer-url {
+          font-size: 13pt; font-weight: 800;
+          background: linear-gradient(135deg, #4fd1c7, #63b3ed);
+          -webkit-background-clip: text; background-clip: text;
+          -webkit-text-fill-color: transparent;
+          letter-spacing: 0.01em;
+        }
+        .hf-footer-loc {
+          font-size: 8pt; font-weight: 500;
+          color: rgba(255,255,255,0.55);
+          letter-spacing: 1.4px; text-transform: uppercase;
+        }
+      `}</style>
+
+      <button onClick={() => window.print()} className="hf-print-btn no-print">Save as PDF</button>
+      <div className="hf-preview-label no-print">5″ × 7″ HBOT Early-Access Flyer</div>
+
+      <div className="hf-page">
+        <div className="hf-grid" />
+        <div className="hf-glow-tl" />
+        <div className="hf-glow-br" />
+
+        <div className="hf-content">
+          {/* Logo + Hyperbaric Oxygen Therapy lockup */}
+          <div className="hf-lockup">
+            <div className="hf-lockup-logo-wrap">
+              <div className="hf-lockup-logo-glow" />
+              <img src="/logo.png" alt="Colorado Springs Health Collective" className="hf-lockup-logo" />
+            </div>
+            <div className="hf-lockup-text">
+              Hyperbaric Oxygen<br />Therapy
+            </div>
+          </div>
+
+          {/* Eyebrow */}
+          <p className="hf-eyebrow">Early-Access Offer</p>
+
+          {/* Big "25% OFF" — SVG for crisp print */}
+          <svg
+            className="hf-headline-svg"
+            viewBox="0 0 400 130"
+            preserveAspectRatio="xMidYMid meet"
+            xmlns="http://www.w3.org/2000/svg"
+            role="img"
+            aria-label={`${clinicFacts.hbot.earlyAccessDiscountPercent} percent off`}
+          >
+            <defs>
+              <linearGradient id="hbotFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#ffffff" />
+                <stop offset="22%" stopColor="#c5f0eb" />
+                <stop offset="50%" stopColor="#4fd1c7" />
+                <stop offset="78%" stopColor="#5dc5e8" />
+                <stop offset="100%" stopColor="#63b3ed" />
+              </linearGradient>
+              <filter id="hbotShadow" x="-10%" y="-15%" width="120%" height="160%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="3.5" />
+                <feOffset dx="0" dy="6" />
+                <feComponentTransfer>
+                  <feFuncA type="linear" slope="0.55" />
+                </feComponentTransfer>
+                <feMerge>
+                  <feMergeNode />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+            <g filter="url(#hbotShadow)">
+              <text
+                x="200" y="100"
+                textAnchor="middle"
+                fontFamily="Poppins, system-ui, -apple-system, sans-serif"
+                fontWeight="900"
+                fontSize="98"
+                letterSpacing="-3"
+                fill="#0a0e14"
+                transform="translate(0, 5)"
+              >
+                {clinicFacts.hbot.earlyAccessDiscountPercent}% OFF
+              </text>
+              <text
+                x="200" y="100"
+                textAnchor="middle"
+                fontFamily="Poppins, system-ui, -apple-system, sans-serif"
+                fontWeight="900"
+                fontSize="98"
+                letterSpacing="-3"
+                fill="url(#hbotFill)"
+              >
+                {clinicFacts.hbot.earlyAccessDiscountPercent}% OFF
+              </text>
+            </g>
+          </svg>
+
+          <h2 className="hf-subhead">Your First HBOT Program<br />or Punch Card</h2>
+
+          <p className="hf-tag-teal">Coming {clinicFacts.hbot.openingDate} — Lock In Your Discount Today</p>
+
+          <p className="hf-blurb">
+            We&apos;re opening a clinical-grade <strong>{clinicFacts.hbot.pressure}</strong> hyperbaric chamber in Colorado Springs.
+            Founding-member pricing for waitlist sign-ups — no payment, no commitment.
+          </p>
+
+          {/* Scan card */}
+          <div className="hf-scan">
+            <div className="hf-scan-info">
+              <span className="hf-scan-eyebrow">Scan to claim</span>
+              <span className="hf-scan-cta">Lock in my {clinicFacts.hbot.earlyAccessDiscountPercent}% discount →</span>
+              <span className="hf-scan-url">coshealthcollective.com/hbot-25</span>
+            </div>
+            <div className="hf-qr-wrap">
+              <canvas ref={qrRef} className="hf-qr" />
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="hf-footer">
+            <div className="hf-footer-url">coshealthcollective.com</div>
+            <div className="hf-footer-loc">Colorado Springs, CO</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

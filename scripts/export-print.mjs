@@ -115,6 +115,20 @@ const PRINT_PAGES = [
     description: 'Heart Healthy Guide',
   },
   {
+    name: 'social-flyer',
+    path: '/social-flyer',
+    viewport: { width: 480, height: 672 },   // 5" × 7" portrait
+    printSize: { width: '5in', height: '7in' },
+    description: '5" × 7" Social Media QR Flyer (Instagram + TikTok)',
+  },
+  {
+    name: 'hbot-flyer',
+    path: '/hbot-flyer',
+    viewport: { width: 480, height: 672 },   // 5" × 7" portrait
+    printSize: { width: '5in', height: '7in' },
+    description: '5" × 7" HBOT Early-Access Discount Flyer',
+  },
+  {
     name: 'event-banner',
     path: '/event-banner',
     viewport: { width: 2880, height: 1152 }, // 30" × 12" scaled (half of 60"×24")
