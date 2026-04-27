@@ -1,8 +1,35 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendNotification, sendConfirmation, emailTemplate, formatFields } from "@/lib/mailer";
 
+const BACKEND = process.env.PLATFORM_API_URL ?? "";
+
 export async function POST(req: NextRequest) {
   const data = await req.json();
+
+  // Forward to Railway backend so the signup shows up in the dashboard.
+  // The backend doesn't yet have a /api/free-consult endpoint, so we route
+  // these into the existing DPC inquiries pipeline with clearly labeled
+  // metadata (responseType + notes) — they'll appear in the DPC list with
+  // their actual interest tagged.
+  if (BACKEND) {
+    try {
+      await fetch(`${BACKEND}/api/cos-health-collective/direct-primary-care`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          phone: "",
+          responseType: `Free Consult — ${data.interest}`,
+          notes: `Event signup: $25 enrollment credit. Interested in: ${data.interest}.`,
+          sourcePage: data.sourcePage ?? "/free-consult",
+        }),
+      });
+    } catch {
+      // non-blocking — email still sends
+    }
+  }
 
   try {
     const rows = formatFields({
