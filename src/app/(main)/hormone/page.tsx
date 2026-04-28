@@ -174,15 +174,15 @@ export default function HormonePage() {
 
             <Link
               href="/hormone/womens-health/quiz"
-              className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline"
+              className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline"
               style={{ color: "hsl(331,95%,82%)" }}
             >
               Not sure if this is you? Take the 2-minute hormone quiz <span aria-hidden="true">→</span>
             </Link>
 
-            {/* Subtle credential trust line */}
+            {/* Subtle credential trust line — anchored at the bottom of the hero */}
             <div
-              className="mt-12 inline-flex items-center gap-2.5 text-[11px] font-medium uppercase tracking-[0.18em]"
+              className="mt-20 inline-flex items-center gap-2.5 text-[11px] font-medium uppercase tracking-[0.18em]"
               style={{ color: "hsl(210,18%,62%)" }}
             >
               <Image
