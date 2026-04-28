@@ -347,8 +347,13 @@ export default function WomensHormonePathway() {
   const [barsAnimated, setBarsAnimated] = useState(false);
   const topRef = useRef<HTMLDivElement>(null);
 
-  // Scroll to top on each step change
+  // Scroll to top on each step change (skip the first mount so the page lands at the very top)
+  const isFirstScroll = useRef(true);
   useEffect(() => {
+    if (isFirstScroll.current) {
+      isFirstScroll.current = false;
+      return;
+    }
     const id = window.setTimeout(
       () => topRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }),
       40,
@@ -799,6 +804,16 @@ export default function WomensHormonePathway() {
                   What This Pattern Suggests
                 </p>
                 <p className="mt-3 text-sm leading-7 text-slate-200">{result.interpretation}</p>
+              </div>
+
+              {/* Confounders disclaimer */}
+              <div className="mt-4 rounded-2xl border border-amber-300/15 bg-amber-300/[0.04] p-4">
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-amber-200/80">
+                  Heads up — what this can&apos;t see
+                </p>
+                <p className="mt-2 text-xs leading-6 text-slate-300">
+                  Untreated thyroid disease, primary depression or anxiety, chronic pain conditions like fibromyalgia, and sleep apnea all produce symptoms this quiz can pick up — even when hormones aren&apos;t the actual driver. We always rule these out first with labs and a real conversation before pointing at a hormone.
+                </p>
               </div>
 
               <div className="mt-8 flex justify-end">

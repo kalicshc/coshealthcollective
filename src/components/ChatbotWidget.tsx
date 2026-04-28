@@ -1,9 +1,11 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { usePathname } from "next/navigation";
 import { Send, X } from "lucide-react";
 import Link from "next/link";
+import { RemoveScroll } from "react-remove-scroll";
 import { ALL_CTA_TAGS, ChatCta, getCtaByTag } from "@/lib/chatbotRouting";
 
 const KALI_STYLES = `
@@ -74,7 +76,10 @@ const KALI_STYLES = `
       linear-gradient(180deg, hsla(210, 24%, 12%, 0.985), hsla(210, 26%, 10%, 0.985)) padding-box,
       linear-gradient(135deg, hsla(177, 70%, 59%, 0.85), hsla(45, 90%, 60%, 0.8) 45%, hsla(200, 70%, 59%, 0.85)) border-box;
     border: 1.5px solid transparent;
-    animation: kali-panel-glow 5.2s ease-in-out infinite;
+    box-shadow:
+      0 24px 64px rgba(0, 0, 0, 0.45),
+      0 0 38px hsla(177, 70%, 50%, 0.22),
+      0 0 70px hsla(45, 90%, 55%, 0.10);
   }
   .kali-header {
     background:
@@ -106,7 +111,7 @@ const EMPTY_FORM: InlineFormState = {
 
 const WELCOME_MESSAGE: Message = {
   role: "assistant",
-  content: "Hey! I'm Kali. What's on your mind today?",
+  content: "Hi, I'm Kali. What can I help you with?",
 };
 
 const VALID_CTA_TAGS = new Set<string>(ALL_CTA_TAGS);
@@ -174,6 +179,93 @@ export function ChatbotWidget() {
     service: "General question",
     question: "",
   });
+  const [keyboardOffset, setKeyboardOffset] = useState(0);
+  const [hydrated, setHydrated] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const messagesRef = useRef<HTMLDivElement | null>(null);
+  const initialPathRef = useRef<string | null>(null);
+
+  // Track viewport size — drives the mobile-fullscreen layout
+  useEffect(() => {
+    setMounted(true);
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(max-width: 639px)");
+    const sync = () => setIsMobile(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  // Hydrate persisted convo from sessionStorage on mount (survives page navs, dies on tab close)
+  useEffect(() => {
+    try {
+      const m = sessionStorage.getItem("kali-messages");
+      if (m) {
+        const parsed = JSON.parse(m) as Message[];
+        if (Array.isArray(parsed) && parsed.length > 0) setMessages(parsed);
+      }
+      if (sessionStorage.getItem("kali-open") === "true") setIsOpen(true);
+      const d = sessionStorage.getItem("kali-draft");
+      if (d) setDraft(d);
+    } catch {}
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    try { sessionStorage.setItem("kali-messages", JSON.stringify(messages)); } catch {}
+  }, [messages, hydrated]);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    try { sessionStorage.setItem("kali-open", String(isOpen)); } catch {}
+  }, [isOpen, hydrated]);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    try { sessionStorage.setItem("kali-draft", draft); } catch {}
+  }, [draft, hydrated]);
+
+  // Close Kali on mobile when the route changes (e.g. user taps a link she suggested).
+  // Desktop keeps her open across navigations.
+  useEffect(() => {
+    if (initialPathRef.current === null) {
+      initialPathRef.current = pathname;
+      return;
+    }
+    if (initialPathRef.current === pathname) return;
+    initialPathRef.current = pathname;
+    if (isMobile) setIsOpen(false);
+  }, [pathname, isMobile]);
+
+  // Keep messages pinned to the bottom whenever they grow or the keyboard moves.
+  useEffect(() => {
+    const el = messagesRef.current;
+    if (!el) return;
+    el.scrollTop = el.scrollHeight;
+  }, [messages, keyboardOffset, isOpen]);
+
+  // Track the iOS on-screen keyboard via VisualViewport so the composer can
+  // ride above it. (Body scroll lock is handled by <RemoveScroll>, not here.)
+  useEffect(() => {
+    if (!isOpen || typeof window === "undefined") return;
+    const vv = window.visualViewport;
+    if (!vv) return;
+    const update = () => {
+      const offset = window.innerHeight - vv.height - vv.offsetTop;
+      setKeyboardOffset(Math.max(0, offset));
+    };
+    vv.addEventListener("resize", update);
+    vv.addEventListener("scroll", update);
+    update();
+    return () => {
+      vv.removeEventListener("resize", update);
+      vv.removeEventListener("scroll", update);
+      setKeyboardOffset(0);
+    };
+  }, [isOpen]);
 
   const transcript = useMemo(
     () => messages.filter((message) => message.content.trim()),
@@ -188,6 +280,8 @@ export function ChatbotWidget() {
     setMessages(nextMessages);
     setDraft("");
     setIsSending(true);
+    // Keep keyboard open after send: refocus synchronously before iOS commits the blur
+    textareaRef.current?.focus({ preventScroll: true });
 
     try {
       const res = await fetch("/api/chatbot", {
@@ -303,14 +397,22 @@ export function ChatbotWidget() {
     });
   }
 
-  return (
-    <>
-      <div className="fixed right-4 bottom-4 z-50 sm:right-6 sm:bottom-6">
-        <KaliTriggerButton onClick={() => setIsOpen((open) => !open)} isOpen={isOpen} />
-      </div>
+  const triggerHiddenOnMobile = isMobile && isOpen;
 
-      {isOpen ? (
-        <div className="kali-panel fixed inset-x-3 bottom-20 z-50 flex max-h-[78vh] flex-col overflow-hidden rounded-3xl sm:right-6 sm:bottom-24 sm:left-auto sm:w-[24rem]">
+  const panelNode = isOpen ? (
+    <RemoveScroll enabled={isMobile} forwardProps>
+      <div
+        className={
+          isMobile
+            ? "kali-panel fixed top-0 left-0 right-0 z-[60] flex flex-col overflow-hidden rounded-none"
+            : "kali-panel fixed right-6 bottom-24 w-[24rem] z-[60] flex flex-col overflow-hidden rounded-3xl"
+        }
+        style={
+          isMobile
+            ? { bottom: `${keyboardOffset}px` }
+            : { maxHeight: "78dvh" }
+        }
+      >
           <div className="kali-header relative flex items-center justify-between px-5 py-4">
             <div className="flex items-center gap-3">
               <div className="kali-avatar relative flex h-11 w-11 items-center justify-center rounded-full">
@@ -332,7 +434,7 @@ export function ChatbotWidget() {
             </button>
           </div>
 
-          <div className="min-h-0 flex-1 overflow-y-auto">
+          <div ref={messagesRef} className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
           <div className="px-4 py-4">
             <div className="space-y-3">
               {messages.map((message, index) => (
@@ -506,6 +608,7 @@ export function ChatbotWidget() {
               className="flex items-end gap-2"
             >
               <textarea
+                ref={textareaRef}
                 value={draft}
                 onChange={(event) => setDraft(event.target.value)}
                 onKeyDown={(event) => {
@@ -516,14 +619,17 @@ export function ChatbotWidget() {
                 }}
                 rows={2}
                 placeholder="Ask a question..."
+                enterKeyHint="send"
                 className="min-h-[56px] flex-1 resize-none rounded-2xl border px-4 py-3 text-sm text-white outline-none"
                 style={{
                   background: "hsla(210, 22%, 18%, 0.96)",
                   borderColor: "hsla(0, 0%, 100%, 0.08)",
+                  fontSize: "16px",
                 }}
               />
               <button
                 type="submit"
+                onMouseDown={(e) => e.preventDefault()}
                 disabled={isSending || !draft.trim()}
                 className="flex h-12 w-12 items-center justify-center rounded-2xl disabled:opacity-50"
                 style={{ background: "linear-gradient(135deg, hsl(177, 70%, 55%), hsl(200, 70%, 59%))", color: "hsl(210, 32%, 12%)" }}
@@ -614,8 +720,19 @@ export function ChatbotWidget() {
             )}
           </div>
           </div>
-        </div>
-      ) : null}
+      </div>
+    </RemoveScroll>
+  ) : null;
+
+  return (
+    <>
+      <div
+        className="fixed right-4 bottom-4 z-50 sm:right-6 sm:bottom-6"
+        style={triggerHiddenOnMobile ? { display: "none" } : undefined}
+      >
+        <KaliTriggerButton onClick={() => setIsOpen((open) => !open)} isOpen={isOpen} />
+      </div>
+      {mounted && panelNode ? createPortal(panelNode, document.body) : null}
     </>
   );
 }

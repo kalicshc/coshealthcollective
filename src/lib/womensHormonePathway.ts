@@ -71,6 +71,55 @@ export const SECTION_IDS: Record<SectionKey, readonly number[]> = {
   section3: [19, 20, 21],
 };
 
+// ─── Hormone attribution weights ──────────────────────────────────────────────
+// Each item distributes its severity across all three hormones via a weight
+// vector that sums to 1.0.
+//
+// Calibration: literature-anchored on H-confidence items (palpitations, sleep,
+// anxiety, depression, headaches, joint pain, hot flushes, night sweats, libido)
+// per NAMS 2022, IMS 2019 (Davis), Wright 2024 (musculoskeletal syndrome),
+// Schmidt/Joffe (perimenopausal depression), MacGregor 2018 (estrogen-withdrawal
+// migraine). M/L-confidence items (excitable, fatigue, anhedonia, breathing,
+// crying, irritability) carry a slight clinical lean within the literature's
+// ambiguity range — clinical owner can adjust those rows.
+
+type HormoneWeights = { progesterone: number; estrogen: number; testosterone: number };
+
+export const HORMONE_WEIGHT_MATRIX: Record<number, HormoneWeights> = {
+  // Section 1 — Psychological
+  1:  { progesterone: 0.10, estrogen: 0.85, testosterone: 0.05 }, // palpitations — H (estrogen autonomic)
+  2:  { progesterone: 0.50, estrogen: 0.40, testosterone: 0.10 }, // tense/nervous — M (P-GABA + E-serotonin)
+  3:  { progesterone: 0.55, estrogen: 0.35, testosterone: 0.10 }, // sleep — H (micronized prog RCTs)
+  4:  { progesterone: 0.50, estrogen: 0.40, testosterone: 0.10 }, // excitable — L (clinical lean P)
+  5:  { progesterone: 0.50, estrogen: 0.40, testosterone: 0.10 }, // anxiety/panic — H (P-GABA strongest)
+  6:  { progesterone: 0.20, estrogen: 0.70, testosterone: 0.10 }, // concentration — M (Maki 2019, brain fog estrogen)
+  7:  { progesterone: 0.40, estrogen: 0.45, testosterone: 0.15 }, // fatigue — L (E primary, sleep-via-P, IMS rejects T)
+  8:  { progesterone: 0.30, estrogen: 0.55, testosterone: 0.15 }, // anhedonia — L (E primary)
+  9:  { progesterone: 0.20, estrogen: 0.70, testosterone: 0.10 }, // depression — H (transdermal E2 antidepressant)
+  10: { progesterone: 0.40, estrogen: 0.50, testosterone: 0.10 }, // crying — M (E-serotonin + P-withdrawal)
+  11: { progesterone: 0.40, estrogen: 0.50, testosterone: 0.10 }, // irritability — M
+  // Section 2 — Physical / somatic
+  12: { progesterone: 0.10, estrogen: 0.85, testosterone: 0.05 }, // dizziness — M
+  13: { progesterone: 0.15, estrogen: 0.80, testosterone: 0.05 }, // head pressure — M
+  14: { progesterone: 0.10, estrogen: 0.85, testosterone: 0.05 }, // numbness — M (E paresthesia)
+  15: { progesterone: 0.10, estrogen: 0.85, testosterone: 0.05 }, // headaches — H (estrogen-withdrawal migraine)
+  16: { progesterone: 0.05, estrogen: 0.90, testosterone: 0.05 }, // joint pain — H (Wright 2024 MSK syndrome)
+  17: { progesterone: 0.10, estrogen: 0.85, testosterone: 0.05 }, // hand/foot numbness — M
+  18: { progesterone: 0.35, estrogen: 0.55, testosterone: 0.10 }, // breathing — L (anxiety-driven)
+  // Section 3 — Vasomotor + Sexual
+  19: { progesterone: 0.05, estrogen: 0.92, testosterone: 0.03 }, // hot flushes — H
+  20: { progesterone: 0.10, estrogen: 0.87, testosterone: 0.03 }, // night sweats — H
+  21: { progesterone: 0.10, estrogen: 0.40, testosterone: 0.50 }, // libido — H (T for HSDD; E for GSM)
+};
+
+// Validate weight matrix at module load (rows must sum to ~1.0)
+for (const [id, w] of Object.entries(HORMONE_WEIGHT_MATRIX)) {
+  const sum = w.progesterone + w.estrogen + w.testosterone;
+  if (Math.abs(sum - 1) > 0.001) {
+    throw new Error(`HORMONE_WEIGHT_MATRIX row ${id} sums to ${sum}, expected 1.0`);
+  }
+}
+
 // ─── Result types ─────────────────────────────────────────────────────────────
 
 export type SeverityLevel = "low" | "moderate" | "significant" | "severe";
@@ -80,6 +129,8 @@ export type GreeneResult = {
   progesteroneScore: number;
   estrogenScore: number;
   testosteroneScore: number;
+  // Attribution shares — sum to 100 (or all 0 if user marked nothing).
+  // "Of the hormone-driven symptom load, what share is each hormone responsible for?"
   progesteronePct: number;
   estrogenPct: number;
   testosteronePct: number;
@@ -96,15 +147,34 @@ export type GreeneResult = {
 export function scoreGreene(scores: GreeneScores): GreeneResult {
   const get = (id: number): GreeneScore => (scores[id] ?? 0) as GreeneScore;
 
-  const progesteroneScore = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].reduce((s, id) => s + get(id), 0);
-  const estrogenScore = [12, 13, 14, 15, 16, 17, 18, 19, 20].reduce((s, id) => s + get(id), 0);
-  const testosteroneScore = get(21);
-  const totalScore = progesteroneScore + estrogenScore + testosteroneScore;
+  // Total raw score stays 0–63 (sum of 21 items × 3 max). Severity thresholds
+  // unchanged. Each row of the weight matrix sums to 1.0, so weighted total = raw total.
+  const totalScore = GREENE_ITEMS.reduce((sum, item) => sum + get(item.id), 0);
 
-  // Max scores: progesterone = 33, estrogen = 27, testosterone = 3
-  const progesteronePct = Math.round((progesteroneScore / 33) * 100);
-  const estrogenPct = Math.round((estrogenScore / 27) * 100);
-  const testosteronePct = Math.round((testosteroneScore / 3) * 100);
+  // Weighted hormone scores — each item's severity gets distributed across
+  // all three hormones via its weight vector.
+  let progesteroneScore = 0;
+  let estrogenScore = 0;
+  let testosteroneScore = 0;
+  for (const item of GREENE_ITEMS) {
+    const score = get(item.id);
+    if (score === 0) continue;
+    const w = HORMONE_WEIGHT_MATRIX[item.id];
+    progesteroneScore += score * w.progesterone;
+    estrogenScore += score * w.estrogen;
+    testosteroneScore += score * w.testosterone;
+  }
+
+  // Attribution shares (sum to 100). Round in a way that preserves exact 100.
+  const totalWeighted = progesteroneScore + estrogenScore + testosteroneScore;
+  let progesteronePct = 0;
+  let estrogenPct = 0;
+  let testosteronePct = 0;
+  if (totalWeighted > 0) {
+    progesteronePct = Math.round((progesteroneScore / totalWeighted) * 100);
+    estrogenPct = Math.round((estrogenScore / totalWeighted) * 100);
+    testosteronePct = Math.max(0, 100 - progesteronePct - estrogenPct);
+  }
 
   let severity: SeverityLevel;
   let severityLabel: string;
@@ -113,23 +183,21 @@ export function scoreGreene(scores: GreeneScores): GreeneResult {
   else if (totalScore <= 40) { severity = "significant"; severityLabel = "Significant"; }
   else { severity = "severe"; severityLabel = "Severe"; }
 
-  // Primary hormone pattern — "significant" if ≥33% of subscale max
-  const progSig = progesteronePct >= 33;
-  const estrSig = estrogenPct >= 33;
-  const testSig = testosteronePct >= 33;
-  const sigCount = [progSig, estrSig, testSig].filter(Boolean).length;
-
+  // Primary hormone pattern — leader wins only if it's at least 8 percentage
+  // points ahead of second place. Otherwise it's a combination pattern.
+  // (≥8pt margin reliably distinguishes "lead" from "noise" given integer rounding.)
   let primaryHormone: GreeneResult["primaryHormone"];
   if (totalScore <= 12) {
     primaryHormone = "combination";
-  } else if (sigCount >= 2) {
-    primaryHormone = "combination";
-  } else if (progesteronePct >= estrogenPct && progesteronePct >= testosteronePct) {
-    primaryHormone = "progesterone";
-  } else if (estrogenPct >= testosteronePct) {
-    primaryHormone = "estrogen";
   } else {
-    primaryHormone = "testosterone";
+    const ranked = (
+      [
+        ["progesterone", progesteronePct],
+        ["estrogen", estrogenPct],
+        ["testosterone", testosteronePct],
+      ] as Array<[HormoneType, number]>
+    ).sort((a, b) => b[1] - a[1]);
+    primaryHormone = ranked[0][1] - ranked[1][1] >= 8 ? ranked[0][0] : "combination";
   }
 
   let interpretation: string;
@@ -137,21 +205,22 @@ export function scoreGreene(scores: GreeneScores): GreeneResult {
     interpretation =
       "Your total score is on the lower end of the Greene scale. The threshold is a guide, not a hard line — questionnaires miss things that labs and a real conversation catch. If something feels off, that's worth taking seriously, and a consult is still the right next step.";
   } else if (primaryHormone === "combination") {
+    // List hormones with at least a meaningful share (≥20%) for the copy
     const parts = [
-      progSig && "progesterone",
-      estrSig && "estrogen",
-      testSig && "testosterone",
+      progesteronePct >= 20 && "progesterone",
+      estrogenPct >= 20 && "estrogen",
+      testosteronePct >= 20 && "testosterone",
     ].filter(Boolean).join(", ");
     interpretation = `Your symptoms point to a combination pattern involving ${parts || "multiple hormones"}. This is common — hormones work as a system, not in isolation. A personalized plan typically addresses the dominant driver first while keeping the full picture in view.`;
   } else if (primaryHormone === "progesterone") {
     interpretation =
-      "Your symptoms point most strongly toward progesterone. Often the first hormone to become erratic in perimenopause, its loss drives anxiety, sleep disruption, irritability, and mood instability. Oral micronized progesterone directly addresses this cluster and is typically well-tolerated.";
+      "Your symptoms lean toward progesterone. Often the first hormone to become erratic in perimenopause, its loss is most strongly tied to sleep disruption and anxiety via its calming effect on the nervous system. Oral micronized progesterone directly addresses sleep architecture and anxiety, and is typically well-tolerated.";
   } else if (primaryHormone === "estrogen") {
     interpretation =
-      "Your symptoms point most strongly toward estrogen deficiency. Estrogen loss drives the widest range of symptoms — hot flashes, night sweats, joint pain, brain fog — and carries real long-term effects on cardiovascular and bone health. Estradiol replacement, particularly via a transdermal route, is the most evidence-based approach for this pattern.";
+      "Your symptoms lean toward estrogen. Estrogen loss drives the widest range of symptoms — hot flashes, night sweats, joint pain, brain fog, mood, and headaches — and carries long-term effects on cardiovascular and bone health. Estradiol replacement (typically transdermal patch, gel, or spray) is the most evidence-based approach for this pattern.";
   } else {
     interpretation =
-      "Your most prominent signal is testosterone — the hormone most overlooked in women's care. Testosterone affects libido, sexual sensation, motivation, and sustained energy. It declines gradually with age and sharply after surgical menopause. Testosterone therapy for women has a solid evidence base and is rarely discussed unless you ask.";
+      "Your symptoms lean toward testosterone — the hormone most overlooked in women's care. Testosterone is the only evidence-based therapy for low libido / decreased sexual interest in women, and declines gradually with age and sharply after surgical menopause. We can measure it directly with a simple blood test before deciding whether to add anything.";
   }
 
   // Top symptoms (scored ≥2), sorted highest first

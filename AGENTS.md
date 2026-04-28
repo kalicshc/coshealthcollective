@@ -38,3 +38,28 @@ This is where to add new bot knowledge. **When the user says things like "the bo
 Behavior, not content. The Kali persona, "how to talk" rules, CTA tag list and intent-to-CTA matching, "rules you do not break" (no diagnose, no invent, emergency handling). It imports `KNOWLEDGE_BASE` from `chatbotKnowledge.ts` and embeds it as the bot's primary source of truth.
 
 Touch this file when changing voice/tone, the CTA tag list, or safety rules. NOT for adding new clinic facts.
+
+# Outreach & Media hub (dashboard)
+
+The internal dashboard has an **Outreach & Media** tab (`dashboard/app/outreach/`) that is the home for all marketing and brand design previews — t-shirts, business cards, flyers, and anything else we put in front of patients. **When the user asks you to add, build, or preview a new design (apparel, print, signage, social, swag), it goes here.** Do not create a new ad-hoc page or drop the asset loose in `public/`.
+
+## How it's wired
+
+- **Route:** `dashboard/app/outreach/page.tsx` → renders `<OutreachDashboard />`.
+- **Component:** `dashboard/components/OutreachDashboard.tsx` — auth-gated client component, renders categories with thumbnail cards, click-to-enlarge lightbox, and category filters.
+- **Manifest:** `dashboard/lib/outreachAssets.ts` — single source of truth for what shows up. Each category has a list of `OutreachAsset` entries with `title`, `description`, `image` (or `images: [...]` for multi-side), and optional `status: "draft" | "approved" | "printed" | "ordered"`.
+- **Image storage:** `dashboard/public/outreach/<category>/` — folders already exist for `tshirts`, `business-cards`, `flyers`, `other`.
+- **Top nav:** `dashboard/lib/dashboardNav.ts` — `TOP_NAV_ITEMS` is the shared nav rendered by both `PlatformDashboard` and `OutreachDashboard`. Add new top-level dashboard tabs here.
+
+## Adding a new design preview
+
+1. Save the image into the matching folder in `dashboard/public/outreach/<category>/`. Note: the dashboard is a **separate Next.js app** from `src/`, so its public folder is `dashboard/public/`, NOT the root `public/`.
+2. Add an entry to the matching category in `dashboard/lib/outreachAssets.ts`. `image` paths begin with `/outreach/...` (relative to the dashboard's public root).
+3. If the design has multiple views (front + back, multiple color variants), use `images: [...]` instead of `image` — the lightbox supports left/right navigation between them.
+4. If the design doesn't fit t-shirts / business cards / flyers / other, add a new `OutreachCategory` entry to `OUTREACH_CATEGORIES` (pick an `accent` of `aqua`, `gold`, `rose`, or `cyan`) and create a matching folder under `dashboard/public/outreach/`.
+
+## What does NOT belong here
+
+- Photos used on the public website (those still go in the root `public/images/...` and are referenced by pages under `src/app/`).
+- Chatbot images (`public/images/chatbot/`).
+- Anything user-facing on coshealthcollective.com — the dashboard is internal only.

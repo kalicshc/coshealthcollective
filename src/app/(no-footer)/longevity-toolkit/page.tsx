@@ -16,7 +16,7 @@ export default function LongevityToolkit() {
     const opts = { width: 80, margin: 0, color: { dark: "#1a202c", light: "#ffffff" } };
     if (homepageQrRef.current) QRCode.toCanvas(homepageQrRef.current, "https://coshealthcollective.com", opts);
     if (meetGreetQrRef.current) QRCode.toCanvas(meetGreetQrRef.current, MEET_GREET_URL, opts);
-    if (instagramQrRef.current) QRCode.toCanvas(instagramQrRef.current, "https://instagram.com/coshealthcollective", opts);
+    if (instagramQrRef.current) QRCode.toCanvas(instagramQrRef.current, "https://www.instagram.com/coshealthcollective/", opts);
   }, []);
 
   return (
@@ -254,7 +254,7 @@ export default function LongevityToolkit() {
                     <span className="cta-clickable">coshealthcollective.com</span>
                   </div>
                 </a>
-                <a href="https://instagram.com/coshealthcollective" target="_blank" rel="noopener noreferrer" className="cta-box-link">
+                <a href="https://www.instagram.com/coshealthcollective/" target="_blank" rel="noopener noreferrer" className="cta-box-link">
                   <div className="cta-box">
                     <SiInstagram size={28} className="instagram-icon" />
                     <h3 className="cta-box-title">Follow Us on Instagram</h3>

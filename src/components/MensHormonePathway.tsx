@@ -170,7 +170,12 @@ export default function MensHormonePathway() {
     }
   }, [index, visibleQuestions.length]);
 
+  const isFirstScroll = useRef(true);
   useEffect(() => {
+    if (isFirstScroll.current) {
+      isFirstScroll.current = false;
+      return;
+    }
     const id = window.setTimeout(() => {
       topRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 40);

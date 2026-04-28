@@ -254,6 +254,19 @@ export default function FreeConsultLandingPage() {
         </p>
 
         <FreeConsultForm />
+
+        <Link
+          href="/"
+          className="rounded-full font-semibold hover:opacity-80 transition-opacity"
+          style={{
+            border: "1px solid hsla(177,70%,59%,0.45)",
+            color: "hsl(177,70%,72%)",
+            padding: "0.55rem 1.4rem",
+            fontSize: "clamp(0.78rem, 1.5vw, 0.9rem)",
+          }}
+        >
+          Learn more about CSHC →
+        </Link>
       </div>
     </section>
   );

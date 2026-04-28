@@ -6,6 +6,7 @@ import Image from "next/image";
 import { MapPin, Star, Phone, Mail, ChevronLeft, ChevronRight } from "lucide-react";
 import OurStoryCarousel from "@/components/OurStoryCarousel";
 import PortalPillars from "@/components/PortalPillars";
+import ClinicAccordion from "@/components/ClinicAccordion";
 import { clinicFacts } from "@/lib/clinicFacts";
 
 const GOOGLE_REVIEWS_URL = "https://share.google/A5V615VuXhaDQytso";
@@ -132,7 +133,7 @@ export default function Home() {
       <section className="py-16">
         <div className="container mx-auto px-5 lg:px-8">
           <div className="max-w-5xl mx-auto">
-            <PortalPillars />
+            <ClinicAccordion />
           </div>
         </div>
       </section>
