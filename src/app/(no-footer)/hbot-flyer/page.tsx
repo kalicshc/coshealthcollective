@@ -84,7 +84,7 @@ export default function HbotFlyer() {
         .hf-content {
           position: relative; z-index: 5;
           width: 100%; height: 100%;
-          padding: 0.28in 0.4in 0.22in 0.4in;
+          padding: 0.18in 0.4in 0.12in 0.4in;
           display: flex; flex-direction: column;
           align-items: center;
         }
@@ -92,7 +92,7 @@ export default function HbotFlyer() {
         /* ─── Top lockup: logo + Hyperbaric Oxygen Therapy ───────── */
         .hf-lockup {
           display: flex; align-items: center; justify-content: center;
-          gap: 0.12in; margin-bottom: 0.14in;
+          gap: 0.12in; margin-bottom: 0.08in;
         }
         .hf-lockup-logo-wrap { position: relative; flex-shrink: 0; display: inline-block; }
         .hf-lockup-logo-glow {
@@ -129,16 +129,15 @@ export default function HbotFlyer() {
         }
         .hf-headline-svg {
           display: block;
-          width: 3.1in; height: auto;
+          width: 2.7in; height: auto;
           overflow: visible;
           margin: 0 auto 0.02in auto;
         }
         .hf-subhead {
-          font-size: 14pt; font-weight: 800;
-          color: white; line-height: 1.15;
-          margin: 0 0 0.06in 0;
+          font-size: 13pt; font-weight: 800;
+          color: white; line-height: 1.12;
+          margin: 0 0 0.04in 0;
           text-align: center;
-          text-shadow: 0 2px 18px rgba(0,0,0,0.55);
           width: 100%;
         }
         .hf-tag-teal {
@@ -147,9 +146,9 @@ export default function HbotFlyer() {
           margin: 0 0 0.05in 0;
         }
         .hf-blurb {
-          font-size: 8pt; font-weight: 400;
+          font-size: 7.5pt; font-weight: 400;
           color: rgba(255,255,255,0.75);
-          line-height: 1.35; margin: 0 0 0.1in 0;
+          line-height: 1.3; margin: 0 0 0.07in 0;
           max-width: 3.8in;
         }
         .hf-blurb strong { color: white; font-weight: 800; }
@@ -159,8 +158,8 @@ export default function HbotFlyer() {
           position: relative;
           background: rgba(255,255,255,0.97);
           border-radius: 14px;
-          padding: 0.13in 0.16in;
-          display: flex; align-items: center; gap: 0.16in;
+          padding: 0.1in 0.13in;
+          display: flex; align-items: center; gap: 0.13in;
           box-shadow: 0 12px 32px rgba(0,0,0,0.5);
           width: 100%;
         }
@@ -190,12 +189,12 @@ export default function HbotFlyer() {
           padding: 0.05in; flex-shrink: 0;
           box-shadow: 0 2px 8px rgba(0,0,0,0.08) inset;
         }
-        .hf-qr { display: block; width: 1.15in; height: 1.15in; }
+        .hf-qr { display: block; width: 1.0in; height: 1.0in; }
 
         /* ─── Footer ──────────────────────────────────────────────── */
         .hf-footer {
-          margin-top: auto; padding-top: 0.16in;
-          display: flex; flex-direction: column; align-items: center; gap: 0.04in;
+          margin-top: auto; padding-top: 0.1in;
+          display: flex; flex-direction: column; align-items: center; gap: 0.03in;
           width: 100%;
           position: relative;
         }
@@ -206,9 +205,7 @@ export default function HbotFlyer() {
         }
         .hf-footer-url {
           font-size: 13pt; font-weight: 800;
-          background: linear-gradient(135deg, #4fd1c7, #63b3ed);
-          -webkit-background-clip: text; background-clip: text;
-          -webkit-text-fill-color: transparent;
+          color: #5fe0d3;
           letter-spacing: 0.01em;
         }
         .hf-footer-loc {

@@ -46,3 +46,6 @@ next-env.d.ts
 
 # stray local screenshots / scratch images at repo root
 /Pikes Peak at Sunset Through Fog.png
+
+# generated print artifacts (PDFs/PNGs from scripts/export-*.mjs)
+/print-exports/

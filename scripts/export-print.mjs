@@ -143,6 +143,13 @@ const PRINT_PAGES = [
     description: '17" × 11" Grip Strength Challenge Whiteboard Topper',
   },
   {
+    name: 'grip-strength-tiers',
+    path: '/grip-strength-tiers',
+    viewport: { width: 1632, height: 1056 },  // 17in × 11in landscape at 96 DPI
+    printSize: { width: '17in', height: '11in' },
+    description: '17" × 11" Grip Strength Tier Reference (whiteboard bottom)',
+  },
+  {
     name: 'event-banner',
     path: '/event-banner',
     viewport: { width: 2880, height: 1152 }, // 30" × 12" scaled (half of 60"×24")
@@ -187,6 +194,13 @@ const EXPORT_CSS = `
   [data-next-mark], button[data-nextjs-build-indicator] { display: none !important; }
   body { padding-top: 0 !important; margin-top: 0 !important; }
   body::before { display: none !important; }
+  /* Print-page shells: strip preview padding so the artboard sits at 0,0 */
+  .bc-shell, .gs-shell, .gst-shell, .fc-shell, .pf-shell, .gym-shell,
+  .iv-shell, .mr-shell, .bh-shell, .ev-shell, .lt-shell, .hh-shell,
+  .hbot-shell, .hf-shell, .sf-shell {
+    padding: 0 !important; margin: 0 !important;
+    min-height: auto !important; background: transparent !important;
+  }
   /* Reset zoom-based preview scaling so card renders at real CSS dimensions */
   .bc-zoom-inner, .bc-scale-inner { zoom: 1 !important; }
   .bc-shell { padding: 0 !important; gap: 0 !important; min-height: auto !important; background: transparent !important; }
@@ -232,6 +246,35 @@ async function saveImages(pngBuffer, basePath, formats = ['jpg', 'png']) {
   }
 }
 
+// ─── Render a PNG into a single-page PDF at the given inch size ──────────────
+async function pdfFromPng(browser, pngPath, sizeInches, outPath) {
+  const { readFileSync } = await import('fs');
+  const pngBuffer = readFileSync(pngPath);
+  const dataUrl = `data:image/png;base64,${pngBuffer.toString('base64')}`;
+  const html = `<!DOCTYPE html>
+<html><head><meta charset="utf-8"><style>
+  @page { size: ${sizeInches.width} ${sizeInches.height}; margin: 0; }
+  html, body { margin: 0; padding: 0; background: #fff; }
+  img { display: block; width: ${sizeInches.width}; height: ${sizeInches.height}; }
+</style></head>
+<body><img src="${dataUrl}"></body></html>`;
+  const tab = await browser.newPage();
+  try {
+    await tab.setContent(html, { waitUntil: 'load' });
+    await new Promise(r => setTimeout(r, 250));
+    await tab.pdf({
+      path: outPath,
+      width: sizeInches.width,
+      height: sizeInches.height,
+      margin: { top: 0, right: 0, bottom: 0, left: 0 },
+      printBackground: true,
+      preferCSSPageSize: true,
+    });
+  } finally {
+    await tab.close();
+  }
+}
+
 // ─── Export a single page ────────────────────────────────────────────────────
 async function exportPage(browser, config) {
   const tab = await browser.newPage();
@@ -269,15 +312,12 @@ async function exportPage(browser, config) {
       }
 
       if (config.pdf !== false) {
-        // PDF: one page per clip
+        // PDF: one page per clip. We can't trust tab.pdf({clip})—it ignores
+        // the clip and renders the full DOM as multiple pages. Instead,
+        // re-render each clipped PNG into a fresh single-page PDF.
         for (const clip of config.clips) {
-          await tab.pdf({
-            path: path.join(pageDir, `${clip.name}.pdf`),
-            width: config.printSize.width,
-            height: config.printSize.height,
-            printBackground: true,
-            margin: { top: 0, right: 0, bottom: 0, left: 0 },
-          });
+          const clipPngPath = path.join(pageDir, `${clip.name}.png`);
+          await pdfFromPng(browser, clipPngPath, config.printSize, path.join(pageDir, `${clip.name}.pdf`));
         }
       }
     } else {

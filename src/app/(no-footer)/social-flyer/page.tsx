@@ -91,7 +91,7 @@ export default function SocialFlyer() {
         .sf-content {
           position: relative; z-index: 5;
           width: 100%; height: 100%;
-          padding: 0.28in 0.4in 0.55in 0.4in;
+          padding: 0.22in 0.4in 0.22in 0.4in;
           display: flex; flex-direction: column;
           align-items: center;
         }
@@ -115,11 +115,10 @@ export default function SocialFlyer() {
           filter: drop-shadow(0 0 8px rgba(79,209,199,0.5));
         }
         .sf-eyebrow {
-          font-size: 16pt; font-weight: 900;
-          letter-spacing: 3px; text-transform: uppercase;
-          background: linear-gradient(135deg, #4fd1c7, #63b3ed);
-          -webkit-background-clip: text; background-clip: text;
-          -webkit-text-fill-color: transparent;
+          font-size: 14pt; font-weight: 900;
+          letter-spacing: 2.2px; text-transform: uppercase;
+          color: #5fe0d3;
+          white-space: nowrap;
         }
 
         .sf-headline-wrap {
@@ -135,7 +134,7 @@ export default function SocialFlyer() {
         }
         .sf-headline-svg {
           display: block;
-          height: 1.15in; width: auto;
+          height: 0.95in; width: auto;
           overflow: visible;
         }
         .sf-subhead {
@@ -196,9 +195,9 @@ export default function SocialFlyer() {
           position: relative;
           background: rgba(255,255,255,0.97);
           border-radius: 14px;
-          padding: 0.14in 0.12in 0.12in 0.12in;
+          padding: 0.1in 0.1in 0.09in 0.1in;
           display: flex; flex-direction: column; align-items: center;
-          gap: 0.06in;
+          gap: 0.04in;
           box-shadow: 0 10px 28px rgba(0,0,0,0.45);
           flex: 1; min-width: 0;
         }
@@ -244,27 +243,26 @@ export default function SocialFlyer() {
           box-shadow: 0 2px 8px rgba(0,0,0,0.08) inset;
           margin-top: 0.04in;
         }
-        .sf-qr { display: block; width: 1.15in; height: 1.15in; }
+        .sf-qr { display: block; width: 0.95in; height: 0.95in; }
 
         /* ─── Footer ──────────────────────────────────────────────── */
         .sf-footer {
-          margin-top: auto; padding-top: 0.13in;
-          display: flex; flex-direction: column; align-items: center; gap: 0.03in;
+          margin-top: auto; padding-top: 0.08in;
+          display: flex; flex-direction: column; align-items: center; gap: 0.02in;
           width: 100%;
         }
         .sf-fine-print {
-          font-size: 6.5pt; font-weight: 500;
+          font-size: 6pt; font-weight: 500;
           color: rgba(255,255,255,0.55);
-          line-height: 1.3;
-          margin: 0 0 0.06in 0;
+          line-height: 1.25;
+          margin: 0 0 0.04in 0;
           max-width: 4in;
           text-align: center;
         }
         .sf-footer-url {
           font-size: 11pt; font-weight: 700;
-          background: linear-gradient(135deg, #4fd1c7, #63b3ed);
-          -webkit-background-clip: text; background-clip: text;
-          -webkit-text-fill-color: transparent;
+          color: #5fe0d3;
+          letter-spacing: 0.01em;
         }
         .sf-footer-loc {
           font-size: 8pt; font-weight: 500;

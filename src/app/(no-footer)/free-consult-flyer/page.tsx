@@ -81,7 +81,7 @@ export default function FreeConsultFlyer() {
         .fc-content {
           position: relative; z-index: 5;
           width: 100%; height: 100%;
-          padding: 0.28in 0.4in 0.4in 0.4in;
+          padding: 0.22in 0.4in 0.2in 0.4in;
           display: flex; flex-direction: column;
           align-items: center;
         }
@@ -200,8 +200,8 @@ export default function FreeConsultFlyer() {
 
         /* ─── Footer ──────────────────────────────────────────────── */
         .fc-footer {
-          margin-top: auto; padding-top: 0.16in;
-          display: flex; flex-direction: column; align-items: center; gap: 0.04in;
+          margin-top: auto; padding-top: 0.1in;
+          display: flex; flex-direction: column; align-items: center; gap: 0.03in;
           width: 100%;
           position: relative;
         }
@@ -212,9 +212,7 @@ export default function FreeConsultFlyer() {
         }
         .fc-footer-url {
           font-size: 13pt; font-weight: 800;
-          background: linear-gradient(135deg, #4fd1c7, #63b3ed);
-          -webkit-background-clip: text; background-clip: text;
-          -webkit-text-fill-color: transparent;
+          color: #5fe0d3;
           letter-spacing: 0.01em;
         }
         .fc-footer-loc {
