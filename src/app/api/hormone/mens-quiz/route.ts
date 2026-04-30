@@ -1,12 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendNotification, sendConfirmation, emailTemplate, formatFields } from "@/lib/mailer";
+import { validate } from "@/lib/validateForm";
+import { sendLifeboat } from "@/lib/leadLifeboat";
 
 const BACKEND = process.env.PLATFORM_API_URL ?? "";
 const BOOKING_URL =
   "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-5688330a3b52e266";
 
 export async function POST(req: NextRequest) {
-  const data = await req.json();
+  const data = await req.json().catch(() => ({}));
+
+  const v = validate(data, {
+    firstName: "string",
+    email: "email",
+  });
+  if (!v.ok) {
+    return NextResponse.json({ error: "Invalid form data", details: v.errors }, { status: 400 });
+  }
 
   const fullName = `${data.firstName ?? ""} ${data.lastName ?? ""}`.trim();
   const primaryConcerns =
@@ -43,11 +53,16 @@ export async function POST(req: NextRequest) {
         }),
       });
       if (!backendRes.ok) {
-        console.error("Men's hormone quiz backend save failed:", backendRes.status, await backendRes.text());
+        const bodyText = await backendRes.text().catch(() => "");
+        console.error("Men's hormone quiz backend save failed:", backendRes.status, bodyText);
+        await sendLifeboat("Men's Hormone Quiz", data, `Backend returned HTTP ${backendRes.status}: ${bodyText.slice(0, 500)}`).catch(console.error);
       }
     } catch (err) {
       console.error("Men's hormone quiz backend save failed:", err);
+      await sendLifeboat("Men's Hormone Quiz", data, `Backend fetch threw: ${(err as Error).message}`).catch(console.error);
     }
+  } else {
+    await sendLifeboat("Men's Hormone Quiz", data, "PLATFORM_API_URL is not set").catch(console.error);
   }
 
   // ── Notification email to clinic ─────────────────────────────────────────

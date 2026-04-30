@@ -40,3 +40,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .env*.local
+
+# dashboard is its own repo (github.com:kalicshc/clinic-platform-dashboard)
+/dashboard
+
+# stray local screenshots / scratch images at repo root
+/Pikes Peak at Sunset Through Fog.png

@@ -1,14 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendNotification, sendConfirmation, emailTemplate, formatFields } from "@/lib/mailer";
+import { isEmail, isNonEmptyString } from "@/lib/validateForm";
+import { sendLifeboat } from "@/lib/leadLifeboat";
 
 const BACKEND = process.env.PLATFORM_API_URL ?? "";
 
 export async function POST(req: NextRequest) {
-  const data = await req.json();
+  const data = await req.json().catch(() => ({}));
+
+  // Allow either `name` or `firstName` (some forms send one, some the other).
+  const hasName = isNonEmptyString(data.name) || isNonEmptyString(data.firstName);
+  if (!hasName || !isEmail(data.email)) {
+    return NextResponse.json(
+      { error: "Invalid form data", details: { nameRequired: !hasName, emailValid: isEmail(data.email) } },
+      { status: 400 }
+    );
+  }
 
   if (BACKEND) {
     try {
-      await fetch(`${BACKEND}/api/hbot/book-interest`, {
+      const upstream = await fetch(`${BACKEND}/api/hbot/book-interest`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -21,9 +32,14 @@ export async function POST(req: NextRequest) {
           sourcePage: data.sourcePage ?? "/hyperbaric",
         }),
       });
-    } catch {
-      // non-blocking
+      if (!upstream.ok) {
+        await sendLifeboat("HBOT early access", data, `Backend returned HTTP ${upstream.status}`).catch(console.error);
+      }
+    } catch (err) {
+      await sendLifeboat("HBOT early access", data, `Backend fetch threw: ${(err as Error).message}`).catch(console.error);
     }
+  } else {
+    await sendLifeboat("HBOT early access", data, "PLATFORM_API_URL is not set").catch(console.error);
   }
 
   try {

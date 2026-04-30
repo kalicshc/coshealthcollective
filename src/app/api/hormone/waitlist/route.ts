@@ -1,8 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendNotification, emailTemplate, formatFields } from "@/lib/mailer";
+import { validate } from "@/lib/validateForm";
 
 export async function POST(req: NextRequest) {
-  const data = await req.json();
+  const data = await req.json().catch(() => ({}));
+
+  const v = validate(data, {
+    name: "string",
+    email: "email",
+  });
+  if (!v.ok) {
+    return NextResponse.json({ error: "Invalid form data", details: v.errors }, { status: 400 });
+  }
 
   try {
     const rows = formatFields({

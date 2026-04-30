@@ -1,10 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendNotification, sendConfirmation, emailTemplate, formatFields } from "@/lib/mailer";
+import { validate } from "@/lib/validateForm";
+import { sendLifeboat } from "@/lib/leadLifeboat";
 
 const BACKEND = process.env.PLATFORM_API_URL ?? "";
 
 export async function POST(req: NextRequest) {
-  const data = await req.json();
+  const data = await req.json().catch(() => ({}));
+
+  const v = validate(data, {
+    firstName: "string",
+    lastName: "string",
+    email: "email",
+    interest: "string",
+  });
+  if (!v.ok) {
+    return NextResponse.json({ error: "Invalid form data", details: v.errors }, { status: 400 });
+  }
 
   // Forward to Railway backend so the signup shows up in the dashboard.
   // The backend doesn't yet have a /api/free-consult endpoint, so we route
@@ -13,7 +25,7 @@ export async function POST(req: NextRequest) {
   // their actual interest tagged.
   if (BACKEND) {
     try {
-      await fetch(`${BACKEND}/api/cos-health-collective/direct-primary-care`, {
+      const upstream = await fetch(`${BACKEND}/api/cos-health-collective/direct-primary-care`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -26,9 +38,14 @@ export async function POST(req: NextRequest) {
           sourcePage: data.sourcePage ?? "/free-consult",
         }),
       });
-    } catch {
-      // non-blocking — email still sends
+      if (!upstream.ok) {
+        await sendLifeboat("Free Consult signup", data, `Backend returned HTTP ${upstream.status}`).catch(console.error);
+      }
+    } catch (err) {
+      await sendLifeboat("Free Consult signup", data, `Backend fetch threw: ${(err as Error).message}`).catch(console.error);
     }
+  } else {
+    await sendLifeboat("Free Consult signup", data, "PLATFORM_API_URL is not set").catch(console.error);
   }
 
   try {

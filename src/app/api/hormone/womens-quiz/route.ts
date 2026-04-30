@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendNotification, sendConfirmation, emailTemplate, formatFields } from "@/lib/mailer";
 import { GREENE_ITEMS, HORMONE_INFO, type HormoneType } from "@/lib/womensHormonePathway";
+import { validate } from "@/lib/validateForm";
+import { sendLifeboat } from "@/lib/leadLifeboat";
 
 const BACKEND = process.env.PLATFORM_API_URL ?? "";
 const BOOKING_URL =
@@ -38,7 +40,15 @@ function hormoneBlock(hormone: HormoneType, pct: number): string {
 }
 
 export async function POST(req: NextRequest) {
-  const data = await req.json();
+  const data = await req.json().catch(() => ({}));
+
+  const v = validate(data, {
+    firstName: "string",
+    email: "email",
+  });
+  if (!v.ok) {
+    return NextResponse.json({ error: "Invalid form data", details: v.errors }, { status: 400 });
+  }
 
   const fullName = `${data.firstName ?? ""} ${data.lastName ?? ""}`.trim();
   const scoreLabel = data.totalScore != null ? `${data.totalScore}/63` : "N/A";
@@ -84,11 +94,16 @@ export async function POST(req: NextRequest) {
         }),
       });
       if (!backendRes.ok) {
-        console.error("Women's hormone quiz backend save failed:", backendRes.status, await backendRes.text());
+        const bodyText = await backendRes.text().catch(() => "");
+        console.error("Women's hormone quiz backend save failed:", backendRes.status, bodyText);
+        await sendLifeboat("Women's Hormone Quiz", data, `Backend returned HTTP ${backendRes.status}: ${bodyText.slice(0, 500)}`).catch(console.error);
       }
     } catch (err) {
       console.error("Women's hormone quiz backend save failed:", err);
+      await sendLifeboat("Women's Hormone Quiz", data, `Backend fetch threw: ${(err as Error).message}`).catch(console.error);
     }
+  } else {
+    await sendLifeboat("Women's Hormone Quiz", data, "PLATFORM_API_URL is not set").catch(console.error);
   }
 
   // ── Notification email to clinic ─────────────────────────────────────────

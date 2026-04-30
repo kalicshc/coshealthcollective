@@ -1,14 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendNotification, sendConfirmation, emailTemplate, formatFields } from "@/lib/mailer";
+import { validate } from "@/lib/validateForm";
+import { sendLifeboat } from "@/lib/leadLifeboat";
 
 const BACKEND = process.env.PLATFORM_API_URL ?? "";
 
 export async function POST(req: NextRequest) {
-  const data = await req.json();
+  const data = await req.json().catch(() => ({}));
+
+  const v = validate(data, {
+    firstName: "string",
+    email: "email",
+  });
+  if (!v.ok) {
+    return NextResponse.json({ error: "Invalid form data", details: v.errors }, { status: 400 });
+  }
 
   if (BACKEND) {
     try {
-      await fetch(`${BACKEND}/api/hormone/intake`, {
+      const upstream = await fetch(`${BACKEND}/api/hormone/intake`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -26,9 +36,14 @@ export async function POST(req: NextRequest) {
           sourcePage: data.sourcePage ?? "/hormone",
         }),
       });
-    } catch {
-      // non-blocking
+      if (!upstream.ok) {
+        await sendLifeboat("Hormone intake", data, `Backend returned HTTP ${upstream.status}`).catch(console.error);
+      }
+    } catch (err) {
+      await sendLifeboat("Hormone intake", data, `Backend fetch threw: ${(err as Error).message}`).catch(console.error);
     }
+  } else {
+    await sendLifeboat("Hormone intake", data, "PLATFORM_API_URL is not set").catch(console.error);
   }
 
   try {
