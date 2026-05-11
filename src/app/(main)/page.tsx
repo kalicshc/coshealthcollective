@@ -87,8 +87,11 @@ export default function Home() {
       const el = clinicZoneRef.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
-      // Scrolled past = the entire clinic zone is above the viewport top.
-      setScrolledPastClinic(rect.bottom < 0);
+      // Scrolled past = the TOP of the wave has scrolled above the viewport top.
+      // From that moment on the panel stays open ("anywhere past them"). When
+      // the user scrolls back up enough that the wave is visible again the
+      // hover-driven close behavior returns.
+      setScrolledPastClinic(rect.top < 0);
     }
     window.addEventListener("scroll", check, { passive: true });
     window.addEventListener("resize", check);
