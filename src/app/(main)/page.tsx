@@ -81,7 +81,7 @@ export default function Home() {
       {/* Hero */}
       <section
         id="main-content"
-        className="hero-overlay relative flex items-start justify-center pt-28 pb-20 sm:pt-32 sm:pb-24 lg:pt-48 lg:pb-28"
+        className="hero-overlay relative flex items-start justify-center pt-28 pb-10 sm:pt-32 sm:pb-12 lg:pt-48 lg:pb-16"
         style={{ background: "linear-gradient(to bottom, hsla(210, 32%, 8%, 0.45), hsla(210, 28%, 12%, 0.2) 60%, transparent)" }}
       >
         <div className="container mx-auto px-5 lg:px-8 text-center z-10">
@@ -119,23 +119,16 @@ export default function Home() {
           </div>
 
           <p
-            className="font-semibold mb-4 max-w-2xl mx-auto"
+            className="font-semibold max-w-2xl mx-auto"
             style={{ color: "hsl(0, 0%, 92%)", fontSize: "22px", letterSpacing: "-0.01em" }}
           >
             This is what modern healthcare looks like.
           </p>
-          <p
-            className="font-normal mb-12 max-w-2xl mx-auto leading-relaxed"
-            style={{ color: "hsl(210, 25%, 62%)", fontSize: "17px" }}
-          >
-            Three clinics. One collective. Built for people who know something better has to exist.
-          </p>
         </div>
       </section>
 
-      {/* Three Clinics */}
-      <div className="section-divider" />
-      <section className="py-16">
+      {/* Three Clinics — wave bleeds up into hero on desktop, no divider */}
+      <section className="pt-0 pb-16 lg:-mt-24 relative">
         <div className="container mx-auto px-5 lg:px-8">
           <div className="max-w-5xl mx-auto">
             <div className="hidden lg:block">
