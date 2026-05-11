@@ -98,10 +98,10 @@ export default function Home() {
         Skip to main content
       </a>
 
-      {/* Hero — compact, natural flow */}
+      {/* Hero — compact, natural flow. pt clears the two-row navbar (~100px on desktop). */}
       <section
         id="main-content"
-        className="hero-overlay relative pt-20 pb-2 sm:pt-24 sm:pb-3 lg:pt-12 lg:pb-1"
+        className="hero-overlay relative pt-24 pb-8 sm:pt-28 sm:pb-10 lg:pt-32 lg:pb-12"
         style={{ background: "linear-gradient(to bottom, hsla(210, 32%, 8%, 0.45), hsla(210, 28%, 12%, 0.2) 60%, transparent)" }}
       >
         <div className="container mx-auto px-5 lg:px-8 text-center z-10">
@@ -143,7 +143,7 @@ export default function Home() {
 
       {/* Desktop clinic zone — one hover boundary covering wave + tiles + collapsible panel */}
       <div
-        className="hidden lg:block relative pb-16"
+        className="hidden lg:block relative pb-8"
         onMouseEnter={openPanel}
         onMouseLeave={closePanel}
       >
