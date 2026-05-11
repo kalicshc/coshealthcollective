@@ -24,15 +24,17 @@ export async function POST(req: NextRequest) {
 
   if (BACKEND) {
     try {
-      const upstream = await fetch(`${BACKEND}/api/hbot/question`, {
+      // Backend has a generic HbotContactRequest endpoint at /api/hbot/contact that
+      // persists as SubmissionType.HBOT_CONTACT_MESSAGE — distinct from waitlist
+      // signups in the dashboard inbox. Reshape the question payload to match.
+      const upstream = await fetch(`${BACKEND}/api/hbot/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: `${data.firstName} ${data.lastName ?? ""}`.trim(),
-          firstName: data.firstName,
-          lastName: data.lastName ?? "",
           email: data.email,
-          question: data.question,
+          phone: "Not provided",
+          message: data.question,
           sourcePage: data.sourcePage ?? "/hyperbaric",
         }),
       });
