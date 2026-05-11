@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { MapPin, Star, Phone, Mail, ChevronLeft, ChevronRight } from "lucide-react";
+import { Star, Phone, Mail, ChevronLeft, ChevronRight } from "lucide-react";
 import OurStoryCarousel from "@/components/OurStoryCarousel";
 import PortalPillars from "@/components/PortalPillars";
 import ClinicAccordion from "@/components/ClinicAccordion";
@@ -81,23 +81,23 @@ export default function Home() {
       {/* Hero */}
       <section
         id="main-content"
-        className="hero-overlay relative flex items-start justify-center pt-28 pb-20 sm:pt-32 sm:pb-24 lg:pt-48 lg:pb-20"
+        className="hero-overlay relative flex items-start justify-center pt-20 pb-10 sm:pt-24 sm:pb-12 lg:pt-28 lg:pb-12"
         style={{ background: "linear-gradient(to bottom, hsla(210, 32%, 8%, 0.45), hsla(210, 28%, 12%, 0.2) 60%, transparent)" }}
       >
         <div className="container mx-auto px-5 lg:px-8 text-center z-10">
-          <div className="mb-8 flex justify-center">
+          <div className="mb-5 flex justify-center">
             <Image
               src="/logo-main.png"
               alt="Colorado Springs Health Collective Logo"
-              width={128}
-              height={128}
-              className="w-24 h-24 lg:w-32 lg:h-32 object-contain drop-shadow-2xl"
+              width={96}
+              height={96}
+              className="w-16 h-16 lg:w-20 lg:h-20 object-contain drop-shadow-2xl"
               priority
             />
           </div>
 
           <h1
-            className="text-4xl lg:text-6xl font-bold mb-6 leading-tight"
+            className="text-4xl lg:text-6xl font-bold mb-4 leading-[1.05]"
             style={{ color: "hsl(0, 0%, 100%)", textShadow: "0 2px 8px rgba(0,0,0,0.6)" }}
           >
             <span className="sr-only">Colorado Springs Health Collective — Direct Primary Care, Hormone Therapy &amp; Hyperbaric Oxygen in Colorado Springs, CO. </span>
@@ -112,15 +112,9 @@ export default function Home() {
             </span>
           </h1>
 
-
-          <div className="flex items-center justify-center mb-8">
-            <MapPin className="w-5 h-5 mr-2" style={{ color: "hsl(177, 70%, 59%)" }} />
-            <p className="text-lg" style={{ color: "hsl(210, 25%, 69%)" }}>Colorado Springs, Colorado</p>
-          </div>
-
           <p
             className="font-semibold max-w-2xl mx-auto"
-            style={{ color: "hsl(0, 0%, 92%)", fontSize: "22px", letterSpacing: "-0.01em" }}
+            style={{ color: "hsl(0, 0%, 92%)", fontSize: "20px", letterSpacing: "-0.01em" }}
           >
             This is what modern healthcare looks like.
           </p>
@@ -128,7 +122,7 @@ export default function Home() {
       </section>
 
       {/* Three Clinics — wave bleeds up into hero on desktop, no divider */}
-      <section className="pt-0 pb-16 lg:-mt-12 relative">
+      <section className="pt-0 pb-16 lg:-mt-10 relative">
         <div className="container mx-auto px-5 lg:px-8">
           <div className="max-w-5xl mx-auto">
             <div className="hidden lg:block">

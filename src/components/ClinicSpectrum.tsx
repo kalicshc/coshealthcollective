@@ -19,8 +19,8 @@ const CLINICS: SpectrumClinic[] = [
 
 const NUM_BARS = 96;
 const SIGMA = 0.18;
-const BASE_HEIGHT = 6;
-const PEAK_HEIGHT = 72;
+const BASE_HEIGHT = 8;
+const PEAK_HEIGHT = 86;
 const BASE_BRIGHT = 0.22;
 const PEAK_BRIGHT = 1.0;
 
@@ -108,7 +108,7 @@ export default function ClinicSpectrum({
       <div
         className="relative w-full"
         style={{
-          height: "clamp(170px, 20vw, 220px)",
+          height: "clamp(140px, 16vw, 180px)",
           // dissolve into the page bg on the sides
           WebkitMaskImage:
             "linear-gradient(90deg, transparent 0%, black 5%, black 95%, transparent 100%)",
