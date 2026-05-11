@@ -1,0 +1,25 @@
+{
+  "name": "CSHC Sign-Up",
+  "short_name": "CSHC",
+  "description": "Colorado Springs Health Collective — kiosk sign-up for free consult and HBOT early-access offers.",
+  "start_url": "/free-consult",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#101a25",
+  "theme_color": "#101a25",
+  "icons": [
+    {
+      "src": "/logo-main.png",
+      "type": "image/png",
+      "sizes": "1024x1024",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo-main.png",
+      "type": "image/png",
+      "sizes": "1024x1024",
+      "purpose": "maskable"
+    }
+  ]
+}

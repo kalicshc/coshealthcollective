@@ -6,13 +6,33 @@ import { Phone, Mail, ArrowLeft, CheckCircle, AlertTriangle, Users } from "lucid
 export const metadata: Metadata = {
   title: "How the Flu Shot Works: Safety, Risks & Why You Should Get Vaccinated | Colorado Springs Health Collective",
   description: "Learn how the flu vaccine works to protect you, its proven safety profile, potential risks, and why getting vaccinated each flu season matters for you and your community.",
+  alternates: { canonical: "/blog/flu-shot-guide" },
+  openGraph: {
+    title: "How the Flu Shot Works: Safety, Risks & Why You Should Get Vaccinated",
+    description: "Proven safety profile, potential risks, and why vaccination matters every flu season — Colorado Springs Health Collective.",
+    url: "https://coshealthcollective.com/blog/flu-shot-guide",
+    type: "article",
+  },
 };
 
 const MEET_GREET_URL = "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207";
 
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "How the Flu Shot Works: Safety, Risks & Why You Should Get Vaccinated",
+  description: "Proven safety profile, potential risks, and why vaccination matters every flu season.",
+  datePublished: "2025-12-15",
+  author: { "@type": "Organization", name: "Colorado Springs Health Collective" },
+  publisher: { "@type": "Organization", name: "Colorado Springs Health Collective", url: "https://coshealthcollective.com", logo: { "@type": "ImageObject", url: "https://coshealthcollective.com/logo-main.png" } },
+  mainEntityOfPage: { "@type": "WebPage", "@id": "https://coshealthcollective.com/blog/flu-shot-guide" },
+  image: "https://coshealthcollective.com/blog/flu-shot-hero.jpg",
+};
+
 export default function BlogFluShotGuide() {
   return (
     <div className="min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <section className="relative" style={{ background: "hsl(210, 32%, 8%)" }}>
 
         <div className="relative h-[60vh] min-h-[420px] overflow-hidden">

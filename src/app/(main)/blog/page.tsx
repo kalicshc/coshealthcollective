@@ -10,6 +10,16 @@ export const metadata: Metadata = {
 
 const articles = [
   {
+    slug: "hrt-critical-window-colorado-springs",
+    title: "The Critical Window Hypothesis for HRT: What the Research Actually Shows",
+    description: "An evidence-based look at the timing hypothesis for hormone therapy — what the WHI, ELITE, DOPS, and KEEPS trials found, and where the science remains unsettled.",
+    date: "May 2026",
+    category: "Women's Health",
+    categoryColor: "hsl(330, 70%, 65%)",
+    image: "/blog/hrt-critical-window-hero.jpg",
+    featured: true,
+  },
+  {
     slug: "hyperbaric-oxygen-therapy-colorado-springs",
     title: "Hyperbaric Oxygen Therapy in Colorado Springs: What the Clinical Evidence Shows",
     description: "How HBOT delivers 15× normal oxygen levels to accelerate healing, reduce inflammation, and reverse cellular aging — backed by peer-reviewed research.",
@@ -17,7 +27,7 @@ const articles = [
     category: "HBOT",
     categoryColor: "hsl(177, 70%, 59%)",
     image: "/blog/hbot-hero.jpg",
-    featured: true,
+    featured: false,
   },
   {
     slug: "skiing-longevity",

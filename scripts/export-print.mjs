@@ -45,6 +45,17 @@ const PRINT_PAGES = [
     ],
   },
   {
+    name: 'ac-referral-card',
+    path: '/ac-referral-card',
+    viewport: { width: 360, height: 432 },
+    printSize: { width: '3.75in', height: '2.25in' },
+    description: '3.5" × 2" Activcore Referral Card + 0.125" bleed (Front + Back)',
+    clips: [
+      { name: 'ac-referral-card-front', x: 0, y: 0,   width: 360, height: 216 },
+      { name: 'ac-referral-card-back',  x: 0, y: 216, width: 360, height: 216 },
+    ],
+  },
+  {
     name: 'patient-flyer',
     path: '/patient-flyer',
     viewport: { width: 576, height: 384 },   // 6" × 4" postcard

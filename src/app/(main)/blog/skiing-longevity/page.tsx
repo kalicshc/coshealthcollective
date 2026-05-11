@@ -6,13 +6,33 @@ import { Phone, Mail, ArrowLeft, CheckCircle, Dumbbell } from "lucide-react";
 export const metadata: Metadata = {
   title: "Skiing Into Your 70s: A Colorado Springs Guide to Longevity on the Slopes | Colorado Springs Health Collective",
   description: "Learn how to keep skiing for decades with proper strength training, nutrition, sleep, and recovery. Colorado Springs longevity tips for lifelong skiers.",
+  alternates: { canonical: "/blog/skiing-longevity" },
+  openGraph: {
+    title: "Skiing Into Your 70s: A Colorado Springs Guide to Longevity on the Slopes",
+    description: "Strength training, nutrition, sleep, and recovery for lifelong Colorado skiers.",
+    url: "https://coshealthcollective.com/blog/skiing-longevity",
+    type: "article",
+  },
 };
 
 const MEET_GREET_URL = "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207";
 
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "Skiing Into Your 70s: A Colorado Springs Guide to Longevity on the Slopes",
+  description: "Strength training, nutrition, sleep, and recovery for lifelong skiers in Colorado.",
+  datePublished: "2026-01-15",
+  author: { "@type": "Organization", name: "Colorado Springs Health Collective" },
+  publisher: { "@type": "Organization", name: "Colorado Springs Health Collective", url: "https://coshealthcollective.com", logo: { "@type": "ImageObject", url: "https://coshealthcollective.com/logo-main.png" } },
+  mainEntityOfPage: { "@type": "WebPage", "@id": "https://coshealthcollective.com/blog/skiing-longevity" },
+  image: "https://coshealthcollective.com/blog/skiing-hero.jpg",
+};
+
 export default function BlogSkiingLongevity() {
   return (
     <div className="min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <section className="relative" style={{ background: "hsl(210, 32%, 8%)" }}>
 
         <div className="relative h-[60vh] min-h-[420px] overflow-hidden">

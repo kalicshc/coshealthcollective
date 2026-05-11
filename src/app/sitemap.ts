@@ -32,6 +32,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "/faq", priority: 0.8, changeFrequency: "monthly" },
     { url: "/about", priority: 0.75, changeFrequency: "monthly" },
     { url: "/blog", priority: 0.7, changeFrequency: "weekly" },
+    { url: "/blog/hrt-critical-window-colorado-springs", priority: 0.7, changeFrequency: "monthly" },
+    { url: "/blog/hyperbaric-oxygen-therapy-colorado-springs", priority: 0.7, changeFrequency: "monthly" },
     { url: "/blog/dpc-vs-concierge", priority: 0.65, changeFrequency: "monthly" },
     { url: "/blog/flu-shot-guide", priority: 0.65, changeFrequency: "monthly" },
     { url: "/blog/save-money-healthcare", priority: 0.65, changeFrequency: "monthly" },
@@ -39,9 +41,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "/blog/why-direct-primary-care", priority: 0.65, changeFrequency: "monthly" },
     { url: "/resources", priority: 0.65, changeFrequency: "monthly" },
     { url: "/resources/calculators", priority: 0.65, changeFrequency: "monthly" },
+    { url: "/resources/calculators/breast-cancer-risk", priority: 0.6, changeFrequency: "monthly" },
     { url: "/community-events", priority: 0.6, changeFrequency: "weekly" },
     { url: "/media", priority: 0.6, changeFrequency: "monthly" },
     { url: "/hormone/mens-health/quiz", priority: 0.8, changeFrequency: "monthly" },
+    { url: "/hormone/womens-health/quiz", priority: 0.8, changeFrequency: "monthly" },
   ];
 
   return routes.map(({ url, priority, changeFrequency }) => ({

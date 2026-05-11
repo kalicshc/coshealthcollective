@@ -42,36 +42,34 @@ function EarlyAccessForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-2 w-full max-w-md mx-auto">
-      <div className="flex flex-col sm:flex-row gap-2">
-        <input
-          type="text"
-          placeholder="First name"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-          required
-          className="flex-1 rounded-full px-4 py-2.5 text-base text-center outline-none"
-          style={{
-            background: "hsla(210,22%,18%,0.9)",
-            border: "1px solid hsla(177,70%,59%,0.22)",
-            color: "hsl(0,0%,92%)",
-            textAlign: "center",
-          }}
-        />
-        <input
-          type="text"
-          placeholder="Last name"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-          required
-          className="flex-1 rounded-full px-4 py-2.5 text-base text-center outline-none"
-          style={{
-            background: "hsla(210,22%,18%,0.9)",
-            border: "1px solid hsla(177,70%,59%,0.22)",
-            color: "hsl(0,0%,92%)",
-            textAlign: "center",
-          }}
-        />
-      </div>
+      <input
+        type="text"
+        placeholder="First name"
+        value={firstName}
+        onChange={(e) => setFirstName(e.target.value)}
+        required
+        className="rounded-full px-4 py-2.5 text-base text-center outline-none"
+        style={{
+          background: "hsla(210,22%,18%,0.9)",
+          border: "1px solid hsla(177,70%,59%,0.22)",
+          color: "hsl(0,0%,92%)",
+          textAlign: "center",
+        }}
+      />
+      <input
+        type="text"
+        placeholder="Last name"
+        value={lastName}
+        onChange={(e) => setLastName(e.target.value)}
+        required
+        className="rounded-full px-4 py-2.5 text-base text-center outline-none"
+        style={{
+          background: "hsla(210,22%,18%,0.9)",
+          border: "1px solid hsla(177,70%,59%,0.22)",
+          color: "hsl(0,0%,92%)",
+          textAlign: "center",
+        }}
+      />
       <input
         type="email"
         placeholder="Email address"

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 130" role="img" aria-label="Activcore — Physical Therapy and Performance">
+  <g>
+    <!-- Stylized A mark -->
+    <path d="M40 100 Q22 100 22 80 Q22 55 50 38 Q72 26 92 30 Q108 34 102 50 Q96 64 80 72 Q66 80 60 92 Q55 102 65 104 Q80 105 92 96" fill="none" stroke="#e8443a" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Wordmark -->
+    <text x="140" y="68" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="56" font-weight="800" letter-spacing="2" fill="#ffffff">ACTIVCORE</text>
+    <text x="140" y="100" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="16" font-weight="500" letter-spacing="3.5" fill="#ffffff">PHYSICAL THERAPY &amp; PERFORMANCE</text>
+  </g>
+</svg>

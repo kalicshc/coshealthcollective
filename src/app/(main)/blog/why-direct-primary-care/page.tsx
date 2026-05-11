@@ -6,13 +6,33 @@ import { Phone, Mail, ArrowLeft, Calendar, DollarSign, Clock, MessageCircle, Che
 export const metadata: Metadata = {
   title: "Why Direct Primary Care Is the Future of Health | Colorado Springs Health Collective",
   description: "Discover how Direct Primary Care in Colorado Springs is redefining healthcare: no insurance hoops, no rushed visits, just real care when you need it.",
+  alternates: { canonical: "/blog/why-direct-primary-care" },
+  openGraph: {
+    title: "Why Direct Primary Care Is the Future of Health",
+    description: "No insurance hoops, no rushed visits — how DPC is redefining healthcare in Colorado Springs.",
+    url: "https://coshealthcollective.com/blog/why-direct-primary-care",
+    type: "article",
+  },
 };
 
 const MEET_GREET_URL = "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207";
 
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "Why Direct Primary Care Is the Future of Health (And Why It Matters for You)",
+  description: "No insurance hoops, no rushed visits — how DPC is redefining healthcare in Colorado Springs.",
+  datePublished: "2025-08-15",
+  author: { "@type": "Organization", name: "Colorado Springs Health Collective" },
+  publisher: { "@type": "Organization", name: "Colorado Springs Health Collective", url: "https://coshealthcollective.com", logo: { "@type": "ImageObject", url: "https://coshealthcollective.com/logo-main.png" } },
+  mainEntityOfPage: { "@type": "WebPage", "@id": "https://coshealthcollective.com/blog/why-direct-primary-care" },
+  image: "https://coshealthcollective.com/blog/why-dpc-hero.jpg",
+};
+
 export default function BlogWhyDirectPrimaryCare() {
   return (
     <div className="min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <section className="relative" style={{ background: "hsl(210, 32%, 8%)" }}>
 
         <div className="relative h-[60vh] min-h-[420px] overflow-hidden">

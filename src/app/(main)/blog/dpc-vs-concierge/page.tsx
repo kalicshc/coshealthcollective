@@ -6,6 +6,25 @@ import { Phone, Mail, ArrowLeft, CheckCircle, Users, Briefcase, Heart, Mountain 
 export const metadata: Metadata = {
   title: "Direct Primary Care vs. Concierge Medicine: Colorado Springs Guide | Colorado Springs Health Collective",
   description: "Understanding the differences between Direct Primary Care and concierge medicine in Colorado Springs. Compare costs, services, and which model best fits your healthcare needs.",
+  alternates: { canonical: "/blog/dpc-vs-concierge" },
+  openGraph: {
+    title: "Direct Primary Care vs. Concierge Medicine: Colorado Springs Guide",
+    description: "Compare costs, services, and which healthcare model best fits your life — from Colorado Springs Health Collective.",
+    url: "https://coshealthcollective.com/blog/dpc-vs-concierge",
+    type: "article",
+  },
+};
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "Direct Primary Care vs. Concierge Medicine: Colorado Springs Guide",
+  description: "Compare costs, services, and which healthcare model best fits your life — from Colorado Springs Health Collective.",
+  datePublished: "2025-01-15",
+  author: { "@type": "Organization", name: "Colorado Springs Health Collective" },
+  publisher: { "@type": "Organization", name: "Colorado Springs Health Collective", url: "https://coshealthcollective.com", logo: { "@type": "ImageObject", url: "https://coshealthcollective.com/logo-main.png" } },
+  mainEntityOfPage: { "@type": "WebPage", "@id": "https://coshealthcollective.com/blog/dpc-vs-concierge" },
+  image: "https://coshealthcollective.com/blog/dpc-hero.jpg",
 };
 
 const MEET_GREET_URL = "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207";
@@ -24,6 +43,7 @@ const comparisonData = [
 export default function BlogDpcVsConcierge() {
   return (
     <div className="min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <section className="relative" style={{ background: "hsl(210, 32%, 8%)" }}>
 
         <div className="relative h-[60vh] min-h-[420px] overflow-hidden">

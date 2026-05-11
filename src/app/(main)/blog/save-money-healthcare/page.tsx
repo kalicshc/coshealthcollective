@@ -6,13 +6,33 @@ import { Phone, Mail, ArrowLeft, CheckCircle } from "lucide-react";
 export const metadata: Metadata = {
   title: "How to Save Money on Healthcare: 7 Smart Strategies | Colorado Springs Health Collective",
   description: "Learn practical ways to save money on healthcare—from cash-pay options and discount pharmacies to imaging price shopping and avoiding surprise bills.",
+  alternates: { canonical: "/blog/save-money-healthcare" },
+  openGraph: {
+    title: "How to Save Money on Healthcare: 7 Smart Strategies",
+    description: "Cash-pay options, discount pharmacies, imaging price shopping, and how to avoid surprise bills — Colorado Springs Health Collective.",
+    url: "https://coshealthcollective.com/blog/save-money-healthcare",
+    type: "article",
+  },
 };
 
 const MEET_GREET_URL = "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207";
 
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "How to Save Money on Healthcare: 7 Smart Strategies Most People Don't Know",
+  description: "Cash-pay options, discount pharmacies, imaging price shopping, and how to avoid surprise bills.",
+  datePublished: "2026-02-15",
+  author: { "@type": "Organization", name: "Colorado Springs Health Collective" },
+  publisher: { "@type": "Organization", name: "Colorado Springs Health Collective", url: "https://coshealthcollective.com", logo: { "@type": "ImageObject", url: "https://coshealthcollective.com/logo-main.png" } },
+  mainEntityOfPage: { "@type": "WebPage", "@id": "https://coshealthcollective.com/blog/save-money-healthcare" },
+  image: "https://coshealthcollective.com/blog/save-money-hero.jpg",
+};
+
 export default function BlogSaveMoneyHealthcare() {
   return (
     <div className="min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <section className="relative" style={{ background: "hsl(210, 32%, 8%)" }}>
 
         <div className="relative h-[60vh] min-h-[420px] overflow-hidden">
