@@ -39,3 +39,34 @@ export async function submitHormoneInquiry(data: { firstName: string; lastName: 
 export async function submitFreeConsult(data: { firstName: string; lastName: string; email: string; interest: string }) {
   return post("/api/free-consult", { ...data, sourcePage: "/free-consult" });
 }
+
+type ClinicQuestionPayload = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  question: string;
+  sourcePage: string;
+};
+
+export async function submitClinicQuestion(
+  clinic: "dpc" | "hormone" | "hyperbaric",
+  data: ClinicQuestionPayload
+) {
+  if (clinic === "hormone") {
+    return post("/api/hormone/intake", data);
+  }
+  if (clinic === "hyperbaric") {
+    return post("/api/hbot/question", data);
+  }
+  // DPC's existing inquiry endpoint expects phone/responseType/notes, so adapt the
+  // question into those fields so it lands in the same DPC inbox as other inquiries.
+  return post("/api/cos-health-collective/direct-primary-care", {
+    firstName: data.firstName,
+    lastName: data.lastName,
+    email: data.email,
+    phone: "Not provided",
+    responseType: "email",
+    notes: data.question,
+    sourcePage: data.sourcePage,
+  });
+}

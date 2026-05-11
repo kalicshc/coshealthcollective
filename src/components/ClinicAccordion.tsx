@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import { submitHbotEarlyAccess } from "@/lib/api";
+import ClinicQuestionForm from "@/components/ClinicQuestionForm";
 
 type ClinicKey = "dpc" | "hormone" | "hyperbaric";
 
@@ -412,21 +414,80 @@ function ExploreButton({ clinic }: { clinic: Clinic }) {
   );
 }
 
+function AskCard({ clinic, onClose }: { clinic: Clinic; onClose: () => void }) {
+  return (
+    <div
+      className="rounded-2xl border p-5 sm:p-6 backdrop-blur-sm"
+      style={{
+        borderColor: `${clinic.accent.from}33`,
+        background: "linear-gradient(180deg, hsla(210, 22%, 8%, 0.7), hsla(210, 22%, 6%, 0.7))",
+        boxShadow: `0 0 0 1px ${clinic.accent.from}1f, 0 18px 50px -20px ${clinic.accent.glow}`,
+      }}
+    >
+      <p
+        className="text-[10px] font-bold uppercase tracking-[0.2em] mb-3"
+        style={{ color: clinic.accent.from }}
+      >
+        Ask {clinic.shortName}
+      </p>
+      <ClinicQuestionForm
+        clinicKey={clinic.key}
+        accent={clinic.accent}
+        sourcePage={clinic.learnMoreHref}
+        onClose={onClose}
+      />
+    </div>
+  );
+}
+
+function AskTrigger({ clinic, onClick }: { clinic: Clinic; onClick: () => void }) {
+  return (
+    <div className="mt-3 flex justify-center">
+      <button
+        type="button"
+        onClick={onClick}
+        className="group inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold transition-all duration-200 hover:scale-[1.02] hover:bg-white/[0.04]"
+        style={{
+          borderColor: `${clinic.accent.from}55`,
+          color: "#fff",
+          background: "rgba(255,255,255,0.025)",
+        }}
+      >
+        <span
+          aria-hidden
+          className="inline-flex h-5 w-5 items-center justify-center rounded-full text-[11px] font-black"
+          style={{
+            background: `linear-gradient(135deg, ${clinic.accent.from}, ${clinic.accent.to})`,
+            color: "hsl(210, 32%, 10%)",
+          }}
+        >
+          ?
+        </span>
+        Ask a Question
+      </button>
+    </div>
+  );
+}
+
 function ClinicTile({
   clinic,
   isActive,
   onClick,
+  onMouseEnter,
   layout,
 }: {
   clinic: Clinic;
   isActive: boolean;
   onClick: () => void;
+  onMouseEnter?: () => void;
   layout: "desktop" | "mobile";
 }) {
   const isMobile = layout === "mobile";
   return (
     <button
       type="button"
+      onMouseEnter={onMouseEnter}
+      onFocus={onMouseEnter}
       onClick={onClick}
       aria-pressed={isActive}
       aria-expanded={isMobile ? isActive : undefined}
@@ -515,24 +576,69 @@ function panelDecor(clinic: Clinic): React.CSSProperties {
   };
 }
 
-export default function ClinicAccordion() {
-  const [activeKey, setActiveKey] = useState<ClinicKey>("dpc");
+export default function ClinicAccordion({
+  externalActiveKey,
+  onActiveChange,
+  defaultActiveKey = "dpc",
+  hideTiles = false,
+}: {
+  externalActiveKey?: ClinicKey;
+  onActiveChange?: (key: ClinicKey) => void;
+  defaultActiveKey?: ClinicKey;
+  hideTiles?: boolean;
+} = {}) {
+  const isControlled = externalActiveKey !== undefined;
+  const [internalKey, setInternalKey] = useState<ClinicKey>(defaultActiveKey);
+  const activeKey: ClinicKey = isControlled ? externalActiveKey! : internalKey;
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
+    if (isControlled) {
+      setHydrated(true);
+      return;
+    }
     try {
       const saved = window.sessionStorage.getItem(STORAGE_KEY);
-      if (isClinicKey(saved)) setActiveKey(saved);
+      if (isClinicKey(saved)) setInternalKey(saved);
     } catch {}
     setHydrated(true);
-  }, []);
+  }, [isControlled]);
 
   useEffect(() => {
-    if (!hydrated) return;
+    if (isControlled || !hydrated) return;
     try {
-      window.sessionStorage.setItem(STORAGE_KEY, activeKey);
+      window.sessionStorage.setItem(STORAGE_KEY, internalKey);
     } catch {}
-  }, [activeKey, hydrated]);
+  }, [internalKey, hydrated, isControlled]);
+
+  const setActiveKey = (k: ClinicKey) => {
+    if (!isControlled) setInternalKey(k);
+    onActiveChange?.(k);
+  };
+
+  const router = useRouter();
+  const [asking, setAsking] = useState(false);
+  // Mobile starts fully closed; clicking a tile toggles it open/closed independently
+  // of desktop activeKey (which always has one clinic focused for the spectrum/panel).
+  const [mobileOpenKey, setMobileOpenKey] = useState<ClinicKey | null>(null);
+
+  useEffect(() => {
+    // collapse the ask form whenever the focused clinic changes on either layout
+    setAsking(false);
+  }, [activeKey, mobileOpenKey]);
+
+  const handleDesktopTileClick = (k: ClinicKey, href: string) => {
+    if (isControlled) {
+      router.push(href);
+    } else {
+      setActiveKey(k);
+    }
+  };
+
+  // Mobile tap toggles: tap an open tile to close it, tap a closed one to open it.
+  const handleMobileTileClick = (k: ClinicKey) => {
+    setMobileOpenKey((prev) => (prev === k ? null : k));
+  };
 
   const active = CLINICS.find((c) => c.key === activeKey)!;
 
@@ -582,21 +688,26 @@ export default function ClinicAccordion() {
 
       {/* ─── Desktop: tile row + single detail panel ─────────────────── */}
       <div className="hidden lg:block">
-        <div className="grid grid-cols-3 gap-3">
-          {CLINICS.map((clinic) => (
-            <ClinicTile
-              key={clinic.key}
-              clinic={clinic}
-              isActive={clinic.key === activeKey}
-              onClick={() => setActiveKey(clinic.key)}
-              layout="desktop"
-            />
-          ))}
-        </div>
+        {hideTiles ? null : (
+          <div className="grid grid-cols-3 gap-3">
+            {CLINICS.map((clinic) => (
+              <ClinicTile
+                key={clinic.key}
+                clinic={clinic}
+                isActive={clinic.key === activeKey}
+                onClick={() => handleDesktopTileClick(clinic.key, clinic.learnMoreHref)}
+                onMouseEnter={
+                  isControlled ? () => setActiveKey(clinic.key) : undefined
+                }
+                layout="desktop"
+              />
+            ))}
+          </div>
+        )}
 
         <div
           key={`desktop-${active.key}`}
-          className="relative mt-4 overflow-hidden rounded-3xl border transition-all duration-500 lg:h-[460px]"
+          className={`relative ${hideTiles ? "" : "mt-4"} overflow-hidden rounded-3xl border transition-all duration-500 lg:min-h-[460px]`}
           style={{ padding: "clamp(24px, 4vw, 44px)", ...panelDecor(active) }}
         >
           <span
@@ -611,13 +722,21 @@ export default function ClinicAccordion() {
           />
 
           <div className="relative grid lg:grid-cols-12 gap-12 items-start clinic-panel-fade">
-            <div className="lg:col-span-7 space-y-5">
+            <Link
+              href={active.learnMoreHref}
+              className="lg:col-span-7 space-y-5 block cursor-pointer transition hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 rounded-2xl -m-2 p-2"
+            >
               <PanelHeader clinic={active} layout="desktop" />
               <PanelBody clinic={active} taglineSize="lg" />
-            </div>
+            </Link>
             <div className="lg:col-span-5">
-              <PanelCta clinic={active} />
+              {asking ? (
+                <AskCard clinic={active} onClose={() => setAsking(false)} />
+              ) : (
+                <PanelCta clinic={active} />
+              )}
               <ExploreButton clinic={active} />
+              {asking ? null : <AskTrigger clinic={active} onClick={() => setAsking(true)} />}
             </div>
           </div>
         </div>
@@ -625,18 +744,46 @@ export default function ClinicAccordion() {
 
       {/* ─── Mobile: vertical accordion, each clinic expands inline ────── */}
       <div className="lg:hidden space-y-3">
-        {CLINICS.map((clinic) => {
-          const isActive = clinic.key === activeKey;
+        {hideTiles ? (
+          <div
+            key={`mobile-headless-${active.key}`}
+            className="clinic-mobile-expand relative overflow-hidden rounded-3xl border"
+            style={{ padding: "clamp(20px, 5vw, 28px)", ...panelDecor(active) }}
+          >
+            <span
+              aria-hidden
+              className="pointer-events-none absolute -top-24 -right-16 h-56 w-56 rounded-full opacity-25 blur-3xl"
+              style={{ background: `radial-gradient(circle, ${active.accent.from}, transparent 70%)` }}
+            />
+            <div className="relative space-y-5 clinic-panel-fade">
+              <Link
+                href={active.learnMoreHref}
+                className="block cursor-pointer transition hover:opacity-95 rounded-2xl space-y-5"
+              >
+                <PanelHeader clinic={active} layout="mobile" />
+                <PanelBody clinic={active} taglineSize="md" />
+              </Link>
+              {asking ? (
+                <AskCard clinic={active} onClose={() => setAsking(false)} />
+              ) : (
+                <PanelCta clinic={active} />
+              )}
+              <ExploreButton clinic={active} />
+              {asking ? null : <AskTrigger clinic={active} onClick={() => setAsking(true)} />}
+            </div>
+          </div>
+        ) : CLINICS.map((clinic) => {
+          const isOpen = clinic.key === mobileOpenKey;
           return (
             <div key={clinic.key}>
               <ClinicTile
                 clinic={clinic}
-                isActive={isActive}
-                onClick={() => setActiveKey(clinic.key)}
+                isActive={isOpen}
+                onClick={() => handleMobileTileClick(clinic.key)}
                 layout="mobile"
               />
 
-              {isActive ? (
+              {isOpen ? (
                 <div
                   key={`mobile-${clinic.key}`}
                   className="clinic-mobile-expand relative mt-2 overflow-hidden rounded-3xl border"
@@ -649,9 +796,21 @@ export default function ClinicAccordion() {
                   />
 
                   <div className="relative space-y-5 clinic-panel-fade">
-                    <PanelBody clinic={clinic} taglineSize="md" />
-                    <PanelCta clinic={clinic} />
+                    <Link
+                      href={clinic.learnMoreHref}
+                      className="block cursor-pointer transition hover:opacity-95 rounded-2xl"
+                    >
+                      <PanelBody clinic={clinic} taglineSize="md" />
+                    </Link>
+                    {asking && clinic.key === mobileOpenKey ? (
+                      <AskCard clinic={clinic} onClose={() => setAsking(false)} />
+                    ) : (
+                      <PanelCta clinic={clinic} />
+                    )}
                     <ExploreButton clinic={clinic} />
+                    {asking && clinic.key === mobileOpenKey ? null : (
+                      <AskTrigger clinic={clinic} onClick={() => setAsking(true)} />
+                    )}
                   </div>
                 </div>
               ) : null}

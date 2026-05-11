@@ -9,7 +9,9 @@ export default function robots(): MetadataRoute.Robots {
         disallow: [
           "/api/",
           "/members/",
+          "/preview/",
           "/_next/",
+          "/ac-welcome",
           "/business-card",
           "/business-handout",
           "/business-handout-1",

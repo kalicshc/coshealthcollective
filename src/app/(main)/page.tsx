@@ -7,7 +7,10 @@ import { MapPin, Star, Phone, Mail, ChevronLeft, ChevronRight } from "lucide-rea
 import OurStoryCarousel from "@/components/OurStoryCarousel";
 import PortalPillars from "@/components/PortalPillars";
 import ClinicAccordion from "@/components/ClinicAccordion";
+import ClinicSpectrum from "@/components/ClinicSpectrum";
 import { clinicFacts } from "@/lib/clinicFacts";
+
+type ClinicKey = "dpc" | "hormone" | "hyperbaric";
 
 const GOOGLE_REVIEWS_URL = "https://share.google/A5V615VuXhaDQytso";
 
@@ -49,6 +52,8 @@ export default function Home() {
   const reviewsScrollRef = useRef<HTMLDivElement>(null);
   const [reviewsAtStart, setReviewsAtStart] = useState(true);
   const [reviewsAtEnd, setReviewsAtEnd] = useState(false);
+
+  const [spectrumKey, setSpectrumKey] = useState<ClinicKey>("hormone");
 
   const scrollReviews = (dir: "left" | "right") => {
     const el = reviewsScrollRef.current;
@@ -133,7 +138,15 @@ export default function Home() {
       <section className="py-16">
         <div className="container mx-auto px-5 lg:px-8">
           <div className="max-w-5xl mx-auto">
-            <ClinicAccordion />
+            <div className="hidden lg:block">
+              <ClinicSpectrum activeKey={spectrumKey} onSelect={setSpectrumKey} />
+            </div>
+            <div className="lg:-mt-2 relative z-[1]">
+              <ClinicAccordion
+                externalActiveKey={spectrumKey}
+                onActiveChange={setSpectrumKey}
+              />
+            </div>
           </div>
         </div>
       </section>
