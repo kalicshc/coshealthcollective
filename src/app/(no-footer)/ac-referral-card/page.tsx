@@ -382,11 +382,11 @@ export default function AcReferralCard() {
         .bc-b-right {
           flex-shrink: 0; position: relative; z-index: 2;
           display: flex; flex-direction: column; align-items: center;
-          justify-content: space-between; gap: 0.04in;
-          padding: 0.005in 0;
+          padding: 0.005in 0 0;
         }
         .bc-b-qr-wrap {
           display: flex; flex-direction: column; align-items: center; gap: 2px;
+          flex-shrink: 0;
         }
         .bc-b-qr {
           display: block;
@@ -402,9 +402,12 @@ export default function AcReferralCard() {
           font-size: 4pt; font-weight: 700;
           color: ${AC_RED}; letter-spacing: 1px; text-transform: uppercase;
         }
-        /* COS logo lockup under the QR */
+        /* COS logo lockup under the QR — vertically centered in remaining space */
         .bc-b-logo-lockup {
-          display: flex; flex-direction: column; align-items: center; gap: 0.02in;
+          flex: 1;
+          display: flex; flex-direction: column;
+          align-items: center; justify-content: center;
+          gap: 0.025in;
         }
         .bc-b-logo-mark {
           width: 0.26in; height: 0.26in;

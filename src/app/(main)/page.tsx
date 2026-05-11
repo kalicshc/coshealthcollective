@@ -12,6 +12,8 @@ import { clinicFacts } from "@/lib/clinicFacts";
 
 type ClinicKey = "dpc" | "hormone" | "hyperbaric";
 
+const PANEL_CLOSE_DELAY_MS = 140;
+
 const GOOGLE_REVIEWS_URL = "https://share.google/A5V615VuXhaDQytso";
 
 const reviewsData = [
@@ -54,6 +56,24 @@ export default function Home() {
   const [reviewsAtEnd, setReviewsAtEnd] = useState(false);
 
   const [spectrumKey, setSpectrumKey] = useState<ClinicKey>("hormone");
+  const [panelOpen, setPanelOpen] = useState(false);
+  const panelCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  function openPanel() {
+    if (panelCloseTimer.current) {
+      clearTimeout(panelCloseTimer.current);
+      panelCloseTimer.current = null;
+    }
+    setPanelOpen(true);
+  }
+
+  function closePanel() {
+    if (panelCloseTimer.current) clearTimeout(panelCloseTimer.current);
+    panelCloseTimer.current = setTimeout(() => {
+      setPanelOpen(false);
+      panelCloseTimer.current = null;
+    }, PANEL_CLOSE_DELAY_MS);
+  }
 
   const scrollReviews = (dir: "left" | "right") => {
     const el = reviewsScrollRef.current;
@@ -78,78 +98,99 @@ export default function Home() {
         Skip to main content
       </a>
 
-      {/* Hero + Wave + Tile row — fills the viewport on desktop so the open
-          detail panel sits cleanly below the fold. Mobile flows naturally. */}
+      {/* Hero — compact, natural flow */}
       <section
         id="main-content"
-        className="hero-overlay relative pt-20 pb-10 sm:pt-24 sm:pb-12 lg:pt-12 lg:pb-6 lg:min-h-[100svh] lg:flex lg:flex-col"
+        className="hero-overlay relative pt-20 pb-2 sm:pt-24 sm:pb-3 lg:pt-12 lg:pb-1"
         style={{ background: "linear-gradient(to bottom, hsla(210, 32%, 8%, 0.45), hsla(210, 28%, 12%, 0.2) 60%, transparent)" }}
       >
-        {/* Hero copy — top-aligned on mobile, flex-centered on desktop */}
-        <div className="lg:flex-1 lg:flex lg:items-center lg:justify-center">
-          <div className="container mx-auto px-5 lg:px-8 text-center z-10">
-            <div className="mb-5 flex justify-center">
-              <Image
-                src="/logo-main.png"
-                alt="Colorado Springs Health Collective Logo"
-                width={96}
-                height={96}
-                className="w-16 h-16 lg:w-20 lg:h-20 object-contain drop-shadow-2xl"
-                priority
-              />
-            </div>
-
-            <h1
-              className="text-4xl lg:text-6xl font-bold mb-4 leading-[1.05]"
-              style={{ color: "hsl(0, 0%, 100%)", textShadow: "0 2px 8px rgba(0,0,0,0.6)" }}
-            >
-              <span className="sr-only">Colorado Springs Health Collective — Direct Primary Care, Hormone Therapy &amp; Hyperbaric Oxygen in Colorado Springs, CO. </span>
-              The Colorado Springs<br />
-              <span style={{
-                background: "linear-gradient(135deg, hsl(177, 70%, 59%), hsl(200, 70%, 59%))",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}>
-                Health Collective
-              </span>
-            </h1>
-
-            <p
-              className="font-semibold max-w-2xl mx-auto"
-              style={{ color: "hsl(0, 0%, 92%)", fontSize: "20px", letterSpacing: "-0.01em" }}
-            >
-              This is what modern healthcare looks like.
-            </p>
+        <div className="container mx-auto px-5 lg:px-8 text-center z-10">
+          <div className="mb-5 flex justify-center">
+            <Image
+              src="/logo-main.png"
+              alt="Colorado Springs Health Collective Logo"
+              width={96}
+              height={96}
+              className="w-16 h-16 lg:w-20 lg:h-20 object-contain drop-shadow-2xl"
+              priority
+            />
           </div>
-        </div>
 
-        {/* Wave + closed tile row — sit at the bottom of the viewport on desktop */}
-        <div className="hidden lg:block">
-          <div className="container mx-auto px-5 lg:px-8">
-            <div className="max-w-5xl mx-auto">
-              <ClinicSpectrum activeKey={spectrumKey} onSelect={setSpectrumKey} />
-              <div className="-mt-2 relative z-[1]">
-                <ClinicAccordion
-                  externalActiveKey={spectrumKey}
-                  onActiveChange={setSpectrumKey}
-                  hidePanel
-                  hideMobile
-                />
-              </div>
-            </div>
-          </div>
+          <h1
+            className="text-4xl lg:text-6xl font-bold mb-4 leading-[1.05]"
+            style={{ color: "hsl(0, 0%, 100%)", textShadow: "0 2px 8px rgba(0,0,0,0.6)" }}
+          >
+            <span className="sr-only">Colorado Springs Health Collective — Direct Primary Care, Hormone Therapy &amp; Hyperbaric Oxygen in Colorado Springs, CO. </span>
+            The Colorado Springs<br />
+            <span style={{
+              background: "linear-gradient(135deg, hsl(177, 70%, 59%), hsl(200, 70%, 59%))",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}>
+              Health Collective
+            </span>
+          </h1>
+
+          <p
+            className="font-semibold max-w-2xl mx-auto"
+            style={{ color: "hsl(0, 0%, 92%)", fontSize: "20px", letterSpacing: "-0.01em" }}
+          >
+            This is what modern healthcare looks like.
+          </p>
         </div>
       </section>
 
-      {/* Detail panel section — below the fold on desktop, primary picker on mobile */}
-      <section className="pt-6 pb-16 lg:pt-10">
+      {/* Desktop clinic zone — one hover boundary covering wave + tiles + collapsible panel */}
+      <div
+        className="hidden lg:block relative pb-16"
+        onMouseEnter={openPanel}
+        onMouseLeave={closePanel}
+      >
+        <div className="container mx-auto px-5 lg:px-8">
+          <div className="max-w-5xl mx-auto">
+            <ClinicSpectrum activeKey={spectrumKey} onSelect={setSpectrumKey} />
+            <div className="-mt-2 relative z-[1]">
+              <ClinicAccordion
+                externalActiveKey={spectrumKey}
+                onActiveChange={setSpectrumKey}
+                hidePanel
+                hideMobile
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Collapsible detail panel — opens on hover in this zone, closes on leave */}
+        <div
+          className="overflow-hidden transition-[max-height,opacity,transform] duration-500 ease-out"
+          style={{
+            maxHeight: panelOpen ? 1200 : 0,
+            opacity: panelOpen ? 1 : 0,
+            transform: panelOpen ? "translateY(0)" : "translateY(-8px)",
+          }}
+          aria-hidden={!panelOpen}
+        >
+          <div className="container mx-auto px-5 lg:px-8 pt-6">
+            <div className="max-w-5xl mx-auto">
+              <ClinicAccordion
+                externalActiveKey={spectrumKey}
+                onActiveChange={setSpectrumKey}
+                hideTiles
+                hideMobile
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile clinic section — full standard accordion (closed by default, tap to toggle) */}
+      <section className="lg:hidden pt-2 pb-16">
         <div className="container mx-auto px-5 lg:px-8">
           <div className="max-w-5xl mx-auto">
             <ClinicAccordion
               externalActiveKey={spectrumKey}
               onActiveChange={setSpectrumKey}
-              hideTiles
             />
           </div>
         </div>
