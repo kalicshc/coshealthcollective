@@ -18,9 +18,9 @@ const CLINICS: SpectrumClinic[] = [
 ];
 
 const NUM_BARS = 96;
-const SIGMA = 0.16;
-const BASE_HEIGHT = 12;
-const PEAK_HEIGHT = 98;
+const SIGMA = 0.18;
+const BASE_HEIGHT = 6;
+const PEAK_HEIGHT = 72;
 const BASE_BRIGHT = 0.22;
 const PEAK_BRIGHT = 1.0;
 
@@ -108,7 +108,7 @@ export default function ClinicSpectrum({
       <div
         className="relative w-full"
         style={{
-          height: "clamp(210px, 24vw, 280px)",
+          height: "clamp(170px, 20vw, 220px)",
           // dissolve into the page bg on the sides
           WebkitMaskImage:
             "linear-gradient(90deg, transparent 0%, black 5%, black 95%, transparent 100%)",
@@ -139,8 +139,8 @@ export default function ClinicSpectrum({
             // tile's colored top accent line for a seamless blend.
             const grad = `linear-gradient(180deg,
               rgba(${lr},${lg},${lb}, 0) 0%,
-              rgba(${lr},${lg},${lb}, 0.45) 16%,
-              rgba(${lr},${lg},${lb}, 0.95) 50%,
+              rgba(${lr},${lg},${lb}, 0.55) 8%,
+              rgba(${lr},${lg},${lb}, 0.95) 40%,
               rgba(${lr},${lg},${lb}, 0.92) 78%,
               rgba(${lr},${lg},${lb}, 0.55) 94%,
               rgba(${lr},${lg},${lb}, 0) 100%

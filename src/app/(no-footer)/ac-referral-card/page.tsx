@@ -247,13 +247,14 @@ export default function AcReferralCard() {
 
 
         /* ══════════════════════════════════════════════════════════
-           BACK — kicker + headline top-left, big QR top-right,
-                  two tier boxes side-by-side, URL footer
+           BACK — two columns: left = kicker + headline + 2 stacked
+                  tier rows + URL; right = big QR + COS logo
         ══════════════════════════════════════════════════════════ */
         .bc-back {
           background: hsl(210, 32%, 8%);
-          padding: 0.07in 0.09in 0.06in 0.09in;
-          display: flex; flex-direction: column; position: relative; overflow: hidden;
+          padding: 0.075in 0.09in 0.07in 0.09in;
+          display: flex; flex-direction: row; gap: 0.09in;
+          position: relative; overflow: hidden;
         }
         .bc-b-glow1 {
           position: absolute; top: -0.4in; right: -0.3in;
@@ -265,51 +266,119 @@ export default function AcReferralCard() {
         }
         .bc-b-glow2 {
           position: absolute; bottom: -0.3in; left: -0.2in;
-          width: 1.8in; height: 1.8in;
+          width: 1.6in; height: 1.6in;
           background: radial-gradient(circle,
             hsla(177,70%,59%,0.22) 0%, transparent 65%
           );
           pointer-events: none;
         }
         .bc-b-glow3 {
-          position: absolute; top: 0.2in; left: 30%;
-          width: 1.2in; height: 1.2in;
+          position: absolute; top: 0.4in; left: 20%;
+          width: 1in; height: 1in;
           background: radial-gradient(circle,
-            hsla(271,74%,60%,0.14) 0%, transparent 65%
+            hsla(271,74%,60%,0.16) 0%, transparent 65%
           );
           pointer-events: none;
         }
 
-        /* Top row: kicker+headline left, big QR right */
-        .bc-b-toprow {
-          display: flex; align-items: center; justify-content: space-between;
-          position: relative; z-index: 2; gap: 0.08in;
-          flex: 0 0 auto;
-        }
-        .bc-b-kicker-wrap {
-          display: flex; flex-direction: column; gap: 0.025in;
-          min-width: 0; flex: 1;
+        /* ── Left column ── */
+        .bc-b-left {
+          flex: 1; min-width: 0; position: relative; z-index: 2;
+          display: flex; flex-direction: column; gap: 0.035in;
         }
         .bc-b-kicker {
-          font-size: 5pt; font-weight: 700;
+          font-size: 5.4pt; font-weight: 800;
           letter-spacing: 1.6px; text-transform: uppercase;
           color: ${AC_RED};
-          text-shadow: 0 0 4px hsla(5,78%,57%,0.4);
+          text-shadow: 0 0 4px hsla(5,78%,57%,0.5);
         }
         .bc-b-headline {
-          font-size: 7pt; font-weight: 700;
-          line-height: 1.2; letter-spacing: -0.05px;
-          background: linear-gradient(90deg, #ffffff 0%, hsl(177,80%,80%) 70%, #fda4af 100%);
+          font-size: 8.5pt; font-weight: 800; font-style: italic;
+          line-height: 1.1; letter-spacing: -0.2px;
+          background: linear-gradient(90deg,
+            #ffffff 0%,
+            hsl(177,90%,82%) 35%,
+            #c4b5fd 65%,
+            #fda4af 100%
+          );
           -webkit-background-clip: text; -webkit-text-fill-color: transparent;
           background-clip: text;
           filter:
-            drop-shadow(0 0 6px hsla(177,70%,59%,0.35))
-            drop-shadow(0 0 16px hsla(5,78%,57%,0.18));
+            drop-shadow(0 0 8px hsla(177,70%,59%,0.5))
+            drop-shadow(0 0 20px hsla(271,74%,60%,0.3))
+            drop-shadow(0 0 30px hsla(5,78%,57%,0.18));
+        }
+        .bc-b-div {
+          height: 1px;
+          background: linear-gradient(to right,
+            hsl(177,70%,59%) 0%, #63b3ed 35%, #c084fc 65%,
+            ${AC_RED} 95%, transparent 100%
+          );
+          margin-top: 0.01in;
         }
 
+        /* Tier rows — stacked vertical */
+        .bc-b-tiers {
+          display: flex; flex-direction: column; gap: 0.035in;
+          margin-top: 0.005in;
+        }
+        .bc-b-tier {
+          background: hsla(210,22%,16%,0.7);
+          border: 1px solid hsla(255,100%,100%,0.06);
+          border-left: 2px solid var(--tier-color);
+          border-radius: 0.025in;
+          padding: 0.04in 0.06in;
+          display: flex; align-items: center; justify-content: space-between;
+          gap: 0.08in;
+          box-shadow: 0 0 8px rgba(0,0,0,0.3),
+                      inset 0 1px 0 hsla(255,100%,100%,0.04);
+        }
+        .bc-b-tier-info { display: flex; flex-direction: column; gap: 0.008in; min-width: 0; }
+        .bc-b-tier-name {
+          font-size: 5.4pt; font-weight: 800; line-height: 1.1;
+          text-transform: uppercase; letter-spacing: 0.5px;
+          background: linear-gradient(90deg, var(--tier-name-from), var(--tier-name-to));
+          -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+          background-clip: text;
+          filter: drop-shadow(0 0 2px var(--tier-glow));
+        }
+        .bc-b-tier-sub {
+          font-size: 4.8pt; color: #94a3b8; line-height: 1.2;
+          letter-spacing: 0.15px;
+        }
+        .bc-b-tier-price-wrap {
+          display: flex; flex-direction: column; align-items: flex-end;
+          flex-shrink: 0; text-align: right;
+        }
+        .bc-b-tier-price {
+          font-size: 9.5pt; font-weight: 800; color: #ffffff;
+          letter-spacing: -0.3px; line-height: 1;
+          text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+        }
+        .bc-b-tier-price-unit {
+          font-size: 4.6pt; font-weight: 600; color: #94a3b8;
+          letter-spacing: 0.2px; line-height: 1.15; margin-top: 1.5px;
+        }
+
+        /* Footer URL */
+        .bc-b-url {
+          font-size: 5.2pt; font-weight: 700; margin-top: auto;
+          background: linear-gradient(90deg, hsl(177,70%,59%), ${AC_RED});
+          -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+          background-clip: text;
+          filter: drop-shadow(0 0 3px hsla(5,78%,57%,0.4));
+          letter-spacing: 0.1px;
+        }
+
+        /* ── Right column: QR + logo ── */
+        .bc-b-right {
+          flex-shrink: 0; position: relative; z-index: 2;
+          display: flex; flex-direction: column; align-items: center;
+          justify-content: space-between; gap: 0.04in;
+          padding: 0.005in 0;
+        }
         .bc-b-qr-wrap {
           display: flex; flex-direction: column; align-items: center; gap: 2px;
-          flex-shrink: 0;
         }
         .bc-b-qr {
           display: block;
@@ -325,78 +394,24 @@ export default function AcReferralCard() {
           font-size: 4pt; font-weight: 700;
           color: ${AC_RED}; letter-spacing: 1px; text-transform: uppercase;
         }
-
-        /* Thin divider */
-        .bc-b-div {
-          height: 1px;
-          background: linear-gradient(to right,
-            hsl(177,70%,59%) 0%,
-            #63b3ed 35%,
-            #c084fc 65%,
-            ${AC_RED} 95%,
-            transparent 100%
+        /* COS logo lockup under the QR */
+        .bc-b-logo-lockup {
+          display: flex; flex-direction: column; align-items: center; gap: 0.02in;
+        }
+        .bc-b-logo-mark {
+          width: 0.26in; height: 0.26in;
+          filter: drop-shadow(0 0 4px hsla(177,70%,59%,0.5));
+        }
+        .bc-b-logo-text {
+          font-size: 4.6pt; font-weight: 800;
+          letter-spacing: 1.2px; text-transform: uppercase;
+          line-height: 1.05; text-align: center;
+          background: linear-gradient(90deg,
+            hsl(177,90%,75%) 0%, #c4b5fd 60%, #f9a8d4 100%
           );
-          margin: 0.05in 0 0.045in 0;
-          position: relative; z-index: 2;
-        }
-
-        /* Tier grid — HRT (wider) + cream */
-        .bc-b-tiers {
-          display: grid;
-          grid-template-columns: 1.55fr 1fr;
-          gap: 0.05in;
-          flex: 1;
-          position: relative; z-index: 2;
-          margin-bottom: 0.04in;
-          align-items: stretch;
-        }
-        .bc-b-tier {
-          background: hsla(210,22%,16%,0.7);
-          border: 1px solid hsla(255,100%,100%,0.06);
-          border-top: 2px solid var(--tier-color);
-          border-radius: 0.03in;
-          padding: 0.04in 0.05in;
-          display: flex; flex-direction: column; gap: 0.018in;
-          box-shadow: 0 0 10px rgba(0,0,0,0.35), inset 0 1px 0 hsla(255,100%,100%,0.04);
-        }
-        .bc-b-tier-name {
-          font-size: 5.6pt; font-weight: 800; line-height: 1.15;
-          text-transform: uppercase; letter-spacing: 0.5px;
-          background: linear-gradient(90deg, var(--tier-name-from), var(--tier-name-to));
           -webkit-background-clip: text; -webkit-text-fill-color: transparent;
           background-clip: text;
-          filter: drop-shadow(0 0 2px var(--tier-glow));
-        }
-        .bc-b-tier-price {
-          font-size: 9.5pt; font-weight: 800; color: #ffffff;
-          letter-spacing: -0.2px; line-height: 1;
-          text-shadow: 0 1px 4px rgba(0,0,0,0.5);
-        }
-        .bc-b-tier-price-unit {
-          font-size: 5.5pt; font-weight: 600; color: #a0aec0;
-          letter-spacing: 0.2px; margin-left: 1px;
-        }
-        .bc-b-tier-sub {
-          font-size: 5pt; color: #c4cfd9; line-height: 1.25; letter-spacing: 0.1px;
-        }
-        .bc-b-tier-extra {
-          font-size: 9.5pt; font-weight: 800; color: #ffffff;
-          letter-spacing: -0.2px; line-height: 1;
-          text-shadow: 0 1px 4px rgba(0,0,0,0.5);
-        }
-        .bc-b-tier-extra-unit {
-          font-size: 5.5pt; font-weight: 600; color: #a0aec0;
-        }
-
-        /* Footer URL */
-        .bc-b-url {
-          font-size: 5.5pt; font-weight: 700;
-          background: linear-gradient(90deg, hsl(177,70%,59%), ${AC_RED});
-          -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-          background-clip: text;
-          filter: drop-shadow(0 0 3px hsla(5,78%,57%,0.4));
-          position: relative; z-index: 2;
-          text-align: center;
+          filter: drop-shadow(0 0 2px hsla(177,70%,59%,0.5));
         }
 
         /* ─── Print ──────────────────────────────────────────────── */
@@ -492,60 +507,64 @@ export default function AcReferralCard() {
                 <div className="bc-b-glow2" />
                 <div className="bc-b-glow3" />
 
-                {/* Top row: kicker + headline + QR */}
-                <div className="bc-b-toprow">
-                  <div className="bc-b-kicker-wrap">
-                    <div className="bc-b-kicker">For Activcore patients</div>
-                    <div className="bc-b-headline">
-                      If hormones are part of the picture, let&rsquo;s coordinate.
+                {/* ── Left column: copy + tiers + URL ── */}
+                <div className="bc-b-left">
+                  <div className="bc-b-kicker">For Activcore patients</div>
+                  <div className="bc-b-headline">
+                    If hormones are part of the picture, let&rsquo;s coordinate.
+                  </div>
+                  <div className="bc-b-div" />
+
+                  <div className="bc-b-tiers">
+                    {/* HRT tier */}
+                    <div className="bc-b-tier" style={{
+                      "--tier-color":     "hsl(177,70%,59%)",
+                      "--tier-name-from": "hsl(177,80%,70%)",
+                      "--tier-name-to":   "#c084fc",
+                      "--tier-glow":      "hsla(177,70%,59%,0.45)",
+                    } as React.CSSProperties}>
+                      <div className="bc-b-tier-info">
+                        <div className="bc-b-tier-name">HRT &middot; Peri &amp; Menopause</div>
+                        <div className="bc-b-tier-sub">then $100/mo ongoing</div>
+                      </div>
+                      <div className="bc-b-tier-price-wrap">
+                        <div className="bc-b-tier-price">$200</div>
+                        <div className="bc-b-tier-price-unit">initial + 1st month</div>
+                      </div>
+                    </div>
+
+                    {/* Vaginal estrogen tier */}
+                    <div className="bc-b-tier" style={{
+                      "--tier-color":     AC_RED,
+                      "--tier-name-from": "#fda4af",
+                      "--tier-name-to":   AC_RED,
+                      "--tier-glow":      "hsla(5,78%,57%,0.45)",
+                    } as React.CSSProperties}>
+                      <div className="bc-b-tier-info">
+                        <div className="bc-b-tier-name">Vaginal Estrogen Cream</div>
+                        <div className="bc-b-tier-sub">no membership required</div>
+                      </div>
+                      <div className="bc-b-tier-price-wrap">
+                        <div className="bc-b-tier-price">$75</div>
+                        <div className="bc-b-tier-price-unit">one-time visit</div>
+                      </div>
                     </div>
                   </div>
+
+                  <div className="bc-b-url">coshealthcollective.com/ac-welcome</div>
+                </div>
+
+                {/* ── Right column: QR + COS logo ── */}
+                <div className="bc-b-right">
                   <div className="bc-b-qr-wrap">
                     <canvas ref={qrRef} className="bc-b-qr" />
                     <div className="bc-b-qr-cap">Scan to start</div>
                   </div>
-                </div>
-
-                <div className="bc-b-div" />
-
-                {/* Two tiers */}
-                <div className="bc-b-tiers">
-                  {/* HRT tier */}
-                  <div className="bc-b-tier" style={{
-                    "--tier-color":     "hsl(177,70%,59%)",
-                    "--tier-name-from": "hsl(177,80%,70%)",
-                    "--tier-name-to":   "#c084fc",
-                    "--tier-glow":      "hsla(177,70%,59%,0.45)",
-                  } as React.CSSProperties}>
-                    <div className="bc-b-tier-name">HRT &middot; Perimenopause &amp; Menopause</div>
-                    <div>
-                      <span className="bc-b-tier-price">$200</span>
-                      <span className="bc-b-tier-price-unit"> initial + first month</span>
-                    </div>
-                    <div>
-                      <span className="bc-b-tier-extra">$100</span>
-                      <span className="bc-b-tier-extra-unit">/mo ongoing</span>
-                    </div>
-                  </div>
-
-                  {/* Vaginal estrogen tier */}
-                  <div className="bc-b-tier" style={{
-                    "--tier-color":     AC_RED,
-                    "--tier-name-from": "#fda4af",
-                    "--tier-name-to":   AC_RED,
-                    "--tier-glow":      "hsla(5,78%,57%,0.45)",
-                  } as React.CSSProperties}>
-                    <div className="bc-b-tier-name">Vaginal Estrogen Cream</div>
-                    <div>
-                      <span className="bc-b-tier-price">$75</span>
-                      <span className="bc-b-tier-price-unit"> one-time visit</span>
-                    </div>
-                    <div className="bc-b-tier-sub">No membership required.</div>
+                  <div className="bc-b-logo-lockup">
+                    <img src="/logo-main.png" alt="" className="bc-b-logo-mark" />
+                    <div className="bc-b-logo-text">COS Health<br />Collective</div>
                   </div>
                 </div>
-
-                {/* Footer URL */}
-                <div className="bc-b-url">coshealthcollective.com/ac-welcome</div>
               </div>
             </div>
           </div>

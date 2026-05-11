@@ -81,7 +81,7 @@ export default function Home() {
       {/* Hero */}
       <section
         id="main-content"
-        className="hero-overlay relative flex items-start justify-center pt-28 pb-10 sm:pt-32 sm:pb-12 lg:pt-48 lg:pb-16"
+        className="hero-overlay relative flex items-start justify-center pt-28 pb-20 sm:pt-32 sm:pb-24 lg:pt-48 lg:pb-20"
         style={{ background: "linear-gradient(to bottom, hsla(210, 32%, 8%, 0.45), hsla(210, 28%, 12%, 0.2) 60%, transparent)" }}
       >
         <div className="container mx-auto px-5 lg:px-8 text-center z-10">
@@ -128,7 +128,7 @@ export default function Home() {
       </section>
 
       {/* Three Clinics — wave bleeds up into hero on desktop, no divider */}
-      <section className="pt-0 pb-16 lg:-mt-24 relative">
+      <section className="pt-0 pb-16 lg:-mt-12 relative">
         <div className="container mx-auto px-5 lg:px-8">
           <div className="max-w-5xl mx-auto">
             <div className="hidden lg:block">
