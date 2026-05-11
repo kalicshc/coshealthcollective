@@ -284,7 +284,11 @@ export default function AcReferralCard() {
         /* ── Left column ── */
         .bc-b-left {
           flex: 1; min-width: 0; position: relative; z-index: 2;
-          display: flex; flex-direction: column; gap: 0.035in;
+          display: flex; flex-direction: column;
+          justify-content: space-between;
+        }
+        .bc-b-left-top {
+          display: flex; flex-direction: column; gap: 0.025in;
         }
         .bc-b-kicker {
           font-size: 5.4pt; font-weight: 800;
@@ -317,52 +321,56 @@ export default function AcReferralCard() {
           margin-top: 0.01in;
         }
 
-        /* Tier rows — stacked vertical */
+        /* Tier rows — stacked vertical, each box larger w/ multi-line content */
         .bc-b-tiers {
-          display: flex; flex-direction: column; gap: 0.035in;
+          display: flex; flex-direction: column; gap: 0.04in;
           margin-top: 0.005in;
         }
         .bc-b-tier {
           background: hsla(210,22%,16%,0.7);
           border: 1px solid hsla(255,100%,100%,0.06);
           border-left: 2px solid var(--tier-color);
-          border-radius: 0.025in;
-          padding: 0.04in 0.06in;
-          display: flex; align-items: center; justify-content: space-between;
-          gap: 0.08in;
-          box-shadow: 0 0 8px rgba(0,0,0,0.3),
+          border-radius: 0.03in;
+          padding: 0.055in 0.075in;
+          display: flex; flex-direction: column; gap: 0.018in;
+          box-shadow: 0 0 10px rgba(0,0,0,0.35),
                       inset 0 1px 0 hsla(255,100%,100%,0.04);
         }
-        .bc-b-tier-info { display: flex; flex-direction: column; gap: 0.008in; min-width: 0; }
         .bc-b-tier-name {
-          font-size: 5.4pt; font-weight: 800; line-height: 1.1;
-          text-transform: uppercase; letter-spacing: 0.5px;
+          font-size: 6pt; font-weight: 800; line-height: 1.1;
+          text-transform: uppercase; letter-spacing: 0.55px;
+          margin-bottom: 0.015in;
           background: linear-gradient(90deg, var(--tier-name-from), var(--tier-name-to));
           -webkit-background-clip: text; -webkit-text-fill-color: transparent;
           background-clip: text;
           filter: drop-shadow(0 0 2px var(--tier-glow));
         }
-        .bc-b-tier-sub {
-          font-size: 4.8pt; color: #94a3b8; line-height: 1.2;
-          letter-spacing: 0.15px;
-        }
-        .bc-b-tier-price-wrap {
-          display: flex; flex-direction: column; align-items: flex-end;
-          flex-shrink: 0; text-align: right;
+        .bc-b-tier-row {
+          display: flex; align-items: baseline; gap: 0.05in;
         }
         .bc-b-tier-price {
-          font-size: 9.5pt; font-weight: 800; color: #ffffff;
-          letter-spacing: -0.3px; line-height: 1;
+          font-size: 7.8pt; font-weight: 800; color: #ffffff;
+          letter-spacing: -0.25px; line-height: 1;
           text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+          flex-shrink: 0;
         }
         .bc-b-tier-price-unit {
-          font-size: 4.6pt; font-weight: 600; color: #94a3b8;
-          letter-spacing: 0.2px; line-height: 1.15; margin-top: 1.5px;
+          font-size: 5pt; font-weight: 600; color: #94a3b8;
+          letter-spacing: 0.15px; margin-left: 1px;
+        }
+        .bc-b-tier-desc {
+          font-size: 5.2pt; color: #d4dce6; line-height: 1.15;
+          letter-spacing: 0.1px; font-weight: 500;
+        }
+        .bc-b-tier-note {
+          font-size: 4.6pt; color: #94a3b8; line-height: 1.2;
+          letter-spacing: 0.2px; font-style: italic;
+          margin-top: 0.012in;
         }
 
         /* Footer URL */
         .bc-b-url {
-          font-size: 5.2pt; font-weight: 700; margin-top: auto;
+          font-size: 5.2pt; font-weight: 700;
           background: linear-gradient(90deg, hsl(177,70%,59%), ${AC_RED});
           -webkit-background-clip: text; -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -403,15 +411,15 @@ export default function AcReferralCard() {
           filter: drop-shadow(0 0 4px hsla(177,70%,59%,0.5));
         }
         .bc-b-logo-text {
-          font-size: 4.6pt; font-weight: 800;
-          letter-spacing: 1.2px; text-transform: uppercase;
-          line-height: 1.05; text-align: center;
+          font-size: 6pt; font-weight: 900;
+          letter-spacing: 2.4px; text-transform: uppercase;
+          line-height: 1; text-align: center;
           background: linear-gradient(90deg,
-            hsl(177,90%,75%) 0%, #c4b5fd 60%, #f9a8d4 100%
+            hsl(177,90%,75%) 0%, #c4b5fd 55%, #f9a8d4 100%
           );
           -webkit-background-clip: text; -webkit-text-fill-color: transparent;
           background-clip: text;
-          filter: drop-shadow(0 0 2px hsla(177,70%,59%,0.5));
+          filter: drop-shadow(0 0 3px hsla(177,70%,59%,0.55));
         }
 
         /* ─── Print ──────────────────────────────────────────────── */
@@ -509,11 +517,13 @@ export default function AcReferralCard() {
 
                 {/* ── Left column: copy + tiers + URL ── */}
                 <div className="bc-b-left">
-                  <div className="bc-b-kicker">For Activcore patients</div>
-                  <div className="bc-b-headline">
-                    If hormones are part of the picture, let&rsquo;s coordinate.
+                  <div className="bc-b-left-top">
+                    <div className="bc-b-kicker">For Activcore patients</div>
+                    <div className="bc-b-headline">
+                      If hormones are part of the picture, let&rsquo;s coordinate.
+                    </div>
+                    <div className="bc-b-div" />
                   </div>
-                  <div className="bc-b-div" />
 
                   <div className="bc-b-tiers">
                     {/* HRT tier */}
@@ -523,13 +533,19 @@ export default function AcReferralCard() {
                       "--tier-name-to":   "#c084fc",
                       "--tier-glow":      "hsla(177,70%,59%,0.45)",
                     } as React.CSSProperties}>
-                      <div className="bc-b-tier-info">
-                        <div className="bc-b-tier-name">HRT &middot; Peri &amp; Menopause</div>
-                        <div className="bc-b-tier-sub">then $100/mo ongoing</div>
+                      <div className="bc-b-tier-name">HRT &middot; Perimenopause &amp; Menopause</div>
+                      <div className="bc-b-tier-row">
+                        <span className="bc-b-tier-price">$200</span>
+                        <span className="bc-b-tier-desc">consult + first month</span>
                       </div>
-                      <div className="bc-b-tier-price-wrap">
-                        <div className="bc-b-tier-price">$200</div>
-                        <div className="bc-b-tier-price-unit">initial + 1st month</div>
+                      <div className="bc-b-tier-row">
+                        <span className="bc-b-tier-price">
+                          $100<span className="bc-b-tier-price-unit">/mo</span>
+                        </span>
+                        <span className="bc-b-tier-desc">ongoing membership</span>
+                      </div>
+                      <div className="bc-b-tier-note">
+                        includes unlimited messaging + follow-ups
                       </div>
                     </div>
 
@@ -540,13 +556,13 @@ export default function AcReferralCard() {
                       "--tier-name-to":   AC_RED,
                       "--tier-glow":      "hsla(5,78%,57%,0.45)",
                     } as React.CSSProperties}>
-                      <div className="bc-b-tier-info">
-                        <div className="bc-b-tier-name">Vaginal Estrogen Cream</div>
-                        <div className="bc-b-tier-sub">no membership required</div>
+                      <div className="bc-b-tier-name">Vaginal Estrogen Cream</div>
+                      <div className="bc-b-tier-row">
+                        <span className="bc-b-tier-price">$75</span>
+                        <span className="bc-b-tier-desc">one-time consult</span>
                       </div>
-                      <div className="bc-b-tier-price-wrap">
-                        <div className="bc-b-tier-price">$75</div>
-                        <div className="bc-b-tier-price-unit">one-time visit</div>
+                      <div className="bc-b-tier-note">
+                        no membership required
                       </div>
                     </div>
                   </div>
@@ -562,7 +578,7 @@ export default function AcReferralCard() {
                   </div>
                   <div className="bc-b-logo-lockup">
                     <img src="/logo-main.png" alt="" className="bc-b-logo-mark" />
-                    <div className="bc-b-logo-text">COS Health<br />Collective</div>
+                    <div className="bc-b-logo-text">CSHC</div>
                   </div>
                 </div>
               </div>

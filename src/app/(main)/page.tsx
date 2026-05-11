@@ -78,62 +78,79 @@ export default function Home() {
         Skip to main content
       </a>
 
-      {/* Hero */}
+      {/* Hero + Wave + Tile row — fills the viewport on desktop so the open
+          detail panel sits cleanly below the fold. Mobile flows naturally. */}
       <section
         id="main-content"
-        className="hero-overlay relative flex items-start justify-center pt-20 pb-10 sm:pt-24 sm:pb-12 lg:pt-28 lg:pb-12"
+        className="hero-overlay relative pt-20 pb-10 sm:pt-24 sm:pb-12 lg:pt-12 lg:pb-6 lg:min-h-[100svh] lg:flex lg:flex-col"
         style={{ background: "linear-gradient(to bottom, hsla(210, 32%, 8%, 0.45), hsla(210, 28%, 12%, 0.2) 60%, transparent)" }}
       >
-        <div className="container mx-auto px-5 lg:px-8 text-center z-10">
-          <div className="mb-5 flex justify-center">
-            <Image
-              src="/logo-main.png"
-              alt="Colorado Springs Health Collective Logo"
-              width={96}
-              height={96}
-              className="w-16 h-16 lg:w-20 lg:h-20 object-contain drop-shadow-2xl"
-              priority
-            />
+        {/* Hero copy — top-aligned on mobile, flex-centered on desktop */}
+        <div className="lg:flex-1 lg:flex lg:items-center lg:justify-center">
+          <div className="container mx-auto px-5 lg:px-8 text-center z-10">
+            <div className="mb-5 flex justify-center">
+              <Image
+                src="/logo-main.png"
+                alt="Colorado Springs Health Collective Logo"
+                width={96}
+                height={96}
+                className="w-16 h-16 lg:w-20 lg:h-20 object-contain drop-shadow-2xl"
+                priority
+              />
+            </div>
+
+            <h1
+              className="text-4xl lg:text-6xl font-bold mb-4 leading-[1.05]"
+              style={{ color: "hsl(0, 0%, 100%)", textShadow: "0 2px 8px rgba(0,0,0,0.6)" }}
+            >
+              <span className="sr-only">Colorado Springs Health Collective — Direct Primary Care, Hormone Therapy &amp; Hyperbaric Oxygen in Colorado Springs, CO. </span>
+              The Colorado Springs<br />
+              <span style={{
+                background: "linear-gradient(135deg, hsl(177, 70%, 59%), hsl(200, 70%, 59%))",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}>
+                Health Collective
+              </span>
+            </h1>
+
+            <p
+              className="font-semibold max-w-2xl mx-auto"
+              style={{ color: "hsl(0, 0%, 92%)", fontSize: "20px", letterSpacing: "-0.01em" }}
+            >
+              This is what modern healthcare looks like.
+            </p>
           </div>
+        </div>
 
-          <h1
-            className="text-4xl lg:text-6xl font-bold mb-4 leading-[1.05]"
-            style={{ color: "hsl(0, 0%, 100%)", textShadow: "0 2px 8px rgba(0,0,0,0.6)" }}
-          >
-            <span className="sr-only">Colorado Springs Health Collective — Direct Primary Care, Hormone Therapy &amp; Hyperbaric Oxygen in Colorado Springs, CO. </span>
-            The Colorado Springs<br />
-            <span style={{
-              background: "linear-gradient(135deg, hsl(177, 70%, 59%), hsl(200, 70%, 59%))",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}>
-              Health Collective
-            </span>
-          </h1>
-
-          <p
-            className="font-semibold max-w-2xl mx-auto"
-            style={{ color: "hsl(0, 0%, 92%)", fontSize: "20px", letterSpacing: "-0.01em" }}
-          >
-            This is what modern healthcare looks like.
-          </p>
+        {/* Wave + closed tile row — sit at the bottom of the viewport on desktop */}
+        <div className="hidden lg:block">
+          <div className="container mx-auto px-5 lg:px-8">
+            <div className="max-w-5xl mx-auto">
+              <ClinicSpectrum activeKey={spectrumKey} onSelect={setSpectrumKey} />
+              <div className="-mt-2 relative z-[1]">
+                <ClinicAccordion
+                  externalActiveKey={spectrumKey}
+                  onActiveChange={setSpectrumKey}
+                  hidePanel
+                  hideMobile
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Three Clinics — wave bleeds up into hero on desktop, no divider */}
-      <section className="pt-0 pb-16 lg:-mt-10 relative">
+      {/* Detail panel section — below the fold on desktop, primary picker on mobile */}
+      <section className="pt-6 pb-16 lg:pt-10">
         <div className="container mx-auto px-5 lg:px-8">
           <div className="max-w-5xl mx-auto">
-            <div className="hidden lg:block">
-              <ClinicSpectrum activeKey={spectrumKey} onSelect={setSpectrumKey} />
-            </div>
-            <div className="lg:-mt-2 relative z-[1]">
-              <ClinicAccordion
-                externalActiveKey={spectrumKey}
-                onActiveChange={setSpectrumKey}
-              />
-            </div>
+            <ClinicAccordion
+              externalActiveKey={spectrumKey}
+              onActiveChange={setSpectrumKey}
+              hideTiles
+            />
           </div>
         </div>
       </section>

@@ -581,11 +581,18 @@ export default function ClinicAccordion({
   onActiveChange,
   defaultActiveKey = "dpc",
   hideTiles = false,
+  hidePanel = false,
+  hideMobile = false,
 }: {
   externalActiveKey?: ClinicKey;
   onActiveChange?: (key: ClinicKey) => void;
   defaultActiveKey?: ClinicKey;
+  /** Desktop only: hide the three-tile picker row (use when the spectrum replaces it). */
   hideTiles?: boolean;
+  /** Desktop only: hide the open detail panel below the tiles (when panel lives elsewhere). */
+  hidePanel?: boolean;
+  /** Hide the entire mobile (lg:hidden) block — use when a sibling instance handles mobile. */
+  hideMobile?: boolean;
 } = {}) {
   const isControlled = externalActiveKey !== undefined;
   const [internalKey, setInternalKey] = useState<ClinicKey>(defaultActiveKey);
@@ -705,7 +712,7 @@ export default function ClinicAccordion({
           </div>
         )}
 
-        <div
+        {hidePanel ? null : <div
           key={`desktop-${active.key}`}
           className={`relative ${hideTiles ? "" : "mt-4"} overflow-hidden rounded-3xl border transition-all duration-500 lg:min-h-[460px]`}
           style={{ padding: "clamp(24px, 4vw, 44px)", ...panelDecor(active) }}
@@ -739,40 +746,12 @@ export default function ClinicAccordion({
               {asking ? null : <AskTrigger clinic={active} onClick={() => setAsking(true)} />}
             </div>
           </div>
-        </div>
+        </div>}
       </div>
 
       {/* ─── Mobile: vertical accordion, each clinic expands inline ────── */}
-      <div className="lg:hidden space-y-3">
-        {hideTiles ? (
-          <div
-            key={`mobile-headless-${active.key}`}
-            className="clinic-mobile-expand relative overflow-hidden rounded-3xl border"
-            style={{ padding: "clamp(20px, 5vw, 28px)", ...panelDecor(active) }}
-          >
-            <span
-              aria-hidden
-              className="pointer-events-none absolute -top-24 -right-16 h-56 w-56 rounded-full opacity-25 blur-3xl"
-              style={{ background: `radial-gradient(circle, ${active.accent.from}, transparent 70%)` }}
-            />
-            <div className="relative space-y-5 clinic-panel-fade">
-              <Link
-                href={active.learnMoreHref}
-                className="block cursor-pointer transition hover:opacity-95 rounded-2xl space-y-5"
-              >
-                <PanelHeader clinic={active} layout="mobile" />
-                <PanelBody clinic={active} taglineSize="md" />
-              </Link>
-              {asking ? (
-                <AskCard clinic={active} onClose={() => setAsking(false)} />
-              ) : (
-                <PanelCta clinic={active} />
-              )}
-              <ExploreButton clinic={active} />
-              {asking ? null : <AskTrigger clinic={active} onClick={() => setAsking(true)} />}
-            </div>
-          </div>
-        ) : CLINICS.map((clinic) => {
+      <div className={`lg:hidden space-y-3 ${hideMobile ? "hidden" : ""}`}>
+        {CLINICS.map((clinic) => {
           const isOpen = clinic.key === mobileOpenKey;
           return (
             <div key={clinic.key}>
