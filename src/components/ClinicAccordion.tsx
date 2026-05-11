@@ -495,7 +495,7 @@ function ClinicTile({
         isMobile ? "w-full" : ""
       }`}
       style={{
-        padding: "18px 18px 16px",
+        padding: isMobile ? "18px 18px 16px" : "18px 18px 26px",
         borderWidth: 0,
         background: isActive
           ? `linear-gradient(135deg, ${clinic.accent.from}26, ${clinic.accent.to}14), hsla(210, 24%, 9%, 0.82)`
@@ -564,6 +564,24 @@ function ClinicTile({
           </span>
         ) : null}
       </div>
+
+      {/* Desktop "more below" hint — small bouncing chevron in clinic's accent color */}
+      {!isMobile ? (
+        <span
+          aria-hidden
+          className="clinic-hint-bounce pointer-events-none absolute bottom-2 left-1/2"
+          style={{
+            color: clinic.accent.from,
+            opacity: isActive ? 0 : undefined,
+            transition: "opacity 320ms ease",
+            filter: `drop-shadow(0 0 6px ${clinic.accent.from}88)`,
+          }}
+        >
+          <svg viewBox="0 0 24 24" fill="none" className="h-3.5 w-3.5">
+            <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </span>
+      ) : null}
     </button>
   );
 }
@@ -687,9 +705,20 @@ export default function ClinicAccordion({
           will-change: transform, filter;
         }
         .clinic-cta-breathe:hover { animation-play-state: paused; }
+
+        @keyframes clinic-hint-bounce {
+          0%, 100% { transform: translateX(-50%) translateY(0);    opacity: 0.55; }
+          50%      { transform: translateX(-50%) translateY(4px);  opacity: 1; }
+        }
+        .clinic-hint-bounce {
+          animation: clinic-hint-bounce 1.8s ease-in-out infinite;
+          will-change: transform, opacity;
+        }
+
         @media (prefers-reduced-motion: reduce) {
           .clinic-tile-title.is-active,
-          .clinic-cta-breathe { animation: none !important; }
+          .clinic-cta-breathe,
+          .clinic-hint-bounce { animation: none !important; }
         }
       `}</style>
 

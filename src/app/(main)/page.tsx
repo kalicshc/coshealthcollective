@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Star, Phone, Mail, ChevronLeft, ChevronRight } from "lucide-react";
@@ -56,24 +56,48 @@ export default function Home() {
   const [reviewsAtEnd, setReviewsAtEnd] = useState(false);
 
   const [spectrumKey, setSpectrumKey] = useState<ClinicKey>("hormone");
-  const [panelOpen, setPanelOpen] = useState(false);
+  const [hoveringClinic, setHoveringClinic] = useState(false);
+  const [scrolledPastClinic, setScrolledPastClinic] = useState(false);
   const panelCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const clinicZoneRef = useRef<HTMLDivElement>(null);
+
+  // Panel is open when cursor is in the zone, OR when the user has scrolled past
+  // the zone (so the panel stays open as they read below). Scrolling back above
+  // and leaving the zone returns the panel to closed.
+  const panelOpen = hoveringClinic || scrolledPastClinic;
 
   function openPanel() {
     if (panelCloseTimer.current) {
       clearTimeout(panelCloseTimer.current);
       panelCloseTimer.current = null;
     }
-    setPanelOpen(true);
+    setHoveringClinic(true);
   }
 
   function closePanel() {
     if (panelCloseTimer.current) clearTimeout(panelCloseTimer.current);
     panelCloseTimer.current = setTimeout(() => {
-      setPanelOpen(false);
+      setHoveringClinic(false);
       panelCloseTimer.current = null;
     }, PANEL_CLOSE_DELAY_MS);
   }
+
+  useEffect(() => {
+    function check() {
+      const el = clinicZoneRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      // Scrolled past = the entire clinic zone is above the viewport top.
+      setScrolledPastClinic(rect.bottom < 0);
+    }
+    window.addEventListener("scroll", check, { passive: true });
+    window.addEventListener("resize", check);
+    check();
+    return () => {
+      window.removeEventListener("scroll", check);
+      window.removeEventListener("resize", check);
+    };
+  }, []);
 
   const scrollReviews = (dir: "left" | "right") => {
     const el = reviewsScrollRef.current;
@@ -101,17 +125,17 @@ export default function Home() {
       {/* Hero — compact, natural flow. pt clears the two-row navbar (~100px on desktop). */}
       <section
         id="main-content"
-        className="hero-overlay relative pt-24 pb-8 sm:pt-28 sm:pb-10 lg:pt-32 lg:pb-12"
+        className="hero-overlay relative pt-28 pb-12 sm:pt-32 sm:pb-14 lg:pt-36 lg:pb-16"
         style={{ background: "linear-gradient(to bottom, hsla(210, 32%, 8%, 0.45), hsla(210, 28%, 12%, 0.2) 60%, transparent)" }}
       >
         <div className="container mx-auto px-5 lg:px-8 text-center z-10">
-          <div className="mb-5 flex justify-center">
+          <div className="mb-6 flex justify-center">
             <Image
               src="/logo-main.png"
               alt="Colorado Springs Health Collective Logo"
-              width={96}
-              height={96}
-              className="w-16 h-16 lg:w-20 lg:h-20 object-contain drop-shadow-2xl"
+              width={112}
+              height={112}
+              className="w-20 h-20 lg:w-24 lg:h-24 object-contain drop-shadow-2xl"
               priority
             />
           </div>
@@ -143,6 +167,7 @@ export default function Home() {
 
       {/* Desktop clinic zone — one hover boundary covering wave + tiles + collapsible panel */}
       <div
+        ref={clinicZoneRef}
         className="hidden lg:block relative pb-8"
         onMouseEnter={openPanel}
         onMouseLeave={closePanel}
@@ -195,8 +220,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <div className="section-divider" />
 
       {/* Our Story Carousel */}
       <OurStoryCarousel />
