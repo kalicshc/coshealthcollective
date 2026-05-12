@@ -20,6 +20,16 @@ const articles = [
     featured: true,
   },
   {
+    slug: "metabolic-health-hormone-therapy-colorado-springs",
+    title: "Why Metabolic Health Is the Foundation of Safe, Effective Hormone Therapy",
+    description: "Hormones don't act in isolation. Inflammation, COMT and ApoE genetics, the brain–amyloid loop, and why men live in the same cycle — what we test and treat before we prescribe.",
+    date: "May 2026",
+    category: "Hormone Therapy",
+    categoryColor: "hsl(331, 70%, 65%)",
+    image: "/blog/metabolic-health-hero.jpg",
+    featured: false,
+  },
+  {
     slug: "hyperbaric-oxygen-therapy-colorado-springs",
     title: "Hyperbaric Oxygen Therapy in Colorado Springs: What the Clinical Evidence Shows",
     description: "How HBOT delivers 15× normal oxygen levels to accelerate healing, reduce inflammation, and reverse cellular aging — backed by peer-reviewed research.",

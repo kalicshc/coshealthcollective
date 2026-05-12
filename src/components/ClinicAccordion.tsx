@@ -27,6 +27,7 @@ type Clinic = {
   statusKind: "live" | "open" | "soon";
   tagline: string;
   body: string;
+  featuredQuote?: string;
   services: string[];
   cta: ClinicCta;
   learnMoreHref: string;
@@ -95,6 +96,8 @@ const CLINICS: Clinic[] = [
     tagline: "Hormone care that addresses the whole picture.",
     body:
       "Perimenopause, menopause, low T, GLP-1 weight loss — for women, men, and metabolic patients. Personalized, evidence-based care that finally takes the full hormonal system seriously.",
+    featuredQuote:
+      "A whole-person approach — addressing inflammation, nutrition, genetics, and lifestyle alongside hormones — is not just good medicine. It's the difference between hormones that heal and hormones that may inadvertently cause harm.",
     services: ["Perimenopause + menopause", "Men's health & TRT", "GLP-1 weight loss", "Personalized plans"],
     cta: {
       type: "multi",
@@ -320,7 +323,16 @@ function PanelBody({ clinic, taglineSize }: { clinic: Clinic; taglineSize: "lg" 
       >
         {clinic.tagline}
       </h3>
-      <p className="text-[15px] leading-7 text-slate-300 max-w-2xl">{clinic.body}</p>
+      {clinic.featuredQuote ? (
+        <blockquote
+          className="border-l-2 pl-4 italic text-[14px] leading-6 text-slate-200 max-w-2xl"
+          style={{ borderColor: clinic.accent.from }}
+        >
+          {clinic.featuredQuote}
+        </blockquote>
+      ) : (
+        <p className="text-[15px] leading-7 text-slate-300 max-w-2xl">{clinic.body}</p>
+      )}
       <div className="flex flex-wrap gap-2 pt-1">
         {clinic.services.map((service) => (
           <span
