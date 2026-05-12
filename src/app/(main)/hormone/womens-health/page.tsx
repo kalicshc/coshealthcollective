@@ -231,7 +231,7 @@ export default function WomensHealthPage() {
             <div className="mt-5 flex flex-wrap gap-x-8 gap-y-3">
               <div>
                 <span className="text-4xl font-black text-white">{usd(clinicFacts.hormone.initialConsult)}</span>
-                <span className="ml-2 text-sm text-slate-400">initial consult</span>
+                <span className="ml-2 text-sm text-slate-400">initial consult + first month</span>
               </div>
               <div>
                 <span className="text-3xl font-black text-white">{usd(clinicFacts.hormone.monthlyManagement)}</span>
