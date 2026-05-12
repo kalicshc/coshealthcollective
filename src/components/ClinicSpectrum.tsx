@@ -12,16 +12,16 @@ type SpectrumClinic = {
 // RGB values match the accents used in ClinicAccordion so the wave's color at any
 // X is the same hue as the tile sitting beneath it.
 const CLINICS: SpectrumClinic[] = [
-  { key: "dpc",        peak: 1 / 6,   rgb: [248, 202, 70] },
-  { key: "hormone",    peak: 1 / 2,   rgb: [247, 130, 184] },
-  { key: "hyperbaric", peak: 5 / 6,   rgb: [73, 217, 207] },
+  { key: "dpc",        peak: 1 / 6,   rgb: [225, 170, 30] },
+  { key: "hormone",    peak: 1 / 2,   rgb: [210, 70, 140] },
+  { key: "hyperbaric", peak: 5 / 6,   rgb: [30, 175, 170] },
 ];
 
 const NUM_BARS = 96;
 const SIGMA = 0.18;
 const BASE_HEIGHT = 8;
 const PEAK_HEIGHT = 86;
-const BASE_BRIGHT = 0.22;
+const BASE_BRIGHT = 0.30;
 const PEAK_BRIGHT = 1.0;
 
 function bell(x: number, peak: number, sigma = SIGMA) {
