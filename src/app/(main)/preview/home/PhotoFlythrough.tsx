@@ -301,6 +301,10 @@ export default function PhotoFlythrough({ images, masks }: { images?: string[]; 
         .vc { opacity:0; transform: translateY(40px); transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1);
           text-shadow: 0 1px 0 rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.85), 0 1px 18px rgba(0,0,0,0.7); }
         .vc[data-on="1"] { opacity:1; transform: translateY(0); }
+        /* Faded-out scenes stay stacked over the active one — kill their pointer
+           events so invisible CTAs (e.g. the Hormone consult) can't be clicked in
+           empty space. !important overrides the inline pointer-events:auto on CTAs. */
+        .vc[data-on="0"], .vc[data-on="0"] * { pointer-events: none !important; }
         .vc .stg { opacity:0; transform: translateY(18px); transition: opacity .55s cubic-bezier(.22,1,.36,1), transform .55s cubic-bezier(.22,1,.36,1); }
         .vc[data-on="1"] .stg { opacity:1; transform: translateY(0); }
         .vc-cta { transition: gap .3s ease; } .vc-cta:hover { gap: 16px; }
