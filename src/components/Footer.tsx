@@ -31,9 +31,16 @@ const quickLinks = [
 export function Footer() {
   return (
     <footer
-      className="mt-auto"
-      style={{ background: "hsl(210, 32%, 9%)", borderTop: "1px solid hsla(177, 70%, 59%, 0.15)" }}
+      className="mt-auto relative"
+      style={{ background: "hsl(210, 32%, 9%)" }}
     >
+      {/* Soft line: fade the top of the footer upward into the photo/section above
+          it (no hard border), mirroring the navbar's soft bottom edge. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-0 right-0"
+        style={{ top: "-96px", height: "96px", background: "linear-gradient(to bottom, transparent, hsl(210, 32%, 9%))" }}
+      />
       <div className="container mx-auto px-5 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
           {/* Brand column */}

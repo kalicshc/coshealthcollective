@@ -71,6 +71,8 @@ const NAV_LABELS = ["Welcome", "Direct Primary Care", "Hormone & Metabolic", "Hy
 
 const clamp = (n: number, lo = 0, hi = 1) => (n < lo ? lo : n > hi ? hi : n);
 const smooth = (x: number) => { const t = clamp(x); return t * t * (3 - 2 * t); };
+// smootherstep — gentler in/out than smoothstep, for silkier crossfades
+const smoother = (x: number) => { const t = clamp(x); return t * t * t * (t * (t * 6 - 15) + 10); };
 const N = SCENES.length;
 
 // 3D extruded drop-shadow per letter — darkens right behind each glyph for
@@ -147,9 +149,9 @@ function StoryCarousel({ tint }: { tint: string }) {
   );
 }
 
-function LeftNav({ active, onJump }: { active: number; onJump: (k: number) => void }) {
+function LeftNav({ active, onJump, hidden }: { active: number; onJump: (k: number) => void; hidden?: boolean }) {
   return (
-    <div className="hidden lg:flex" style={{ position: "fixed", left: 22, top: "50%", transform: "translateY(-50%)", zIndex: 55, flexDirection: "column", gap: 16, pointerEvents: "auto" }}>
+    <div className="hidden lg:flex" style={{ position: "fixed", left: 22, top: "50%", transform: "translateY(-50%)", zIndex: 55, flexDirection: "column", gap: 16, pointerEvents: hidden ? "none" : "auto", opacity: hidden ? 0 : 1, transition: "opacity .4s ease" }}>
       {NAV_LABELS.map((label, k) => {
         const on = active === k;
         return (
@@ -224,6 +226,8 @@ export default function PhotoFlythrough({ images, masks }: { images?: string[]; 
   // can derive `t` from window.scrollY alone — no getBoundingClientRect (layout read)
   // every frame.
   const metricsRef = useRef({ top: 0, travel: 1 });
+  const [navHidden, setNavHidden] = useState(false);
+  const navHiddenRef = useRef(false);
 
   function jumpTo(k: number) {
     const sec = sectionRef.current;
@@ -255,10 +259,12 @@ export default function PhotoFlythrough({ images, masks }: { images?: string[]; 
         const local = clamp((t - start) / seg);
         const scene = sceneRefs.current[i];
         if (scene) {
-          const fade = seg * 0.42; // long cross-scene fade — aurora colors blend into each other
-          const op = clamp(Math.min(smooth((t - (start - fade)) / fade), smooth(((end + fade) - t) / fade)));
+          const fade = seg * 0.46; // long cross-scene fade — aurora colors blend into each other
+          const op = clamp(Math.min(smoother((t - (start - fade)) / fade), smoother(((end + fade) - t) / fade)));
           scene.style.opacity = String(op);
-          scene.style.transform = `scale(${(1.05 + 0.34 * local).toFixed(4)})`;
+          // ease the zoom so it gently decelerates as a scene settles (premium drift),
+          // still mapped 1:1 to scroll — no temporal smoothing.
+          scene.style.transform = `scale(${(1.05 + 0.34 * smooth(local)).toFixed(4)})`;
           scene.style.visibility = op <= 0.01 ? "hidden" : "visible";
           scene.style.zIndex = String(i);
         }
@@ -279,6 +285,10 @@ export default function PhotoFlythrough({ images, masks }: { images?: string[]; 
       }
       const nav = t < 0.03 ? 0 : Math.min(N - 1, Math.floor(t * N)) + 1;
       if (nav !== navRef.current) { navRef.current = nav; setNavIdx(nav); }
+      // Hide the fixed, vertically-centered side nav once we scroll past the
+      // flythrough into the footer, so it doesn't overlap the footer content.
+      const pastEnd = window.scrollY > top + travel + window.innerHeight * 0.15;
+      if (pastEnd !== navHiddenRef.current) { navHiddenRef.current = pastEnd; setNavHidden(pastEnd); }
       if (heroRef.current) {
         const o = clamp(1 - t * 16);
         heroRef.current.style.opacity = String(o);
@@ -330,7 +340,7 @@ export default function PhotoFlythrough({ images, masks }: { images?: string[]; 
         }
       `}</style>
 
-      <LeftNav active={navIdx} onJump={jumpTo} />
+      <LeftNav active={navIdx} onJump={jumpTo} hidden={navHidden} />
 
       <div ref={stageRef} className="sticky top-0 h-screen w-full overflow-hidden" style={{ background: "hsl(220,32%,6%)", height: "100dvh" }}>
         {SCENES.map((s, i) => (
