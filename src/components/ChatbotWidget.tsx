@@ -14,7 +14,7 @@ const KALI_STYLES = `
       box-shadow:
         0 18px 42px rgba(0, 0, 0, 0.34),
         0 0 34px hsla(177, 70%, 50%, 0.2),
-        0 0 58px hsla(45, 90%, 55%, 0.1);
+        0 0 58px hsla(280, 66%, 56%, 0.12);
     }
     50% {
       box-shadow:
@@ -32,7 +32,7 @@ const KALI_STYLES = `
   .kali-avatar {
     background:
       radial-gradient(circle at 50% 52%, hsla(177,70%,59%,0.26), transparent 56%),
-      radial-gradient(circle at 32% 28%, hsla(45,90%,60%,0.22), transparent 34%),
+      radial-gradient(circle at 32% 28%, hsla(280,66%,62%,0.24), transparent 36%),
       radial-gradient(circle at 72% 22%, hsla(200,70%,59%,0.24), transparent 38%),
       radial-gradient(circle at 50% 50%, hsla(210,32%,9%,0.35), transparent 72%);
     padding: 0;
@@ -41,50 +41,59 @@ const KALI_STYLES = `
   }
   .kali-avatar img {
     border: 0;
-    filter: drop-shadow(0 0 14px hsla(177, 70%, 59%, 0.2));
+    filter: drop-shadow(0 0 12px hsla(177, 72%, 58%, 0.30)) drop-shadow(0 0 22px hsla(280, 66%, 62%, 0.22));
     -webkit-mask-image: radial-gradient(circle, black 63%, rgba(0,0,0,0.82) 76%, transparent 100%);
     mask-image: radial-gradient(circle, black 63%, rgba(0,0,0,0.82) 76%, transparent 100%);
     transform: scale(1.04);
   }
   .kali-status-dot {
-    box-shadow: 0 0 12px hsla(45,90%,60%,0.65);
+    box-shadow: 0 0 12px hsla(177,72%,58%,0.7);
   }
   .kali-label {
     background:
       linear-gradient(135deg, hsla(210,32%,12%,0.96), hsla(210,28%,9%,0.98)) padding-box,
-      linear-gradient(135deg, hsla(177,70%,59%,0.78), hsla(45,90%,60%,0.74), hsla(200,70%,59%,0.78)) border-box;
+      linear-gradient(135deg, hsla(177,72%,58%,0.82), hsla(280,66%,62%,0.78), hsla(190,78%,56%,0.82)) border-box;
     border: 1px solid transparent;
-    box-shadow: 0 10px 28px rgba(0,0,0,0.34), 0 0 18px hsla(177,70%,45%,0.16);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.34), 0 0 18px hsla(280,60%,50%,0.18);
     backdrop-filter: blur(12px);
   }
   @keyframes kali-panel-glow {
     0%, 100% {
       box-shadow:
         0 24px 64px rgba(0, 0, 0, 0.45),
-        0 0 38px hsla(177, 70%, 50%, 0.22),
-        0 0 70px hsla(45, 90%, 55%, 0.10);
+        0 0 38px hsla(177, 72%, 52%, 0.22),
+        0 0 70px hsla(280, 66%, 55%, 0.12);
     }
     50% {
       box-shadow:
         0 26px 70px rgba(0, 0, 0, 0.48),
-        0 0 52px hsla(200, 70%, 59%, 0.28),
-        0 0 88px hsla(177, 70%, 45%, 0.16);
+        0 0 52px hsla(280, 66%, 58%, 0.26),
+        0 0 88px hsla(177, 72%, 50%, 0.16);
     }
+  }
+  /* teal <-> purple gradient that flows continuously around the open box */
+  @keyframes kali-border-flow {
+    to { background-position: 0% 0%, -220% 0%; }
   }
   .kali-panel {
     background:
       linear-gradient(180deg, hsla(210, 24%, 12%, 0.985), hsla(210, 26%, 10%, 0.985)) padding-box,
-      linear-gradient(135deg, hsla(177, 70%, 59%, 0.85), hsla(45, 90%, 60%, 0.8) 45%, hsla(200, 70%, 59%, 0.85)) border-box;
-    border: 1.5px solid transparent;
+      linear-gradient(90deg, hsl(177,72%,55%), hsl(280,66%,62%), hsl(190,78%,56%), hsl(288,62%,60%), hsl(177,72%,55%)) border-box;
+    background-size: 100% 100%, 220% 100%;
+    border: 1.6px solid transparent;
+    animation: kali-border-flow 7s linear infinite, kali-panel-glow 4.6s ease-in-out infinite;
     box-shadow:
       0 24px 64px rgba(0, 0, 0, 0.45),
-      0 0 38px hsla(177, 70%, 50%, 0.22),
-      0 0 70px hsla(45, 90%, 55%, 0.10);
+      0 0 38px hsla(177, 72%, 52%, 0.22),
+      0 0 70px hsla(280, 66%, 55%, 0.12);
   }
   .kali-header {
     background:
-      linear-gradient(135deg, hsla(177, 70%, 55%, 0.22), hsla(45, 90%, 60%, 0.10) 45%, hsla(200, 70%, 59%, 0.20));
-    border-bottom: 1px solid hsla(177, 70%, 59%, 0.18);
+      linear-gradient(135deg, hsla(177, 72%, 55%, 0.22), hsla(280, 66%, 60%, 0.12) 45%, hsla(190, 78%, 56%, 0.20));
+    border-bottom: 1px solid hsla(280, 66%, 60%, 0.18);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .kali-avatar, .kali-panel { animation: none; }
   }
 `;
 
@@ -146,14 +155,14 @@ function KaliTriggerButton({ onClick, isOpen }: { onClick: () => void; isOpen: b
           {isOpen && (
             <div
               className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full text-[9px] font-bold"
-              style={{ background: "hsl(45,90%,60%)", color: "hsl(210,32%,12%)" }}
+              style={{ background: "hsl(280,64%,62%)", color: "hsl(0,0%,100%)" }}
             >
               x
             </div>
           )}
         </div>
         <span className="kali-label mt-1.5 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-black uppercase leading-none tracking-[0.14em] text-white">
-          <span className="kali-status-dot h-1.5 w-1.5 rounded-full" style={{ background: "hsl(45,90%,60%)" }} />
+          <span className="kali-status-dot h-1.5 w-1.5 rounded-full" style={{ background: "hsl(177,72%,56%)" }} />
           {isOpen ? "Close" : "Ask Kali"}
         </span>
       </button>
