@@ -72,6 +72,11 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   interactiveWidget: "resizes-content",
+  // The site is always dark — force browser UA surfaces (scrollbars, form
+  // controls, pre-paint canvas) and the mobile toolbar to match, regardless of
+  // the visitor's OS setting.
+  colorScheme: "dark",
+  themeColor: "#101a25",
 };
 
 const structuredData = {
