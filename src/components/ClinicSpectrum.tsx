@@ -10,11 +10,12 @@ type SpectrumClinic = {
 
 // Peaks line up with the centers of a 3-column tile grid below (≈ 1/6, 1/2, 5/6).
 // RGB values match the accents used in ClinicAccordion so the wave's color at any
-// X is the same hue as the tile sitting beneath it.
+// X is the same hue as the tile sitting beneath it. Palette comes from the logo:
+// royal blue (DPC) → violet (hormone) → teal (hyperbaric).
 const CLINICS: SpectrumClinic[] = [
-  { key: "dpc",        peak: 1 / 6,   rgb: [225, 170, 30] },
-  { key: "hormone",    peak: 1 / 2,   rgb: [210, 70, 140] },
-  { key: "hyperbaric", peak: 5 / 6,   rgb: [30, 175, 170] },
+  { key: "dpc",        peak: 1 / 6,   rgb: [36, 89, 249] },
+  { key: "hormone",    peak: 1 / 2,   rgb: [218, 56, 250] },
+  { key: "hyperbaric", peak: 5 / 6,   rgb: [0, 247, 255] },
 ];
 
 const NUM_BARS = 96;

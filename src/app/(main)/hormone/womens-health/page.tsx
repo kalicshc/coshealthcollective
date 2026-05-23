@@ -266,6 +266,27 @@ export default function WomensHealthPage() {
               </a>
             </div>
           </div>
+
+          <div
+            className="mt-6 rounded-[34px] border p-6 lg:p-8"
+            style={{
+              borderColor: "hsla(331,95%,72%,0.18)",
+              background: "linear-gradient(135deg, hsla(331,95%,72%,0.08), hsla(210,22%,16%,0.72))",
+              boxShadow: "0 18px 60px rgba(7,10,18,0.28)",
+            }}
+          >
+            <div className="h-0.5 w-12 rounded-full" style={{ background: "linear-gradient(135deg, hsl(331,95%,72%), hsl(271,74%,55%))" }} />
+            <h3 className="mt-5 text-xl font-black text-white">Topical estrogen cream — telehealth only</h3>
+            <div className="mt-4 flex flex-wrap items-baseline gap-x-6 gap-y-2">
+              <div>
+                <span className="text-3xl font-black text-white">{usd(clinicFacts.hormone.topicalEstrogenTelehealth)}</span>
+                <span className="ml-2 text-sm text-slate-400">{clinicFacts.hormone.topicalEstrogenDurationMonths}-month telehealth visit</span>
+              </div>
+            </div>
+            <p className="mt-3 text-sm leading-7 text-slate-300">
+              A simple telehealth visit for topical estrogen cream only — covers {clinicFacts.hormone.topicalEstrogenDurationMonths} months. For patients who already know they want vaginal/topical estrogen and don&apos;t need the full hormone workup. Medication is billed separately.
+            </p>
+          </div>
         </div>
       </section>
 

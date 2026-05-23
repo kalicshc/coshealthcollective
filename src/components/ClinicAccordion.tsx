@@ -45,30 +45,34 @@ const MEET_GREET_URL =
 const HORMONE_CONSULT_URL =
   "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-5688330a3b52e266";
 
+// Palette extends the logo's hues for max chroma without raising lightness:
+// royal blue (DPC) | magenta-violet (hormone) | electric cyan (hyperbaric).
+// Saturation pushed near max, lightness held ≈55-62 so colors deepen rather
+// than glow, and hues spread wider so the wave never muddies in the middle.
 const ACCENT = {
-  // gold/amber — moved from hyperbaric to dpc
-  amber: {
-    from: "hsl(45, 90%, 62%)",
-    to: "hsl(28, 80%, 60%)",
-    glow: "hsla(45, 90%, 60%, 0.45)",
-    chipBorder: "hsla(45, 90%, 60%, 0.34)",
-    statusDot: "hsl(45, 90%, 60%)",
+  // deep royal blue — DPC (anchored cool midpoint)
+  blue: {
+    from: "hsl(225, 95%, 56%)",
+    to: "hsl(238, 90%, 48%)",
+    glow: "hsla(225, 95%, 54%, 0.55)",
+    chipBorder: "hsla(225, 95%, 56%, 0.38)",
+    statusDot: "hsl(225, 95%, 56%)",
   },
-  // fuchsia/violet — hormone, unchanged
-  fuchsia: {
-    from: "hsl(331, 95%, 72%)",
-    to: "hsl(271, 74%, 60%)",
-    glow: "hsla(331, 95%, 72%, 0.45)",
-    chipBorder: "hsla(331, 95%, 72%, 0.32)",
-    statusDot: "hsl(331, 95%, 72%)",
+  // magenta-violet — hormone (pushed warm so it clearly opposes the cyan)
+  purple: {
+    from: "hsl(290, 95%, 60%)",
+    to: "hsl(272, 90%, 52%)",
+    glow: "hsla(290, 95%, 56%, 0.55)",
+    chipBorder: "hsla(290, 95%, 60%, 0.38)",
+    statusDot: "hsl(290, 95%, 60%)",
   },
-  // teal/aqua — moved from dpc to hyperbaric
-  aqua: {
-    from: "hsl(177, 70%, 55%)",
-    to: "hsl(200, 70%, 60%)",
-    glow: "hsla(177, 70%, 55%, 0.45)",
-    chipBorder: "hsla(177, 70%, 59%, 0.32)",
-    statusDot: "hsl(160, 70%, 55%)",
+  // pure cyan — hyperbaric (maxed for max contrast against the magenta)
+  teal: {
+    from: "hsl(182, 100%, 50%)",
+    to: "hsl(198, 95%, 54%)",
+    glow: "hsla(182, 100%, 48%, 0.55)",
+    chipBorder: "hsla(182, 100%, 50%, 0.38)",
+    statusDot: "hsl(182, 100%, 50%)",
   },
 };
 
@@ -85,7 +89,7 @@ const CLINICS: Clinic[] = [
     services: ["Unlimited visits", "Same/next-day care", "No surprise bills", "Labs at cost"],
     cta: { type: "single", primary: { label: "Book a Free Meet & Greet", href: MEET_GREET_URL, external: true } },
     learnMoreHref: "/direct-primary-care",
-    accent: ACCENT.amber,
+    accent: ACCENT.blue,
   },
   {
     key: "hormone",
@@ -108,7 +112,7 @@ const CLINICS: Clinic[] = [
       ],
     },
     learnMoreHref: "/hormone",
-    accent: ACCENT.fuchsia,
+    accent: ACCENT.purple,
   },
   {
     key: "hyperbaric",
@@ -122,7 +126,7 @@ const CLINICS: Clinic[] = [
     services: ["Fibromyalgia", "UC + Crohn's", "Long COVID", "Sports recovery"],
     cta: { type: "form" },
     learnMoreHref: "/hyperbaric",
-    accent: ACCENT.aqua,
+    accent: ACCENT.teal,
   },
 ];
 

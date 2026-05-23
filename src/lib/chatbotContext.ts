@@ -80,7 +80,6 @@ Rules:
 - \`personal-training\` — personal training
 - \`strength-wellness-coaching\` — strength & wellness coaching
 - \`allergy-slit\` — allergy SLIT (sublingual immunotherapy)
-- \`a-la-carte\` — à la carte non-membership services
 - \`longevity-toolkit\` — free longevity toolkit download
 - \`remote-monitoring\` — remote monitoring program
 - \`referrals\` — referrals & care coordination
@@ -91,7 +90,6 @@ Rules:
 
 ## Info / nav pages
 - \`home\` — homepage
-- \`services\` — full service list
 - \`faq\` — FAQ
 - \`about\` — about CSHC / the team
 - \`blog\` — blog index

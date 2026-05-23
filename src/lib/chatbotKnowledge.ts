@@ -116,6 +116,8 @@ Plans match stage of life — perimenopause is chaotic and hormone-swingy; post-
 
 There's a free symptom quiz — no email required until the end. Use the \`hormone-womens-quiz\` CTA when it fits ("I've been having hot flashes," "could this be perimenopause," "I'm in my 40s and something's off," etc.).
 
+**Topical estrogen cream — telehealth only (women's only):** ${usd(hormone.topicalEstrogenTelehealth)} for a ${hormone.topicalEstrogenDurationMonths}-month telehealth visit, vaginal/topical estrogen cream only. For women who already know they want topical estrogen and don't need the full hormone workup. Medication is billed separately. If someone asks specifically about vaginal/topical estrogen, dryness, painful sex, or recurrent UTIs and just wants the cream — this is the cheaper, simpler option.
+
 ## Men's Hormone Health & TRT
 
 Comprehensive eval BEFORE deciding on TRT. Sometimes the answer isn't TRT at all — elevated estradiol, high SHBG, sleep apnea, thyroid dysfunction, or metabolic issues are common drivers of "low T" symptoms.

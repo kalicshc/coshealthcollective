@@ -19,7 +19,6 @@ export type ChatCtaTag =
   | "personal-training"
   | "strength-wellness-coaching"
   | "allergy-slit"
-  | "a-la-carte"
   | "longevity-toolkit"
   | "remote-monitoring"
   | "referrals"
@@ -28,7 +27,6 @@ export type ChatCtaTag =
   | "hbot-why-2ata"
   // Info / nav pages
   | "home"
-  | "services"
   | "faq"
   | "about"
   | "blog"
@@ -190,12 +188,6 @@ const CTA_BY_TAG: Record<ChatCtaTag, ChatCta> = {
     book: { label: "Allergy SLIT", href: "/allergy-slit" },
     learnMore: { label: "Book a Meet & Greet", href: BOOK_MEET_GREET, external: true },
   },
-  "a-la-carte": {
-    tag: "a-la-carte",
-    kind: "book",
-    book: { label: "À La Carte Services", href: "/a-la-carte" },
-    learnMore: { label: "All services", href: "/services" },
-  },
   "longevity-toolkit": {
     tag: "longevity-toolkit",
     kind: "book",
@@ -232,11 +224,6 @@ const CTA_BY_TAG: Record<ChatCtaTag, ChatCta> = {
     tag: "home",
     kind: "book",
     book: { label: "Homepage", href: "/" },
-  },
-  services: {
-    tag: "services",
-    kind: "book",
-    book: { label: "All Services", href: "/services" },
   },
   faq: {
     tag: "faq",

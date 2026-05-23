@@ -19,8 +19,6 @@ const quickLinks = [
   { label: "Direct Primary Care", href: "/direct-primary-care" },
   { label: "Hormone & Weight Loss", href: "/hormone" },
   { label: "Hyperbaric", href: "/hyperbaric" },
-  { label: "All Services", href: "/services" },
-  { label: "A La Carte", href: "/a-la-carte" },
   { label: "About Us", href: "/about" },
   { label: "For Businesses", href: "/for-businesses" },
   { label: "Blog", href: "/blog" },

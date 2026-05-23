@@ -33,8 +33,10 @@ export const clinicFacts = {
     inPerson: 115,
   },
   hormone: {
-    initialConsult: 249,
-    monthlyManagement: 149,
+    initialConsult: 200,
+    monthlyManagement: 100,
+    topicalEstrogenTelehealth: 89,
+    topicalEstrogenDurationMonths: 3,
   },
   hbot: {
     pressure: "2.0 ATA",

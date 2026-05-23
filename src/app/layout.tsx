@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { clinicFacts, usd } from "@/lib/clinicFacts";
 
@@ -48,13 +50,13 @@ export const metadata: Metadata = {
     title: "Colorado Springs Health Collective | Direct Primary Care, Hormone & Hyperbaric",
     description:
       "Modern healthcare in Colorado Springs — DPC membership, hormone therapy, and hyperbaric oxygen. Three clinics. One collective.",
-    images: [{ url: "/share.png", width: 1024, height: 1024, alt: "Pikes Peak at sunset through the fog — Colorado Springs Health Collective" }],
+    images: [{ url: "/share-aurora.png", width: 1200, height: 630, alt: "Aurora over the mountains — Colorado Springs Health Collective" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Colorado Springs Health Collective",
     description: "DPC, hormone therapy, and hyperbaric oxygen in Colorado Springs, CO.",
-    images: ["/share.png"],
+    images: ["/share-aurora.png"],
   },
   robots: {
     index: true,
@@ -172,7 +174,11 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </head>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <Analytics />
+        <SpeedInsights />
+      </body>
     </html>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
@@ -10,7 +10,6 @@ const navLinks = [
   { label: "Direct Primary Care", href: "/direct-primary-care" },
   { label: "Hormone & Weight Loss", href: "/hormone" },
   { label: "Hyperbaric", href: "/hyperbaric" },
-  { label: "Services", href: "/services" },
   { label: "About Us", href: "/about" },
   { label: "For Businesses", href: "/for-businesses" },
   { label: "Blog", href: "/blog" },
@@ -22,15 +21,50 @@ export function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const isHome = pathname === "/";
+  // On the cinematic flythrough (now the live homepage, plus the /preview/home
+  // drafts) the bar melts into the photos: solid where the logo/links/buttons sit,
+  // fading to transparent at its bottom edge (a "soft line"), and the top
+  // logo/wordmark row collapses on scroll-down.
+  const onFlythrough = isHome || (!!pathname && pathname.startsWith("/preview/home"));
+  const navTextShadow = onFlythrough ? "0 1px 2px rgba(0,0,0,0.55), 0 2px 10px rgba(0,0,0,0.7)" : undefined;
+
+  // On the preview, collapse the logo/wordmark row when scrolling DOWN, and bring
+  // it back the moment the user scrolls UP (any reversal). Always shown at the top.
+  const [collapsedState, setCollapsedState] = useState(false);
+  const lastY = useRef(0);
+  useEffect(() => {
+    if (!onFlythrough) return;
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (y <= 60) setCollapsedState(false);
+      else if (y > lastY.current + 4) setCollapsedState(true);   // scrolling down
+      else if (y < lastY.current - 4) setCollapsedState(false);  // scrolling up
+      lastY.current = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [onFlythrough]);
+  const collapsed = onFlythrough && collapsedState;
 
   return (
     <nav
       className="fixed top-0 left-0 right-0 z-50"
-      style={{ background: "hsla(210, 32%, 12%, 0.95)", backdropFilter: "blur(10px)" }}
+      style={onFlythrough
+        ? { background: "linear-gradient(to bottom, hsla(214,42%,8%,0.95) 0%, hsla(214,42%,8%,0.92) 72%, hsla(214,42%,8%,0.5) 90%, transparent 100%)" }
+        : { background: "hsla(210, 32%, 12%, 0.95)", backdropFilter: "blur(10px)" }}
     >
       {/* Row 1: Logo + name + Resources */}
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="hidden md:flex items-center justify-between py-2 border-b" style={{ borderColor: "hsla(177, 70%, 59%, 0.1)" }}>
+        <div className="hidden md:flex items-center justify-between border-b" style={{
+          borderColor: onFlythrough ? "transparent" : "hsla(177, 70%, 59%, 0.1)",
+          overflow: "hidden",
+          maxHeight: collapsed ? 0 : 60,
+          opacity: collapsed ? 0 : 1,
+          paddingTop: collapsed ? 0 : 8,
+          paddingBottom: collapsed ? 0 : 8,
+          transition: "max-height .35s ease, opacity .3s ease, padding .35s ease",
+        }}>
 
           {/* Left: back arrow + logo + wordmark */}
           <div className="flex items-center gap-3">
@@ -61,10 +95,10 @@ export function Navbar() {
                 priority
               />
               <div className="leading-tight">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em]" style={{ color: "hsl(177, 70%, 65%)" }}>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em]" style={{ color: "hsl(177, 70%, 65%)", textShadow: navTextShadow }}>
                   Colorado Springs
                 </p>
-                <p className="text-sm font-bold text-white">Health Collective</p>
+                <p className="text-sm font-bold text-white" style={{ textShadow: navTextShadow }}>Health Collective</p>
               </div>
             </Link>
           </div>
@@ -84,7 +118,7 @@ export function Navbar() {
         </div>
 
         {/* Row 2: Nav links centered (desktop) */}
-        <div className="hidden md:flex items-center justify-center gap-6 py-2">
+        <div className="hidden md:flex items-center justify-center gap-6 py-2" style={{ marginTop: onFlythrough ? -6 : undefined }}>
           {navLinks.map((link, index) => (
             <span key={link.label} className="flex items-center gap-6">
               <Link
@@ -92,6 +126,7 @@ export function Navbar() {
                 className="hover:opacity-70 transition-opacity text-sm font-medium"
                 style={{
                   color: pathname === link.href ? "hsl(45, 90%, 60%)" : "hsl(177, 70%, 65%)",
+                  textShadow: navTextShadow,
                 }}
               >
                 {link.label}

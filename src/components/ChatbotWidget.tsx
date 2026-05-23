@@ -728,7 +728,7 @@ export function ChatbotWidget() {
     <>
       <div
         className="fixed right-4 bottom-4 z-50 sm:right-6 sm:bottom-6"
-        style={triggerHiddenOnMobile ? { display: "none" } : undefined}
+        style={triggerHiddenOnMobile ? { display: "none" } : { bottom: "calc(env(safe-area-inset-bottom) + 1.1rem)" }}
       >
         <KaliTriggerButton onClick={() => setIsOpen((open) => !open)} isOpen={isOpen} />
       </div>

@@ -23,8 +23,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "/personal-training", priority: 0.75, changeFrequency: "monthly" },
     { url: "/precision-medicine", priority: 0.75, changeFrequency: "monthly" },
     { url: "/allergy-slit", priority: 0.75, changeFrequency: "monthly" },
-    { url: "/a-la-carte", priority: 0.75, changeFrequency: "monthly" },
-    { url: "/services", priority: 0.75, changeFrequency: "monthly" },
     { url: "/remote-monitoring", priority: 0.7, changeFrequency: "monthly" },
     { url: "/referrals-care-coordination", priority: 0.7, changeFrequency: "monthly" },
     { url: "/partner-network", priority: 0.7, changeFrequency: "monthly" },

@@ -141,13 +141,6 @@ export default function About() {
                 >
                   Book a Free Meet &amp; Greet
                 </a>
-                <Link
-                  href="/services"
-                  className="inline-block px-8 py-4 rounded-full font-semibold text-lg border border-white/20 hover:bg-white/5 transition-colors"
-                  style={{ color: "hsl(210, 40%, 89%)" }}
-                >
-                  View All Services
-                </Link>
               </div>
             </div>
           </div>

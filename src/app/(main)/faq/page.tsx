@@ -138,10 +138,6 @@ export default function FAQ() {
                 Direct Primary Care
               </Link>
               <span style={{ color: "hsl(0, 0%, 50%)" }}>|</span>
-              <Link href="/services" className="hover:opacity-80 transition-opacity" style={{ color: "hsl(177, 70%, 59%)" }}>
-                All Services
-              </Link>
-              <span style={{ color: "hsl(0, 0%, 50%)" }}>|</span>
               <Link href="/about" className="hover:opacity-80 transition-opacity" style={{ color: "hsl(177, 70%, 59%)" }}>
                 About Us
               </Link>
