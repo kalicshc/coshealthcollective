@@ -537,6 +537,17 @@ function Motes() {
   return <canvas ref={ref} aria-hidden style={{ position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: 2, pointerEvents: "none" }} />;
 }
 
+// Fullscreen toggle that also works in Safari (which still uses webkit-prefixed APIs).
+function toggleFullscreen(el: HTMLElement | null) {
+  const d = document as Document & { webkitFullscreenElement?: Element; webkitExitFullscreen?: () => void };
+  const e = el as (HTMLElement & { webkitRequestFullscreen?: () => void }) | null;
+  if (d.fullscreenElement || d.webkitFullscreenElement) {
+    (d.exitFullscreen || d.webkitExitFullscreen)?.call(d);
+  } else if (e) {
+    (e.requestFullscreen || e.webkitRequestFullscreen)?.call(e);
+  }
+}
+
 // Map panel position → outer flex alignment + glass max width.
 function panelLayout(s: DeckScene): { justify: string; align: string; maxW: string } {
   switch (s.panel) {
@@ -640,8 +651,7 @@ export default function CriticalWindowDeck() {
         case "n": case "N": e.preventDefault(); setNotesVisible((v) => !v); break;
         case "f": case "F":
           e.preventDefault();
-          if (document.fullscreenElement) document.exitFullscreen();
-          else rootRef.current?.requestFullscreen?.();
+          toggleFullscreen(rootRef.current);
           break;
       }
     }
@@ -772,7 +782,7 @@ export default function CriticalWindowDeck() {
 
       {/* Fullscreen toggle */}
       <button
-        onClick={(e) => { e.stopPropagation(); if (document.fullscreenElement) document.exitFullscreen(); else rootRef.current?.requestFullscreen?.(); }}
+        onClick={(e) => { e.stopPropagation(); toggleFullscreen(rootRef.current); }}
         aria-label="Toggle fullscreen"
         style={{ position: "absolute", bottom: 16, right: 18, opacity: chromeVisible ? 1 : 0, transition: "opacity .4s", pointerEvents: chromeVisible ? "auto" : "none", cursor: "pointer", padding: "8px 14px", borderRadius: 999, fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#fff", background: "rgba(8,13,20,0.5)", border: "1px solid rgba(255,255,255,0.3)", backdropFilter: "blur(6px)" }}
       >

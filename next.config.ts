@@ -1,6 +1,16 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Allow the presenter phone (reached by LAN/hotspot IP) to use the dev server. Next 16 blocks
+  // non-localhost dev origins by default, which leaves the phone's page un-hydrated. Covers the
+  // iPhone-hotspot subnet (172.20.10.x) and common home ranges. (Production has no such limit.)
+  allowedDevOrigins: [
+    "172.20.10.9",
+    "192.168.131.149",
+    "172.20.10.*",
+    "192.168.*.*",
+    "10.*.*.*",
+  ],
   async redirects() {
     return [
       {
