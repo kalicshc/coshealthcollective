@@ -784,7 +784,7 @@ export default function CriticalWindowDeck() {
       <button
         onClick={(e) => { e.stopPropagation(); toggleFullscreen(rootRef.current); }}
         aria-label="Toggle fullscreen"
-        style={{ position: "absolute", bottom: 16, right: 18, opacity: chromeVisible ? 1 : 0, transition: "opacity .4s", pointerEvents: chromeVisible ? "auto" : "none", cursor: "pointer", padding: "8px 14px", borderRadius: 999, fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#fff", background: "rgba(8,13,20,0.5)", border: "1px solid rgba(255,255,255,0.3)", backdropFilter: "blur(6px)" }}
+        style={{ position: "absolute", bottom: 16, right: 18, zIndex: 6, opacity: chromeVisible ? 1 : 0, transition: "opacity .4s", pointerEvents: chromeVisible ? "auto" : "none", cursor: "pointer", padding: "8px 14px", borderRadius: 999, fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#fff", background: "rgba(8,13,20,0.5)", border: "1px solid rgba(255,255,255,0.3)", backdropFilter: "blur(6px)" }}
       >
         ⤢ Fullscreen
       </button>
