@@ -13,7 +13,7 @@
  * first/last · F = fullscreen · N = toggle speaker notes. Cursor + chrome auto-hide when idle.
  */
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import QRCode from "qrcode";
 import { SCENES, type DeckScene, type GraphShape } from "./deckContent";
 
@@ -38,18 +38,70 @@ const SOFT = "rgba(44,95,93,0.12)"; // subtle accent-tinted pill background
 
 const TSOFT_DARK = "0 1px 2px rgba(0,0,0,0.45)"; // faint legibility lift for off-white on dark glass
 
-/** Render text with **bold** and *emphasis* spans — both render in the accent color (bold = heavy
- *  weight, single = normal weight). No italics, per the design rules. */
+// Bumped each time a slide finishes coming in; count-ups read it to (re)play on slide entry.
+const PlayContext = createContext(0);
+
+/** A number that rolls up from 0 to its target when its slide lands. Inherits surrounding style. */
+function CountUp({ prefix, value, suffix, decimals }: { prefix: string; value: number; suffix: string; decimals: number }) {
+  const gen = useContext(PlayContext);
+  const [disp, setDisp] = useState(value);
+  useEffect(() => {
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) { setDisp(value); return; }
+    let raf = 0;
+    const dur = 850;
+    const t0 = performance.now();
+    const tick = (t: number) => {
+      const p = Math.min(1, (t - t0) / dur);
+      const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic — quick, then settles
+      setDisp(value * eased);
+      if (p < 1) raf = requestAnimationFrame(tick);
+      else setDisp(value);
+    };
+    setDisp(0);
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [gen, value]);
+  return <>{prefix}{disp.toFixed(decimals)}{suffix}</>;
+}
+
+// "~75%" / "+2.9%" / "84%" / "3×" → static prefix, rolling number, static suffix.
+function parseCountUp(content: string): { prefix: string; value: number; suffix: string; decimals: number } | null {
+  const m = content.match(/^([^\d.-]*)(-?\d+(?:\.\d+)?)(.*)$/);
+  if (!m) return null;
+  const [, prefix, num, suffix] = m;
+  const decimals = num.includes(".") ? num.split(".")[1].length : 0;
+  return { prefix, value: parseFloat(num), suffix, decimals };
+}
+
+/** Inner text: turns {{42%}} tokens into animated count-ups; everything else passes through. */
+function Inline({ text }: { text: string }) {
+  const parts = text.split(/(\{\{[^}]+\}\})/g);
+  return (
+    <>
+      {parts.map((p, i) => {
+        if (p.startsWith("{{") && p.endsWith("}}")) {
+          const c = parseCountUp(p.slice(2, -2));
+          if (c) return <CountUp key={i} {...c} />;
+          return <span key={i}>{p.slice(2, -2)}</span>;
+        }
+        return p ? <span key={i}>{p}</span> : null;
+      })}
+    </>
+  );
+}
+
+/** Render text with **bold** and *emphasis* spans (both in the accent color), plus {{n}} count-ups.
+ *  No italics, per the design rules. */
 function Rich({ text, accent }: { text: string; accent: string }) {
   const parts = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g);
   return (
     <>
       {parts.map((p, i) => {
         if (p.startsWith("**") && p.endsWith("**"))
-          return <strong key={i} style={{ fontWeight: 800, color: accent }}>{p.slice(2, -2)}</strong>;
+          return <strong key={i} style={{ fontWeight: 800, color: accent }}><Inline text={p.slice(2, -2)} /></strong>;
         if (p.startsWith("*") && p.endsWith("*") && p.length > 2)
-          return <span key={i} style={{ color: accent, fontWeight: 600 }}>{p.slice(1, -1)}</span>;
-        return <span key={i}>{p}</span>;
+          return <span key={i} style={{ color: accent, fontWeight: 600 }}><Inline text={p.slice(1, -1)} /></span>;
+        return <Inline key={i} text={p} />;
       })}
     </>
   );
@@ -65,7 +117,7 @@ function Spark({ shape, color }: { shape: GraphShape; color: string }) {
   return (
     <svg viewBox="0 0 180 80" width="100%" height="70" preserveAspectRatio="none" aria-hidden>
       <line x1="0" y1="79" x2="180" y2="79" stroke="rgba(31,42,46,0.18)" strokeWidth="1" />
-      <polyline points={pts[shape]} fill="none" stroke={color} strokeWidth="3" strokeLinejoin="round" strokeLinecap="round" />
+      <polyline className="cwl-spark" points={pts[shape]} fill="none" stroke={color} strokeWidth="3" strokeLinejoin="round" strokeLinecap="round" />
     </svg>
   );
 }
@@ -501,6 +553,7 @@ export default function CriticalWindowDeck() {
   const [shown, setShown] = useState(true);
   const [chromeVisible, setChromeVisible] = useState(true);
   const [notesVisible, setNotesVisible] = useState(false);
+  const [playGen, setPlayGen] = useState(0); // bumps when a slide finishes entering → replays count-ups
   const rootRef = useRef<HTMLDivElement>(null);
   const idxRef = useRef(0);
   const animatingRef = useRef(false);
@@ -512,6 +565,9 @@ export default function CriticalWindowDeck() {
   useEffect(() => {
     SCENES.forEach((sc) => { const img = new Image(); img.src = `${STILLS}/${sc.still}.webp`; });
   }, []);
+
+  // When a slide finishes entering (glass shown), bump the play generation so count-ups animate.
+  useEffect(() => { if (shown) setPlayGen((g) => g + 1); }, [shown]);
 
   // Advance/retreat: fade the glass out (revealing the bare photo for a beat), swap the still
   // (it crossfades + eases out of a slight zoom), then fade the new glass in. ~1.2s total.
@@ -638,6 +694,8 @@ export default function CriticalWindowDeck() {
         .cwl-navitem:hover .cwl-navtick { transform: scale(1.7); }
         .cwl-navlabel { position: absolute; left: 18px; top: 50%; transform: translateY(-50%) translateX(-6px); opacity: 0; transition: opacity .16s ease, transform .16s ease; white-space: nowrap; font-size: 12px; font-weight: 600; letter-spacing: .01em; color: #fff; background: rgba(8,13,20,0.72); padding: 4px 10px; border-radius: 7px; pointer-events: none; box-shadow: 0 2px 12px rgba(0,0,0,0.45); backdrop-filter: blur(4px); }
         .cwl-navitem:hover .cwl-navlabel { opacity: 1; transform: translateY(-50%) translateX(0); }
+        .cwl-spark { stroke-dasharray: 640; stroke-dashoffset: 640; }
+        .cwl-shown .cwl-spark { stroke-dashoffset: 0; transition: stroke-dashoffset 1.05s cubic-bezier(.22,1,.36,1) .2s; }
       `}</style>
 
       {/* Background stack — only the active still and its immediate neighbors are mounted, so the
@@ -694,7 +752,9 @@ export default function CriticalWindowDeck() {
             display: "flex", alignItems: "center", justifyContent: "center",
           }}
         >
-          <SlideBody s={scene} />
+          <PlayContext.Provider value={playGen}>
+            <SlideBody s={scene} />
+          </PlayContext.Provider>
 
           {/* n / 26 pill inside the glass, bottom-right (hidden on moment slides). */}
           {showFooter && (

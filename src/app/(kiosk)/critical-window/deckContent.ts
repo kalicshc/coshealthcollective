@@ -316,7 +316,7 @@ export const SCENES: DeckScene[] = [
     markerList: [
       { label: "Everyone", text: "Lifestyle is the foundation — for every woman, with or without hormones." },
       { label: "Mild symptoms", text: "Lifestyle first. Most get through with manageable symptoms — no HRT needed." },
-      { label: "In the window", text: "Bothersome symptoms, under 60 / within 10 years: HRT is appropriate — **~75% fewer hot flashes**, paired with lifestyle." },
+      { label: "In the window", text: "Bothersome symptoms, under 60 / within 10 years: HRT is appropriate — **{{~75%}} fewer hot flashes**, paired with lifestyle." },
       { label: "Contraindicated", text: "Breast cancer, clots, stroke: lifestyle + non-hormonal meds (incl. **fezolinetant**). Vaginal estrogen often still fine." },
       { label: "Outside the window", text: "Past 10 years / over 60: lifestyle **is** the intervention; starting systemic HRT this late carries more risk." },
     ],
@@ -364,7 +364,7 @@ export const SCENES: DeckScene[] = [
       { header: "High-intensity intervals", items: ["Heart, insulin sensitivity"] },
       { header: "Impact / plyometrics", items: ["Bone density, balance, fewer falls"] },
     ],
-    band: "LIFTMOR (2018): postmenopausal women lifting heavy **gained ~3% spine density (+2.9%)** in 8 months — the control group *lost* bone. And it’s **never too late**; people start in their 80s and transform.",
+    band: "LIFTMOR (2018): postmenopausal women lifting heavy **gained ~3% spine density ({{+2.9%}})** in 8 months — the control group *lost* bone. And it’s **never too late**; people start in their 80s and transform.",
     transition: { dissolve: "fade", durationS: 2.5, motion: "Trail rises to a massive granite monolith glowing in golden light; glass fades." },
     notes:
       "\"Specifically: lift heavy. Deadlifts, squats, presses — real load, not pink dumbbells. Bone " +
@@ -429,7 +429,7 @@ export const SCENES: DeckScene[] = [
     eyebrow: "exercise is medicine for the rest of you",
     headline: "Hot flashes, mood, and sleep",
     markerList: [
-      { label: "Hot flashes", text: "Resistance training cut hot-flash frequency **~50%** in one trial — endorphins steadying the brain's thermostat." },
+      { label: "Hot flashes", text: "Resistance training cut hot-flash frequency **{{~50%}}** in one trial — endorphins steadying the brain's thermostat." },
       { label: "Mood & sleep", text: "Big drops in depression (**SMD −1.04**) and anxiety — and better sleep across every kind of exercise." },
     ],
     footnote: "**No drug builds bone, burns fat, clears amyloid, steadies your thermostat, fixes sleep, and lifts mood — all at once. Exercise does.**",
@@ -496,7 +496,7 @@ export const SCENES: DeckScene[] = [
         "Worth asking your provider about — not a recommendation from the stage",
       ] },
     ],
-    band: "**CBT-I beats sleeping pills — and the effects last.** In the MsFLASH trial, **84%** of women landed in the no-insomnia range at 24 weeks vs 43% on education alone. Pair it with good habits and your cleaning crew gets the full shift.",
+    band: "**CBT-I beats sleeping pills — and the effects last.** In the MsFLASH trial, **{{84%}}** of women landed in the no-insomnia range at 24 weeks vs 43% on education alone. Pair it with good habits and your cleaning crew gets the full shift.",
     transition: { dissolve: "fade", durationS: 2.5, motion: "Night lifts to first light; camera rises to a Colorado ridgeline catching warm dawn sun; glass fades." },
     notes:
       "\"So how do you actually fix it? First, a myth to retire: sleep hygiene alone has NOT been shown " +
@@ -614,7 +614,7 @@ export const SCENES: DeckScene[] = [
     eyebrow: "stress isn’t just in your head",
     headline: "Stress isn’t just in your head — it’s in your hormones",
     markerList: [
-      { label: "It worsens symptoms", text: "SWAN, 2,718 women over 9 years: those upset by a stressful life event had **21% more hot flashes** — independent of age, smoking, and menopause stage. Stress severity tracks symptom severity even after accounting for hormone levels." },
+      { label: "It worsens symptoms", text: "SWAN, 2,718 women over 9 years: those upset by a stressful life event had **{{21%}} more hot flashes** — independent of age, smoking, and menopause stage. Stress severity tracks symptom severity even after accounting for hormone levels." },
       { label: "It rewires the response", text: "Chronic stress holds **cortisol** high → insulin resistance, visceral fat, inflammation — the exact triad that shifts estrogen receptors toward **pro-inflammatory** signaling. Stress changes how the body responds to its own hormones." },
       { label: "Trauma history counts", text: "PTSD symptoms carry **3× the odds** of sleep trouble, 1.7× hot flashes, 2.2× vaginal irritation. A history of abuse or instability tracks with a harder transition decades later — not imagined, biologically wired." },
     ],
@@ -818,7 +818,7 @@ export const SCENES: DeckScene[] = [
         "Talk with your partner",
       ] },
     ],
-    band: "**And don’t forget lifestyle — exercise and sleep move this too:** exercise improves desire, arousal, lubrication & blood flow (~15% gain in sexual-function scores), and poor sleep raises sexual-dysfunction risk ~50%.",
+    band: "**And don’t forget lifestyle — exercise and sleep move this too:** exercise improves desire, arousal, lubrication & blood flow ({{~15%}} gain in sexual-function scores), and poor sleep raises sexual-dysfunction risk ~50%.",
     transition: { dissolve: "fade", durationS: 2.5, motion: "Camera drifts to two slender aspens grown together, glowing in warm golden light; glass fades." },
     notes:
       "\"Here's the part that should leave you hopeful: almost all of this is fixable.\"\n\nVaginal " +
