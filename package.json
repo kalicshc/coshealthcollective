@@ -8,9 +8,14 @@
     "start": "next start",
     "lint": "eslint",
     "export": "node scripts/export-print.mjs",
-    "export:all": "node scripts/export-print.mjs"
+    "export:all": "node scripts/export-print.mjs",
+    "gen:stills": "node --env-file=.env.local scripts/gen-deck-stills.mjs",
+    "gen:images": "node --env-file=.env.local scripts/gen-deck-images.mjs",
+    "gen:videos": "node --env-file=.env.local scripts/gen-deck-videos.mjs",
+    "gen:nature": "node --env-file=.env.local scripts/gen-deck-nature.mjs"
   },
   "dependencies": {
+    "@fal-ai/client": "^1.10.1",
     "@types/nodemailer": "^8.0.0",
     "@types/qrcode": "^1.5.6",
     "@vercel/analytics": "^2.0.1",

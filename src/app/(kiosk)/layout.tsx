@@ -1,4 +1,14 @@
 import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
+
+// Inter is the deck's typeface (build brief, Part 1). Self-hosted via next/font so it renders
+// consistently on any presenting machine. Exposed as the `--font-inter` CSS variable.
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  weight: ["400", "500", "700", "800"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   robots: { index: false, follow: false },
@@ -46,7 +56,9 @@ export default function KioskLayout({ children }: { children: React.ReactNode })
           }
         }
       `}</style>
-      {children}
+      <div className={inter.variable} style={{ display: "contents" }}>
+        {children}
+      </div>
     </>
   );
 }
