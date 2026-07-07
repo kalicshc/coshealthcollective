@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight, CheckCircle, ExternalLink } from "lucide-react";
 import { submitDpcInquiry, submitHbotEarlyAccess, submitHormoneInquiry } from "@/lib/api";
+import { bookingUrl } from "@/lib/bookingLinks";
 
 type FormType = "dpc" | "hormone" | "hbot";
 
@@ -129,7 +130,7 @@ const CARDS = [
   {
     id: "hormone",
     formType: "hormone" as FormType,
-    href: "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-5688330a3b52e266",
+    href: bookingUrl("freeConsult", "clinic-cards"),
     external: true,
     badge: "Coming Soon",
     name: "Hormone + GLP Clinic",

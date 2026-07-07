@@ -2,13 +2,25 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail } from "lucide-react";
+import { clinicFacts } from "@/lib/clinicFacts";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/blog" },
   title: "Healthcare Blog | Colorado Springs Health Collective",
   description: "Discover how Direct Primary Care is transforming healthcare in Colorado Springs. Get insights on whole-person wellness, preventive care, and building authentic relationships with your healthcare provider.",
 };
 
 const articles = [
+  {
+    slug: "why-menopause-evolution-colorado-springs",
+    title: "Why Do Women Go Through Menopause? The Evolutionary Answer",
+    description: "The grandmother hypothesis, killer whales, the selection wall — why menopause exists, why the symptoms persist, and why evolution never fixed it.",
+    date: "May 2026",
+    category: "Women's Health",
+    categoryColor: "hsl(330, 70%, 65%)",
+    image: "/blog/menopause-evolution-hero.jpg",
+    featured: true,
+  },
   {
     slug: "hrt-critical-window-colorado-springs",
     title: "The Critical Window Hypothesis for HRT: What the Research Actually Shows",
@@ -17,7 +29,7 @@ const articles = [
     category: "Women's Health",
     categoryColor: "hsl(330, 70%, 65%)",
     image: "/blog/hrt-critical-window-hero.jpg",
-    featured: true,
+    featured: false,
   },
   {
     slug: "metabolic-health-hormone-therapy-colorado-springs",
@@ -63,7 +75,7 @@ const articles = [
     slug: "dpc-vs-concierge",
     title: "Direct Primary Care vs. Concierge Medicine: Colorado Springs Guide",
     description: "Compare costs, services, and which healthcare model best fits your life.",
-    date: "January 2025",
+    date: "Updated July 2026",
     category: "DPC",
     categoryColor: "hsl(177, 70%, 59%)",
     image: "/blog/dpc-hero.jpg",
@@ -181,13 +193,13 @@ export default function Blog() {
 
           <div className="text-center">
             <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-              <a href="tel:+17198244716" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+              <a href={`tel:${clinicFacts.contact.phoneTel}`} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                 <Phone className="w-5 h-5" style={{ color: "hsl(177, 70%, 59%)" }} />
-                <span style={{ color: "hsl(0, 0%, 92%)" }}>(719) 824-4716</span>
+                <span style={{ color: "hsl(0, 0%, 92%)" }}>{clinicFacts.contact.phone}</span>
               </a>
-              <a href="mailto:dpc@coshealthcollective.com" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+              <a href={`mailto:${clinicFacts.contact.email}`} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                 <Mail className="w-5 h-5" style={{ color: "hsl(177, 70%, 59%)" }} />
-                <span style={{ color: "hsl(0, 0%, 92%)" }}>dpc@coshealthcollective.com</span>
+                <span style={{ color: "hsl(0, 0%, 92%)" }}>{clinicFacts.contact.email}</span>
               </a>
             </div>
           </div>

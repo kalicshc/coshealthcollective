@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { SiYoutube } from "react-icons/si";
+import { clinicFacts } from "@/lib/clinicFacts";
 
 const videos = [
   { id: "M8YxtX0GIDI", title: "About Us — Colorado Springs Health Collective", description: "Meet Logan and Sarah Crist and learn why we built a different kind of healthcare practice — one focused on real relationships, transparent pricing, and care that actually works for you." },
@@ -82,7 +83,7 @@ export default function Media() {
 
         <div className="text-center mt-16 pt-10" style={{ borderTop: "1px solid hsla(0,0%,100%,0.06)" }}>
           <p className="text-sm mb-2" style={{ color: "hsl(0,0%,45%)" }}>Media inquiries</p>
-          <a href="mailto:dpc@coshealthcollective.com" className="text-base font-medium hover:opacity-80 transition-opacity" style={{ color: "hsl(177,70%,65%)" }}>dpc@coshealthcollective.com</a>
+          <a href={`mailto:${clinicFacts.contact.email}`} className="text-base font-medium hover:opacity-80 transition-opacity" style={{ color: "hsl(177,70%,65%)" }}>{clinicFacts.contact.email}</a>
         </div>
       </div>
     </div>

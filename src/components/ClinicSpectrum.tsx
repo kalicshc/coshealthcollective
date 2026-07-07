@@ -1,5 +1,7 @@
 "use client";
 
+import { ACCENTS } from "@/lib/accents";
+
 type ClinicKey = "dpc" | "hormone" | "hyperbaric";
 
 type SpectrumClinic = {
@@ -9,13 +11,12 @@ type SpectrumClinic = {
 };
 
 // Peaks line up with the centers of a 3-column tile grid below (≈ 1/6, 1/2, 5/6).
-// RGB values match the accents used in ClinicAccordion so the wave's color at any
-// X is the same hue as the tile sitting beneath it. Palette comes from the logo:
-// royal blue (DPC) → violet (hormone) → teal (hyperbaric).
+// Wave colors come from the shared per-service palettes (src/lib/accents.ts,
+// `waveRgb` variant) so the wave's hue always matches the tile beneath it.
 const CLINICS: SpectrumClinic[] = [
-  { key: "dpc",        peak: 1 / 6,   rgb: [36, 89, 249] },
-  { key: "hormone",    peak: 1 / 2,   rgb: [218, 56, 250] },
-  { key: "hyperbaric", peak: 5 / 6,   rgb: [0, 247, 255] },
+  { key: "dpc",        peak: 1 / 6,   rgb: ACCENTS.dpc.waveRgb },
+  { key: "hormone",    peak: 1 / 2,   rgb: ACCENTS.hormone.waveRgb },
+  { key: "hyperbaric", peak: 5 / 6,   rgb: ACCENTS.hyperbaric.waveRgb },
 ];
 
 const NUM_BARS = 96;

@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
+import { clinicFacts } from "@/lib/clinicFacts";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/hipaa-notice" },
   title: "HIPAA Notice of Privacy Practices | Colorado Springs Health Collective",
   description: "Notice of Privacy Practices for Colorado Springs Health Collective. Learn how we use and protect your medical information.",
 };
 
 export default function HipaaNotice() {
   const sections = [
-    { heading: "Who We Are", content: <><p className="mb-2">COBC Brands Direct Primary Care LLC d/b/a Colorado Springs Health Collective – Direct Primary Care ("the Practice")</p><p className="mb-2">1497 Solitaire St, Colorado Springs, CO 80905</p><p>Privacy Officer: Logan Crist, PA-C • Email: dpc@coshealthcollective.com</p></> },
+    { heading: "Who We Are", content: <><p className="mb-2">COBC Brands Direct Primary Care LLC d/b/a Colorado Springs Health Collective – Direct Primary Care ("the Practice")</p><p className="mb-2">1497 Solitaire St, Colorado Springs, CO 80905</p><p>Privacy Officer: Logan Crist, PA-C • Email: {clinicFacts.contact.email}</p></> },
     { heading: "Our Responsibilities", content: <><p className="mb-2">We are required by law to:</p><ul className="list-disc pl-6 mb-4 space-y-1"><li>Maintain the privacy and security of your protected health information (PHI).</li><li>Provide you this Notice of our legal duties and privacy practices.</li><li>Follow the terms of the Notice currently in effect.</li><li>Notify you following a breach of unsecured PHI.</li><li>For minors, the parent or guardian normally signs the NPP acknowledgment as the child's personal representative.</li></ul><p>We will not retaliate against you for filing a complaint.</p></> },
     { heading: "How We May Use and Disclose Your Information", content: <><p className="mb-2">We typically use or share your PHI in these ways:</p><ul className="list-disc pl-6 space-y-2"><li><strong>Treatment.</strong> To provide, coordinate, or manage your care and related services.</li><li><strong>Payment.</strong> To obtain or process payment for services you receive.</li><li><strong>Health Care Operations.</strong> For quality assurance, training, credentialing, legal/compliance, and business operations.</li></ul></> },
     { heading: "Minors and Adolescent Privacy", content: <p>We comply with Colorado and federal privacy rules regarding minors. Some health services may be confidential to a minor under Colorado law. In those cases, we may limit disclosures to parents or guardians and restrict proxy portal access to protect the minor's privacy.</p> },

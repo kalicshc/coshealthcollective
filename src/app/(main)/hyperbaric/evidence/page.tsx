@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/hyperbaric/evidence" },
   title: "HBOT Evidence Library | Colorado Springs Health Collective — Hyperbaric",
   description: "Evidence-based hyperbaric oxygen therapy outcomes by condition. Fourteen indications reviewed across four tiers of clinical evidence — with honest clinical context.",
 };

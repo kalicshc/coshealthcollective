@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { clinicFacts, usd } from "@/lib/clinicFacts";
+import { PageCtaFooter } from "@/components/PageCtaFooter";
+import { ReviewStrip } from "@/components/ReviewStrip";
+import { bookingUrl } from "@/lib/bookingLinks";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/hormone/glp1" },
   title: "GLP-1 Weight Loss | Colorado Springs Health Collective",
   description: "Semaglutide and tirzepatide in Colorado Springs with a real metabolic review. GLP-1 care that fits your weight, hormones, and long-term goals.",
 };
@@ -58,7 +62,7 @@ const pricingFeatures = [
 ];
 
 const BOOKING_URL =
-  "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-5688330a3b52e266";
+  bookingUrl("freeConsult", "hormone-glp1");
 
 export default function GLP1Page() {
   return (
@@ -350,6 +354,18 @@ export default function GLP1Page() {
           </div>
         </div>
       </section>
+      <section className="pb-4">
+        <div className="mx-auto max-w-5xl px-4 lg:px-8">
+          <ReviewStrip variant="strip" service="hormone" source="glp1-reviews" />
+        </div>
+      </section>
+
+      <PageCtaFooter
+        service="hormone"
+        heading="Ready to talk GLP-1?"
+        body="Book a free consult, or reach out — we'll help you decide if medically-managed weight loss fits your goals."
+        primaryCta={{ label: "Book a Free Consult", href: BOOKING_URL, external: true }}
+      />
     </div>
   );
 }

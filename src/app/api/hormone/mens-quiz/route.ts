@@ -2,10 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { sendNotification, sendConfirmation, emailTemplate, formatFields } from "@/lib/mailer";
 import { validate } from "@/lib/validateForm";
 import { sendLifeboat } from "@/lib/leadLifeboat";
+import { bookingUrl } from "@/lib/bookingLinks";
 
 const BACKEND = process.env.PLATFORM_API_URL ?? "";
 const BOOKING_URL =
-  "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-5688330a3b52e266";
+  bookingUrl("freeConsult", "quiz-mens-email");
 
 export async function POST(req: NextRequest) {
   const data = await req.json().catch(() => ({}));

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/hyperbaric/why-2ata" },
   title: "Why 2.0 ATA | Colorado Springs Health Collective — Hyperbaric",
   description: "The clinical case for 2.0 ATA hyperbaric oxygen therapy. Pressure-specific outcomes, research by indication, and why soft chambers don't replicate real HBOT.",
 };

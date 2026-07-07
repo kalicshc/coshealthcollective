@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { trackEvent } from "@/lib/analytics";
 import {
   GREENE_ITEMS,
   GREENE_SECTIONS,
@@ -422,6 +423,7 @@ export default function WomensHormonePathway() {
 
   function advanceSection(sec: SectionKey) {
     if (!isSectionComplete(sec)) return;
+    trackEvent("quiz_step", { page: "womens-quiz", service: "hormone", step: sec });
     const next = NEXT_SECTION[sec];
     if (next === "analyzing") {
       setStep("analyzing");
@@ -455,6 +457,8 @@ export default function WomensHormonePathway() {
         }),
       });
       if (!res.ok) throw new Error("failed");
+      trackEvent("quiz_complete", { page: "womens-quiz", service: "hormone" });
+      trackEvent("form_submit", { page: "womens-quiz", service: "hormone", source: "quiz-womens" });
       setStep("done");
     } catch {
       setSubmitError("Something went wrong. Please try again or call us directly.");
@@ -602,7 +606,10 @@ export default function WomensHormonePathway() {
               <div className="mt-8">
                 <button
                   type="button"
-                  onClick={() => setStep("section1")}
+                  onClick={() => {
+                    trackEvent("quiz_start", { page: "womens-quiz", service: "hormone" });
+                    setStep("section1");
+                  }}
                   className="rounded-full px-8 py-4 text-sm font-semibold text-white transition hover:opacity-90 hover:scale-[1.02]"
                   style={{
                     background:

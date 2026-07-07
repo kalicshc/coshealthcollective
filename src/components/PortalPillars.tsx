@@ -4,11 +4,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { submitHbotEarlyAccess, submitDpcInquiry } from "@/lib/api";
+import { bookingUrl } from "@/lib/bookingLinks";
 
 const MEET_GREET_URL =
-  "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207";
+  bookingUrl("meetGreet", "portal-pillars");
 const HORMONE_URL =
-  "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-5688330a3b52e266";
+  bookingUrl("freeConsult", "portal-pillars");
 
 type Pillar = {
   id: "dpc" | "hormone" | "hbot";

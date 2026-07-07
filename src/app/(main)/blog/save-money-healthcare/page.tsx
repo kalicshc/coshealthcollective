@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Phone, Mail, ArrowLeft, CheckCircle } from "lucide-react";
+import { clinicFacts } from "@/lib/clinicFacts";
+import { bookingUrl } from "@/lib/bookingLinks";
 
 export const metadata: Metadata = {
   title: "How to Save Money on Healthcare: 7 Smart Strategies | Colorado Springs Health Collective",
@@ -15,7 +17,7 @@ export const metadata: Metadata = {
   },
 };
 
-const MEET_GREET_URL = "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207";
+const MEET_GREET_URL = bookingUrl("meetGreet", "blog-save-money-healthcare");
 
 const articleSchema = {
   "@context": "https://schema.org",
@@ -111,13 +113,13 @@ export default function BlogSaveMoneyHealthcare() {
                 Book Free Meet &amp; Greet
               </a>
               <div className="flex flex-col md:flex-row items-center justify-center gap-6 mt-8">
-                <a href="tel:+17198244716" className="flex items-center gap-3 hover:opacity-80">
+                <a href={`tel:${clinicFacts.contact.phoneTel}`} className="flex items-center gap-3 hover:opacity-80">
                   <Phone className="w-5 h-5" style={{ color: "hsl(177, 70%, 65%)" }} />
-                  <span style={{ color: "hsl(0, 0%, 85%)" }}>(719) 824-4716</span>
+                  <span style={{ color: "hsl(0, 0%, 85%)" }}>{clinicFacts.contact.phone}</span>
                 </a>
-                <a href="mailto:dpc@coshealthcollective.com" className="flex items-center gap-3 hover:opacity-80">
+                <a href={`mailto:${clinicFacts.contact.email}`} className="flex items-center gap-3 hover:opacity-80">
                   <Mail className="w-5 h-5" style={{ color: "hsl(177, 70%, 65%)" }} />
-                  <span style={{ color: "hsl(0, 0%, 85%)" }}>dpc@coshealthcollective.com</span>
+                  <span style={{ color: "hsl(0, 0%, 85%)" }}>{clinicFacts.contact.email}</span>
                 </a>
               </div>
             </div>

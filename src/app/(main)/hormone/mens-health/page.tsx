@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { clinicFacts, usd } from "@/lib/clinicFacts";
+import { PageCtaFooter } from "@/components/PageCtaFooter";
+import { ReviewStrip } from "@/components/ReviewStrip";
+import { bookingUrl } from "@/lib/bookingLinks";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/hormone/mens-health" },
   title: "Men's Hormone Health + TRT | Colorado Springs Health Collective",
   description: "Comprehensive men's hormone care in Colorado Springs. Low testosterone, TRT optimization, fatigue, recovery, libido — a full evaluation before any treatment.",
 };
@@ -59,7 +63,7 @@ const pricingFeatures = [
 ];
 
 const BOOKING_URL =
-  "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-5688330a3b52e266";
+  bookingUrl("freeConsult", "hormone-mens-health");
 
 export default function MensHealthPage() {
   return (
@@ -338,6 +342,18 @@ export default function MensHealthPage() {
           </div>
         </div>
       </section>
+      <section className="pb-4">
+        <div className="mx-auto max-w-5xl px-4 lg:px-8">
+          <ReviewStrip variant="strip" service="hormone" source="mens-reviews" />
+        </div>
+      </section>
+
+      <PageCtaFooter
+        service="hormone"
+        heading="Wondering if it's your hormones?"
+        body="Book a free consult, or reach out — we'll help you figure out whether testosterone or metabolic care is the right next step."
+        primaryCta={{ label: "Book a Free Consult", href: BOOKING_URL, external: true }}
+      />
     </div>
   );
 }

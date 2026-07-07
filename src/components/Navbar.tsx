@@ -4,7 +4,35 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { Menu, X, Users, ArrowLeft } from "lucide-react";
+import { Menu, X, Users, ArrowLeft, CalendarCheck } from "lucide-react";
+import { bookingUrl } from "@/lib/bookingLinks";
+import { trackEvent } from "@/lib/analytics";
+
+// The one always-available conversion action: a free Meet & Greet.
+function BookButton({ compact, source, onNavigate }: { compact?: boolean; source: string; onNavigate?: () => void }) {
+  return (
+    <a
+      href={bookingUrl("meetGreet", source)}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={() => {
+        trackEvent("book_redirect", { source, appt: "meetGreet", label: "Book Free Meet & Greet" });
+        onNavigate?.();
+      }}
+      className={`inline-flex items-center gap-2 rounded-full font-bold transition-opacity hover:opacity-85 ${
+        compact ? "px-3.5 py-1 text-xs" : "px-4 py-1.5 text-sm"
+      }`}
+      style={{
+        background: "linear-gradient(135deg, hsl(45, 90%, 60%), hsl(36, 90%, 52%))",
+        color: "hsl(210, 32%, 10%)",
+        boxShadow: "0 4px 18px hsla(45, 90%, 55%, 0.3)",
+      }}
+    >
+      <CalendarCheck className={compact ? "w-3.5 h-3.5" : "w-4 h-4"} />
+      Book Free Meet &amp; Greet
+    </a>
+  );
+}
 
 const navLinks = [
   { label: "Direct Primary Care", href: "/direct-primary-care" },
@@ -103,21 +131,25 @@ export function Navbar() {
             </Link>
           </div>
 
-          {/* Right: Resources */}
-          <Link
-            href="/resources"
-            className="flex items-center gap-2 px-4 py-1.5 rounded-full hover:opacity-80 transition-opacity text-sm font-medium"
-            style={{
-              background: "hsla(210, 22%, 28%, 0.75)",
-              color: "hsl(177, 70%, 65%)",
-            }}
-          >
-            <Users className="w-4 h-4" />
-            Resources
-          </Link>
+          {/* Right: Book + Resources */}
+          <div className="flex items-center gap-3">
+            <BookButton source="nav" />
+            <Link
+              href="/resources"
+              className="flex items-center gap-2 px-4 py-1.5 rounded-full hover:opacity-80 transition-opacity text-sm font-medium"
+              style={{
+                background: "hsla(210, 22%, 28%, 0.75)",
+                color: "hsl(177, 70%, 65%)",
+              }}
+            >
+              <Users className="w-4 h-4" />
+              Resources
+            </Link>
+          </div>
         </div>
 
-        {/* Row 2: Nav links centered (desktop) */}
+        {/* Row 2: Nav links centered (desktop). When Row 1 collapses on the
+            flythrough, a compact Book button appears here so the CTA persists. */}
         <div className="hidden md:flex items-center justify-center gap-6 py-2" style={{ marginTop: onFlythrough ? -6 : undefined }}>
           {navLinks.map((link, index) => (
             <span key={link.label} className="flex items-center gap-6">
@@ -136,6 +168,7 @@ export function Navbar() {
               )}
             </span>
           ))}
+          {collapsed && <BookButton compact source="nav-collapsed" />}
         </div>
       </div>
 
@@ -174,14 +207,30 @@ export function Navbar() {
           </Link>
         </div>
 
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="p-2 rounded-lg transition-colors"
-          style={{ color: "hsl(177, 70%, 65%)" }}
-          aria-label={isOpen ? "Close menu" : "Open menu"}
-        >
-          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+        <div className="flex items-center gap-2">
+          <a
+            href={bookingUrl("meetGreet", "nav-mobile")}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackEvent("book_redirect", { source: "nav-mobile", appt: "meetGreet", label: "Book" })}
+            className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold"
+            style={{
+              background: "linear-gradient(135deg, hsl(45, 90%, 60%), hsl(36, 90%, 52%))",
+              color: "hsl(210, 32%, 10%)",
+            }}
+          >
+            <CalendarCheck className="w-3.5 h-3.5" />
+            Book
+          </a>
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="p-2 rounded-lg transition-colors"
+            style={{ color: "hsl(177, 70%, 65%)" }}
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+          >
+            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile dropdown */}
@@ -197,6 +246,23 @@ export function Navbar() {
           }}
         >
           <div className="flex flex-col gap-3">
+            <a
+              href={bookingUrl("meetGreet", "nav-mobile-menu")}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                trackEvent("book_redirect", { source: "nav-mobile-menu", appt: "meetGreet", label: "Book Free Meet & Greet" });
+                setIsOpen(false);
+              }}
+              className="flex items-center justify-center gap-2 py-3 px-4 rounded-lg text-base font-bold"
+              style={{
+                background: "linear-gradient(135deg, hsl(45, 90%, 60%), hsl(36, 90%, 52%))",
+                color: "hsl(210, 32%, 10%)",
+              }}
+            >
+              <CalendarCheck className="w-4 h-4" />
+              Book a Free Meet &amp; Greet
+            </a>
             {navLinks.map((link) => (
               <Link
                 key={link.label}

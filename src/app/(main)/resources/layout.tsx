@@ -4,6 +4,15 @@ export const metadata: Metadata = {
   title: "Patient Resources & Tools | Colorado Springs Health Collective",
   description:
     "Trusted patient resources from CSHC in Colorado Springs — health calculators, screening guidelines, lab references, and tools to help you make informed decisions about your care.",
+  keywords: [
+    "patient resources Colorado Springs",
+    "health calculators Colorado Springs",
+    "breast cancer risk calculator",
+    "hormone screening tools",
+    "CSHC patient tools",
+    "health screening guidelines Colorado Springs",
+    "direct primary care patient resources",
+  ],
   alternates: { canonical: "/resources" },
   openGraph: {
     title: "Patient Resources & Tools | Colorado Springs Health Collective",

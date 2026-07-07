@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import MensHormonePathway from "@/components/MensHormonePathway";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/hormone/mens-health/quiz" },
   title: "Men's Hormone + TRT Quiz | Colorado Springs Health Collective",
   description: "A no-email men's hormone and TRT assessment to help identify what may be driving fatigue, low libido, poor recovery, or TRT issues.",
 };

@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { submitLongevityToolkit } from "@/lib/api";
 import { Download, Sparkles, CheckCircle, Heart, Moon, Apple, Dumbbell, Brain } from "lucide-react";
+import { bookingUrl } from "@/lib/bookingLinks";
 
-const MEET_GREET_URL = "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207";
+const MEET_GREET_URL = bookingUrl("meetGreet", "longevity-toolkit-download");
 
 const pillars = [
   { icon: Moon, label: "Sleep", color: "#667eea" },

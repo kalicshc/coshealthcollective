@@ -3,10 +3,11 @@ import { sendNotification, sendConfirmation, emailTemplate, formatFields } from 
 import { GREENE_ITEMS, HORMONE_INFO, type HormoneType } from "@/lib/womensHormonePathway";
 import { validate } from "@/lib/validateForm";
 import { sendLifeboat } from "@/lib/leadLifeboat";
+import { bookingUrl } from "@/lib/bookingLinks";
 
 const BACKEND = process.env.PLATFORM_API_URL ?? "";
 const BOOKING_URL =
-  "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-5688330a3b52e266";
+  bookingUrl("freeConsult", "quiz-womens-email");
 
 function cap(s: string) {
   return s.charAt(0).toUpperCase() + s.slice(1);

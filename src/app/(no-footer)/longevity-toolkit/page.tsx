@@ -4,8 +4,9 @@ import { useEffect, useRef } from "react";
 import QRCode from "qrcode";
 import { Moon, Apple, Dumbbell, Heart, Brain, Sparkles, CheckCircle, Phone, Mail, Globe } from "lucide-react";
 import { SiInstagram } from "react-icons/si";
+import { bookingUrl } from "@/lib/bookingLinks";
 
-const MEET_GREET_URL = "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207";
+const MEET_GREET_URL = bookingUrl("meetGreet", "longevity-toolkit");
 
 export default function LongevityToolkit() {
   const homepageQrRef = useRef<HTMLCanvasElement>(null);

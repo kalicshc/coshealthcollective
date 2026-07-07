@@ -37,6 +37,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "/blog/save-money-healthcare", priority: 0.65, changeFrequency: "monthly" },
     { url: "/blog/skiing-longevity", priority: 0.65, changeFrequency: "monthly" },
     { url: "/blog/why-direct-primary-care", priority: 0.65, changeFrequency: "monthly" },
+    { url: "/blog/metabolic-health-hormone-therapy-colorado-springs", priority: 0.7, changeFrequency: "monthly" },
+    { url: "/blog/why-menopause-evolution-colorado-springs", priority: 0.7, changeFrequency: "monthly" },
     { url: "/resources", priority: 0.65, changeFrequency: "monthly" },
     { url: "/resources/calculators", priority: 0.65, changeFrequency: "monthly" },
     { url: "/resources/calculators/breast-cancer-risk", priority: 0.6, changeFrequency: "monthly" },

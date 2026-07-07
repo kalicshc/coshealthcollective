@@ -1,11 +1,10 @@
-import type { Metadata } from "next";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { ChatbotWidget } from "@/components/ChatbotWidget";
+import { ChatbotWidgetLazy } from "@/components/ChatbotWidgetLazy";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "https://coshealthcollective.com" },
-};
+// No group-wide metadata here: a shared alternates.canonical would be inherited
+// by every page that doesn't override it, telling Google they're all duplicates
+// of that one URL. Each page/layout declares its own relative canonical.
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -14,7 +13,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
       <Navbar />
       <main className="flex-1">{children}</main>
       <Footer />
-      <ChatbotWidget />
+      <ChatbotWidgetLazy />
     </>
   );
 }

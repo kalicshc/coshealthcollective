@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import { submitHbotEarlyAccess } from "@/lib/api";
 import ClinicQuestionForm from "@/components/ClinicQuestionForm";
+import { ACCENTS } from "@/lib/accents";
+import { bookingUrl } from "@/lib/bookingLinks";
 
 type ClinicKey = "dpc" | "hormone" | "hyperbaric";
 
@@ -41,39 +43,16 @@ type Clinic = {
 };
 
 const MEET_GREET_URL =
-  "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207";
+  bookingUrl("meetGreet", "clinic-accordion");
 const HORMONE_CONSULT_URL =
-  "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-5688330a3b52e266";
+  bookingUrl("freeConsult", "clinic-accordion");
 
-// Palette extends the logo's hues for max chroma without raising lightness:
-// royal blue (DPC) | magenta-violet (hormone) | electric cyan (hyperbaric).
-// Saturation pushed near max, lightness held ≈55-62 so colors deepen rather
-// than glow, and hues spread wider so the wave never muddies in the middle.
+// Per-service palettes live in src/lib/accents.ts (shared with the home
+// flythrough, ClinicSpectrum, and the shared page components).
 const ACCENT = {
-  // deep royal blue — DPC (anchored cool midpoint)
-  blue: {
-    from: "hsl(225, 95%, 56%)",
-    to: "hsl(238, 90%, 48%)",
-    glow: "hsla(225, 95%, 54%, 0.55)",
-    chipBorder: "hsla(225, 95%, 56%, 0.38)",
-    statusDot: "hsl(225, 95%, 56%)",
-  },
-  // magenta-violet — hormone (pushed warm so it clearly opposes the cyan)
-  purple: {
-    from: "hsl(290, 95%, 60%)",
-    to: "hsl(272, 90%, 52%)",
-    glow: "hsla(290, 95%, 56%, 0.55)",
-    chipBorder: "hsla(290, 95%, 60%, 0.38)",
-    statusDot: "hsl(290, 95%, 60%)",
-  },
-  // pure cyan — hyperbaric (maxed for max contrast against the magenta)
-  teal: {
-    from: "hsl(182, 100%, 50%)",
-    to: "hsl(198, 95%, 54%)",
-    glow: "hsla(182, 100%, 48%, 0.55)",
-    chipBorder: "hsla(182, 100%, 50%, 0.38)",
-    statusDot: "hsl(182, 100%, 50%)",
-  },
+  blue: ACCENTS.dpc,
+  purple: ACCENTS.hormone,
+  teal: ACCENTS.hyperbaric,
 };
 
 const CLINICS: Clinic[] = [

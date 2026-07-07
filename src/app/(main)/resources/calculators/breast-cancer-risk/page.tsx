@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { bookingUrl } from "@/lib/bookingLinks";
 
 type Step = "eligibility" | "form" | "results" | "ineligible";
 
@@ -766,7 +767,7 @@ export default function BreastCancerRiskPage() {
                   Start over
                 </button>
                 <Link
-                  href="https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207"
+                  href={bookingUrl("meetGreet", "resources-calculators-breast-cancer-risk")}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 rounded-full py-3.5 text-center text-sm font-semibold transition-opacity hover:opacity-85"

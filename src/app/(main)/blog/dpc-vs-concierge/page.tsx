@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Phone, Mail, ArrowLeft, CheckCircle, Users, Briefcase, Heart, Mountain } from "lucide-react";
+import { clinicFacts } from "@/lib/clinicFacts";
+import { bookingUrl } from "@/lib/bookingLinks";
 
 export const metadata: Metadata = {
   title: "Direct Primary Care vs. Concierge Medicine: Colorado Springs Guide | Colorado Springs Health Collective",
@@ -21,13 +23,14 @@ const articleSchema = {
   headline: "Direct Primary Care vs. Concierge Medicine: Colorado Springs Guide",
   description: "Compare costs, services, and which healthcare model best fits your life — from Colorado Springs Health Collective.",
   datePublished: "2025-01-15",
+  dateModified: "2026-07-06",
   author: { "@type": "Organization", name: "Colorado Springs Health Collective" },
   publisher: { "@type": "Organization", name: "Colorado Springs Health Collective", url: "https://coshealthcollective.com", logo: { "@type": "ImageObject", url: "https://coshealthcollective.com/logo-main.png" } },
   mainEntityOfPage: { "@type": "WebPage", "@id": "https://coshealthcollective.com/blog/dpc-vs-concierge" },
   image: "https://coshealthcollective.com/blog/dpc-hero.jpg",
 };
 
-const MEET_GREET_URL = "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207";
+const MEET_GREET_URL = bookingUrl("meetGreet", "blog-dpc-vs-concierge");
 
 const comparisonData = [
   { feature: "Cost Structure", dpc: "$50-150/month flat fee", concierge: "$1,500-$10,000+ annual retainer" },
@@ -58,7 +61,7 @@ export default function BlogDpcVsConcierge() {
               <h1 className="text-3xl lg:text-5xl font-bold leading-tight mb-4" style={{ color: "hsl(0, 0%, 100%)" }}>
                 Direct Primary Care vs. Concierge Medicine: Colorado Springs Guide
               </h1>
-              <p className="text-sm" style={{ color: "hsl(0, 0%, 60%)" }}>January 2025 · 7 min read</p>
+              <p className="text-sm" style={{ color: "hsl(0, 0%, 60%)" }}>Updated July 2026 · 7 min read</p>
             </div>
           </div>
         </div>
@@ -160,13 +163,13 @@ export default function BlogDpcVsConcierge() {
 
           <div className="text-center mt-8 mb-4">
             <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-              <a href="tel:+17198244716" className="flex items-center gap-2 hover:opacity-80">
+              <a href={`tel:${clinicFacts.contact.phoneTel}`} className="flex items-center gap-2 hover:opacity-80">
                 <Phone className="w-5 h-5" style={{ color: "hsl(177, 70%, 59%)" }} />
-                <span style={{ color: "hsl(0, 0%, 92%)" }}>(719) 824-4716</span>
+                <span style={{ color: "hsl(0, 0%, 92%)" }}>{clinicFacts.contact.phone}</span>
               </a>
-              <a href="mailto:dpc@coshealthcollective.com" className="flex items-center gap-2 hover:opacity-80">
+              <a href={`mailto:${clinicFacts.contact.email}`} className="flex items-center gap-2 hover:opacity-80">
                 <Mail className="w-5 h-5" style={{ color: "hsl(177, 70%, 59%)" }} />
-                <span style={{ color: "hsl(0, 0%, 92%)" }}>dpc@coshealthcollective.com</span>
+                <span style={{ color: "hsl(0, 0%, 92%)" }}>{clinicFacts.contact.email}</span>
               </a>
             </div>
           </div>

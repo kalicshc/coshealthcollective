@@ -5,11 +5,12 @@ import { ArrowRight, Mail } from "lucide-react";
 import { CoBrandedHeader } from "@/components/referral/CoBrandedHeader";
 import { InterestForm } from "@/components/referral/InterestForm";
 import { clinicFacts } from "@/lib/clinicFacts";
+import { bookingUrl } from "@/lib/bookingLinks";
 
 // ─── PLACEHOLDERS — Logan to confirm/replace ───────────────────────────────
 const LOGAN_LAST_NAME = "[Last Name]";
 const BOOKING_URL =
-  "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-5688330a3b52e266";
+  bookingUrl("freeConsult", "ac-welcome");
 const QUIZ_URL = "/hormone/womens-health/quiz";
 // Placeholder until Logan drops a real photo. Replace with /images/partners/natalie-keefe.jpg when ready.
 const NATALIE_PHOTO = "/images/partners/natalie-keefe.svg";

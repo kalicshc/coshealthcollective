@@ -2,14 +2,19 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { clinicFacts, usd } from "@/lib/clinicFacts";
+import { PageCtaFooter } from "@/components/PageCtaFooter";
+import { bookingUrl } from "@/lib/bookingLinks";
+import { CredentialHero } from "@/components/CredentialHero";
+import { ReviewStrip } from "@/components/ReviewStrip";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/hormone" },
   title: "Hormone + Metabolic Care | Colorado Springs Health Collective",
   description: "Evidence-based hormone care for women and men in Colorado Springs. HRT, TRT, GLP-1, perimenopause, menopause, and metabolic health — all in one care pathway.",
 };
 
 const BOOKING_URL =
-  "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-5688330a3b52e266";
+  bookingUrl("freeConsult", "hormone");
 
 const womensChips = ["Brain fog", "Low libido", "Mood changes", "Fatigue", "Sleep disruption"];
 const mensChips = ["Low T", "Fatigue", "Low libido", "Recovery"];
@@ -145,21 +150,8 @@ export default function HormonePage() {
 
             <PriceStrip />
 
-            <div className="mt-4">
-              <div
-                className="inline-flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.18em]"
-                style={{ color: "hsl(210,18%,62%)" }}
-              >
-                <Image
-                  src="/perry-academy-perimenopause-certificate.svg"
-                  alt=""
-                  width={18}
-                  height={18}
-                  aria-hidden="true"
-                  className="object-contain opacity-80"
-                />
-                Perry Academy · Perimenopause Certification
-              </div>
+            <div className="mt-5 flex justify-center">
+              <CredentialHero size="chip" />
             </div>
           </div>
         </section>
@@ -601,8 +593,13 @@ export default function HormonePage() {
 
             </div>
 
+            {/* Social proof */}
+            <div className="mt-20 lg:mt-24">
+              <ReviewStrip variant="strip" service="hormone" source="hormone-hub-reviews" />
+            </div>
+
             {/* Read the full article CTA */}
-            <div className="mt-20 lg:mt-24 flex justify-center">
+            <div className="mt-12 flex justify-center">
               <Link
                 href="/blog/metabolic-health-hormone-therapy-colorado-springs"
                 className="px-8 py-4 rounded-full text-base font-semibold text-white hover:opacity-90 transition-opacity"
@@ -617,6 +614,12 @@ export default function HormonePage() {
           </section>
         </div>
       </div>
+      <PageCtaFooter
+        service="hormone"
+        heading="Not sure which path fits?"
+        body="Book a free consult, or reach out — we'll point you to the right starting place."
+        primaryCta={{ label: "Book a Free Consult", href: BOOKING_URL, external: true }}
+      />
     </div>
   );
 }

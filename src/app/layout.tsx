@@ -35,10 +35,6 @@ export const metadata: Metadata = {
     "telehealth Colorado Springs",
     "Colorado Springs Health Collective",
   ],
-  icons: {
-    icon: "/logo-main.png",
-    apple: "/logo-main.png",
-  },
   authors: [{ name: "Colorado Springs Health Collective" }],
   creator: "Colorado Springs Health Collective",
   metadataBase: new URL("https://coshealthcollective.com"),
@@ -151,7 +147,15 @@ const structuredData = {
           },
         ],
       },
-      sameAs: [],
+      // Same profiles as the footer's social links — keep the two lists in sync.
+      sameAs: [
+        "https://share.google/A5V615VuXhaDQytso",
+        "https://www.instagram.com/coshealthcollective/",
+        "https://www.youtube.com/@coshealthcollective",
+        "https://www.tiktok.com/@cos.health.collec",
+        "https://www.linkedin.com/in/loganmcrist/",
+        "https://www.facebook.com/profile.php?id=61579765478524",
+      ],
     },
     {
       "@type": "WebSite",

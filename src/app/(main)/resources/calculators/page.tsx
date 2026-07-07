@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources/calculators" },
   title: "Clinical Calculators | Colorado Springs Health Collective",
   description: "Evidence-based risk calculators for breast cancer, cardiovascular disease, diabetes, and more — running securely on our site.",
 };

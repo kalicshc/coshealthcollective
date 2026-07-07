@@ -148,7 +148,7 @@ function KaliTriggerButton({ onClick, isOpen }: { onClick: () => void; isOpen: b
           }`}
         >
           <img
-            src="/images/chatbot/kali-ai-dog.png"
+            src="/images/chatbot/kali-ai-dog.webp"
             alt=""
             className="h-full w-full rounded-full object-cover"
           />
@@ -426,7 +426,7 @@ export function ChatbotWidget() {
             <div className="flex items-center gap-3">
               <div className="kali-avatar relative flex h-11 w-11 items-center justify-center rounded-full">
                 <img
-                  src="/images/chatbot/kali-ai-dog.png"
+                  src="/images/chatbot/kali-ai-dog.webp"
                   alt=""
                   className="h-full w-full rounded-full object-cover"
                 />

@@ -1,3 +1,5 @@
+import { bookingUrl } from "@/lib/bookingLinks";
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 export type MensPathwayAnswerValue = string | number | boolean | string[] | undefined;
@@ -81,15 +83,15 @@ export type PathwayResult = {
 export const mensHormoneCtas = {
   scheduleConsult: {
     label: "Schedule a consult",
-    href: "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-5688330a3b52e266",
+    href: bookingUrl("freeConsult", "quiz-mens"),
   },
   comprehensiveTesting: {
     label: "Talk with us about comprehensive hormone testing",
-    href: "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-5688330a3b52e266",
+    href: bookingUrl("freeConsult", "quiz-mens"),
   },
   fertilityOptions: {
     label: "Talk with us about fertility-preserving options",
-    href: "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-5688330a3b52e266",
+    href: bookingUrl("freeConsult", "quiz-mens"),
   },
   glp1Support: {
     label: "Ask about weight-loss / GLP-1 support",

@@ -1,3 +1,5 @@
+import { bookingUrl } from "@/lib/bookingLinks";
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 export type GreeneScore = 0 | 1 | 2 | 3;
@@ -286,5 +288,4 @@ export const HORMONE_INFO: Record<HormoneType, { name: string; role: string; the
 
 // ─── Booking URL ──────────────────────────────────────────────────────────────
 
-export const WOMENS_BOOKING_URL =
-  "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-5688330a3b52e266";
+export const WOMENS_BOOKING_URL = bookingUrl("freeConsult", "quiz-womens");

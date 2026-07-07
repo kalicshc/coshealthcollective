@@ -4,6 +4,14 @@ export const metadata: Metadata = {
   title: "Videos & Media | Colorado Springs Health Collective",
   description:
     "Watch videos from Colorado Springs Health Collective — learn about direct primary care, hormone therapy, HBOT, and how we're building a different kind of healthcare practice.",
+  keywords: [
+    "CSHC videos",
+    "direct primary care video Colorado Springs",
+    "hormone therapy education video",
+    "hyperbaric oxygen therapy video",
+    "Colorado Springs Health Collective media",
+    "DPC explainer video",
+  ],
   alternates: { canonical: "/media" },
   openGraph: {
     title: "Videos & Media | Colorado Springs Health Collective",

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { bookingUrl } from "@/lib/bookingLinks";
 
 const slides = [
   {
@@ -64,7 +65,7 @@ const slides = [
     cta: {
       primary: {
         text: "Book a Free Meet & Greet",
-        href: "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207",
+        href: bookingUrl("meetGreet", "our-story-carousel"),
       },
       secondary: {
         text: "Learn if DPC is a fit",

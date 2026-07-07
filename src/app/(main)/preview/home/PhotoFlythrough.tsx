@@ -16,9 +16,13 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { clinicFacts } from "@/lib/clinicFacts";
+import { ACCENTS } from "@/lib/accents";
+import { bookingUrl } from "@/lib/bookingLinks";
+import { GOOGLE_REVIEWS } from "@/lib/reviews";
+import { trackEvent } from "@/lib/analytics";
 
-const MEET_GREET_URL = "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207";
-const HORMONE_CONSULT_URL = "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-5688330a3b52e266";
+const MEET_GREET_URL = bookingUrl("meetGreet", "home-fly");
+const HORMONE_CONSULT_URL = bookingUrl("freeConsult", "home-fly");
 
 type Side = "left" | "right" | "center";
 type Scene = {
@@ -26,36 +30,34 @@ type Scene = {
   side: Side; tint: string;
   status?: string; name?: string; tagline?: string; services?: string[];
   cta?: string; href?: string; external?: boolean; cta2?: string; href2?: string;
+  credential?: string; showRating?: boolean;
 };
 
-// Wave colors (ClinicSpectrum): DPC royal blue, Hormone violet, Hyperbaric teal; gold for the close.
+// Scene tints come from the shared per-service palettes (src/lib/accents.ts):
+// DPC royal blue, Hormone violet, Hyperbaric teal; gold for the close.
 const SCENES: Scene[] = [
-  { type: "clinic", side: "left", tint: "60,120,255",
+  { type: "clinic", side: "left", tint: ACCENTS.dpc.rgb,
     status: "Now Enrolling", name: "Direct Primary Care", tagline: "$100/month. A provider who actually knows you.",
     services: ["Unlimited visits", "Same / next-day care", "No surprise bills", "Labs at cost"],
-    cta: "Book a Free Meet & Greet", href: MEET_GREET_URL, external: true, cta2: "Learn more", href2: "/direct-primary-care" },
-  { type: "clinic", side: "right", tint: "210,80,250",
+    cta: "Book a Free Meet & Greet", href: MEET_GREET_URL, external: true, cta2: "Learn more", href2: "/direct-primary-care", showRating: true },
+  { type: "clinic", side: "right", tint: ACCENTS.hormone.rgb,
     status: "Now Open", name: "Hormone & Metabolic Clinic", tagline: "Hormone care that addresses the whole picture.",
     services: ["Perimenopause + menopause", "Men's health & TRT", "GLP-1 weight loss", "Personalized plans"],
-    cta: "Book a Free Consult", href: HORMONE_CONSULT_URL, external: true, cta2: "Learn more", href2: "/hormone" },
-  { type: "clinic", side: "left", tint: "20,225,235",
+    cta: "Book a Free Consult", href: HORMONE_CONSULT_URL, external: true, cta2: "Learn more", href2: "/hormone",
+    credential: "/perry-academy-perimenopause-badge.png", showRating: true },
+  { type: "clinic", side: "left", tint: ACCENTS.hyperbaric.rgb,
     status: "Opening Summer 2026", name: "Hyperbaric Oxygen", tagline: "2.0 ATA oxygen therapy is coming.",
     services: ["Fibromyalgia", "UC + Crohn's", "Long COVID", "Sports recovery"],
     cta: "Join the Waitlist", href: "/hyperbaric", cta2: "Learn more", href2: "/hyperbaric" },
   { type: "story", side: "center", tint: "52,210,200" },
-  { type: "reviews", side: "center", tint: "245,196,86" },
-  { type: "vision", side: "center", tint: "245,196,86" },
+  { type: "reviews", side: "center", tint: ACCENTS.brand.rgb },
+  { type: "vision", side: "center", tint: ACCENTS.brand.rgb },
 ];
 
 const DEFAULT_IMAGES = ["/preview/scene1.png", "/preview/scene2.png", "/preview/scene3.png", "/preview/scene4.png", "/preview/scene5.png", "/preview/scene5.png"];
 
-const REVIEWS: { quote: string; name: string }[] = [
-  { quote: "We had such a great experience with Logan! Our toddler woke up in the middle of a Saturday night with croup. Logan came to our living room, conducted an exam, and got him rolling on meds quickly. Everything you hope for from a medical provider.", name: "Samuel S." },
-  { quote: "When my daughter was sick, their concierge team came directly to our home and took such amazing care of her. They were prompt, professional, and incredibly thorough. They didn't rush, they explained everything, and they followed up afterward.", name: "Sheena S." },
-  { quote: "Such a great primary care experience! Providers that truly take the time to ask in-depth questions and seem compassionate and invested. I never feel rushed, and I always leave feeling confident about my care plan. Highly recommend!", name: "Jozlyn G." },
-  { quote: "Logan took his time, dove into my issue, ordered relevant labs, reviewed my medical history, nutrition, lifestyle, and goals, and built a treatment plan that has already given me positive results. Highly recommend!", name: "Michael R." },
-  { quote: "The care feels genuinely personal, with unrushed visits, thoughtful follow-ups, and quick, easy communication. Logan truly listened and showed real professionalism. I always feel cared for like a human, not a time slot.", name: "Carley H." },
-];
+// Review quotes live in src/lib/reviews.ts (shared with ReviewStrip on interior pages).
+const REVIEWS = GOOGLE_REVIEWS;
 
 const STORY: { title: string; body: string; image: string }[] = [
   { title: "You're not a number here.", body: "We're a collective of providers building something different. Whether you're here for primary care, hormone optimization, or recovery — you're a whole human with strengths, stressors, habits, and goals. Our job is to help you move the needle.", image: "/images/story/01-who-we-are-opt.jpg" },
@@ -74,6 +76,18 @@ const smooth = (x: number) => { const t = clamp(x); return t * t * (3 - 2 * t); 
 // smootherstep — gentler in/out than smoothstep, for silkier crossfades
 const smoother = (x: number) => { const t = clamp(x); return t * t * t * (t * (t * 6 - 15) + 10); };
 const N = SCENES.length;
+// Scene 0 (DPC) shares its slot with the hero, so on-screen it gets far less word
+// time than the others. Weights = relative segment lengths; giving scene 0 extra
+// room evens out DPC's word time. Everything derives start/end from these bounds.
+const SCENE_WEIGHTS = [1.6, 1, 1, 1, 1, 1];
+const WSUM = SCENE_WEIGHTS.reduce((a, b) => a + b, 0);
+const SCENE_BOUNDS = (() => {
+  const out: { start: number; end: number; w: number }[] = [];
+  let acc = 0;
+  for (const wt of SCENE_WEIGHTS) { const w = wt / WSUM; out.push({ start: acc, end: acc + w, w }); acc += w; }
+  return out;
+})();
+const FADE = (1 / WSUM) * 0.40; // constant cross-scene fade (in scroll-progress units)
 
 // 3D extruded drop-shadow per letter — darkens right behind each glyph for
 // readability (so we don't have to darken the whole photo) and reads as 3D.
@@ -234,12 +248,14 @@ export default function PhotoFlythrough({ images, masks }: { images?: string[]; 
     if (!sec) return;
     const docTop = sec.getBoundingClientRect().top + window.scrollY;
     const travel = sec.offsetHeight - window.innerHeight;
-    const targetT = k === 0 ? 0.001 : (k - 1 + 0.5) / N;
+    const b = SCENE_BOUNDS[k - 1];
+    const targetT = k === 0 ? 0.001 : (b.start + b.end) / 2;
     window.scrollTo({ top: docTop + targetT * travel, behavior: "smooth" });
   }
 
   useEffect(() => {
     let ticking = false;
+    let lastW = window.innerWidth;
     function measure() {
       const el = sectionRef.current;
       if (!el) return;
@@ -252,24 +268,27 @@ export default function PhotoFlythrough({ images, masks }: { images?: string[]; 
       if (!el) return;
       const { top, travel } = metricsRef.current;
       const t = travel > 0 ? clamp((window.scrollY - top) / travel) : 0;
-      const seg = 1 / N;
       let nextActive = -1;
       for (let i = 0; i < N; i++) {
-        const start = i * seg, end = (i + 1) * seg;
-        const local = clamp((t - start) / seg);
+        const { start, end, w } = SCENE_BOUNDS[i];
         const scene = sceneRefs.current[i];
         if (scene) {
-          const fade = seg * 0.46; // long cross-scene fade — aurora colors blend into each other
-          const op = clamp(Math.min(smoother((t - (start - fade)) / fade), smoother(((end + fade) - t) / fade)));
+          const op = clamp(Math.min(smoother((t - (start - FADE)) / FADE), smoother(((end + FADE) - t) / FADE)));
           scene.style.opacity = String(op);
-          // ease the zoom so it gently decelerates as a scene settles (premium drift),
-          // still mapped 1:1 to scroll — no temporal smoothing.
-          scene.style.transform = `scale(${(1.05 + 0.34 * smooth(local)).toFixed(4)})`;
+          // Continuous push-in: the zoom runs across the photo's FULL visible life
+          // (fade-in → dwell → fade-out) at a constant rate, so the incoming photo is
+          // already pushing in as it fades up. The zoom never freezes at a boundary —
+          // it flows straight into the next photo.
+          const zoomT = clamp((t - (start - FADE)) / (w + 2 * FADE));
+          scene.style.transform = `scale(${(1.05 + 0.34 * zoomT).toFixed(4)})`;
           scene.style.visibility = op <= 0.01 ? "hidden" : "visible";
           scene.style.zIndex = String(i);
         }
-        const enter = i === 0 ? 0.28 : 0.04; // content pops a touch sooner into each scene
-        if (t > start + enter * seg && t < end - 0.06 * seg) nextActive = i;
+        const enter = i === 0 ? 0.32 : 0.04; // DPC waits for the hero to clear before it pops in
+        // Words start fading as the transition begins and clear right about when the
+        // next scene's color lands — so they fade DURING the handoff, never floating
+        // over the next scene's pure color. (margins are fractions of THIS scene's width)
+        if (t > start + enter * w && t < end - 0.12 * w) nextActive = i;
       }
       if (nextActive !== activeRef.current) { activeRef.current = nextActive; setActiveIdx(nextActive); }
       // Aurora color is per-scene (tint lives inside each scene div) so it crossfades
@@ -277,27 +296,38 @@ export default function PhotoFlythrough({ images, masks }: { images?: string[]; 
       // from full teal on the hero to blue as you scroll into the DPC content.
       const s0 = sceneRefs.current[0];
       if (s0) {
-        const local0 = clamp(t / seg);                 // 0 at the very top (hero) → 1 at end of DPC
+        const local0 = clamp(t / SCENE_BOUNDS[0].w);   // 0 at the very top (hero) → 1 at end of DPC
         const k = smooth(clamp(local0 / 0.45));         // teal → blue across the first ~45% of DPC
         s0.style.setProperty("--d0a", _T);              // left edge stays teal
         s0.style.setProperty("--d0b", mixRGB(_T, _B, k));
         s0.style.setProperty("--d0c", mixRGB(_T, _B, k));
       }
-      const nav = t < 0.03 ? 0 : Math.min(N - 1, Math.floor(t * N)) + 1;
+      let sceneIdx = 0;
+      for (let i = 0; i < N; i++) if (t >= SCENE_BOUNDS[i].start) sceneIdx = i;
+      const nav = t < 0.03 ? 0 : sceneIdx + 1;
       if (nav !== navRef.current) { navRef.current = nav; setNavIdx(nav); }
       // Hide the fixed, vertically-centered side nav once we scroll past the
       // flythrough into the footer, so it doesn't overlap the footer content.
       const pastEnd = window.scrollY > top + travel + window.innerHeight * 0.15;
       if (pastEnd !== navHiddenRef.current) { navHiddenRef.current = pastEnd; setNavHidden(pastEnd); }
       if (heroRef.current) {
-        const o = clamp(1 - t * 16);
+        const o = clamp(1 - t * 20);
         heroRef.current.style.opacity = String(o);
         heroRef.current.style.transform = `translateY(${t * -80}px) scale(${1 + t * 0.5})`;
         heroRef.current.style.visibility = o <= 0.01 ? "hidden" : "visible";
       }
     }
     function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(apply); } }
-    function onResize() { measure(); onScroll(); }
+    function onResize() {
+      // The mobile address/nav bar shows & hides on scroll, firing resize with only
+      // a HEIGHT change. Re-measuring then shifts the scroll mapping and makes the
+      // pinned scene jump — so only re-measure on a real WIDTH change (rotation /
+      // window resize), never on the toolbar toggle.
+      if (window.innerWidth === lastW) return;
+      lastW = window.innerWidth;
+      measure();
+      onScroll();
+    }
     measure();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
@@ -306,9 +336,9 @@ export default function PhotoFlythrough({ images, masks }: { images?: string[]; 
   }, []);
 
   return (
-    <section ref={sectionRef} style={{ height: `${N * 150}vh` }} className="relative">
+    <section ref={sectionRef} style={{ height: `${Math.round(WSUM * 170)}vh` }} className="relative">
       <style>{`
-        .vc { opacity:0; transform: translateY(40px); transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1);
+        .vc { opacity:0; transform: translateY(40px); transition: opacity .5s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1);
           text-shadow: 0 1px 0 rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.85), 0 1px 18px rgba(0,0,0,0.7); }
         .vc[data-on="1"] { opacity:1; transform: translateY(0); }
         /* Faded-out scenes stay stacked over the active one — kill their pointer
@@ -331,7 +361,7 @@ export default function PhotoFlythrough({ images, masks }: { images?: string[]; 
           .vc-center h2{ font-size: clamp(1.55rem,7.2vw,2.05rem) !important; margin-bottom: 12px !important; }
           /* shrink Story photo so the whole scene fits one screen */
           .stry-photo{ width: min(230px,50vw) !important; }
-          .stry-photo img{ max-height: 25dvh !important; width: auto !important; margin: 0 auto !important; }
+          .stry-photo img{ max-height: 25svh !important; width: auto !important; margin: 0 auto !important; }
           /* trim the reserved review-quote height + size */
           .rev-quote{ min-height: 80px !important; font-size: 1.02rem !important; line-height: 1.42 !important; }
           .cz-wrap{ margin-bottom: 12px !important; }
@@ -383,8 +413,32 @@ export default function PhotoFlythrough({ images, masks }: { images?: string[]; 
                     </li>
                   ))}
                 </ul>
+                {(s.credential || s.showRating) && (
+                  <div className="stg" style={{ transitionDelay: "490ms", display: "flex", alignItems: "center", gap: 14, marginBottom: 20, flexWrap: "wrap" }}>
+                    {s.credential && (
+                      <span style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
+                        <img src={s.credential} alt="Perry Academy Perimenopause Certificate" style={{ width: 48, height: 48, objectFit: "contain", flexShrink: 0 }} />
+                        <span style={{ fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: `rgb(${s.tint})`, textShadow: TSOFT }}>
+                          Perry Academy Certified<br />
+                          <span style={{ color: "rgba(255,255,255,0.85)", letterSpacing: "0.08em" }}>Perimenopause (2026)</span>
+                        </span>
+                      </span>
+                    )}
+                    {s.showRating && (
+                      <span style={{ display: "inline-flex", alignItems: "center", gap: 7, padding: "5px 13px", borderRadius: 999, border: `1px solid rgba(${s.tint},0.45)`, background: "hsla(214,40%,8%,0.45)", fontSize: "0.74rem", fontWeight: 700, color: "#fff", textShadow: TSOFT }}>
+                        <span style={{ color: "hsl(45,90%,62%)" }}>★★★★★</span>5.0 on Google
+                      </span>
+                    )}
+                  </div>
+                )}
                 <div className="stg" style={{ transitionDelay: "560ms", display: "flex", alignItems: "center", gap: 22, flexWrap: "wrap" }}>
-                  <a href={s.href} {...(s.external ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="vc-cta no-underline" style={{ pointerEvents: "auto", display: "inline-flex", alignItems: "center", gap: 10, color: "#fff", fontSize: "1.05rem", fontWeight: 700, paddingBottom: 6, borderBottom: `2px solid rgb(${s.tint})` }}>
+                  <a
+                    href={s.href}
+                    {...(s.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    onClick={() => trackEvent(s.external ? "book_redirect" : "cta_click", { page: "home", source: "home-fly", label: s.cta })}
+                    className="vc-cta no-underline"
+                    style={{ pointerEvents: "auto", display: "inline-flex", alignItems: "center", gap: 10, color: "#fff", fontSize: "1.05rem", fontWeight: 700, paddingBottom: 6, borderBottom: `2px solid rgb(${s.tint})` }}
+                  >
                     {s.cta}<span style={{ color: `rgb(${s.tint})`, fontSize: "1.2rem" }}>→</span>
                   </a>
                   {s.cta2 ? (

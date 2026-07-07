@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { trackEvent } from "@/lib/analytics";
 import {
   evaluateMensHormonePathway,
   getVisibleMensHormoneQuestions,
@@ -218,6 +219,7 @@ export default function MensHormonePathway() {
 
   function goNext() {
     if (!currentQuestion || !isAnswered(currentQuestion, answers)) return;
+    if (index === 0) trackEvent("quiz_start", { page: "mens-quiz", service: "hormone" });
     if (index === visibleQuestions.length - 1) {
       setAnalyzing(true);
       window.setTimeout(() => {
@@ -226,6 +228,7 @@ export default function MensHormonePathway() {
       }, 1800);
       return;
     }
+    trackEvent("quiz_step", { page: "mens-quiz", service: "hormone", step: index + 1 });
     setIndex((i) => i + 1);
   }
 
@@ -251,6 +254,8 @@ export default function MensHormonePathway() {
         }),
       });
       if (!res.ok) throw new Error("failed");
+      trackEvent("quiz_complete", { page: "mens-quiz", service: "hormone" });
+      trackEvent("form_submit", { page: "mens-quiz", service: "hormone", source: "quiz-mens" });
       setLeadSubmitted(true);
     } catch {
       setLeadError("Something went wrong. Please try again.");

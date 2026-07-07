@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { ExternalLink, ArrowRight, Info, Heart } from "lucide-react";
+import { bookingUrl } from "@/lib/bookingLinks";
 
-const MEET_GREET_URL = "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207";
+const MEET_GREET_URL = bookingUrl("meetGreet", "remote-monitoring");
 
 interface Product {
   id: string;
@@ -85,7 +86,7 @@ export default function RemoteMonitoring() {
 
       <div className="container mx-auto px-5 lg:px-8 pt-12 pb-20">
         <div className="text-center mb-6 max-w-3xl mx-auto">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-3 leading-tight" style={{ background: "linear-gradient(135deg, hsl(140,70%,60%), hsl(177,70%,60%))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+          <h1 className="text-4xl lg:text-5xl font-bold mb-3 leading-tight" style={{ background: "linear-gradient(135deg, hsl(177,70%,60%), hsl(210,70%,62%))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
             AI-Integrated Remote Monitoring
           </h1>
           <p className="text-2xl lg:text-3xl font-semibold mb-5" style={{ color: "hsl(0,0%,90%)" }}>Home Health Devices</p>

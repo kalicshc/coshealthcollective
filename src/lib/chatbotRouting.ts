@@ -1,3 +1,5 @@
+import { bookingUrl, hintLink } from "@/lib/bookingLinks";
+
 export type ChatCtaTag =
   // Bookings & high-intent flows
   | "dpc"
@@ -59,13 +61,11 @@ export type ChatCta = {
   learnMore?: ChatSuggestion;
 };
 
-const HINT_BASE = "https://colorado-springs-health-collective-direct-primary-care.hint.com";
-
-const BOOK_MEET_GREET = `${HINT_BASE}/booking?appointment-type=appty-d2b5ee660e1e0207`;
-const BOOK_HORMONE_CONSULT = `${HINT_BASE}/booking?appointment-type=appty-5688330a3b52e266`;
-const BOOK_TELEHEALTH = `${HINT_BASE}/signup/telehealth`;
-const DPC_MEMBERSHIP_SIGNUP = `${HINT_BASE}/signup/membership/contacts?=`;
-const MEMBER_LOGIN = `${HINT_BASE}/login/request?redirectTo=%2Faccount%2Fbooking`;
+const BOOK_MEET_GREET = bookingUrl("meetGreet", "chatbot");
+const BOOK_HORMONE_CONSULT = bookingUrl("freeConsult", "chatbot");
+const BOOK_TELEHEALTH = hintLink("urgentCareTelehealth", "chatbot");
+const DPC_MEMBERSHIP_SIGNUP = hintLink("dpcMembershipSignup", "chatbot");
+const MEMBER_LOGIN = hintLink("memberLogin", "chatbot");
 
 const SOCIALS = {
   instagram: "https://www.instagram.com/coshealthcollective/",

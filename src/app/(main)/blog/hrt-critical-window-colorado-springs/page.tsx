@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Phone, Mail, ChevronRight } from "lucide-react";
+import { clinicFacts } from "@/lib/clinicFacts";
+import { bookingUrl } from "@/lib/bookingLinks";
 
 export const metadata: Metadata = {
   title: "The Critical Window Hypothesis for HRT: What the Research Actually Shows | CSHC Colorado Springs",
@@ -17,7 +19,7 @@ export const metadata: Metadata = {
   },
 };
 
-const MEET_GREET_URL = "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207";
+const MEET_GREET_URL = bookingUrl("meetGreet", "blog-hrt-critical-window-colorado-springs");
 
 const toc = [
   { id: "the-shock", label: "The 2002 WHI Shock" },
@@ -426,13 +428,13 @@ export default function HRTCriticalWindowPost() {
                 Book a Meet & Greet
               </a>
               <div className="flex flex-col md:flex-row items-center justify-center gap-6 mt-8">
-                <a href="tel:+17198244716" className="flex items-center gap-2 hover:opacity-80">
+                <a href={`tel:${clinicFacts.contact.phoneTel}`} className="flex items-center gap-2 hover:opacity-80">
                   <Phone className="w-4 h-4" style={{ color: "hsl(330, 70%, 72%)" }} />
-                  <span className="text-sm" style={{ color: "hsl(0, 0%, 85%)" }}>(719) 824-4716</span>
+                  <span className="text-sm" style={{ color: "hsl(0, 0%, 85%)" }}>{clinicFacts.contact.phone}</span>
                 </a>
-                <a href="mailto:dpc@coshealthcollective.com" className="flex items-center gap-2 hover:opacity-80">
+                <a href={`mailto:${clinicFacts.contact.email}`} className="flex items-center gap-2 hover:opacity-80">
                   <Mail className="w-4 h-4" style={{ color: "hsl(330, 70%, 72%)" }} />
-                  <span className="text-sm" style={{ color: "hsl(0, 0%, 85%)" }}>dpc@coshealthcollective.com</span>
+                  <span className="text-sm" style={{ color: "hsl(0, 0%, 85%)" }}>{clinicFacts.contact.email}</span>
                 </a>
               </div>
             </div>

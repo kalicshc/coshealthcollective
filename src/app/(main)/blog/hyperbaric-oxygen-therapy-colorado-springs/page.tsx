@@ -2,13 +2,16 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Phone, Mail, ChevronRight } from "lucide-react";
+import { clinicFacts } from "@/lib/clinicFacts";
+import { bookingUrl } from "@/lib/bookingLinks";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/blog/hyperbaric-oxygen-therapy-colorado-springs" },
   title: "Hyperbaric Oxygen Therapy Colorado Springs | CSHC",
   description: "Hyperbaric oxygen therapy in Colorado Springs delivers 15× normal tissue oxygen levels. Peer-reviewed evidence for wound healing, Long COVID, fibromyalgia, hearing loss, and cellular anti-aging.",
 };
 
-const WAITLIST_URL = "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207";
+const WAITLIST_URL = bookingUrl("meetGreet", "blog-hyperbaric-oxygen-therapy-colorado-springs");
 
 const toc = [
   { id: "what-is-hbot", label: "What Is HBOT?" },
@@ -338,13 +341,13 @@ export default function HBOTBlogPost() {
                 Join the Waitlist — 25% Off
               </a>
               <div className="flex flex-col md:flex-row items-center justify-center gap-6 mt-8">
-                <a href="tel:+17198244716" className="flex items-center gap-2 hover:opacity-80">
+                <a href={`tel:${clinicFacts.contact.phoneTel}`} className="flex items-center gap-2 hover:opacity-80">
                   <Phone className="w-4 h-4" style={{ color: "hsl(177, 70%, 65%)" }} />
-                  <span className="text-sm" style={{ color: "hsl(0, 0%, 85%)" }}>(719) 824-4716</span>
+                  <span className="text-sm" style={{ color: "hsl(0, 0%, 85%)" }}>{clinicFacts.contact.phone}</span>
                 </a>
-                <a href="mailto:dpc@coshealthcollective.com" className="flex items-center gap-2 hover:opacity-80">
+                <a href={`mailto:${clinicFacts.contact.email}`} className="flex items-center gap-2 hover:opacity-80">
                   <Mail className="w-4 h-4" style={{ color: "hsl(177, 70%, 65%)" }} />
-                  <span className="text-sm" style={{ color: "hsl(0, 0%, 85%)" }}>dpc@coshealthcollective.com</span>
+                  <span className="text-sm" style={{ color: "hsl(0, 0%, 85%)" }}>{clinicFacts.contact.email}</span>
                 </a>
               </div>
             </div>

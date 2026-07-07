@@ -3,24 +3,22 @@
 import { useState, useEffect, useRef } from "react";
 import { submitDpcInquiry } from "@/lib/api";
 import { clinicFacts, usd } from "@/lib/clinicFacts";
-import Link from "next/link";
+import { ACCENTS } from "@/lib/accents";
+import { ServiceHero, gradientTextStyle } from "@/components/ServiceHero";
+import { GlassCard } from "@/components/GlassCard";
+import { Accordion } from "@/components/Accordion";
+import { PageCtaFooter } from "@/components/PageCtaFooter";
 import {
-  CheckCircle, Phone, Mail, ChevronDown, Heart, Video, Clock, MessageCircle,
+  CheckCircle, Heart, Video, Clock, MessageCircle,
   Users, Shield, Droplets, Sparkles, Dumbbell, Scissors, Pill, FlaskConical,
-  Plus, Minus, AlertTriangle
+  AlertTriangle
 } from "lucide-react";
+import { bookingUrl, hintLink } from "@/lib/bookingLinks";
 
-const benefitColors = [
-  "hsl(45, 90%, 60%)",
-  "hsl(280, 70%, 65%)",
-  "hsl(177, 70%, 59%)",
-  "hsl(330, 70%, 65%)",
-  "hsl(200, 70%, 60%)",
-  "hsl(140, 60%, 55%)",
-];
+const ACCENT = ACCENTS.dpc;
 
-const MEET_GREET_URL = "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-d2b5ee660e1e0207";
-const SIGNUP_URL = "https://colorado-springs-health-collective-direct-primary-care.hint.com/signup/membership/contacts?=";
+const MEET_GREET_URL = bookingUrl("meetGreet", "direct-primary-care");
+const SIGNUP_URL = hintLink("dpcMembershipSignup", "direct-primary-care");
 
 const includedBenefits = [
   { icon: Heart, title: "Unlimited Office Visits", description: "As many in-person appointments as you need with no copays, surprise bills, or limits. Your health, your schedule." },
@@ -111,10 +109,26 @@ const dpcFaqs = [
   },
 ];
 
+function BenefitGrid({ items }: { items: { title: string; description: string }[] }) {
+  return (
+    <div className="grid md:grid-cols-2 gap-4 pt-1">
+      {items.map((benefit) => (
+        <div
+          key={benefit.title}
+          className="rounded-lg p-4"
+          style={{ background: "hsla(210,22%,25%,0.6)", borderLeft: `3px solid rgb(${ACCENT.rgb})` }}
+        >
+          <h4 className="font-semibold mb-1 text-base" style={{ color: `rgb(${ACCENT.rgb})` }}>{benefit.title}</h4>
+          <p className="text-sm leading-relaxed" style={{ color: "hsl(210,25%,75%)" }}>{benefit.description}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+const inputStyle = { background: "hsla(210,22%,35%,0.6)", border: "1px solid hsla(255,255,255,0.2)" } as const;
+
 export default function DirectPrimaryCare() {
-  const [openIncluded, setOpenIncluded] = useState<string | null>(null);
-  const [openDiscounted, setOpenDiscounted] = useState<string | null>(null);
-  const [openFaq, setOpenFaq] = useState<string | null>(null);
   const [responseType, setResponseType] = useState("Email");
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formSubmitting, setFormSubmitting] = useState(false);
@@ -151,352 +165,242 @@ export default function DirectPrimaryCare() {
   };
 
   return (
-    <div className="min-h-screen">
-      <section
-        className="hero-overlay relative min-h-screen flex items-center justify-center"
-        style={{ background: "transparent" }}
-      >
-        <h1 className="sr-only">Direct Primary Care Colorado Springs — Unlimited Visits, No Copays, {usd(clinicFacts.dpc.individualMonthly)}/Month DPC Membership</h1>
-        <div className="container mx-auto px-5 lg:px-8 z-10 py-32 pt-40">
+    <div>
+      <h1 className="sr-only">Direct Primary Care Colorado Springs — Unlimited Visits, No Copays, {usd(clinicFacts.dpc.individualMonthly)}/Month DPC Membership</h1>
+      <ServiceHero
+        service="dpc"
+        eyebrow="Direct Primary Care · Now Enrolling"
+        title="Your own doctor,"
+        titleAccent={`${usd(clinicFacts.dpc.individualMonthly)}/month.`}
+        subhead="Flat monthly fee. Unlimited access. Providers who actually know you. No copays, no surprise bills, no insurance games."
+        ctas={[
+          { label: "Schedule Your Free Meet & Greet", href: MEET_GREET_URL, external: true, variant: "primary" },
+          { label: "See Pricing", href: "#pricing", variant: "ghost" },
+        ]}
+      />
 
-          <div className="text-center mb-16">
-            <div className="text-4xl lg:text-6xl font-bold mb-4 leading-tight" aria-hidden="true">
-              <span style={{ color: "hsl(0, 0%, 100%)" }}>The Colorado Springs</span>
-              <br />
-              <span style={{ color: "hsl(177, 70%, 65%)" }}>Health Collective</span>
+      <div className="section-divider" />
+
+      {/* Integrative Approach */}
+      <section className="py-16 lg:py-20">
+        <div className="mx-auto max-w-4xl px-5 lg:px-8">
+          <GlassCard service="dpc" className="!p-8 lg:!p-10 text-center">
+            <h2 className="text-2xl lg:text-3xl font-black mb-5 text-white">
+              Our <span style={gradientTextStyle("dpc")}>Integrative Approach</span>
+            </h2>
+            <p className="text-base leading-relaxed mb-4" style={{ color: "hsl(210,25%,78%)" }}>
+              Integrative medicine combines evidence-based primary care with lifestyle, behavioral, and preventive strategies to address the whole person—not just isolated symptoms.
+            </p>
+            <p className="text-sm leading-relaxed" style={{ color: "hsl(210,25%,68%)" }}>
+              We integrate traditional medical care with nutrition, movement, sleep, stress, and habit-based interventions when supported by evidence, always prioritizing safety, simplicity, and long-term health.
+            </p>
+          </GlassCard>
+        </div>
+      </section>
+
+      {/* Benefits */}
+      <section className="py-8 lg:py-12">
+        <div className="mx-auto max-w-4xl px-5 lg:px-8">
+          <div className="text-center mb-10">
+            <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: `rgb(${ACCENT.rgb})` }}>
+              Your Membership
+            </p>
+            <h2 className="text-3xl lg:text-4xl font-black text-white">
+              Comprehensive care, <span style={gradientTextStyle("dpc")}>no insurance hassles.</span>
+            </h2>
+          </div>
+          <Accordion
+            service="dpc"
+            allowMultiple
+            items={[
+              { id: "included", question: "What's Included in Your Membership", answer: <BenefitGrid items={includedBenefits} /> },
+              { id: "discounted", question: "Discounted Member Services", answer: <BenefitGrid items={discountedServices} /> },
+            ]}
+          />
+        </div>
+      </section>
+
+      {/* Comparison */}
+      <section className="py-16 lg:py-20">
+        <div className="mx-auto max-w-4xl px-5 lg:px-8">
+          <h2 className="text-3xl lg:text-4xl font-black mb-10 text-center text-white">How We Compare</h2>
+          <div
+            className="rounded-3xl overflow-hidden"
+            style={{ background: "hsla(210,22%,18%,0.9)", border: `1px solid rgba(${ACCENT.rgb},0.18)` }}
+          >
+            <div className="hidden md:grid grid-cols-3 p-5" style={{ background: "hsla(210,22%,25%,0.8)" }}>
+              <div />
+              <div className="text-center font-bold text-lg" style={{ color: `rgb(${ACCENT.rgb})` }}>Colorado Springs Health Collective</div>
+              <div className="text-center font-bold text-lg" style={{ color: "hsl(0,0%,70%)" }}>Traditional Healthcare</div>
             </div>
-            <div className="mb-6">
-              <span
-                className="inline-block px-6 py-2 text-sm font-medium tracking-widest rounded-full uppercase"
-                style={{ background: "hsla(210, 22%, 28%, 0.85)", color: "hsl(177, 70%, 65%)", border: "1px solid hsla(177, 70%, 59%, 0.3)" }}
+            {comparisonData.map((row, index) => (
+              <div
+                key={row.feature}
+                className="grid md:grid-cols-3 border-b"
+                style={{ background: index % 2 === 0 ? "hsla(210,22%,22%,0.6)" : "hsla(210,22%,18%,0.6)", borderColor: "hsla(210,22%,30%,0.5)" }}
               >
-                Direct Primary Care
-              </span>
-            </div>
-            <p className="text-xl lg:text-2xl font-light mb-10 max-w-3xl mx-auto leading-relaxed" style={{ color: "hsl(210, 40%, 89%)" }}>
-              Flat monthly fee. Unlimited access. Providers who actually know you.
-            </p>
-            <a
-              href={MEET_GREET_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block px-10 py-4 rounded-full font-bold text-lg uppercase tracking-wide transition-all duration-300 hover:scale-105"
-              style={{ background: "linear-gradient(135deg, hsl(177, 70%, 55%), hsl(45, 90%, 60%))", color: "hsl(210, 32%, 12%)", boxShadow: "0 4px 20px hsla(177, 70%, 50%, 0.3)" }}
-            >
-              Schedule Your Free Meet &amp; Greet
-            </a>
-          </div>
-
-          {/* Integrative Approach */}
-          <div className="max-w-4xl mx-auto mb-16">
-            <div className="rounded-3xl p-8 lg:p-10" style={{ background: "hsla(210, 22%, 20%, 0.85)", border: "1px solid hsla(177, 70%, 59%, 0.2)" }}>
-              <h2 className="text-2xl lg:text-3xl font-bold mb-6 text-center" style={{ color: "hsl(177, 70%, 65%)" }}>
-                Our Integrative Approach
-              </h2>
-              <p className="text-lg leading-relaxed mb-4 text-center" style={{ color: "hsl(0, 0%, 92%)" }}>
-                Integrative medicine combines evidence-based primary care with lifestyle, behavioral, and preventive strategies to address the whole person—not just isolated symptoms.
-              </p>
-              <p className="text-base leading-relaxed text-center" style={{ color: "hsl(210, 40%, 82%)" }}>
-                We integrate traditional medical care with nutrition, movement, sleep, stress, and habit-based interventions when supported by evidence, always prioritizing safety, simplicity, and long-term health.
-              </p>
-            </div>
-          </div>
-
-          {/* Benefits */}
-          <div className="max-w-4xl mx-auto mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold mb-3 text-center" style={{ color: "hsl(177, 70%, 65%)" }}>
-              Your Membership Benefits
-            </h2>
-            <p className="text-center mb-8 text-lg" style={{ color: "hsl(210, 40%, 89%)" }}>
-              Comprehensive care without insurance hassles
-            </p>
-            <div className="space-y-4">
-              {/* Included */}
-              <div className="rounded-xl overflow-hidden" style={{ background: "hsla(210, 22%, 20%, 0.85)", border: "1px solid hsla(177, 70%, 59%, 0.2)" }}>
-                <button
-                  onClick={() => setOpenIncluded(openIncluded === "included" ? null : "included")}
-                  className="w-full flex items-center justify-between p-5 text-left hover:bg-white/5"
-                >
-                  <span className="text-lg font-semibold" style={{ color: "hsl(0, 0%, 95%)" }}>
-                    What&apos;s Included in Your Membership
-                  </span>
-                  {openIncluded === "included" ? (
-                    <Minus className="w-5 h-5 flex-shrink-0" style={{ color: "hsl(177, 70%, 65%)" }} />
-                  ) : (
-                    <Plus className="w-5 h-5 flex-shrink-0" style={{ color: "hsl(177, 70%, 65%)" }} />
-                  )}
-                </button>
-                <div className="h-1" style={{ background: "linear-gradient(90deg, hsl(280, 70%, 65%), hsl(177, 70%, 59%), hsl(45, 90%, 60%), hsl(330, 70%, 65%), hsl(140, 60%, 55%))" }} />
-                {openIncluded === "included" && (
-                  <div className="p-5 pt-4">
-                    <div className="grid md:grid-cols-2 gap-4">
-                      {includedBenefits.map((benefit, index) => (
-                        <div key={index} className="rounded-lg p-4" style={{ background: "hsla(210, 22%, 25%, 0.6)", borderLeft: `3px solid ${benefitColors[index % benefitColors.length]}` }}>
-                          <h4 className="font-semibold mb-1 text-base" style={{ color: benefitColors[index % benefitColors.length] }}>
-                            {benefit.title}
-                          </h4>
-                          <p className="text-sm leading-relaxed" style={{ color: "hsl(0, 0%, 85%)" }}>
-                            {benefit.description}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                <div className="p-4 font-semibold" style={{ color: "hsl(0,0%,95%)" }}>{row.feature}</div>
+                <div className="p-4 flex items-center gap-2" style={{ color: "hsl(210,40%,80%)" }}>
+                  <CheckCircle className="w-4 h-4 flex-shrink-0" style={{ color: `rgb(${ACCENT.rgb})` }} />
+                  {row.dpc}
+                </div>
+                <div className="p-4 flex items-center gap-2" style={{ color: "hsl(0,0%,55%)" }}>
+                  <AlertTriangle className="w-4 h-4 flex-shrink-0" style={{ color: "hsl(0,0%,50%)" }} />
+                  {row.traditional}
+                </div>
               </div>
-
-              {/* Discounted */}
-              <div className="rounded-xl overflow-hidden" style={{ background: "hsla(210, 22%, 20%, 0.85)", border: "1px solid hsla(177, 70%, 59%, 0.2)" }}>
-                <button
-                  onClick={() => setOpenDiscounted(openDiscounted === "discounted" ? null : "discounted")}
-                  className="w-full flex items-center justify-between p-5 text-left hover:bg-white/5"
-                >
-                  <span className="text-lg font-semibold" style={{ color: "hsl(0, 0%, 95%)" }}>
-                    Discounted Member Services
-                  </span>
-                  {openDiscounted === "discounted" ? (
-                    <Minus className="w-5 h-5 flex-shrink-0" style={{ color: "hsl(177, 70%, 65%)" }} />
-                  ) : (
-                    <Plus className="w-5 h-5 flex-shrink-0" style={{ color: "hsl(177, 70%, 65%)" }} />
-                  )}
-                </button>
-                <div className="h-1" style={{ background: "linear-gradient(90deg, hsl(280, 70%, 65%), hsl(177, 70%, 59%), hsl(45, 90%, 60%), hsl(330, 70%, 65%), hsl(140, 60%, 55%))" }} />
-                {openDiscounted === "discounted" && (
-                  <div className="p-5 pt-4">
-                    <div className="grid md:grid-cols-2 gap-4">
-                      {discountedServices.map((service, index) => (
-                        <div key={index} className="rounded-lg p-4" style={{ background: "hsla(210, 22%, 25%, 0.6)", borderLeft: `3px solid ${benefitColors[index % benefitColors.length]}` }}>
-                          <h4 className="font-semibold mb-1 text-base" style={{ color: benefitColors[index % benefitColors.length] }}>
-                            {service.title}
-                          </h4>
-                          <p className="text-sm leading-relaxed" style={{ color: "hsl(0, 0%, 85%)" }}>
-                            {service.description}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Comparison */}
-          <div className="max-w-4xl mx-auto mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold mb-10 text-center" style={{ color: "hsl(0, 0%, 100%)" }}>
-              How We Compare
-            </h2>
-            <div className="rounded-3xl overflow-hidden" style={{ background: "hsla(210, 22%, 18%, 0.9)" }}>
-              <div className="hidden md:grid grid-cols-3 p-5" style={{ background: "hsla(210, 22%, 25%, 0.8)" }}>
-                <div />
-                <div className="text-center font-bold text-lg" style={{ color: "hsl(177, 70%, 65%)" }}>Colorado Springs Health Collective</div>
-                <div className="text-center font-bold text-lg" style={{ color: "hsl(0, 0%, 70%)" }}>Traditional Healthcare</div>
-              </div>
-              {comparisonData.map((row, index) => (
-                <div
-                  key={index}
-                  className="grid md:grid-cols-3 border-b"
-                  style={{ background: index % 2 === 0 ? "hsla(210, 22%, 22%, 0.6)" : "hsla(210, 22%, 18%, 0.6)", borderColor: "hsla(210, 22%, 30%, 0.5)" }}
-                >
-                  <div className="p-4 font-semibold" style={{ color: "hsl(0, 0%, 95%)" }}>{row.feature}</div>
-                  <div className="p-4 flex items-center gap-2" style={{ color: "hsl(177, 70%, 75%)" }}>
-                    <CheckCircle className="w-4 h-4 flex-shrink-0" style={{ color: "hsl(177, 70%, 59%)" }} />
-                    {row.dpc}
-                  </div>
-                  <div className="p-4 flex items-center gap-2" style={{ color: "hsl(0, 0%, 55%)" }}>
-                    <AlertTriangle className="w-4 h-4 flex-shrink-0" style={{ color: "hsl(0, 0%, 50%)" }} />
-                    {row.traditional}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Pricing */}
-          <div id="pricing" className="max-w-4xl mx-auto mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold mb-10 text-center" style={{ color: "hsl(0, 0%, 100%)" }}>
-              Transparent Pricing
-            </h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              {[
-                { title: "Individual", desc: "Single member", price: usd(clinicFacts.dpc.individualMonthly), suffix: "/month", extra: null },
-                { title: "Couples", desc: "2 individuals under the same household", price: usd(clinicFacts.dpc.couplesMonthly), suffix: "/month", extra: null },
-                { title: "Family", desc: "Up to 6 members", price: `+${usd(clinicFacts.dpc.childAddOnMonthly)}`, suffix: "/child", extra: `over age ${clinicFacts.dpc.childAgeMin}` },
-              ].map((plan, index) => (
-                <div
-                  key={index}
-                  className="rounded-3xl p-6 text-center"
-                  style={{ background: "hsla(210, 22%, 28%, 0.75)", border: "1px solid hsla(177, 70%, 59%, 0.2)" }}
-                >
-                  <h3 className="text-xl font-bold mb-2 italic" style={{ color: "hsl(177, 70%, 65%)" }}>{plan.title}</h3>
-                  <p className="text-sm mb-4" style={{ color: "hsl(0, 0%, 85%)" }}>{plan.desc}</p>
-                  <div className="text-4xl font-bold mb-1" style={{ color: "hsl(0, 0%, 100%)" }}>
-                    {plan.price}<span className="text-lg font-normal">{plan.suffix}</span>
-                  </div>
-                  {plan.extra && <p className="text-sm" style={{ color: "hsl(0, 0%, 75%)" }}>{plan.extra}</p>}
-                </div>
-              ))}
-            </div>
-            <p className="text-center text-sm mt-6" style={{ color: "hsl(210, 25%, 60%)" }}>
-              One-time {usd(clinicFacts.dpc.registrationFee)} registration fee per household for new members.
-            </p>
-            <div className="text-center mt-8">
-              <a
-                href={SIGNUP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block px-10 py-4 rounded-full font-bold text-lg uppercase tracking-wide transition-all duration-300 hover:scale-105"
-                style={{ background: "linear-gradient(135deg, hsl(177, 70%, 55%), hsl(45, 90%, 60%))", color: "hsl(210, 32%, 12%)" }}
-              >
-                Become a Member
-              </a>
-            </div>
-          </div>
-
-          {/* FAQ */}
-          <div id="faq" className="max-w-4xl mx-auto mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold mb-3 text-center" style={{ color: "hsl(177, 70%, 65%)" }}>
-              Frequently Asked Questions
-            </h2>
-            <p className="text-center mb-8 text-lg" style={{ color: "hsl(210, 40%, 89%)" }}>
-              Everything you need to know about CSHC Direct Primary Care
-            </p>
-            <div className="space-y-3">
-              {dpcFaqs.map((faq) => (
-                <div key={faq.id} className="rounded-2xl overflow-hidden" style={{ background: "hsla(210, 22%, 28%, 0.75)" }}>
-                  <button
-                    className="w-full text-left p-6 flex items-center justify-between"
-                    onClick={() => setOpenFaq(openFaq === faq.id ? null : faq.id)}
-                    aria-expanded={openFaq === faq.id}
-                  >
-                    <span className="text-base font-semibold pr-4" style={{ color: "hsl(0, 0%, 100%)" }}>
-                      {faq.question}
-                    </span>
-                    {openFaq === faq.id ? (
-                      <Minus className="w-5 h-5 flex-shrink-0" style={{ color: "hsl(177, 70%, 59%)" }} />
-                    ) : (
-                      <Plus className="w-5 h-5 flex-shrink-0" style={{ color: "hsl(177, 70%, 59%)" }} />
-                    )}
-                  </button>
-                  {openFaq === faq.id && (
-                    <div className="px-6 pb-6">
-                      <p className="leading-relaxed" style={{ color: "hsl(0, 0%, 85%)" }}>
-                        {faq.answer}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="section-divider mb-16" />
-
-          {/* Contact Form */}
-          <div id="contact" className="max-w-2xl mx-auto mb-16">
-            <div className="rounded-3xl p-8 lg:p-10" style={{ background: "hsla(210, 22%, 28%, 0.75)" }}>
-              <h2 className="text-2xl font-bold mb-2 text-center" style={{ color: "hsl(177, 70%, 65%)" }}>
-                Have Questions First?
-              </h2>
-              <p className="text-center mb-6" style={{ color: "hsl(0, 0%, 85%)" }}>
-                Get answers about Direct Primary Care, our services, pricing, or anything else you&apos;d like to know.
-              </p>
-              {formSubmitted ? (
-                <div className="text-center py-8">
-                  <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: "linear-gradient(135deg, hsl(177, 70%, 59%), hsl(140, 60%, 55%))" }}>
-                    <CheckCircle className="w-8 h-8" style={{ color: "hsl(210, 32%, 12%)" }} />
-                  </div>
-                  <h3 className="text-xl font-bold mb-2" style={{ color: "hsl(177, 70%, 65%)" }}>Message Sent Successfully!</h3>
-                  <p style={{ color: "hsl(0, 0%, 85%)" }}>We&apos;ll get back to you soon. Thank you for reaching out!</p>
-                  <button
-                    onClick={() => setFormSubmitted(false)}
-                    className="mt-6 px-6 py-2 rounded-full"
-                    style={{ background: "hsla(210, 22%, 28%, 0.75)", color: "hsl(177, 70%, 65%)", border: "1px solid hsla(177, 70%, 59%, 0.3)" }}
-                  >
-                    Send Another Message
-                  </button>
-                </div>
-              ) : (
-                <form ref={formRef} onSubmit={handleFormSubmit} className="space-y-4">
-                  <input type="hidden" name="Date and Time" ref={datetimeRef} />
-                  <input type="hidden" name="Status" value="DPC Page Inquiry" />
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm mb-1" style={{ color: "hsl(0, 0%, 92%)" }}>First Name *</label>
-                      <input type="text" name="First Name" required className="w-full px-3 py-2 rounded-lg text-white" style={{ background: "hsla(210, 22%, 35%, 0.6)", border: "1px solid hsla(255, 255, 255, 0.2)" }} />
-                    </div>
-                    <div>
-                      <label className="block text-sm mb-1" style={{ color: "hsl(0, 0%, 92%)" }}>Last Name *</label>
-                      <input type="text" name="Last Name" required className="w-full px-3 py-2 rounded-lg text-white" style={{ background: "hsla(210, 22%, 35%, 0.6)", border: "1px solid hsla(255, 255, 255, 0.2)" }} />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm mb-1" style={{ color: "hsl(0, 0%, 92%)" }}>Email *</label>
-                    <input type="email" name="Email" required className="w-full px-3 py-2 rounded-lg text-white" style={{ background: "hsla(210, 22%, 35%, 0.6)", border: "1px solid hsla(255, 255, 255, 0.2)" }} />
-                  </div>
-                  <div>
-                    <label className="block text-sm mb-1" style={{ color: "hsl(0, 0%, 92%)" }}>Phone Number (Optional)</label>
-                    <input type="tel" name="Phone Number" className="w-full px-3 py-2 rounded-lg text-white" style={{ background: "hsla(210, 22%, 35%, 0.6)", border: "1px solid hsla(255, 255, 255, 0.2)" }} />
-                  </div>
-                  <div>
-                    <label className="block text-sm mb-2" style={{ color: "hsl(0, 0%, 92%)" }}>How would you prefer we respond?</label>
-                    <div className="flex gap-6">
-                      {["Email", "Phone"].map((opt) => (
-                        <label key={opt} className="flex items-center gap-2 cursor-pointer">
-                          <input
-                            type="radio"
-                            name="Response Type"
-                            value={opt}
-                            checked={responseType === opt}
-                            onChange={() => setResponseType(opt)}
-                            className="accent-teal-400"
-                          />
-                          <span style={{ color: "hsl(0, 0%, 85%)" }}>{opt === "Phone" ? "Phone Call" : opt}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm mb-1" style={{ color: "hsl(0, 0%, 92%)" }}>Your Questions</label>
-                    <textarea name="Notes" rows={4} className="w-full px-3 py-2 rounded-lg text-white resize-none" style={{ background: "hsla(210, 22%, 35%, 0.6)", border: "1px solid hsla(255, 255, 255, 0.2)" }} />
-                  </div>
-                  <button
-                    type="submit"
-                    disabled={formSubmitting}
-                    className="w-full py-4 rounded-full font-semibold text-lg mt-6 disabled:opacity-50"
-                    style={{ background: "linear-gradient(135deg, hsl(177, 70%, 59%), hsl(200, 70%, 59%))", color: "hsl(210, 32%, 12%)" }}
-                  >
-                    {formSubmitting ? "Sending..." : "Send My Questions"}
-                  </button>
-                </form>
-              )}
-            </div>
-          </div>
-
-          <div className="text-center mb-8">
-            <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-6">
-              <a href={`tel:${clinicFacts.contact.phoneTel}`} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                <Phone className="w-5 h-5" style={{ color: "hsl(177, 70%, 59%)" }} />
-                <span style={{ color: "hsl(0, 0%, 92%)" }}>{clinicFacts.contact.phone}</span>
-              </a>
-              <a href={`mailto:${clinicFacts.contact.email}`} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                <Mail className="w-5 h-5" style={{ color: "hsl(177, 70%, 59%)" }} />
-                <span style={{ color: "hsl(0, 0%, 92%)" }}>{clinicFacts.contact.email}</span>
-              </a>
-            </div>
-            <div className="flex items-center justify-center gap-4 mb-8">
-              <Link href="/faq" className="hover:opacity-80 transition-opacity" style={{ color: "hsl(177, 70%, 59%)" }}>FAQ</Link>
-              <span style={{ color: "hsl(0, 0%, 50%)" }}>|</span>
-              <Link href="/about" className="hover:opacity-80 transition-opacity" style={{ color: "hsl(177, 70%, 59%)" }}>About Us</Link>
-              <span style={{ color: "hsl(0, 0%, 50%)" }}>|</span>
-              <Link href="/blog" className="hover:opacity-80 transition-opacity" style={{ color: "hsl(177, 70%, 59%)" }}>Blog</Link>
-            </div>
-            <p className="text-xs max-w-2xl mx-auto" style={{ color: "hsl(0, 0%, 60%)" }}>
-              This website provides educational and informational content only. Nothing on this site constitutes medical advice, diagnosis, or treatment.
-            </p>
+            ))}
           </div>
         </div>
       </section>
+
+      {/* Pricing */}
+      <section id="pricing" className="py-16 lg:py-20">
+        <div className="mx-auto max-w-4xl px-5 lg:px-8">
+          <h2 className="text-3xl lg:text-4xl font-black mb-10 text-center text-white">
+            Transparent <span style={gradientTextStyle("dpc")}>Pricing</span>
+          </h2>
+          <div className="grid md:grid-cols-3 gap-5">
+            {[
+              { title: "Individual", desc: "Single member", price: usd(clinicFacts.dpc.individualMonthly), suffix: "/month", extra: null },
+              { title: "Couples", desc: "2 individuals under the same household", price: usd(clinicFacts.dpc.couplesMonthly), suffix: "/month", extra: null },
+              { title: "Family", desc: "Up to 6 members", price: `+${usd(clinicFacts.dpc.childAddOnMonthly)}`, suffix: "/child", extra: `over age ${clinicFacts.dpc.childAgeMin}` },
+            ].map((plan) => (
+              <GlassCard key={plan.title} service="dpc" className="text-center">
+                <h3 className="text-lg font-bold mb-2" style={{ color: `rgb(${ACCENT.rgb})` }}>{plan.title}</h3>
+                <p className="text-sm mb-4" style={{ color: "hsl(210,25%,70%)" }}>{plan.desc}</p>
+                <div className="text-4xl font-black mb-1 text-white">
+                  {plan.price}<span className="text-lg font-normal">{plan.suffix}</span>
+                </div>
+                {plan.extra && <p className="text-sm" style={{ color: "hsl(210,25%,65%)" }}>{plan.extra}</p>}
+              </GlassCard>
+            ))}
+          </div>
+          <p className="text-center text-sm mt-6" style={{ color: "hsl(210,25%,60%)" }}>
+            One-time {usd(clinicFacts.dpc.registrationFee)} registration fee per household for new members.
+          </p>
+          <div className="text-center mt-8">
+            <a
+              href={SIGNUP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block rounded-full px-10 py-4 text-sm font-bold uppercase tracking-wide hover:opacity-85 transition-opacity"
+              style={{ background: `linear-gradient(135deg, ${ACCENT.from}, ${ACCENT.to})`, color: "hsl(210,32%,10%)" }}
+            >
+              Become a Member
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      {/* FAQ */}
+      <section id="faq" className="py-16 lg:py-20">
+        <div className="mx-auto max-w-4xl px-5 lg:px-8">
+          <div className="text-center mb-10">
+            <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: `rgb(${ACCENT.rgb})` }}>
+              DPC FAQ
+            </p>
+            <h2 className="text-3xl lg:text-4xl font-black text-white">
+              Everything you need to know about <span style={gradientTextStyle("dpc")}>CSHC Direct Primary Care</span>
+            </h2>
+          </div>
+          <Accordion service="dpc" items={dpcFaqs} />
+        </div>
+      </section>
+
+      {/* Contact Form */}
+      <section id="contact" className="py-8 lg:py-12">
+        <div className="mx-auto max-w-2xl px-5 lg:px-8">
+          <GlassCard service="dpc" className="!p-8 lg:!p-10">
+            <h2 className="text-2xl font-black mb-2 text-center text-white">Have Questions First?</h2>
+            <p className="text-center mb-6 text-sm" style={{ color: "hsl(210,25%,70%)" }}>
+              Get answers about Direct Primary Care, our services, pricing, or anything else you&apos;d like to know.
+            </p>
+            {formSubmitted ? (
+              <div className="text-center py-8">
+                <div
+                  className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+                  style={{ background: `linear-gradient(135deg, ${ACCENT.from}, ${ACCENT.to})` }}
+                >
+                  <CheckCircle className="w-8 h-8" style={{ color: "hsl(210,32%,10%)" }} />
+                </div>
+                <h3 className="text-xl font-bold mb-2" style={{ color: `rgb(${ACCENT.rgb})` }}>Message Sent Successfully!</h3>
+                <p style={{ color: "hsl(210,25%,75%)" }}>We&apos;ll get back to you soon. Thank you for reaching out!</p>
+                <button
+                  onClick={() => setFormSubmitted(false)}
+                  className="mt-6 px-6 py-2 rounded-full"
+                  style={{ background: "hsla(210,22%,28%,0.75)", color: `rgb(${ACCENT.rgb})`, border: `1px solid rgba(${ACCENT.rgb},0.3)` }}
+                >
+                  Send Another Message
+                </button>
+              </div>
+            ) : (
+              <form ref={formRef} onSubmit={handleFormSubmit} className="space-y-4">
+                <input type="hidden" name="Date and Time" ref={datetimeRef} />
+                <input type="hidden" name="Status" value="DPC Page Inquiry" />
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm mb-1" style={{ color: "hsl(0,0%,92%)" }}>First Name *</label>
+                    <input type="text" name="First Name" required className="w-full px-3 py-2 rounded-lg text-white" style={inputStyle} />
+                  </div>
+                  <div>
+                    <label className="block text-sm mb-1" style={{ color: "hsl(0,0%,92%)" }}>Last Name *</label>
+                    <input type="text" name="Last Name" required className="w-full px-3 py-2 rounded-lg text-white" style={inputStyle} />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm mb-1" style={{ color: "hsl(0,0%,92%)" }}>Email *</label>
+                  <input type="email" name="Email" required className="w-full px-3 py-2 rounded-lg text-white" style={inputStyle} />
+                </div>
+                <div>
+                  <label className="block text-sm mb-1" style={{ color: "hsl(0,0%,92%)" }}>Phone Number (Optional)</label>
+                  <input type="tel" name="Phone Number" className="w-full px-3 py-2 rounded-lg text-white" style={inputStyle} />
+                </div>
+                <div>
+                  <label className="block text-sm mb-2" style={{ color: "hsl(0,0%,92%)" }}>How would you prefer we respond?</label>
+                  <div className="flex gap-6">
+                    {["Email", "Phone"].map((opt) => (
+                      <label key={opt} className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="Response Type"
+                          value={opt}
+                          checked={responseType === opt}
+                          onChange={() => setResponseType(opt)}
+                          className="accent-blue-400"
+                        />
+                        <span style={{ color: "hsl(0,0%,85%)" }}>{opt === "Phone" ? "Phone Call" : opt}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm mb-1" style={{ color: "hsl(0,0%,92%)" }}>Your Questions</label>
+                  <textarea name="Notes" rows={4} className="w-full px-3 py-2 rounded-lg text-white resize-none" style={inputStyle} />
+                </div>
+                <button
+                  type="submit"
+                  disabled={formSubmitting}
+                  className="w-full py-4 rounded-full font-bold text-lg mt-6 disabled:opacity-50 hover:opacity-85 transition-opacity"
+                  style={{ background: `linear-gradient(135deg, ${ACCENT.from}, ${ACCENT.to})`, color: "hsl(210,32%,10%)" }}
+                >
+                  {formSubmitting ? "Sending..." : "Send My Questions"}
+                </button>
+              </form>
+            )}
+          </GlassCard>
+        </div>
+      </section>
+
+      <PageCtaFooter
+        service="dpc"
+        heading="Ready to meet your new care team?"
+        body="Start with a free Meet & Greet — no commitment, no paperwork, just a conversation."
+        primaryCta={{ label: "Schedule Your Free Meet & Greet", href: MEET_GREET_URL, external: true }}
+        disclaimer="This website provides educational and informational content only. Nothing on this site constitutes medical advice, diagnosis, or treatment."
+      />
     </div>
   );
 }
