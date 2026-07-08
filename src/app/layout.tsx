@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     "direct primary care Colorado Springs",
     "DPC Colorado Springs",
     "hormone therapy Colorado Springs",
-    "perimenopause doctor Colorado Springs",
+    "perimenopause specialist Colorado Springs",
     "TRT Colorado Springs",
     "GLP-1 weight loss Colorado Springs",
     "semaglutide Colorado Springs",

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/urgent-care" },
   title: `Urgent Care Colorado Springs | Telehealth ${usd(telehealth)}, In-Person ${usd(inPerson)}`,
   description: `Skip the ER. Urgent care and telehealth visits in Colorado Springs for UTIs, strep, flu, COVID, lacerations, infections, and minor injuries. Flat rate pricing: ${usd(telehealth)} telehealth, ${usd(inPerson)} in-person or in-home. Same-day appointments available.`,
-  keywords: "urgent care Colorado Springs, telehealth Colorado Springs, virtual doctor visit, urgent care near me, same day appointments Colorado Springs, in-home doctor visits",
+  keywords: "urgent care Colorado Springs, telehealth Colorado Springs, virtual urgent care visit, urgent care near me, same day appointments Colorado Springs, in-home provider visits",
 };
 
 const treatmentCategories = [

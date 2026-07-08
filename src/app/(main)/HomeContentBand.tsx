@@ -15,7 +15,7 @@ const SERVICES = [
     accent: "64,150,246",
     kicker: "Now Enrolling",
     title: "Direct Primary Care",
-    body: `A membership with your own doctor for ${usd(clinicFacts.dpc.individualMonthly)}/month — unlimited visits, same-day access, no copays, wholesale labs and medications. Couples ${usd(clinicFacts.dpc.couplesMonthly)}/month.`,
+    body: `A membership with your own provider for ${usd(clinicFacts.dpc.individualMonthly)}/month — unlimited visits, same-day access, no copays, wholesale labs and medications. Couples ${usd(clinicFacts.dpc.couplesMonthly)}/month.`,
     cta: "Explore DPC membership",
   },
   {

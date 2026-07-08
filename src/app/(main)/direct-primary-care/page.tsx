@@ -154,7 +154,7 @@ export default function DirectPrimaryCare() {
             className="mt-8 text-4xl font-bold text-white lg:text-6xl"
             style={{ textShadow: "0 10px 34px rgba(0,0,0,0.42)", lineHeight: 1.1 }}
           >
-            Your own doctor,
+            Your own provider,
             <span
               className="mt-2 block"
               style={{
@@ -189,7 +189,7 @@ export default function DirectPrimaryCare() {
               </h2>
               <p className="mt-4 text-lg leading-relaxed text-slate-300">
                 Seven-minute visits. Weeks of waiting. Phone trees, copays, and a different face every time.
-                None of that is your doctor&apos;s fault — it&apos;s the insurance-billing machine they work
+                None of that is your provider&apos;s fault — it&apos;s the insurance-billing machine they work
                 inside. Direct Primary Care removes the machine.
               </p>
             </div>

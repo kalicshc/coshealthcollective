@@ -104,7 +104,7 @@ export default function MailroomFlyer2() {
                   <li>Surprise bills after visits</li>
                   <li>Weeks to get an appointment</li>
                   <li>10-minute rushed visits</li>
-                  <li>Can't reach your doctor</li>
+                  <li>Can't reach your provider</li>
                 </ul>
               </div>
               <div className="solution-box">

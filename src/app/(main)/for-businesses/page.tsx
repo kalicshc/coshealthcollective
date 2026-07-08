@@ -79,7 +79,7 @@ export default function ForBusinesses() {
             className="mt-8 text-4xl font-bold text-white lg:text-6xl"
             style={{ textShadow: "0 10px 34px rgba(0,0,0,0.42)", lineHeight: 1.1 }}
           >
-            Your team&apos;s doctor,
+            Your team&apos;s provider,
             <span
               className="mt-2 block"
               style={{

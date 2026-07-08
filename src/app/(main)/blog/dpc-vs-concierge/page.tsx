@@ -51,7 +51,7 @@ export default function BlogDpcVsConcierge() {
       <section className="relative" style={{ background: "hsl(210, 32%, 8%)" }}>
 
         <div className="relative h-[60vh] min-h-[420px] overflow-hidden">
-          <Image src="/blog/dpc-hero.jpg" alt="Doctor and patient conversation in Colorado Springs" fill className="object-cover" priority />
+          <Image src="/blog/dpc-hero.jpg" alt="Provider and patient conversation in Colorado Springs" fill className="object-cover" priority />
           <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, hsla(210,32%,8%,0.65) 0%, hsla(210,32%,8%,0.93) 55%, hsl(210,32%,8%) 85%)" }} />
           <div className="absolute inset-0 flex flex-col justify-end pb-12 px-5 lg:px-8">
             <div className="container mx-auto max-w-4xl">
