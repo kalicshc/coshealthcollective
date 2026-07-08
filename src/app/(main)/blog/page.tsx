@@ -4,8 +4,14 @@ import Image from "next/image";
 import { Phone, Mail } from "lucide-react";
 import { clinicFacts } from "@/lib/clinicFacts";
 import { ACCENTS } from "@/lib/accents";
+import { SceneSection } from "@/components/SceneSection";
 
-const BRAND = `rgb(${ACCENTS.brand.rgb})`;
+const ACCENT = ACCENTS.brand;
+
+// Lighter golds than ACCENT.from/to — hand-tuned for gradient-clipped
+// headlines sitting on dark photos (same approach as the DPC blues).
+const goldLight = "hsl(48, 96%, 72%)";
+const goldDeep = "hsl(38, 92%, 56%)";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/blog" },
@@ -111,29 +117,50 @@ const grid = articles.slice(1);
 
 export default function Blog() {
   return (
-    <div className="min-h-screen">
-      <section className="relative min-h-screen" style={{ background: "hsl(210, 32%, 8%)" }}>
-        <div className="container mx-auto px-5 lg:px-8 py-32 pt-40">
+    <div>
+      {/* ── 1. CINEMATIC HERO ─────────────────────────────────────────── */}
+      <SceneSection image="/images/brand/blog-hero.webp" scrim="hero" minHeight="100svh" priority maxWidthClassName="max-w-7xl" scrollCue="#articles">
+        <div className="max-w-3xl pt-20">
+          <span className="rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em]" style={{ border: `1px solid rgba(${ACCENT.rgb},0.3)`, background: `rgba(${ACCENT.rgb},0.12)`, color: "hsl(45,90%,86%)" }}>
+            The CSHC Journal · Evidence-Based
+          </span>
+          <h1
+            className="mt-8 text-4xl font-bold text-white lg:text-6xl"
+            style={{ textShadow: "0 10px 34px rgba(0,0,0,0.42)", lineHeight: 1.1 }}
+          >
+            Healthcare insights
+            <span
+              className="mt-2 block"
+              style={{
+                background: `linear-gradient(135deg, ${goldLight}, ${goldDeep})`,
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                filter: "drop-shadow(0 8px 18px rgba(0,0,0,0.28))",
+              }}
+            >
+              &amp; wellness.
+            </span>
+          </h1>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-white" style={{ textShadow: "0 4px 16px rgba(0,0,0,0.35)" }}>
+            Evidence-based guides from Colorado Springs Health Collective — hormones, longevity,
+            hyperbaric medicine, and getting more from your healthcare dollar.
+          </p>
+        </div>
+      </SceneSection>
 
-          <div className="text-center mb-16">
-            <h1 className="text-4xl lg:text-5xl font-bold mb-4 leading-tight">
-              <span style={{ color: "hsl(0, 0%, 100%)" }}>Healthcare </span>
-              <span style={{ color: BRAND }}>Insights &amp; Wellness</span>
-            </h1>
-            <p className="text-xl font-light max-w-2xl mx-auto" style={{ color: "hsl(210, 40%, 75%)" }}>
-              Evidence-based guides from Colorado Springs Health Collective.
-            </p>
-          </div>
+      {/* ── 2. ARTICLES ───────────────────────────────────────────────── */}
+      <section id="articles" className="scroll-mt-20 py-14 lg:py-20">
+        <div className="mx-auto max-w-6xl px-5 lg:px-8">
 
           {/* Featured article */}
-          <Link href={`/blog/${featured.slug}`} className="block max-w-6xl mx-auto mb-12 group">
+          <Link href={`/blog/${featured.slug}`} className="block mb-12 group">
             <div className="relative rounded-3xl overflow-hidden" style={{ minHeight: "420px" }}>
               <Image
                 src={featured.image}
                 alt={featured.title}
                 fill
                 className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
-                priority
               />
               <div className="absolute inset-0" style={{ background: "linear-gradient(to right, hsla(210, 32%, 8%, 0.95) 40%, hsla(210, 32%, 8%, 0.3) 100%)" }} />
               <div className="absolute inset-0 flex items-center p-10 lg:p-16">
@@ -159,7 +186,7 @@ export default function Blog() {
           </Link>
 
           {/* Article grid */}
-          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
             {grid.map((article) => (
               <Link key={article.slug} href={`/blog/${article.slug}`} className="group block">
                 <div className="rounded-2xl overflow-hidden h-full flex flex-col" style={{ background: "hsla(210, 22%, 18%, 0.8)" }}>
@@ -197,11 +224,11 @@ export default function Blog() {
           <div className="text-center">
             <div className="flex flex-col md:flex-row items-center justify-center gap-6">
               <a href={`tel:${clinicFacts.contact.phoneTel}`} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                <Phone className="w-5 h-5" style={{ color: BRAND }} />
+                <Phone className="w-5 h-5" style={{ color: `rgb(${ACCENT.rgb})` }} />
                 <span style={{ color: "hsl(0, 0%, 92%)" }}>{clinicFacts.contact.phone}</span>
               </a>
               <a href={`mailto:${clinicFacts.contact.email}`} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                <Mail className="w-5 h-5" style={{ color: BRAND }} />
+                <Mail className="w-5 h-5" style={{ color: `rgb(${ACCENT.rgb})` }} />
                 <span style={{ color: "hsl(0, 0%, 92%)" }}>{clinicFacts.contact.email}</span>
               </a>
             </div>

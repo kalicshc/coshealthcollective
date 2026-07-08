@@ -159,6 +159,58 @@ const IMAGES = {
       "white text. Near-abstract. Wide cinematic.",
     w: 2200, h: 1400,
   },
+  // ── Brand-gold support pages (about / blog / faq) — warm golden moods ──
+  "about-hero": {
+    dir: "brand",
+    prompt:
+      "Warm golden-hour light washing across a Colorado front-range meadow, two tall ponderosa " +
+      "pines standing close together on the RIGHT third of the frame catching the low amber sun, " +
+      "soft grasses and pine-ringed foothills beyond. The left half and lower third of the frame " +
+      "are calm, deep-shadowed, and uncluttered — near-dark warm slate tones with no highlights — " +
+      "deliberately dark to hold a large white headline. Human-scale, welcoming. Wide cinematic.",
+    w: 2200, h: 1400,
+  },
+  "about-vision": {
+    dir: "brand",
+    prompt:
+      "A vast Colorado valley seen from a high overlook at first light, layer upon layer of " +
+      "ridgelines receding to a distant horizon, a thin band of warm gold along the farthest " +
+      "ridge at the TOP of the frame only — a long view, a sense of what's being built ahead. " +
+      "The center and lower two-thirds of the frame are even, near-dark shadow with soft haze " +
+      "and no highlights — deliberately dark to hold centered white text. Wide cinematic.",
+    w: 2200, h: 1400,
+  },
+  "blog-hero": {
+    dir: "brand",
+    prompt:
+      "Soft warm morning light breaking through a misty Colorado pine forest, gentle gold rays " +
+      "slanting down in the UPPER RIGHT corner only, drifting fog between dark tree trunks. " +
+      "The left half and lower third of the frame are deep, even shadow with no highlights — " +
+      "deliberately dark to hold a large white headline. Quiet, curious, contemplative. Wide cinematic.",
+    w: 2200, h: 1400,
+  },
+  "faq-hero": {
+    dir: "brand",
+    prompt:
+      "A perfectly still Colorado alpine lake at warm dusk, dark pine shorelines mirrored in calm " +
+      "water, a faint amber afterglow hugging the ridgeline on the FAR RIGHT only. The left half " +
+      "and lower third of the frame are deep, even, near-dark shadow with zero highlights — " +
+      "deliberately dark to hold a large white headline. Clear, settled, reassuring. Wide cinematic.",
+    w: 2200, h: 1400,
+  },
+
+  // ── For-businesses hero — cool DPC-blue morning, expansive/professional ──
+  "business-hero": {
+    dir: "dpc",
+    prompt:
+      "A wide cool blue-hour panorama over Colorado foothills at dawn, crisp layered ridgelines " +
+      "under a deep steel-blue sky, the faintest clean gold edge of sunrise on the FAR RIGHT " +
+      "horizon only — expansive, organized, optimistic. The left half and lower third of the " +
+      "frame are calm, deep-shadowed slate-blue with no highlights — deliberately dark to hold " +
+      "a large white headline. Wide cinematic.",
+    w: 2200, h: 1400,
+  },
+
   "hbot-final": {
     dir: "hyperbaric",
     prompt:

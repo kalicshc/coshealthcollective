@@ -6,11 +6,21 @@ import { submitEmployerInquiry } from "@/lib/api";
 import { trackEvent } from "@/lib/analytics";
 import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { ACCENTS } from "@/lib/accents";
-import { ServiceHero, gradientTextStyle } from "@/components/ServiceHero";
+import { SceneSection, Eyebrow, SCENE_H, SCENE_P } from "@/components/SceneSection";
+import { CoPrimaryCtas } from "@/components/CoPrimaryCtas";
 import { GlassCard } from "@/components/GlassCard";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
+import { ReviewStrip, RatingChip } from "@/components/ReviewStrip";
+import { gradientTextStyle } from "@/components/ServiceHero";
 
 const ACCENT = ACCENTS.dpc;
+
+// Lighter blues than ACCENT.from/to — hand-tuned for gradient-clipped
+// headlines sitting on dark photos (same values as the DPC epic page).
+const blueLight = "hsl(198,100%,76%)";
+const blueDeep = "hsl(215,95%,66%)";
+
+const EYEBROW = "hsla(205,95%,82%,0.85)";
 
 const dpcBenefits = [
   "Tax-deductible business expense",
@@ -56,55 +66,90 @@ export default function ForBusinesses() {
 
   return (
     <div>
-      <ServiceHero
-        service="dpc"
-        eyebrow="For Employers"
-        title="CSHC for Your Team"
-        titleAccent="Better care. Better value."
-        subhead="Colorado Springs Health Collective is building a full suite of health services — starting with Direct Primary Care and expanding to hormone optimization and hyperbaric recovery. Offer your employees access to one or all three."
-        ctas={[{ label: "Get Started", href: "#contact-form", variant: "primary" }]}
-      />
-
-      <div className="section-divider" />
-
-      {/* DPC for teams */}
-      <section className="py-16 lg:py-20">
-        <div className="mx-auto max-w-4xl px-5 lg:px-8">
-          <GlassCard service="dpc" className="!p-8 lg:!p-10">
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <Users className="w-7 h-7" style={{ color: `rgb(${ACCENT.rgb})` }} />
-              <h2 className="text-2xl lg:text-3xl font-black text-white">
-                DPC Membership <span style={gradientTextStyle("dpc")}>for Your Team</span>
-              </h2>
-            </div>
-            <p className="text-base text-center mb-6" style={{ color: "hsl(210,25%,78%)" }}>
-              Whether your employees already have their own high-deductible plan, health share coverage, or no insurance at all—DPC membership gives them direct access to quality primary care.
-            </p>
-            <div
-              className="rounded-2xl p-6 mb-8 text-center"
-              style={{ background: `linear-gradient(135deg, rgba(${ACCENT.rgb},0.14), hsla(45,90%,60%,0.12))`, border: `2px solid rgb(${ACCENT.rgb})` }}
+      {/* ── 1. CINEMATIC HERO ─────────────────────────────────────────── */}
+      <SceneSection image="/images/dpc/business-hero.webp" scrim="hero" minHeight="100svh" priority maxWidthClassName="max-w-7xl" scrollCue="#team-benefit">
+        <div className="max-w-3xl pt-20">
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em]" style={{ border: `1px solid rgba(${ACCENT.rgb},0.3)`, background: `rgba(${ACCENT.rgb},0.12)`, color: "hsl(220,95%,88%)" }}>
+              For Employers · Group Benefit
+            </span>
+            <RatingChip service="dpc" source="for-businesses-hero" />
+          </div>
+          <h1
+            className="mt-8 text-4xl font-bold text-white lg:text-6xl"
+            style={{ textShadow: "0 10px 34px rgba(0,0,0,0.42)", lineHeight: 1.1 }}
+          >
+            Your team&apos;s doctor,
+            <span
+              className="mt-2 block"
+              style={{
+                background: `linear-gradient(135deg, ${blueLight}, ${blueDeep})`,
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                filter: "drop-shadow(0 8px 18px rgba(0,0,0,0.28))",
+              }}
             >
-              <p className="text-2xl lg:text-3xl font-black mb-2" style={{ color: "hsl(45,90%,60%)" }}>15% Group Discount</p>
-              <p style={{ color: "hsl(210,25%,80%)" }}>When you enroll all employees as a company benefit</p>
-            </div>
-            <h3 className="text-lg font-semibold mb-4 text-center text-white">Why offer DPC to your team?</h3>
-            <div className="space-y-3">
+              one flat fee.
+            </span>
+          </h1>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-white" style={{ textShadow: "0 4px 16px rgba(0,0,0,0.35)" }}>
+            Colorado Springs Health Collective is building a full suite of health services — starting
+            with Direct Primary Care and expanding to hormone optimization and hyperbaric recovery.
+            Offer your employees access to one or all three.
+          </p>
+          <div className="mt-9">
+            <CoPrimaryCtas
+              service="dpc"
+              source="for-businesses-hero"
+              primary={{ label: "Get Started", href: "#contact-form" }}
+              secondary={{ label: "Why DPC for Teams", href: "#team-benefit" }}
+              size="lg"
+              align="left"
+            />
+          </div>
+        </div>
+      </SceneSection>
+
+      {/* ── 2. FULL-BLEED SCENE — the team benefit ────────────────────── */}
+      <SceneSection image="/images/dpc/dpc-membership.webp" scrim="side" id="team-benefit">
+        <Eyebrow color={EYEBROW}>The Benefit</Eyebrow>
+        <h2 className="mt-4 text-3xl font-bold text-white lg:text-4xl" style={{ textShadow: SCENE_H }}>
+          DPC membership for your team
+        </h2>
+        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-white/95" style={{ textShadow: SCENE_P }}>
+          Whether your employees already have their own high-deductible plan, health share coverage, or
+          no insurance at all — DPC membership gives them direct access to quality primary care.
+        </p>
+        <div className="mt-10 grid gap-5 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <div
+            className="rounded-[24px] p-6 text-center"
+            style={{ background: `linear-gradient(135deg, rgba(${ACCENT.rgb},0.16), hsla(45,90%,60%,0.12), hsla(222,45%,8%,0.75))`, border: `1px solid rgba(${ACCENT.rgb},0.45)`, backdropFilter: "blur(8px)" }}
+          >
+            <Users className="mx-auto h-7 w-7" style={{ color: `rgb(${ACCENT.rgb})` }} />
+            <p className="mt-3 text-3xl font-black" style={{ color: "hsl(45,90%,60%)" }}>15% Group Discount</p>
+            <p className="mt-2 text-sm" style={{ color: "hsl(210,25%,80%)" }}>When you enroll all employees as a company benefit</p>
+          </div>
+          <div className="rounded-[24px] border border-white/10 bg-slate-950/70 p-6" style={{ backdropFilter: "blur(8px)" }}>
+            <h3 className="text-lg font-semibold text-white">Why offer DPC to your team?</h3>
+            <div className="mt-4 space-y-3">
               {dpcBenefits.map((benefit) => (
                 <div key={benefit} className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: `rgb(${ACCENT.rgb})` }} />
-                  <span style={{ color: "hsl(210,25%,80%)" }}>{benefit}</span>
+                  <span className="text-sm leading-6" style={{ color: "hsl(210,25%,82%)" }}>{benefit}</span>
                 </div>
               ))}
             </div>
-          </GlassCard>
+          </div>
         </div>
-      </section>
+      </SceneSection>
 
-      {/* Coverage partners */}
-      <section className="py-8">
+      {/* ── 3. COVERAGE PARTNERS ──────────────────────────────────────── */}
+      <section className="py-14 lg:py-20">
         <div className="mx-auto max-w-5xl px-5 lg:px-8">
           <div className="mb-8 text-center">
-            <h2 className="text-3xl lg:text-4xl font-black text-white mb-4">Need Coverage Too?</h2>
+            <Eyebrow color={EYEBROW}>Coverage Partners</Eyebrow>
+            <h2 className="mt-4 text-3xl lg:text-4xl font-black text-white mb-4">Need Coverage Too?</h2>
             <p className="text-base max-w-3xl mx-auto" style={{ color: "hsl(210,25%,70%)" }}>
               We recommend everyone carry some type of catastrophic coverage for major events. Here are two options we can help coordinate:
             </p>
@@ -155,8 +200,8 @@ export default function ForBusinesses() {
         </div>
       </section>
 
-      {/* Contact form */}
-      <section id="contact-form" className="py-16 lg:py-20">
+      {/* ── 4. CONTACT FORM ───────────────────────────────────────────── */}
+      <section id="contact-form" className="scroll-mt-20 py-14 lg:py-20">
         <div className="mx-auto max-w-2xl px-5 lg:px-8">
           <GlassCard service="dpc" className="!p-8 lg:!p-10">
             <h2 className="text-2xl lg:text-3xl font-black mb-6 text-center text-white">
@@ -220,7 +265,7 @@ export default function ForBusinesses() {
         </div>
       </section>
 
-      {/* Coming Soon for Teams */}
+      {/* ── 5. COMING SOON FOR TEAMS ──────────────────────────────────── */}
       <section className="py-8">
         <div className="mx-auto max-w-4xl px-5 lg:px-8">
           <GlassCard service="brand" className="!p-8 lg:!p-10">
@@ -247,6 +292,12 @@ export default function ForBusinesses() {
               </div>
             </div>
           </GlassCard>
+        </div>
+      </section>
+
+      <section className="pt-12 pb-4">
+        <div className="mx-auto max-w-4xl px-5 lg:px-8">
+          <ReviewStrip variant="strip" service="dpc" source="for-businesses-reviews" />
         </div>
       </section>
 

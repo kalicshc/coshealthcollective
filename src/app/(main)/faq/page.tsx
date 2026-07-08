@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { clinicFacts, usd } from "@/lib/clinicFacts";
-import { ServiceHero } from "@/components/ServiceHero";
+import { ACCENTS } from "@/lib/accents";
+import { SceneSection } from "@/components/SceneSection";
 import { Accordion } from "@/components/Accordion";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
 import { ReviewStrip } from "@/components/ReviewStrip";
@@ -8,6 +9,13 @@ import { bookingUrl } from "@/lib/bookingLinks";
 
 // Server component: the FAQ answers render in the HTML (good for SEO/AI
 // search); only the shared <Accordion> ships client JS.
+
+const ACCENT = ACCENTS.brand;
+
+// Lighter golds than ACCENT.from/to — hand-tuned for gradient-clipped
+// headlines sitting on dark photos (same approach as the DPC blues).
+const goldLight = "hsl(48, 96%, 72%)";
+const goldDeep = "hsl(38, 92%, 56%)";
 
 const faqs = [
   {
@@ -55,25 +63,44 @@ const faqs = [
 export default function FAQ() {
   return (
     <div>
-      <ServiceHero
-        service="brand"
-        eyebrow="Good Questions"
-        title="Frequently Asked"
-        titleAccent="Questions"
-        subhead="Everything you need to know about Colorado Springs Health Collective and our three divisions."
-        compact
-      >
-        <p className="text-sm" style={{ color: "hsl(210,25%,60%)" }}>
-          Looking for DPC-specific questions?{" "}
-          <Link href="/direct-primary-care#faq" className="underline hover:opacity-80" style={{ color: "rgb(64,150,246)" }}>
-            See our Direct Primary Care FAQ →
-          </Link>
-        </p>
-      </ServiceHero>
+      {/* ── 1. CINEMATIC HERO ─────────────────────────────────────────── */}
+      <SceneSection image="/images/brand/faq-hero.webp" scrim="hero" minHeight="100svh" priority maxWidthClassName="max-w-7xl" scrollCue="#faqs">
+        <div className="max-w-3xl pt-20">
+          <span className="rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em]" style={{ border: `1px solid rgba(${ACCENT.rgb},0.3)`, background: `rgba(${ACCENT.rgb},0.12)`, color: "hsl(45,90%,86%)" }}>
+            Good Questions
+          </span>
+          <h1
+            className="mt-8 text-4xl font-bold text-white lg:text-6xl"
+            style={{ textShadow: "0 10px 34px rgba(0,0,0,0.42)", lineHeight: 1.1 }}
+          >
+            Frequently asked
+            <span
+              className="mt-2 block"
+              style={{
+                background: `linear-gradient(135deg, ${goldLight}, ${goldDeep})`,
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                filter: "drop-shadow(0 8px 18px rgba(0,0,0,0.28))",
+              }}
+            >
+              questions.
+            </span>
+          </h1>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-white" style={{ textShadow: "0 4px 16px rgba(0,0,0,0.35)" }}>
+            Everything you need to know about Colorado Springs Health Collective and our three divisions.
+          </p>
+          <p className="mt-5 text-sm" style={{ color: "hsl(210,25%,72%)", textShadow: "0 2px 10px rgba(0,0,0,0.6)" }}>
+            Looking for DPC-specific questions?{" "}
+            <Link href="/direct-primary-care#faq" className="underline hover:opacity-80" style={{ color: "rgb(64,150,246)" }}>
+              See our Direct Primary Care FAQ →
+            </Link>
+          </p>
+        </div>
+      </SceneSection>
 
-      <div className="section-divider" />
-
-      <section className="py-14 lg:py-20">
+      {/* ── 2. THE ANSWERS ────────────────────────────────────────────── */}
+      <section id="faqs" className="scroll-mt-20 py-14 lg:py-20">
         <div className="mx-auto max-w-4xl px-5 lg:px-8">
           <Accordion items={faqs.map(({ id, question, answer }) => ({ id, question, answer }))} service="brand" />
         </div>
