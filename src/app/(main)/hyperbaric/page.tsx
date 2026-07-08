@@ -105,10 +105,10 @@ export default function HyperbaricPage() {
   return (
     <div className="pb-20 lg:pb-0">
       {/* ── 1. CINEMATIC HERO — the 2.0 ATA claim + early access ──────── */}
-      <SceneSection image="/images/hyperbaric/hbot-hero.webp" scrim="radial" minHeight="92vh" priority contentClassName="text-center">
-        <div className="pt-20">
+      <SceneSection image="/images/hyperbaric/hbot-hero.webp" scrim="radial" minHeight="100svh" priority contentClassName="text-center" scrollCue="#science">
+        <div className="pt-12">
           {/* Brand badge */}
-          <div className="flex justify-center mb-8">
+          <div className="flex justify-center mb-5">
             <div
               className="inline-flex items-center gap-3 rounded-2xl border px-5 py-3"
               style={{
@@ -136,7 +136,7 @@ export default function HyperbaricPage() {
             <span
               className="block font-black"
               style={{
-                fontSize: "clamp(4rem, 14vw, 9rem)",
+                fontSize: "clamp(3.6rem, 12vw, 7.5rem)",
                 fontWeight: 900,
                 ...gradientClip,
                 filter: `drop-shadow(0 0 40px rgba(${A.rgb},0.35)) drop-shadow(0 6px 20px rgba(0,0,0,0.5))`,
@@ -150,16 +150,16 @@ export default function HyperbaricPage() {
             </span>
           </h1>
 
-          <p className="mt-6 mb-2 font-semibold" style={{ color: `rgb(${A.rgb})`, fontSize: "clamp(1rem, 2vw, 1.2rem)", textShadow: SCENE_P }}>
+          <p className="mt-5 mb-2 font-semibold" style={{ color: `rgb(${A.rgb})`, fontSize: "clamp(1rem, 2vw, 1.2rem)", textShadow: SCENE_P }}>
             Coming {clinicFacts.hbot.openingDate} — Lock In Your {clinicFacts.hbot.earlyAccessDiscountPercent}% Discount Today.
           </p>
 
-          <p className="mb-10 max-w-xl mx-auto text-white/95" style={{ fontSize: "17px", lineHeight: "1.65", textShadow: SCENE_P }}>
+          <p className="mb-7 max-w-xl mx-auto text-white/95" style={{ fontSize: "17px", lineHeight: "1.65", textShadow: SCENE_P }}>
             Most local providers operate at 1.3–1.6 ATA. We&apos;re opening a clinical-grade chamber at{" "}
             <strong style={{ color: "#fff" }}>2.0 ATA</strong> — the pressure the clinical evidence was built on.
           </p>
 
-          <div className="flex flex-col items-center gap-5">
+          <div className="flex flex-col items-center gap-4">
             <TrackedLink
               href="/hyperbaric/why-2ata"
               event="cta_click"
@@ -176,7 +176,7 @@ export default function HyperbaricPage() {
 
       {/* ── 2. THE SCIENCE — four mechanisms ──────────────────────────── */}
       <SectionView analytics={{ page: PAGE, label: "mechanisms", service: "hyperbaric" }}>
-        <section className="py-14 lg:py-20">
+        <section id="science" className="scroll-mt-20 py-14 lg:py-20">
           <div className="mx-auto max-w-6xl px-4 lg:px-8">
             <div className="text-center mb-14">
               <Eyebrow color={EYEBROW}>The Science</Eyebrow>

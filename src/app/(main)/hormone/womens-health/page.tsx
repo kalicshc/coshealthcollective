@@ -200,7 +200,7 @@ export default function WomensHealthEpicPage() {
       </h1>
 
       {/* ── 1. CINEMATIC HERO ─────────────────────────────────────────── */}
-      <section className="relative flex min-h-[92vh] items-center overflow-hidden">
+      <section className="relative flex min-h-[100svh] items-center overflow-hidden">
         <Image
           src="/images/hormone/womens-hero.webp"
           alt=""

@@ -141,7 +141,7 @@ export default function DirectPrimaryCare() {
       <h1 className="sr-only">Direct Primary Care Colorado Springs — Unlimited Visits, No Copays, {usd(clinicFacts.dpc.individualMonthly)}/Month DPC Membership</h1>
 
       {/* ── 1. CINEMATIC HERO ─────────────────────────────────────────── */}
-      <SceneSection image="/images/dpc/dpc-hero.webp" scrim="hero" minHeight="92vh" priority maxWidthClassName="max-w-7xl">
+      <SceneSection image="/images/dpc/dpc-hero.webp" scrim="hero" minHeight="100svh" priority maxWidthClassName="max-w-7xl" scrollCue="#why">
         <div className="max-w-3xl pt-20">
           <div className="flex flex-wrap items-center gap-3">
             <span className="rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em]" style={{ border: `1px solid rgba(${ACCENT.rgb},0.3)`, background: `rgba(${ACCENT.rgb},0.12)`, color: "hsl(220,95%,88%)" }}>
@@ -179,7 +179,7 @@ export default function DirectPrimaryCare() {
       </SceneSection>
 
       {/* ── 2. VALIDATION — primary care is broken ────────────────────── */}
-      <section className="py-14 lg:py-20">
+      <section id="why" className="scroll-mt-20 py-14 lg:py-20">
         <div className="mx-auto max-w-6xl px-4 lg:px-8">
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <div>

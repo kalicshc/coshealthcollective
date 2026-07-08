@@ -7,6 +7,8 @@ import { bookingUrl } from "@/lib/bookingLinks";
 import { CredentialHero } from "@/components/CredentialHero";
 import { ReviewStrip } from "@/components/ReviewStrip";
 import { TrackedLink } from "@/components/analytics/TrackedLink";
+import { SceneSection } from "@/components/SceneSection";
+import { RatingChip } from "@/components/ReviewStrip";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/hormone" },
@@ -41,25 +43,76 @@ export default function HormonePage() {
       className="relative"
       style={{ background: "linear-gradient(180deg, hsla(210,32%,11%,0.7), hsla(210,32%,12%,0.56))" }}
     >
-      {/* ── FIRST VIEWPORT: glass panes over a full-bleed photo scene ── */}
-      <div className="relative overflow-hidden">
-        <Image
-          src="/images/hormone/journey-backdrop.webp"
-          alt=""
-          fill
-          priority
-          className="object-cover"
-          sizes="100vw"
-        />
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{ background: "radial-gradient(ellipse 85% 80% at 50% 45%, hsla(222,45%,6%,0.88) 0%, hsla(222,45%,6%,0.62) 60%, hsla(222,45%,6%,0.3) 100%)" }}
-        />
-        <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-32"
-          style={{ background: "linear-gradient(0deg, hsl(210,32%,8%), transparent)" }}
-        />
-      <div className="relative z-10 container mx-auto px-4 lg:px-6 max-w-6xl min-h-screen flex flex-col pt-24 pb-6 md:pt-40 lg:pt-44 xl:pt-32 lg:pb-8">
+      {/* ── 1. CINEMATIC HERO — one clean screen, then sections ──────── */}
+      <SceneSection
+        image="/images/hormone/journey-backdrop.webp"
+        scrim="radial"
+        minHeight="100svh"
+        priority
+        contentClassName="text-center"
+        scrollCue="#clinics"
+      >
+        <div className="pt-16">
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <span
+              className="rounded-full border px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em]"
+              style={{ borderColor: "hsla(331,80%,72%,0.32)", background: "hsla(294,34%,14%,0.55)", color: "hsl(331,95%,84%)", backdropFilter: "blur(8px)" }}
+            >
+              Hormone &amp; Metabolic Care
+            </span>
+            <RatingChip service="hormone" source="hormone-hub-hero" />
+          </div>
+          <h1
+            className="mt-8 text-4xl font-bold text-white lg:text-6xl"
+            style={{ textShadow: "0 10px 34px rgba(0,0,0,0.42)", lineHeight: 1.1 }}
+          >
+            <span className="sr-only">Hormone Therapy Colorado Springs — HRT, Perimenopause, Menopause, TRT &amp; GLP-1 Weight Loss. </span>
+            <span aria-hidden="true">One clinic.</span>
+            <span
+              aria-hidden="true"
+              className="mt-2 block"
+              style={{
+                background: "linear-gradient(135deg, hsl(340,100%,82%), hsl(281,86%,67%), hsl(189,100%,70%))",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                filter: "drop-shadow(0 8px 18px rgba(0,0,0,0.28))",
+              }}
+            >
+              Your whole hormonal picture.
+            </span>
+          </h1>
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white/95" style={{ textShadow: "0 2px 14px rgba(0,0,0,0.8)" }}>
+            Women&apos;s hormone care, men&apos;s TRT, and GLP-1 weight loss — hormones, metabolic health,
+            and lifestyle treated together, not in silos.
+          </p>
+          <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <TrackedLink
+              href={bookingUrl("freeConsult", "hormone-hub-hero")}
+              analytics={{ page: "hormone", source: "hormone-hub-hero", service: "hormone", appt: "freeConsult", label: "Book a Free Consult" }}
+              className="rounded-full px-9 py-4 text-base font-bold text-white hover:opacity-85 transition-opacity"
+              style={{ background: "linear-gradient(135deg, hsl(331,95%,65%), hsl(271,74%,52%))", boxShadow: "0 12px 36px hsla(331,80%,55%,0.35)" }}
+            >
+              Book a Free Consult
+            </TrackedLink>
+            <TrackedLink
+              href="#clinics"
+              event="cta_click"
+              analytics={{ page: "hormone", source: "hormone-hub-hero", service: "hormone", label: "Explore the clinics" }}
+              className="rounded-full px-9 py-4 text-base font-semibold hover:opacity-85 transition-opacity"
+              style={{ border: "1px solid hsla(331,80%,72%,0.45)", color: "hsl(331,95%,82%)", background: "hsla(222,45%,8%,0.5)", backdropFilter: "blur(8px)" }}
+            >
+              Explore the clinics ↓
+            </TrackedLink>
+          </div>
+          <div className="mt-9 flex justify-center">
+            <CredentialHero size="chip" />
+          </div>
+        </div>
+      </SceneSection>
+
+      {/* ── 2. THE THREE CLINICS — full panes, each its own moment ───── */}
+      <div id="clinics" className="container mx-auto px-4 lg:px-6 max-w-6xl scroll-mt-20 py-14 lg:py-20">
 
         {/* ── WOMEN'S HEALTH PANE (top, slightly smaller) ── */}
         <section
@@ -98,11 +151,10 @@ export default function HormonePage() {
               Women&apos;s Hormone Health
             </span>
 
-            <h1
+            <h2
               className="mt-2 text-2xl font-bold leading-[1.05] lg:text-4xl"
               style={{ color: "hsl(0,0%,100%)", textShadow: "0 10px 34px rgba(0,0,0,0.42)" }}
             >
-              <span className="sr-only">Hormone Therapy Colorado Springs — HRT, Perimenopause, Menopause, TRT &amp; GLP-1 Weight Loss. </span>
               <span
                 className="block"
                 style={{
@@ -115,7 +167,7 @@ export default function HormonePage() {
               >
                 Women&apos;s Health
               </span>
-            </h1>
+            </h2>
 
             <p
               className="mx-auto mt-2 max-w-2xl text-sm leading-relaxed"
@@ -368,41 +420,9 @@ export default function HormonePage() {
 
         </div>
 
-        {/* ── Bouncing scroll cue (pinned to bottom of first viewport) ── */}
-        <a
-          href="#whole-person"
-          aria-label="Scroll for more"
-          className="mt-auto pt-6 flex justify-center"
-        >
-          <span
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border animate-bounce"
-            style={{
-              borderColor: "hsla(331,80%,72%,0.32)",
-              background: "hsla(294,34%,14%,0.55)",
-              color: "hsl(331,95%,82%)",
-              backdropFilter: "blur(8px)",
-            }}
-          >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M6 9l6 6 6-6" />
-            </svg>
-          </span>
-        </a>
-
-      </div>
       </div>
 
-      {/* ── SECOND VIEWPORT: a whole-person approach (zig-zag with imagery) ── */}
+      {/* ── 3. A whole-person approach (zig-zag with imagery) ────────── */}
       <div className="relative overflow-hidden">
         {/* Keyframes for ambient animations */}
         <style>{`

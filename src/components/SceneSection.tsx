@@ -38,6 +38,8 @@ type Props = {
   /** Widen/narrow the content column; default matches the interior scenes. */
   maxWidthClassName?: string;
   id?: string;
+  /** Anchor href for a bouncing scroll-cue chevron pinned to the scene's bottom (heroes). */
+  scrollCue?: string;
   children: ReactNode;
 };
 
@@ -49,6 +51,7 @@ export function SceneSection({
   contentClassName = "",
   maxWidthClassName = "max-w-6xl",
   id,
+  scrollCue,
   children,
 }: Props) {
   const fades = scrim !== "hero";
@@ -65,6 +68,22 @@ export function SceneSection({
       <div className={`relative z-10 mx-auto w-full ${maxWidthClassName} px-4 py-24 lg:px-8 ${contentClassName}`}>
         {children}
       </div>
+      {scrollCue != null && (
+        <a
+          href={scrollCue}
+          aria-label="Scroll for more"
+          className="absolute inset-x-0 bottom-5 z-10 flex justify-center"
+        >
+          <span
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border animate-bounce"
+            style={{ borderColor: "rgba(255,255,255,0.25)", background: "hsla(222,45%,8%,0.55)", color: "rgba(255,255,255,0.85)", backdropFilter: "blur(8px)" }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </span>
+        </a>
+      )}
     </section>
   );
 }
