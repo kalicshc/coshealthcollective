@@ -25,10 +25,10 @@ const ACCENT = ACCENTS.dpc;
 
 // Lighter blues than ACCENT.from/to — hand-tuned for gradient-clipped
 // headlines sitting on dark photos (same approach as the women's fuchsia).
-const blueLight = "hsl(215,100%,78%)";
-const blueDeep = "hsl(232,95%,68%)";
+const blueLight = "hsl(198,100%,76%)";
+const blueDeep = "hsl(215,95%,66%)";
 
-const EYEBROW = "hsla(220,95%,82%,0.85)";
+const EYEBROW = "hsla(205,95%,82%,0.85)";
 
 const DPC_PRIMARY = { label: "Book a Free Meet & Greet", appt: "meetGreet" as const };
 const DPC_SECONDARY = { label: "See Pricing", href: "#pricing" };

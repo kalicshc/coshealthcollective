@@ -16,13 +16,13 @@ import type { CSSProperties, ReactNode } from "react";
  * Use SCENE_H / SCENE_P as textShadow on headings / body sitting on the photo.
  */
 
-export const SCENE_H = "0 2px 6px rgba(0,0,0,0.6), 0 8px 40px rgba(0,0,0,0.7)";
-export const SCENE_P = "0 2px 14px rgba(0,0,0,0.8)";
+export const SCENE_H = "0 2px 8px rgba(0,0,0,0.75), 0 8px 44px rgba(0,0,0,0.8)";
+export const SCENE_P = "0 1px 4px rgba(0,0,0,0.85), 0 2px 16px rgba(0,0,0,0.9)";
 
 const SCRIMS: Record<ScrimVariant, string> = {
-  hero: "linear-gradient(100deg, hsla(222,45%,6%,0.96) 0%, hsla(222,45%,6%,0.88) 35%, hsla(222,45%,6%,0.55) 62%, hsla(222,45%,6%,0.25) 100%), linear-gradient(0deg, hsl(210,32%,8%) 0%, transparent 128px)",
-  side: "linear-gradient(105deg, hsla(222,45%,6%,0.88) 0%, hsla(222,45%,6%,0.6) 45%, hsla(222,45%,6%,0.15) 80%, transparent 100%)",
-  radial: "radial-gradient(ellipse 75% 70% at 50% 55%, hsla(222,45%,6%,0.82) 0%, hsla(222,45%,6%,0.5) 60%, transparent 100%)",
+  hero: "linear-gradient(100deg, hsla(222,45%,6%,0.97) 0%, hsla(222,45%,6%,0.92) 35%, hsla(222,45%,6%,0.68) 62%, hsla(222,45%,6%,0.4) 100%), linear-gradient(0deg, hsl(210,32%,8%) 0%, transparent 128px)",
+  side: "linear-gradient(105deg, hsla(222,45%,6%,0.94) 0%, hsla(222,45%,6%,0.75) 45%, hsla(222,45%,6%,0.35) 80%, hsla(222,45%,6%,0.12) 100%)",
+  radial: "radial-gradient(ellipse 80% 75% at 50% 55%, hsla(222,45%,6%,0.92) 0%, hsla(222,45%,6%,0.68) 60%, hsla(222,45%,6%,0.25) 100%)",
 };
 
 type ScrimVariant = "hero" | "side" | "radial";

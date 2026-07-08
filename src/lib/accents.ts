@@ -48,15 +48,16 @@ export const ACCENTS: Record<ServiceKey, Accent> = {
     chipBorder: "hsla(45, 90%, 60%, 0.38)",
     statusDot: "hsl(45, 90%, 60%)",
   },
-  // deep royal blue — DPC (anchored cool midpoint)
+  // mystic azure — DPC (teal-leaning blue: cooler than the old royal blue,
+  // clearly bluer than hyperbaric's cyan)
   dpc: {
-    rgb: "60,120,255",
-    waveRgb: [36, 89, 249],
-    from: "hsl(225, 95%, 56%)",
-    to: "hsl(238, 90%, 48%)",
-    glow: "hsla(225, 95%, 54%, 0.55)",
-    chipBorder: "hsla(225, 95%, 56%, 0.38)",
-    statusDot: "hsl(225, 95%, 56%)",
+    rgb: "64,150,246",
+    waveRgb: [30, 112, 240],
+    from: "hsl(205, 92%, 55%)",
+    to: "hsl(220, 88%, 50%)",
+    glow: "hsla(205, 92%, 54%, 0.55)",
+    chipBorder: "hsla(205, 92%, 56%, 0.38)",
+    statusDot: "hsl(205, 92%, 56%)",
   },
   // magenta-violet — hormone (pushed warm so it clearly opposes the cyan)
   hormone: {

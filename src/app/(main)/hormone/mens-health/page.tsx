@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { clinicFacts, usd } from "@/lib/clinicFacts";
+import { ACCENTS } from "@/lib/accents";
+import { ServiceHero } from "@/components/ServiceHero";
+import { glassCardStyle } from "@/components/GlassCard";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
 import { ReviewStrip } from "@/components/ReviewStrip";
 import { TrackedLink } from "@/components/analytics/TrackedLink";
@@ -10,6 +13,8 @@ export const metadata: Metadata = {
   title: "Men's Hormone Health + TRT | Colorado Springs Health Collective",
   description: "Comprehensive men's hormone care in Colorado Springs. Low testosterone, TRT optimization, fatigue, recovery, libido — a full evaluation before any treatment.",
 };
+
+const ACCENT = ACCENTS.hormone;
 
 const symptoms = ["fatigue", "low libido", "poor recovery", "brain fog", "strength loss", "weight gain", "low motivation", "mood changes"];
 
@@ -66,146 +71,68 @@ const PAGE = "mens-health";
 
 export default function MensHealthPage() {
   return (
-    <div className="page-bg pt-28">
-      <section className="hero-overlay relative overflow-hidden py-20 lg:py-24">
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(circle at 14% 14%, hsla(188,88%,54%,0.14), transparent 22%), radial-gradient(circle at 88% 14%, hsla(216,79%,46%,0.12), transparent 22%), linear-gradient(180deg, rgba(10,18,32,0.1), rgba(10,18,32,0.5))",
-          }}
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute inset-0 opacity-30"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)",
-            backgroundSize: "34px 34px",
-            maskImage: "linear-gradient(180deg, rgba(0,0,0,0.7), transparent 90%)",
-          }}
-          aria-hidden="true"
-        />
-
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-            <div className="relative z-10 max-w-3xl">
-              <span
-                className="rounded-full border px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em]"
-                style={{ borderColor: "hsla(188,88%,54%,0.22)", background: "hsla(188,88%,54%,0.08)", color: "hsl(188,88%,78%)" }}
-              >
-                Men&apos;s Hormone Health
+    <div>
+      <ServiceHero
+        service="hormone"
+        eyebrow="Men's Hormone Health"
+        title={
+          <>
+            <span className="sr-only">Men's Hormone Therapy &amp; TRT Colorado Springs — Testosterone Replacement, Low T Treatment. </span>
+            Modern men&apos;s health
+          </>
+        }
+        titleAccent="with a deeper look."
+        subhead="Low energy, poor recovery, low libido — not just part of getting older. We do a comprehensive review of symptoms, history, prior hormone exposure, and labs before deciding whether TRT or another path makes sense."
+        ctas={[
+          { label: "Book a Free Consult", href: bookingUrl("freeConsult", "mens-health-hero"), external: true },
+        ]}
+      >
+        <div className="rounded-[28px] p-6 text-left lg:p-8" style={glassCardStyle("hormone")}>
+          <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: `rgb(${ACCENT.rgb})` }}>
+            Common Reasons Men Start Here
+          </p>
+          <h2 className="text-xl font-bold mb-6 text-white">
+            The symptoms rarely come alone.
+          </h2>
+          <div className="flex flex-wrap gap-3">
+            {symptoms.map((s) => (
+              <span key={s} className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200">
+                {s}
               </span>
-              <h1
-                className="mt-6 text-4xl font-bold text-white lg:text-6xl"
-                style={{ textShadow: "0 10px 34px rgba(0,0,0,0.42)" }}
-              >
-                <span className="sr-only">Men's Hormone Therapy &amp; TRT Colorado Springs — Testosterone Replacement, Low T Treatment. </span>
-                Modern men&apos;s health
-                <span
-                  className="mt-2 block"
-                  style={{
-                    background: "linear-gradient(135deg, hsl(188,88%,62%), hsl(216,79%,55%))",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                    filter: "drop-shadow(0 8px 18px rgba(0,0,0,0.28))",
-                  }}
-                >
-                  with a deeper look.
-                </span>
-              </h1>
-              <p
-                className="mt-6 max-w-2xl text-lg leading-8 text-white"
-                style={{ textShadow: "0 4px 16px rgba(0,0,0,0.35)" }}
-              >
-                Low energy, poor recovery, low libido — not just part of getting older. We do a comprehensive review of symptoms, history, prior hormone exposure, and labs before deciding whether TRT or another path makes sense.
-              </p>
-              <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-                <TrackedLink
-                  href={bookingUrl("freeConsult", "mens-health-hero")}
-                  analytics={{ page: PAGE, source: "mens-health-hero", service: "hormone", label: "Book a Free Consult", appt: "freeConsult" }}
-                  className="rounded-full px-7 py-4 text-sm font-semibold hover:opacity-90 transition-opacity"
-                  style={{
-                    background: "linear-gradient(135deg, hsl(188,88%,54%), hsl(216,79%,46%))",
-                    color: "hsl(210,32%,10%)",
-                    boxShadow: "0 0 40px hsla(188,80%,50%,0.22)",
-                  }}
-                >
-                  Book a Free Consult
-                </TrackedLink>
-              </div>
-            </div>
-
-            <div
-              className="rounded-[34px] border p-6 backdrop-blur-xl lg:p-8"
-              style={{
-                background: "linear-gradient(180deg, hsla(210,40%,14%,0.92), hsla(220,36%,12%,0.9), hsla(210,24%,10%,0.88))",
-                borderColor: "hsla(188,88%,54%,0.18)",
-                boxShadow: "0 24px 80px rgba(7,10,18,0.42)",
-              }}
+            ))}
+          </div>
+          <p className="mt-6 text-sm leading-7 text-slate-300">
+            We do not start with a prescription. We start with understanding what is actually going on.
+          </p>
+          <div className="mt-6 border-t pt-6" style={{ borderColor: `rgba(${ACCENT.rgb},0.18)` }}>
+            <p className="text-sm font-bold text-white">See what&apos;s really going on.</p>
+            <p className="mt-1 text-sm leading-6 text-slate-400">Take our quiz — no email or commitment required.</p>
+            <TrackedLink
+              href="/hormone/mens-health/quiz"
+              event="cta_click"
+              analytics={{ page: PAGE, source: "mens-health-quiz", service: "hormone", label: "Take the quiz" }}
+              className="mt-4 inline-block rounded-full px-5 py-2.5 text-sm font-bold hover:opacity-85 transition-opacity"
+              style={{ background: `linear-gradient(135deg, ${ACCENT.from}, ${ACCENT.to})`, color: "hsl(210,32%,10%)" }}
             >
-              <p
-                className="text-xs font-bold uppercase tracking-widest mb-2"
-                style={{ color: "hsl(188,88%,72%)" }}
-              >
-                Common Reasons Men Start Here
-              </p>
-              <h2 className="text-xl font-bold mb-6 text-white">
-                The symptoms rarely come alone.
-              </h2>
-              <div className="flex flex-wrap gap-3">
-                {symptoms.map((s) => (
-                  <span
-                    key={s}
-                    className="rounded-full px-4 py-2 text-sm font-medium"
-                    style={{
-                      background: "hsla(188,88%,54%,0.1)",
-                      border: "1px solid hsla(188,88%,54%,0.22)",
-                      color: "hsl(188,88%,78%)",
-                    }}
-                  >
-                    {s}
-                  </span>
-                ))}
-              </div>
-              <p className="mt-6 text-sm leading-7 text-slate-300">
-                We do not start with a prescription. We start with understanding what is actually going on.
-              </p>
-              <div className="mt-6 border-t pt-6" style={{ borderColor: "hsla(188,88%,54%,0.18)" }}>
-                <p className="text-sm font-bold text-white">See what&apos;s really going on.</p>
-                <p className="mt-1 text-sm leading-6 text-slate-400">Take our quiz — no email or commitment required.</p>
-                <TrackedLink
-                  href="/hormone/mens-health/quiz"
-                  event="cta_click"
-                  analytics={{ page: PAGE, source: "mens-health-quiz", service: "hormone", label: "Take the quiz" }}
-                  className="mt-4 inline-block rounded-full px-5 py-2.5 text-sm font-semibold hover:opacity-90 transition-opacity"
-                  style={{
-                    background: "linear-gradient(135deg, hsl(188,88%,54%), hsl(271,74%,55%))",
-                    color: "hsl(210,32%,10%)",
-                  }}
-                >
-                  Take the quiz
-                </TrackedLink>
-              </div>
-            </div>
+              Take the quiz
+            </TrackedLink>
           </div>
         </div>
-      </section>
+      </ServiceHero>
 
-      <div className="section-divider mx-auto max-w-6xl" />
+      <div className="section-divider" />
 
       {/* Pricing */}
-      <section className="py-20">
-        <div className="mx-auto max-w-4xl px-4 lg:px-8">
+      <section className="py-16 lg:py-24">
+        <div className="mx-auto max-w-4xl px-5 lg:px-8">
           <div className="mb-10 text-center">
-            <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "hsl(188,88%,62%)" }}>
+            <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: `rgb(${ACCENT.rgb})` }}>
               Pricing
             </p>
-            <h2 className="text-3xl font-bold text-white lg:text-4xl">
+            <h2 className="text-3xl lg:text-4xl font-black text-white">
               Transparent men&apos;s hormone care pricing
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-slate-300">
+            <p className="mx-auto mt-4 max-w-2xl" style={{ color: "hsl(210,25%,68%)", fontSize: "17px", lineHeight: "1.65" }}>
               The initial consult includes a comprehensive review, lab ordering, and lab review with you. Labs and medications are billed separately.
             </p>
           </div>
@@ -213,12 +140,12 @@ export default function MensHealthPage() {
           <div
             className="rounded-[34px] border p-8 lg:p-10"
             style={{
-              borderColor: "hsla(188,88%,54%,0.22)",
-              background: "linear-gradient(135deg, hsla(188,88%,54%,0.14), hsla(216,79%,46%,0.16), hsla(210,22%,16%,0.72))",
+              borderColor: `rgba(${ACCENT.rgb},0.22)`,
+              background: `linear-gradient(135deg, rgba(${ACCENT.rgb},0.14), hsla(272,90%,52%,0.16), hsla(210,22%,16%,0.72))`,
               boxShadow: "0 24px 80px rgba(7,10,18,0.32)",
             }}
           >
-            <div className="h-0.5 w-16 rounded-full" style={{ background: "linear-gradient(135deg, hsl(188,88%,54%), hsl(216,79%,46%))" }} />
+            <div className="h-0.5 w-16 rounded-full" style={{ background: `linear-gradient(135deg, ${ACCENT.from}, ${ACCENT.to})` }} />
             <h3 className="mt-6 text-2xl font-black text-white">Men&apos;s Hormone + TRT Care</h3>
             <div className="mt-5 flex flex-wrap gap-x-8 gap-y-3">
               <div>
@@ -244,18 +171,17 @@ export default function MensHealthPage() {
         </div>
       </section>
 
-
       {/* What we evaluate */}
-      <section className="py-20">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+      <section className="py-16 lg:py-24">
+        <div className="mx-auto max-w-7xl px-5 lg:px-8">
           <div className="max-w-2xl mb-12">
-            <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "hsl(188,88%,62%)" }}>
+            <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: `rgb(${ACCENT.rgb})` }}>
               The Evaluation
             </p>
-            <h2 className="text-3xl font-bold text-white lg:text-4xl">
+            <h2 className="text-3xl lg:text-4xl font-black text-white">
               What we actually look at
             </h2>
-            <p className="mt-4 text-lg leading-relaxed text-slate-300">
+            <p className="mt-4" style={{ color: "hsl(210,25%,68%)", fontSize: "17px", lineHeight: "1.65" }}>
               Most testosterone workups are incomplete. We run a full picture before deciding whether treatment makes sense.
             </p>
           </div>
@@ -265,7 +191,7 @@ export default function MensHealthPage() {
               <div key={item.title} className="service-card-transparent rounded-[28px] p-7">
                 <div
                   className="mb-4 h-0.5 w-14 rounded-full"
-                  style={{ background: "linear-gradient(135deg, hsl(188,88%,54%), hsl(216,79%,46%))" }}
+                  style={{ background: `linear-gradient(135deg, ${ACCENT.from}, ${ACCENT.to})` }}
                 />
                 <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
                 <p className="text-sm leading-7 text-slate-300">{item.text}</p>
@@ -276,16 +202,16 @@ export default function MensHealthPage() {
       </section>
 
       {/* TRT nuance */}
-      <section className="py-20">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+      <section className="py-16 lg:py-24">
+        <div className="mx-auto max-w-7xl px-5 lg:px-8">
           <div className="max-w-2xl mb-12">
-            <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "hsl(188,88%,62%)" }}>
+            <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: `rgb(${ACCENT.rgb})` }}>
               About TRT
             </p>
-            <h2 className="text-3xl font-bold text-white lg:text-4xl">
+            <h2 className="text-3xl lg:text-4xl font-black text-white">
               Things most clinics won&apos;t tell you upfront
             </h2>
-            <p className="mt-4 text-lg leading-relaxed text-slate-300">
+            <p className="mt-4" style={{ color: "hsl(210,25%,68%)", fontSize: "17px", lineHeight: "1.65" }}>
               Testosterone replacement therapy can be the right answer — and it can also be the wrong one. Here is the honest version.
             </p>
           </div>
@@ -295,7 +221,7 @@ export default function MensHealthPage() {
               <div key={fact.value} className="service-card-transparent rounded-[28px] p-7">
                 <h3
                   className="text-lg font-black mb-3"
-                  style={{ color: "hsl(188,88%,72%)" }}
+                  style={{ color: `rgb(${ACCENT.rgb})` }}
                 >
                   {fact.value}
                 </h3>
@@ -308,32 +234,29 @@ export default function MensHealthPage() {
 
       {/* CTA */}
       <section className="pb-24">
-        <div className="mx-auto max-w-6xl px-4 lg:px-8">
+        <div className="mx-auto max-w-6xl px-5 lg:px-8">
           <div
             className="rounded-[36px] border p-8 text-center lg:p-12"
             style={{
-              borderColor: "hsla(188,88%,54%,0.2)",
-              background: "linear-gradient(135deg, hsla(188,88%,54%,0.14), hsla(216,79%,46%,0.18), hsla(210,22%,22%,0.52))",
+              borderColor: `rgba(${ACCENT.rgb},0.2)`,
+              background: `linear-gradient(135deg, rgba(${ACCENT.rgb},0.14), hsla(272,90%,52%,0.18), hsla(210,22%,22%,0.52))`,
             }}
           >
-            <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: "hsl(188,88%,72%)" }}>
+            <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: `rgb(${ACCENT.rgb})` }}>
               Get Started
             </p>
-            <h2 className="text-3xl font-bold text-white lg:text-4xl">
+            <h2 className="text-3xl lg:text-4xl font-black text-white">
               A deeper look is where it starts.
             </h2>
-            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-slate-200">
+            <p className="mx-auto mt-5 max-w-2xl" style={{ color: "hsl(210,25%,72%)", fontSize: "17px", lineHeight: "1.65" }}>
               Book a free consult. Get your questions answered before committing to anything.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <TrackedLink
                 href={bookingUrl("freeConsult", "mens-health-cta")}
                 analytics={{ page: PAGE, source: "mens-health-cta", service: "hormone", label: "Book a Free Consult", appt: "freeConsult" }}
-                className="rounded-full px-7 py-4 text-sm font-semibold hover:opacity-90 transition-opacity"
-                style={{
-                  background: "linear-gradient(135deg, hsl(188,88%,54%), hsl(216,79%,46%))",
-                  color: "hsl(210,32%,10%)",
-                }}
+                className="rounded-full px-8 py-3.5 text-sm font-bold hover:opacity-85 transition-opacity"
+                style={{ background: `linear-gradient(135deg, ${ACCENT.from}, ${ACCENT.to})`, color: "hsl(210,32%,10%)" }}
               >
                 Book a Free Consult
               </TrackedLink>
@@ -341,8 +264,9 @@ export default function MensHealthPage() {
           </div>
         </div>
       </section>
+
       <section className="pb-4">
-        <div className="mx-auto max-w-5xl px-4 lg:px-8">
+        <div className="mx-auto max-w-5xl px-5 lg:px-8">
           <ReviewStrip variant="strip" service="hormone" source="mens-reviews" />
         </div>
       </section>

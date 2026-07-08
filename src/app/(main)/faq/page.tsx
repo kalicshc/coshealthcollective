@@ -65,7 +65,7 @@ export default function FAQ() {
       >
         <p className="text-sm" style={{ color: "hsl(210,25%,60%)" }}>
           Looking for DPC-specific questions?{" "}
-          <Link href="/direct-primary-care#faq" className="underline hover:opacity-80" style={{ color: "rgb(60,120,255)" }}>
+          <Link href="/direct-primary-care#faq" className="underline hover:opacity-80" style={{ color: "rgb(64,150,246)" }}>
             See our Direct Primary Care FAQ →
           </Link>
         </p>

@@ -12,7 +12,7 @@ import { TrackedLink } from "@/components/analytics/TrackedLink";
 const SERVICES = [
   {
     href: "/direct-primary-care",
-    accent: "60,120,255",
+    accent: "64,150,246",
     kicker: "Now Enrolling",
     title: "Direct Primary Care",
     body: `A membership with your own doctor for ${usd(clinicFacts.dpc.individualMonthly)}/month — unlimited visits, same-day access, no copays, wholesale labs and medications. Couples ${usd(clinicFacts.dpc.couplesMonthly)}/month.`,
