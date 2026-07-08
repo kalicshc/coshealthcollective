@@ -7,7 +7,7 @@ import { bookingUrl } from "@/lib/bookingLinks";
 import { CredentialHero } from "@/components/CredentialHero";
 import { ReviewStrip } from "@/components/ReviewStrip";
 import { TrackedLink } from "@/components/analytics/TrackedLink";
-import { SceneSection } from "@/components/SceneSection";
+import { SceneSection, SCENE_H, SCENE_P } from "@/components/SceneSection";
 import { RatingChip } from "@/components/ReviewStrip";
 
 export const metadata: Metadata = {
@@ -422,30 +422,18 @@ export default function HormonePage() {
 
       </div>
 
-      {/* ── 3. A whole-person approach (zig-zag with imagery) ────────── */}
-      <div className="relative overflow-hidden">
-        {/* Keyframes for ambient animations */}
-        <style>{`
-          @keyframes wp-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
-          @keyframes wp-glow { 0%,100% { filter: drop-shadow(0 12px 36px hsla(331,95%,60%,0.30)); } 50% { filter: drop-shadow(0 18px 48px hsla(331,95%,60%,0.55)); } }
-          @keyframes wp-glow-v { 0%,100% { filter: drop-shadow(0 12px 36px hsla(271,74%,60%,0.30)); } 50% { filter: drop-shadow(0 18px 48px hsla(271,74%,60%,0.55)); } }
-          @keyframes wp-glow-c { 0%,100% { filter: drop-shadow(0 12px 36px hsla(188,88%,54%,0.28)); } 50% { filter: drop-shadow(0 18px 48px hsla(188,88%,54%,0.50)); } }
-          @keyframes wp-spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        `}</style>
-        {/* Ambient color wash */}
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(circle at 20% 10%, hsla(331,95%,72%,0.10), transparent 45%), radial-gradient(circle at 85% 90%, hsla(188,88%,54%,0.08), transparent 45%)",
-          }}
-          aria-hidden="true"
-        />
-        <div className="relative container mx-auto px-4 lg:px-6 max-w-6xl py-20 lg:py-28">
-          <section id="whole-person" className="scroll-mt-24">
-
+      {/* ── 3. A whole-person approach — full-bleed photo scenes ─────── */}
+      <style>{`
+        @keyframes wp-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+        @keyframes wp-glow { 0%,100% { filter: drop-shadow(0 12px 36px hsla(331,95%,60%,0.30)); } 50% { filter: drop-shadow(0 18px 48px hsla(331,95%,60%,0.55)); } }
+        @keyframes wp-glow-v { 0%,100% { filter: drop-shadow(0 12px 36px hsla(271,74%,60%,0.30)); } 50% { filter: drop-shadow(0 18px 48px hsla(271,74%,60%,0.55)); } }
+        @keyframes wp-glow-c { 0%,100% { filter: drop-shadow(0 12px 36px hsla(188,88%,54%,0.28)); } 50% { filter: drop-shadow(0 18px 48px hsla(188,88%,54%,0.50)); } }
+        @keyframes wp-spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      `}</style>
+      <section id="whole-person" className="scroll-mt-24 pt-16 lg:pt-24 pb-6">
+        <div className="mx-auto max-w-6xl px-4 lg:px-8">
             {/* Header */}
-            <div className="text-center mb-16 lg:mb-24">
+            <div className="text-center">
               <p className="text-xs font-bold uppercase tracking-[0.22em]" style={{ color: "hsl(331,95%,72%)" }}>
                 Beyond the prescription
               </p>
@@ -474,10 +462,11 @@ export default function HormonePage() {
               </p>
             </div>
 
-            {/* Zig-zag rows */}
-            <div className="space-y-20 lg:space-y-28">
+        </div>
+      </section>
 
-              {/* 01 — image LEFT, content RIGHT */}
+      {/* 01 — the terrain (photo scene, image LEFT, content RIGHT) */}
+      <SceneSection image="/images/hormone/window-backdrop-v2.webp" scrim="side" minHeight="80vh">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 items-center">
                 <div className="relative order-1 md:order-1">
                   <div
@@ -520,19 +509,21 @@ export default function HormonePage() {
                       The terrain
                     </p>
                   </div>
-                  <h3 className="text-2xl font-bold text-white lg:text-3xl">
+                  <h3 className="text-2xl font-bold text-white lg:text-3xl" style={{ textShadow: SCENE_H }}>
                     Metabolic health is the foundation
                   </h3>
-                  <p className="mt-4 text-lg italic" style={{ color: "hsl(210,22%,88%)" }}>
+                  <p className="mt-4 text-lg italic" style={{ color: "hsl(210,22%,92%)", textShadow: SCENE_P }}>
                     Same hormone, different body — different outcome.
                   </p>
-                  <p className="mt-4 text-base leading-8" style={{ color: "hsl(210,22%,80%)" }}>
+                  <p className="mt-4 text-base leading-8" style={{ color: "hsl(210,22%,90%)", textShadow: SCENE_P }}>
                     Your body doesn&apos;t just receive hormones — it processes them. Chronic inflammation, insulin resistance, and excess belly fat throw that processing off, so byproducts that should be cleared safely instead build up where they shouldn&apos;t — including in brain tissue. The result: the same dose can help one person and quietly burden another. Fixing the terrain first — the inflammation, the metabolic load — is what lets hormone therapy work <em>with</em> your body instead of against it.
                   </p>
                 </div>
               </div>
+      </SceneSection>
 
-              {/* 02 — content LEFT, image RIGHT (zig) */}
+      {/* 02 — the personal piece (photo scene, content LEFT, image RIGHT) */}
+      <SceneSection image="/images/hormone/reviews-backdrop-v1.webp" scrim="side" minHeight="80vh">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 items-center">
                 <div className="order-2 md:order-1">
                   <div className="flex items-center gap-3 mb-2">
@@ -552,13 +543,13 @@ export default function HormonePage() {
                       The personal piece
                     </p>
                   </div>
-                  <h3 className="text-2xl font-bold text-white lg:text-3xl">
+                  <h3 className="text-2xl font-bold text-white lg:text-3xl" style={{ textShadow: SCENE_H }}>
                     Two genes change the math
                   </h3>
-                  <p className="mt-4 text-lg italic" style={{ color: "hsl(210,22%,88%)" }}>
+                  <p className="mt-4 text-lg italic" style={{ color: "hsl(210,22%,92%)", textShadow: SCENE_P }}>
                     Your genome decides how your body handles estrogen — and how your brain ages.
                   </p>
-                  <p className="mt-4 text-base leading-8" style={{ color: "hsl(210,22%,80%)" }}>
+                  <p className="mt-4 text-base leading-8" style={{ color: "hsl(210,22%,90%)", textShadow: SCENE_P }}>
                     COMT (Val158Met) governs how quickly you clear estrogen byproducts. ApoE shapes how your brain handles lipids and amyloid. Both interact with what researchers call the &quot;healthy cell bias&quot; — estrogen is deeply neuroprotective when neurons are healthy, and surprisingly burdensome when they&apos;re not. The same therapy can preserve memory in one body and accelerate decline in another. Knowing your genotype can help guide treatment decisions and other work that needs to be done.
                   </p>
                 </div>
@@ -585,8 +576,10 @@ export default function HormonePage() {
                   </div>
                 </div>
               </div>
+      </SceneSection>
 
-              {/* 03 — image LEFT, content RIGHT (zag) */}
+      {/* 03 — same biology (photo scene, image LEFT, content RIGHT) */}
+      <SceneSection image="/images/hormone/final-backdrop-v1.webp" scrim="side" minHeight="80vh">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 items-center">
                 <div className="relative order-1 md:order-1">
                   <div
@@ -628,41 +621,39 @@ export default function HormonePage() {
                       Same biology
                     </p>
                   </div>
-                  <h3 className="text-2xl font-bold text-white lg:text-3xl">
+                  <h3 className="text-2xl font-bold text-white lg:text-3xl" style={{ textShadow: SCENE_H }}>
                     Men live in the same loop
                   </h3>
-                  <p className="mt-4 text-lg italic" style={{ color: "hsl(210,22%,88%)" }}>
+                  <p className="mt-4 text-lg italic" style={{ color: "hsl(210,22%,92%)", textShadow: SCENE_P }}>
                     Low T and metabolism reinforce each other.
                   </p>
-                  <p className="mt-4 text-base leading-8" style={{ color: "hsl(210,22%,80%)" }}>
+                  <p className="mt-4 text-base leading-8" style={{ color: "hsl(210,22%,90%)", textShadow: SCENE_P }}>
                     Visceral fat raises aromatase, which converts testosterone into estrogen — which deepens metabolic dysfunction, which lowers testosterone further. The cycle feeds itself. Many men labeled &quot;low T&quot; actually have a metabolic problem in disguise — and fixing that problem can restore testosterone without lifelong replacement. We optimize the system first, then decide what, if anything, you actually need from the prescription pad.
                   </p>
                 </div>
               </div>
+      </SceneSection>
 
-            </div>
-
-            {/* Social proof */}
-            <div className="mt-20 lg:mt-24">
-              <ReviewStrip variant="strip" service="hormone" source="hormone-hub-reviews" />
-            </div>
-
-            {/* Read the full article CTA */}
-            <div className="mt-12 flex justify-center">
-              <Link
-                href="/blog/metabolic-health-hormone-therapy-colorado-springs"
-                className="px-8 py-4 rounded-full text-base font-semibold text-white hover:opacity-90 transition-opacity"
-                style={{
-                  background: "linear-gradient(135deg, hsl(331,95%,65%), hsl(271,74%,52%))",
-                  boxShadow: "0 16px 40px hsla(331,80%,55%,0.4)",
-                }}
-              >
-                Read the full article →
-              </Link>
-            </div>
-          </section>
+      {/* ── 4. Social proof + the full article ───────────────────────── */}
+      <section className="py-14 lg:py-20">
+        <div className="mx-auto max-w-6xl px-4 lg:px-8">
+          <ReviewStrip variant="strip" service="hormone" source="hormone-hub-reviews" />
+          <div className="mt-12 flex justify-center">
+            <TrackedLink
+              href="/blog/metabolic-health-hormone-therapy-colorado-springs"
+              event="cta_click"
+              analytics={{ page: "hormone", source: "hormone-hub-article", service: "hormone", label: "Read the full article" }}
+              className="px-8 py-4 rounded-full text-base font-semibold text-white hover:opacity-90 transition-opacity"
+              style={{
+                background: "linear-gradient(135deg, hsl(331,95%,65%), hsl(271,74%,52%))",
+                boxShadow: "0 16px 40px hsla(331,80%,55%,0.4)",
+              }}
+            >
+              Read the full article →
+            </TrackedLink>
+          </div>
         </div>
-      </div>
+      </section>
       <PageCtaFooter
         service="hormone"
         heading="Not sure which path fits?"
