@@ -31,7 +31,7 @@ export function bookingUrl(key: ApptKey, source?: string): string {
 const HINT_ROOT = "https://colorado-springs-health-collective-direct-primary-care.hint.com";
 
 export const HINT_LINKS = {
-  dpcMembershipSignup: `${HINT_ROOT}/signup/membership/contacts?=`,
+  dpcMembershipSignup: `${HINT_ROOT}/signup/membership/contacts`,
   urgentCareInPerson: `${HINT_ROOT}/signup/urgentcarevisit`,
   urgentCareTelehealth: `${HINT_ROOT}/signup/telehealth`,
   rxSkincare: `${HINT_ROOT}/signup/rxskincare`,
