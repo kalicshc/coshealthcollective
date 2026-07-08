@@ -6,7 +6,8 @@
  *   node --env-file=.env.local scripts/gen-site-images.mjs              # all
  *   node --env-file=.env.local scripts/gen-site-images.mjs womens-hero  # one
  *
- * Writes webp into public/images/hormone/. Requires FAL_KEY.
+ * Writes webp into public/images/<dir>/ (per-image `dir`, default "hormone").
+ * Requires FAL_KEY.
  */
 
 import { dirname, join } from "node:path";
@@ -16,8 +17,12 @@ import { mkdirSync } from "node:fs";
 import sharp from "sharp";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const OUT_DIR = join(__dirname, "..", "public", "images", "hormone");
-mkdirSync(OUT_DIR, { recursive: true });
+const IMAGES_ROOT = join(__dirname, "..", "public", "images");
+const outDirFor = (dir = "hormone") => {
+  const out = join(IMAGES_ROOT, dir);
+  mkdirSync(out, { recursive: true });
+  return out;
+};
 const ENDPOINT = "https://fal.run/fal-ai/flux-pro/v1.1-ultra";
 
 const KEY = process.env.FAL_KEY;
@@ -103,9 +108,71 @@ const IMAGES = {
       "light rays anywhere in the middle. Quiet, contemplative, near-abstract. Wide cinematic.",
     w: 1920, h: 1080,
   },
+
+  // ── DPC epic page scenes — cool royal-blue moods (ACCENTS.dpc) ──────────
+  "dpc-hero": {
+    dir: "dpc",
+    prompt:
+      "Blue-hour dawn over the Colorado Front Range, deep royal-blue and indigo sky over crisp " +
+      "snow-lined ridgelines, the faintest cool pre-sunrise glow along the horizon on the far right. " +
+      "The left half and lower third of the frame are calm, deep-shadowed, and uncluttered — near-dark " +
+      "slate-blue tones with no highlights — deliberately dark to hold a large white headline. Wide cinematic.",
+    w: 2200, h: 1400,
+  },
+  "dpc-membership": {
+    dir: "dpc",
+    prompt:
+      "A calm Colorado pine valley in steady early-morning light, soft cool blue tones with a hint " +
+      "of warm gold on the highest treetops in the UPPER RIGHT only, gentle mist between the pines. " +
+      "The left half and lower two-thirds of the frame are even, dark, and quiet with no highlights — " +
+      "deliberately dark to hold white text and glass cards. Grounded, reassuring. Wide cinematic.",
+    w: 2200, h: 1400,
+  },
+  "dpc-final": {
+    dir: "dpc",
+    prompt:
+      "An open high-country trail leading toward sunlit Colorado peaks at first light — a narrow band " +
+      "of warm gold on the distant summits at the TOP of the frame only, a quiet sense of forward " +
+      "motion and beginning. The lower two-thirds of the frame fall into deep, even, near-black " +
+      "blue-shadow with soft haze and no highlights — deliberately dark to hold centered white text. Wide cinematic.",
+    w: 2200, h: 1400,
+  },
+
+  // ── Hyperbaric epic page scenes — ice-blue / cyan moods (ACCENTS.hyperbaric) ──
+  "hbot-hero": {
+    dir: "hyperbaric",
+    prompt:
+      "A low-key, dark-exposure photograph of a glacial alpine lake beneath jagged Colorado peaks at " +
+      "deep blue-hour dusk, still ice-blue and cyan-teal water barely catching the last cold light on " +
+      "the FAR RIGHT only. Underexposed overall: the sky is deep dark teal-navy, the left half and " +
+      "lower two-thirds of the frame are near-black shadow with zero highlights — deliberately very " +
+      "dark to hold a large white headline and a form panel. Pristine, awe-inspiring. Wide cinematic.",
+    w: 2200, h: 1400,
+  },
+  "hbot-depth": {
+    dir: "hyperbaric",
+    prompt:
+      "Deep turquoise water of a high mountain lake seen from just beneath the surface, shafts of " +
+      "cool light breaking down into the depths in the UPPER RIGHT corner only, fading to profound " +
+      "dark teal below. The left half and lower two-thirds of the frame are an even, very dark " +
+      "blue-black with no highlights — a feeling of pressure and depth — deliberately dark to hold " +
+      "white text. Near-abstract. Wide cinematic.",
+    w: 2200, h: 1400,
+  },
+  "hbot-final": {
+    dir: "hyperbaric",
+    prompt:
+      "A dark winter night photograph of a Colorado alpine valley under deep twilight, snow-dusted " +
+      "pines in near-black silhouette, a cold cyan-teal glow of the last light hugging the distant " +
+      "ridgeline at the very TOP of the frame, faint stars appearing in a deep navy sky. Night " +
+      "exposure: the entire lower two-thirds of the frame are even, near-black blue shadow with zero " +
+      "bright highlights — deliberately very dark to hold centered white text and a form. Still, " +
+      "clean, expectant. Wide cinematic.",
+    w: 2200, h: 1400,
+  },
 };
 
-async function generateOne(id, { prompt, w, h }) {
+async function generateOne(id, { prompt, w, h, dir }) {
   const res = await fetch(ENDPOINT, {
     method: "POST",
     headers: { Authorization: `Key ${KEY}`, "Content-Type": "application/json" },
@@ -122,13 +189,13 @@ async function generateOne(id, { prompt, w, h }) {
   const url = (await res.json())?.images?.[0]?.url;
   if (!url) throw new Error("no image url in response");
   const buf = Buffer.from(await (await fetch(url)).arrayBuffer());
-  await sharp(buf).resize(w, h, { fit: "cover", position: "centre" }).webp({ quality: 84 }).toFile(join(OUT_DIR, `${id}.webp`));
+  await sharp(buf).resize(w, h, { fit: "cover", position: "centre" }).webp({ quality: 84 }).toFile(join(outDirFor(dir), `${id}.webp`));
 }
 
 async function main() {
   const args = process.argv.slice(2).filter((a) => !a.startsWith("--"));
   const jobs = Object.entries(IMAGES).filter(([id]) => (args.length === 0 ? true : args.some((a) => id.startsWith(a) || id === a)));
-  console.log(`\nSite section imagery via FLUX → ${OUT_DIR}\n`);
+  console.log(`\nSite section imagery via FLUX → ${IMAGES_ROOT}/<dir>\n`);
   let ok = 0, failed = 0;
   for (const [id, spec] of jobs) {
     process.stdout.write(`• flux   ${id} … `);

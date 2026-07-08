@@ -3,7 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { Phone, Mail, ArrowLeft, CheckCircle, Dumbbell } from "lucide-react";
 import { clinicFacts } from "@/lib/clinicFacts";
-import { bookingUrl } from "@/lib/bookingLinks";
+import { ACCENTS } from "@/lib/accents";
+import { BlogCtaBlock } from "@/components/BlogCtaBlock";
+
+const A = ACCENTS.brand;
 
 export const metadata: Metadata = {
   title: "Skiing Into Your 70s: A Colorado Springs Guide to Longevity on the Slopes | Colorado Springs Health Collective",
@@ -16,8 +19,6 @@ export const metadata: Metadata = {
     type: "article",
   },
 };
-
-const MEET_GREET_URL = bookingUrl("meetGreet", "blog-skiing-longevity");
 
 const articleSchema = {
   "@context": "https://schema.org",
@@ -42,7 +43,7 @@ export default function BlogSkiingLongevity() {
           <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, hsla(210,32%,8%,0.4) 0%, hsla(210,32%,8%,0.85) 70%, hsl(210,32%,8%) 100%)" }} />
           <div className="absolute inset-0 flex flex-col justify-end pb-12 px-5 lg:px-8">
             <div className="container mx-auto max-w-4xl">
-              <Link href="/blog" className="inline-flex items-center gap-1.5 mb-6 text-sm hover:opacity-80" style={{ color: "hsl(177, 70%, 65%)" }}>
+              <Link href="/blog" className="inline-flex items-center gap-1.5 mb-6 text-sm hover:opacity-80" style={{ color: `rgb(${A.rgb})` }}>
                 <ArrowLeft className="w-4 h-4" /> Back to All Articles
               </Link>
               <span className="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4" style={{ background: "hsl(200, 70%, 60%)", color: "hsl(210, 32%, 10%)" }}>Longevity</span>
@@ -77,7 +78,7 @@ export default function BlogSkiingLongevity() {
               Living in Colorado Springs means having world-class skiing just a couple hours away. The question isn&apos;t whether you <em>can</em> ski into your 70s — it&apos;s whether you&apos;re setting yourself up for it now. The five pillars below are what separates skiers who are still ripping groomers at 72 from those who quit at 55.
             </p>
 
-            <h2 className="text-2xl lg:text-3xl font-bold mb-6" style={{ color: "hsl(177, 70%, 65%)" }}>The Five Pillars of Ski Longevity</h2>
+            <h2 className="text-2xl lg:text-3xl font-bold mb-6" style={{ color: `rgb(${A.rgb})` }}>The Five Pillars of Ski Longevity</h2>
 
             {/* Sleep */}
             <div className="rounded-2xl overflow-hidden mb-5" style={{ background: "hsla(260, 70%, 60%, 0.1)", border: "1px solid hsla(260, 70%, 60%, 0.2)" }}>
@@ -128,11 +129,11 @@ export default function BlogSkiingLongevity() {
             </div>
 
             {/* Strength */}
-            <div className="rounded-2xl overflow-hidden mb-5" style={{ background: "hsla(177, 70%, 50%, 0.1)", border: "1px solid hsla(177, 70%, 50%, 0.2)" }}>
+            <div className="rounded-2xl overflow-hidden mb-5" style={{ background: `rgba(${A.rgb},0.1)`, border: `1px solid rgba(${A.rgb},0.2)` }}>
               <div className="flex items-center gap-4 px-6 pt-6 pb-4">
-                <div className="text-4xl font-black" style={{ color: "hsl(177, 70%, 65%)" }}>8–12</div>
+                <div className="text-4xl font-black" style={{ color: `rgb(${A.rgb})` }}>8–12</div>
                 <div>
-                  <div className="text-xs font-bold uppercase tracking-wider" style={{ color: "hsl(177, 70%, 65%)" }}>weeks pre-season</div>
+                  <div className="text-xs font-bold uppercase tracking-wider" style={{ color: `rgb(${A.rgb})` }}>weeks pre-season</div>
                   <h3 className="text-xl font-bold" style={{ color: "hsl(0, 0%, 95%)" }}>Strength: The Foundation of Injury Prevention</h3>
                 </div>
               </div>
@@ -143,7 +144,7 @@ export default function BlogSkiingLongevity() {
                 <div className="grid sm:grid-cols-2 gap-2">
                   {["Squats and lunges 2–3× per week", "Single-leg exercises for balance and stability", "Core — planks, rotational work, dead bugs", "Bulgarian split squats for ski-specific strength"].map((item, i) => (
                     <div key={i} className="flex items-start gap-2">
-                      <Dumbbell className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: "hsl(177, 70%, 55%)" }} />
+                      <Dumbbell className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: `rgb(${A.rgb})` }} />
                       <span className="text-sm" style={{ color: "hsl(0, 0%, 82%)" }}>{item}</span>
                     </div>
                   ))}
@@ -180,7 +181,7 @@ export default function BlogSkiingLongevity() {
             </div>
 
             {/* Pull quote */}
-            <div className="rounded-2xl p-8 mb-10 text-center" style={{ background: "linear-gradient(135deg, hsla(200, 70%, 50%, 0.15), hsla(177, 70%, 50%, 0.15))", border: "1px solid hsla(200, 70%, 50%, 0.3)" }}>
+            <div className="rounded-2xl p-8 mb-10 text-center" style={{ background: `linear-gradient(135deg, hsla(200, 70%, 50%, 0.15), rgba(${A.rgb},0.15))`, border: "1px solid hsla(200, 70%, 50%, 0.3)" }}>
               <p className="text-xl lg:text-2xl font-bold italic leading-snug" style={{ color: "hsl(0, 0%, 95%)" }}>
                 &ldquo;The best time to start building ski longevity was 20 years ago. The second best time is today.&rdquo;
               </p>
@@ -188,28 +189,20 @@ export default function BlogSkiingLongevity() {
 
             {/* Provider section */}
             <div className="rounded-2xl p-6 mb-8" style={{ background: "hsla(210, 22%, 18%, 0.8)" }}>
-              <h2 className="text-2xl font-bold mb-3" style={{ color: "hsl(177, 70%, 65%)" }}>Having a Provider Who Gets It</h2>
+              <h2 className="text-2xl font-bold mb-3" style={{ color: `rgb(${A.rgb})` }}>Having a Provider Who Gets It</h2>
               <p className="leading-relaxed" style={{ color: "hsl(0, 0%, 82%)" }}>
                 With Direct Primary Care, you have a healthcare provider who actually knows you — your goals, your activities, your body. When you tweak something on the mountain, you can text your provider that same day. No appointment required, no waiting room, no surprise bill. That kind of relationship is what makes proactive longevity medicine possible.
               </p>
             </div>
 
-            <div className="rounded-3xl p-8 lg:p-10 text-center" style={{ background: "hsla(210, 22%, 28%, 0.75)" }}>
-              <h3 className="text-xl font-bold mb-4" style={{ color: "hsl(0, 0%, 100%)" }}>Ready to build your longevity plan?</h3>
-              <p className="mb-6" style={{ color: "hsl(0, 0%, 85%)" }}>Book a free meet and greet to see if DPC is right for you.</p>
-              <a href={MEET_GREET_URL} target="_blank" rel="noopener noreferrer" className="inline-block px-8 py-4 rounded-full font-semibold text-lg" style={{ background: "linear-gradient(135deg, hsl(45, 90%, 60%), hsl(30, 85%, 58%))", color: "hsl(210, 32%, 12%)" }}>
-                Book Free Meet &amp; Greet
-              </a>
-              <div className="flex flex-col md:flex-row items-center justify-center gap-6 mt-8">
-                <a href={`tel:${clinicFacts.contact.phoneTel}`} className="flex items-center gap-3 hover:opacity-80">
-                  <Phone className="w-5 h-5" style={{ color: "hsl(177, 70%, 65%)" }} />
-                  <span style={{ color: "hsl(0, 0%, 85%)" }}>{clinicFacts.contact.phone}</span>
-                </a>
-                <a href={`mailto:${clinicFacts.contact.email}`} className="flex items-center gap-3 hover:opacity-80">
-                  <Mail className="w-5 h-5" style={{ color: "hsl(177, 70%, 65%)" }} />
-                  <span style={{ color: "hsl(0, 0%, 85%)" }}>{clinicFacts.contact.email}</span>
-                </a>
-              </div>
+            <div>
+              <BlogCtaBlock
+                service="brand"
+                source="blog-skiing-longevity"
+                appt="meetGreet"
+                heading="Ready to build your longevity plan?"
+                body="Book a free meet and greet to see if DPC is right for you."
+              />
             </div>
           </article>
         </div>

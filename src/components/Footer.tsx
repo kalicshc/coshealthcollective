@@ -25,7 +25,7 @@ const quickLinks = [
   { label: "Media", href: "/media" },
   { label: "FAQ", href: "/faq" },
   { label: "Free Resources", href: "/longevity-toolkit-download" },
-  { label: "Member Resources", href: "/members" },
+  { label: "Member Resources", href: "/resources" },
 ];
 
 export function Footer() {

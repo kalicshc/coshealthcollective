@@ -1,6 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
-import Link from "next/link";
 import { ACCENTS, type ServiceKey } from "@/lib/accents";
+import { TrackedLink } from "@/components/analytics/TrackedLink";
 
 /**
  * Shared interior-page hero in the site's "modern glass" language
@@ -31,6 +31,13 @@ type Props = {
   children?: ReactNode;
   compact?: boolean;
 };
+
+/** Pull the ?source= attribution a bookingUrl/hintLink href already carries,
+ * so hero clicks and bookings report the same placement id. */
+function sourceFromHref(href: string): string | undefined {
+  const match = href.match(/[?&]source=([^&#]+)/);
+  return match ? decodeURIComponent(match[1]) : undefined;
+}
 
 export function gradientTextStyle(service: ServiceKey): CSSProperties {
   const a = ACCENTS[service];
@@ -97,14 +104,17 @@ export function ServiceHero({ service, eyebrow, title, titleAccent, subhead, cta
                 ? { background: `linear-gradient(135deg, ${a.from}, ${a.to})`, color: "hsl(210,32%,10%)" }
                 : { border: `1px solid rgba(${a.rgb},0.45)`, color: `rgb(${a.rgb})` };
               const cls = "rounded-full px-8 py-3.5 text-sm font-bold hover:opacity-85 transition-opacity";
-              return cta.external ? (
-                <a key={cta.label} href={cta.href} target="_blank" rel="noopener noreferrer" className={cls} style={style}>
+              return (
+                <TrackedLink
+                  key={cta.label}
+                  href={cta.href}
+                  external={cta.external}
+                  analytics={{ service, label: cta.label, source: sourceFromHref(cta.href) ?? `${service}-hero` }}
+                  className={cls}
+                  style={style}
+                >
                   {cta.label}
-                </a>
-              ) : (
-                <Link key={cta.label} href={cta.href} className={cls} style={style}>
-                  {cta.label}
-                </Link>
+                </TrackedLink>
               );
             })}
           </div>

@@ -110,7 +110,8 @@ export default function PartnerNetwork() {
         service="brand"
         heading="Want a referral?"
         body="Learn more about our partner network or get connected — schedule a free meet and greet."
-        primaryCta={{ label: "Book a Free Meet & Greet", href: MEET_GREET_URL, external: true }}
+        primaryCta={{ label: "Book a Free Meet & Greet", href: bookingUrl("meetGreet", "partner-network-footer"), external: true }}
+        analytics={{ page: "partner-network", source: "partner-network-footer", service: "brand", label: "Book a Free Meet & Greet", appt: "meetGreet" }}
       />
     </div>
   );

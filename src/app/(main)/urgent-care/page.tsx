@@ -5,6 +5,7 @@ import { ACCENTS } from "@/lib/accents";
 import { ServiceHero, gradientTextStyle } from "@/components/ServiceHero";
 import { GlassCard } from "@/components/GlassCard";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
+import { ReviewStrip } from "@/components/ReviewStrip";
 import { hintLink } from "@/lib/bookingLinks";
 
 const { telehealth, inPerson } = clinicFacts.urgentCare;
@@ -164,15 +165,22 @@ export default function UrgentCare() {
         </div>
       </section>
 
+      <section className="pt-12 pb-4">
+        <div className="mx-auto max-w-5xl px-5 lg:px-8">
+          <ReviewStrip variant="strip" service="dpc" source="urgent-care-reviews" />
+        </div>
+      </section>
+
       <PageCtaFooter
         service="dpc"
         heading="Ready to book your visit?"
         body="Schedule online in minutes, or reach out and we'll help you pick the right visit type."
         primaryCta={{
           label: "Book Your Visit",
-          href: hintLink("urgentCareInPerson", "urgent-care"),
+          href: hintLink("urgentCareInPerson", "urgent-care-footer"),
           external: true,
         }}
+        analytics={{ page: "urgent-care", source: "urgent-care-footer", service: "dpc", label: "Book Your Visit" }}
       />
     </div>
   );

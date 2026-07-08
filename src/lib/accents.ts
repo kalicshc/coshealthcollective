@@ -13,6 +13,13 @@
  *               chrome (borders, dots, underlines) — "R,G,B" string form.
  *  - `waveRgb`  deeper variant tuned for ClinicSpectrum's additive wave,
  *               where the brighter values would wash out.
+ *
+ * Borrow rules — do NOT add new ServiceKeys for minor pages; pages without
+ * their own key use the nearest fit:
+ *  - non-clinic pages (about, faq, media, resources, community, toolkit) → `brand`
+ *  - DPC-adjacent services (urgent care, allergy, precision medicine,
+ *    remote monitoring, for-businesses, aesthetics via DPC membership) → `dpc`
+ *  - blog posts → the accent of the service the post discusses, else `brand`
  */
 
 export type ServiceKey = "brand" | "dpc" | "hormone" | "hyperbaric";

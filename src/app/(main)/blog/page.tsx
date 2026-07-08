@@ -3,6 +3,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail } from "lucide-react";
 import { clinicFacts } from "@/lib/clinicFacts";
+import { ACCENTS } from "@/lib/accents";
+
+const BRAND = `rgb(${ACCENTS.brand.rgb})`;
 
 export const metadata: Metadata = {
   alternates: { canonical: "/blog" },
@@ -17,7 +20,7 @@ const articles = [
     description: "The grandmother hypothesis, killer whales, the selection wall — why menopause exists, why the symptoms persist, and why evolution never fixed it.",
     date: "May 2026",
     category: "Women's Health",
-    categoryColor: "hsl(330, 70%, 65%)",
+    categoryColor: ACCENTS.hormone.statusDot,
     image: "/blog/menopause-evolution-hero.jpg",
     featured: true,
   },
@@ -27,7 +30,7 @@ const articles = [
     description: "An evidence-based look at the timing hypothesis for hormone therapy — what the WHI, ELITE, DOPS, and KEEPS trials found, and where the science remains unsettled.",
     date: "May 2026",
     category: "Women's Health",
-    categoryColor: "hsl(330, 70%, 65%)",
+    categoryColor: ACCENTS.hormone.statusDot,
     image: "/blog/hrt-critical-window-hero.jpg",
     featured: false,
   },
@@ -37,7 +40,7 @@ const articles = [
     description: "Hormones don't act in isolation. Inflammation, COMT and ApoE genetics, the brain–amyloid loop, and why men live in the same cycle — what we test and treat before we prescribe.",
     date: "May 2026",
     category: "Hormone Therapy",
-    categoryColor: "hsl(331, 70%, 65%)",
+    categoryColor: ACCENTS.hormone.statusDot,
     image: "/blog/metabolic-health-hero.jpg",
     featured: false,
   },
@@ -47,7 +50,7 @@ const articles = [
     description: "How HBOT delivers 15× normal oxygen levels to accelerate healing, reduce inflammation, and reverse cellular aging — backed by peer-reviewed research.",
     date: "April 2026",
     category: "HBOT",
-    categoryColor: "hsl(177, 70%, 59%)",
+    categoryColor: ACCENTS.hyperbaric.statusDot,
     image: "/blog/hbot-hero.jpg",
     featured: false,
   },
@@ -57,7 +60,7 @@ const articles = [
     description: "Learn how to keep skiing for decades with proper strength training, nutrition, sleep, and recovery.",
     date: "January 2026",
     category: "Longevity",
-    categoryColor: "hsl(200, 70%, 60%)",
+    categoryColor: ACCENTS.brand.statusDot,
     image: "/blog/skiing-hero.jpg",
     featured: false,
   },
@@ -67,7 +70,7 @@ const articles = [
     description: "Cash-pay options, discount pharmacies, imaging price shopping, and how to avoid surprise bills.",
     date: "February 2026",
     category: "Smart Savings",
-    categoryColor: "hsl(140, 70%, 55%)",
+    categoryColor: ACCENTS.dpc.statusDot,
     image: "/blog/save-money-hero.jpg",
     featured: false,
   },
@@ -77,7 +80,7 @@ const articles = [
     description: "Compare costs, services, and which healthcare model best fits your life.",
     date: "Updated July 2026",
     category: "DPC",
-    categoryColor: "hsl(177, 70%, 59%)",
+    categoryColor: ACCENTS.dpc.statusDot,
     image: "/blog/dpc-hero.jpg",
     featured: false,
   },
@@ -87,7 +90,7 @@ const articles = [
     description: "No insurance hoops, no rushed visits — how DPC is redefining healthcare in Colorado Springs.",
     date: "August 2025",
     category: "DPC",
-    categoryColor: "hsl(45, 90%, 60%)",
+    categoryColor: ACCENTS.dpc.statusDot,
     image: "/blog/why-dpc-hero.jpg",
     featured: false,
   },
@@ -97,7 +100,7 @@ const articles = [
     description: "The proven safety profile, potential risks, and why vaccination matters every flu season.",
     date: "December 2025",
     category: "Preventive Care",
-    categoryColor: "hsl(280, 70%, 65%)",
+    categoryColor: ACCENTS.brand.statusDot,
     image: "/blog/flu-shot-hero.jpg",
     featured: false,
   },
@@ -115,7 +118,7 @@ export default function Blog() {
           <div className="text-center mb-16">
             <h1 className="text-4xl lg:text-5xl font-bold mb-4 leading-tight">
               <span style={{ color: "hsl(0, 0%, 100%)" }}>Healthcare </span>
-              <span style={{ color: "hsl(177, 70%, 65%)" }}>Insights &amp; Wellness</span>
+              <span style={{ color: BRAND }}>Insights &amp; Wellness</span>
             </h1>
             <p className="text-xl font-light max-w-2xl mx-auto" style={{ color: "hsl(210, 40%, 75%)" }}>
               Evidence-based guides from Colorado Springs Health Collective.
@@ -194,11 +197,11 @@ export default function Blog() {
           <div className="text-center">
             <div className="flex flex-col md:flex-row items-center justify-center gap-6">
               <a href={`tel:${clinicFacts.contact.phoneTel}`} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                <Phone className="w-5 h-5" style={{ color: "hsl(177, 70%, 59%)" }} />
+                <Phone className="w-5 h-5" style={{ color: BRAND }} />
                 <span style={{ color: "hsl(0, 0%, 92%)" }}>{clinicFacts.contact.phone}</span>
               </a>
               <a href={`mailto:${clinicFacts.contact.email}`} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                <Mail className="w-5 h-5" style={{ color: "hsl(177, 70%, 59%)" }} />
+                <Mail className="w-5 h-5" style={{ color: BRAND }} />
                 <span style={{ color: "hsl(0, 0%, 92%)" }}>{clinicFacts.contact.email}</span>
               </a>
             </div>

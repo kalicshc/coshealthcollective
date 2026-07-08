@@ -120,7 +120,8 @@ export default function AllergySlit() {
         service="dpc"
         heading="Ready to find relief?"
         body="Schedule a free meet and greet to discuss whether allergy testing and SLIT therapy is right for you."
-        primaryCta={{ label: "Book a Free Meet & Greet", href: MEET_GREET_URL, external: true }}
+        primaryCta={{ label: "Book a Free Meet & Greet", href: bookingUrl("meetGreet", "allergy-slit-footer"), external: true }}
+        analytics={{ page: "allergy-slit", source: "allergy-slit-footer", service: "dpc", label: "Book a Free Meet & Greet", appt: "meetGreet" }}
       />
     </div>
   );

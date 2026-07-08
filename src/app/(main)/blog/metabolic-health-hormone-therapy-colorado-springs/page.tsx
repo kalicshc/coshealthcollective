@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Phone, Mail, ChevronRight } from "lucide-react";
 import { clinicFacts } from "@/lib/clinicFacts";
-import { bookingUrl } from "@/lib/bookingLinks";
+import { BlogCtaBlock } from "@/components/BlogCtaBlock";
 
 export const metadata: Metadata = {
   title: "Why Metabolic Health Is the Foundation of Safe, Effective Hormone Therapy | CSHC Colorado Springs",
@@ -19,8 +19,6 @@ export const metadata: Metadata = {
   },
 };
 
-const HORMONE_CONSULT_URL =
-  bookingUrl("freeConsult", "blog-metabolic-health-hormone-therapy-colorado-springs");
 
 const toc = [
   { id: "whole-person", label: "The Whole-Person Approach" },
@@ -336,34 +334,13 @@ export default function MetabolicHealthHormonePost() {
             </div>
 
             {/* CTA */}
-            <div className="rounded-3xl p-8 lg:p-10 text-center" style={{ background: "linear-gradient(135deg, hsla(331,70%,55%,0.15), hsla(271,70%,55%,0.15))", border: "1px solid hsla(331,70%,55%,0.3)" }}>
-              <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "hsl(331, 70%, 75%)" }}>Colorado Springs Health Collective</p>
-              <h3 className="text-2xl lg:text-3xl font-bold mb-3" style={{ color: "hsl(0, 0%, 100%)" }}>
-                Start With the System That Carries the Hormones
-              </h3>
-              <p className="mb-6 max-w-lg mx-auto" style={{ color: "hsl(210, 30%, 80%)" }}>
-                Book a free consult to talk through your symptoms, your metabolic picture, and what a personalized plan would look like — before any prescription.
-              </p>
-              <a
-                href={HORMONE_CONSULT_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block px-8 py-4 rounded-full font-semibold text-lg"
-                style={{ background: "linear-gradient(135deg, hsl(331,70%,60%), hsl(271,70%,60%))", color: "hsl(0, 0%, 100%)", boxShadow: "0 8px 32px hsla(331,70%,50%,0.3)" }}
-              >
-                Book a Free Consult
-              </a>
-              <div className="flex flex-col md:flex-row items-center justify-center gap-6 mt-8">
-                <a href={`tel:${clinicFacts.contact.phoneTel}`} className="flex items-center gap-2 hover:opacity-80">
-                  <Phone className="w-4 h-4" style={{ color: "hsl(331, 70%, 75%)" }} />
-                  <span className="text-sm" style={{ color: "hsl(0, 0%, 85%)" }}>{clinicFacts.contact.phone}</span>
-                </a>
-                <a href={`mailto:${clinicFacts.contact.email}`} className="flex items-center gap-2 hover:opacity-80">
-                  <Mail className="w-4 h-4" style={{ color: "hsl(331, 70%, 75%)" }} />
-                  <span className="text-sm" style={{ color: "hsl(0, 0%, 85%)" }}>{clinicFacts.contact.email}</span>
-                </a>
-              </div>
-            </div>
+            <BlogCtaBlock
+              service="hormone"
+              source="blog-metabolic-health-hormone-therapy-colorado-springs"
+              appt="freeConsult"
+              heading="Start With the System That Carries the Hormones"
+              body="Book a free consult to talk through your symptoms, your metabolic picture, and what a personalized plan would look like — before any prescription."
+            />
 
           </div>
         </div>

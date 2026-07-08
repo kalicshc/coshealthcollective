@@ -1,9 +1,12 @@
-"use client";
-
-import Link from "next/link";
-import { ExternalLink, ArrowRight, Info, Heart } from "lucide-react";
+import { ExternalLink, Info } from "lucide-react";
 import { bookingUrl } from "@/lib/bookingLinks";
+import { ACCENTS } from "@/lib/accents";
+import { ServiceHero } from "@/components/ServiceHero";
+import { glassCardStyle } from "@/components/GlassCard";
+import { PageCtaFooter } from "@/components/PageCtaFooter";
+import { TrackedLink } from "@/components/analytics/TrackedLink";
 
+const A = ACCENTS.dpc;
 const MEET_GREET_URL = bookingUrl("meetGreet", "remote-monitoring");
 
 interface Product {
@@ -38,18 +41,24 @@ const scales: Product[] = [
 ];
 
 const brandColors = {
-  iHealth: { bg: "hsla(177, 70%, 55%, 0.15)", text: "hsl(177, 70%, 65%)", border: "hsla(177, 70%, 55%, 0.4)" },
+  iHealth: { bg: `rgba(${A.rgb},0.15)`, text: `rgb(${A.rgb})`, border: `rgba(${A.rgb},0.4)` },
   Omron: { bg: "hsla(210, 70%, 55%, 0.15)", text: "hsl(210, 70%, 70%)", border: "hsla(210, 70%, 55%, 0.4)" },
 };
 
 function ProductCard({ product }: { product: Product }) {
   const colors = brandColors[product.brand];
   return (
-    <a href={product.url} target="_blank" rel="noopener noreferrer" className="group block rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1" style={{ background: "hsla(210, 22%, 20%, 0.9)", border: "1px solid hsla(0,0%,100%,0.08)", boxShadow: "0 2px 12px hsla(0,0%,0%,0.2)" }}>
-      <div className="relative flex items-center justify-center p-6" style={{ background: "hsla(0,0%,100%,0.97)", minHeight: "200px" }}>
+    <TrackedLink
+      href={product.url}
+      event="cta_click"
+      analytics={{ page: "remote-monitoring", source: `remote-monitoring-${product.id}`, service: "dpc", label: product.name }}
+      className="group block rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1"
+      style={glassCardStyle("dpc")}
+    >
+      <div className="relative flex items-center justify-center p-6" style={{ background: "hsla(210, 18%, 14%, 0.6)", minHeight: "200px" }}>
         <img src={product.image} alt={product.name} className="object-contain w-full transition-transform duration-300 group-hover:scale-105" style={{ maxHeight: "160px" }} loading="lazy" />
         {product.badge && (
-          <span className="absolute top-3 right-3 text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: "linear-gradient(135deg, hsl(177, 70%, 55%), hsl(45, 90%, 60%))", color: "hsl(210, 32%, 12%)" }}>{product.badge}</span>
+          <span className="absolute top-3 right-3 text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: `linear-gradient(135deg, ${A.from}, ${A.to})`, color: "hsl(210, 32%, 12%)" }}>{product.badge}</span>
         )}
       </div>
       <div className="p-5">
@@ -58,10 +67,10 @@ function ProductCard({ product }: { product: Product }) {
         <p className="text-xs leading-relaxed mb-4" style={{ color: "hsl(0,0%,60%)" }}>{product.tagline}</p>
         <div className="flex items-center justify-between">
           <span className="font-bold text-base" style={{ color: product.price ? "hsl(140,70%,65%)" : "hsl(0,0%,55%)" }}>{product.price ?? "Check Price"}</span>
-          <span className="flex items-center gap-1 text-xs font-semibold" style={{ color: "hsl(177,70%,65%)" }}>View Product <ExternalLink className="w-3 h-3" /></span>
+          <span className="flex items-center gap-1 text-xs font-semibold" style={{ color: `rgb(${A.rgb})` }}>View Product <ExternalLink className="w-3 h-3" /></span>
         </div>
       </div>
-    </a>
+    </TrackedLink>
   );
 }
 
@@ -84,49 +93,40 @@ export default function RemoteMonitoring() {
     <div className="min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "ItemList", "name": "Clinician-Recommended Home Health Monitoring Devices", "numberOfItems": bpMonitors.length + pulseOximeters.length + scales.length, "itemListElement": [...bpMonitors, ...pulseOximeters, ...scales].map((p, i) => ({ "@type": "ListItem", "position": i + 1, "name": p.name, "url": p.url })) }) }} />
 
-      <div className="container mx-auto px-5 lg:px-8 pt-12 pb-20">
-        <div className="text-center mb-6 max-w-3xl mx-auto">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-3 leading-tight" style={{ background: "linear-gradient(135deg, hsl(177,70%,60%), hsl(210,70%,62%))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-            AI-Integrated Remote Monitoring
-          </h1>
-          <p className="text-2xl lg:text-3xl font-semibold mb-5" style={{ color: "hsl(0,0%,90%)" }}>Home Health Devices</p>
-          <p className="text-lg leading-relaxed mb-6" style={{ color: "hsl(0,0%,70%)" }}>
-            Monitor your blood pressure, oxygen levels, weight, and more at home — and sync your readings directly to your care team through Guava Health. These are the devices we actually use and recommend to our patients.
-          </p>
-          <div className="inline-flex items-start gap-3 px-5 py-3 rounded-2xl text-left mb-10" style={{ background: "hsla(45,90%,60%,0.08)", border: "1px solid hsla(45,90%,60%,0.2)" }}>
-            <Info className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: "hsl(45,90%,65%)" }} />
-            <p className="text-sm" style={{ color: "hsl(45,90%,75%)" }}>We do not earn any commission on these products.</p>
-          </div>
+      <ServiceHero
+        service="dpc"
+        compact
+        eyebrow="Home Health Devices"
+        title="AI-Integrated"
+        titleAccent="Remote Monitoring"
+        subhead="Monitor your blood pressure, oxygen levels, weight, and more at home — and sync your readings directly to your care team through Guava Health. These are the devices we actually use and recommend to our patients."
+      >
+        <div className="inline-flex items-start gap-3 px-5 py-3 rounded-2xl text-left" style={{ background: "hsla(45,90%,60%,0.08)", border: "1px solid hsla(45,90%,60%,0.2)" }}>
+          <Info className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: "hsl(45,90%,65%)" }} />
+          <p className="text-sm" style={{ color: "hsl(45,90%,75%)" }}>We do not earn any commission on these products.</p>
         </div>
+      </ServiceHero>
 
+      <div className="container mx-auto px-5 lg:px-8 pt-12 pb-8">
         <div className="flex flex-wrap justify-center gap-3 mb-16">
           {[{ label: "Blood Pressure Monitors", id: "bp-monitors" }, { label: "Pulse Oximetry", id: "pulse-ox" }, { label: "Smart Scales", id: "scales" }].map(({ label, id }) => (
-            <button key={id} onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })} className="px-5 py-2.5 rounded-full text-sm font-semibold hover:opacity-80 transition-opacity" style={{ background: "hsla(210,22%,26%,0.9)", color: "hsl(177,70%,65%)", border: "1px solid hsla(177,70%,59%,0.3)" }}>
+            <a key={id} href={`#${id}`} className="px-5 py-2.5 rounded-full text-sm font-semibold hover:opacity-80 transition-opacity" style={{ background: "hsla(210,22%,26%,0.9)", color: `rgb(${A.rgb})`, border: `1px solid rgba(${A.rgb},0.3)` }}>
               {label}
-            </button>
+            </a>
           ))}
         </div>
 
         <ProductSection id="bp-monitors" title="Blood Pressure Monitors" description="Clinically validated Bluetooth blood pressure cuffs. All iHealth models sync to Guava Health; Omron devices connect via the Omron Connect app." products={bpMonitors} />
         <ProductSection id="pulse-ox" title="Pulse Oximetry" description="Monitor your blood oxygen levels and heart rate at home. Ideal for patients managing respiratory conditions, recovering from illness, or tracking fitness." products={pulseOximeters} />
         <ProductSection id="scales" title="Smart Scales" description="Bluetooth-connected scales that track weight and body composition over time — automatically logged to your health record." products={scales} />
-
-        <div className="rounded-3xl p-10 lg:p-14 text-center mt-8" style={{ background: "hsla(210,22%,20%,0.9)", border: "1px solid hsla(177,70%,59%,0.2)" }}>
-          <Heart className="w-10 h-10 mx-auto mb-5" style={{ color: "hsl(330,70%,65%)" }} />
-          <h2 className="text-2xl lg:text-3xl font-bold mb-4" style={{ color: "hsl(0,0%,100%)" }}>Want your devices to actually talk to your care team?</h2>
-          <p className="text-base leading-relaxed max-w-2xl mx-auto mb-8" style={{ color: "hsl(0,0%,70%)" }}>
-            As a member of Colorado Springs Health Collective, your home monitoring data syncs directly to your provider through Guava Health — so we can spot trends, adjust your care plan, and follow up between visits.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href={MEET_GREET_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-base hover:opacity-85 transition-opacity" style={{ background: "linear-gradient(135deg, hsl(177,70%,55%), hsl(45,90%,60%))", color: "hsl(210,32%,12%)" }}>
-              Book a Free Meet &amp; Greet <ArrowRight className="w-4 h-4" />
-            </a>
-            <Link href="/direct-primary-care" className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-base hover:opacity-80 transition-opacity" style={{ background: "hsla(210,22%,28%,0.9)", color: "hsl(177,70%,65%)", border: "1px solid hsla(177,70%,59%,0.3)" }}>
-              Learn About Membership
-            </Link>
-          </div>
-        </div>
       </div>
+
+      <PageCtaFooter
+        service="dpc"
+        heading="Want your devices to actually talk to your care team?"
+        body="As a member of Colorado Springs Health Collective, your home monitoring data syncs directly to your provider through Guava Health — so we can spot trends, adjust your care plan, and follow up between visits."
+        primaryCta={{ label: "Book a Free Meet & Greet", href: MEET_GREET_URL, external: true }}
+      />
     </div>
   );
 }

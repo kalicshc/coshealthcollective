@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { clinicFacts, usd } from "@/lib/clinicFacts";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
 import { ReviewStrip } from "@/components/ReviewStrip";
+import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { bookingUrl } from "@/lib/bookingLinks";
 
 export const metadata: Metadata = {
@@ -62,8 +62,7 @@ const pricingFeatures = [
   "Ongoing follow-up, medication management, and adjustments once established",
 ];
 
-const BOOKING_URL =
-  bookingUrl("freeConsult", "hormone-mens-health");
+const PAGE = "mens-health";
 
 export default function MensHealthPage() {
   return (
@@ -123,10 +122,9 @@ export default function MensHealthPage() {
                 Low energy, poor recovery, low libido — not just part of getting older. We do a comprehensive review of symptoms, history, prior hormone exposure, and labs before deciding whether TRT or another path makes sense.
               </p>
               <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-                <Link
-                  href={BOOKING_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <TrackedLink
+                  href={bookingUrl("freeConsult", "mens-health-hero")}
+                  analytics={{ page: PAGE, source: "mens-health-hero", service: "hormone", label: "Book a Free Consult", appt: "freeConsult" }}
                   className="rounded-full px-7 py-4 text-sm font-semibold hover:opacity-90 transition-opacity"
                   style={{
                     background: "linear-gradient(135deg, hsl(188,88%,54%), hsl(216,79%,46%))",
@@ -135,7 +133,7 @@ export default function MensHealthPage() {
                   }}
                 >
                   Book a Free Consult
-                </Link>
+                </TrackedLink>
               </div>
             </div>
 
@@ -177,8 +175,10 @@ export default function MensHealthPage() {
               <div className="mt-6 border-t pt-6" style={{ borderColor: "hsla(188,88%,54%,0.18)" }}>
                 <p className="text-sm font-bold text-white">See what&apos;s really going on.</p>
                 <p className="mt-1 text-sm leading-6 text-slate-400">Take our quiz — no email or commitment required.</p>
-                <Link
+                <TrackedLink
                   href="/hormone/mens-health/quiz"
+                  event="cta_click"
+                  analytics={{ page: PAGE, source: "mens-health-quiz", service: "hormone", label: "Take the quiz" }}
                   className="mt-4 inline-block rounded-full px-5 py-2.5 text-sm font-semibold hover:opacity-90 transition-opacity"
                   style={{
                     background: "linear-gradient(135deg, hsl(188,88%,54%), hsl(271,74%,55%))",
@@ -186,7 +186,7 @@ export default function MensHealthPage() {
                   }}
                 >
                   Take the quiz
-                </Link>
+                </TrackedLink>
               </div>
             </div>
           </div>
@@ -326,10 +326,9 @@ export default function MensHealthPage() {
               Book a free consult. Get your questions answered before committing to anything.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Link
-                href={BOOKING_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <TrackedLink
+                href={bookingUrl("freeConsult", "mens-health-cta")}
+                analytics={{ page: PAGE, source: "mens-health-cta", service: "hormone", label: "Book a Free Consult", appt: "freeConsult" }}
                 className="rounded-full px-7 py-4 text-sm font-semibold hover:opacity-90 transition-opacity"
                 style={{
                   background: "linear-gradient(135deg, hsl(188,88%,54%), hsl(216,79%,46%))",
@@ -337,7 +336,7 @@ export default function MensHealthPage() {
                 }}
               >
                 Book a Free Consult
-              </Link>
+              </TrackedLink>
             </div>
           </div>
         </div>
@@ -352,7 +351,8 @@ export default function MensHealthPage() {
         service="hormone"
         heading="Wondering if it's your hormones?"
         body="Book a free consult, or reach out — we'll help you figure out whether testosterone or metabolic care is the right next step."
-        primaryCta={{ label: "Book a Free Consult", href: BOOKING_URL, external: true }}
+        primaryCta={{ label: "Book a Free Consult", href: bookingUrl("freeConsult", "mens-health-footer"), external: true }}
+        analytics={{ page: PAGE, source: "mens-health-footer", service: "hormone", label: "Book a Free Consult", appt: "freeConsult" }}
       />
     </div>
   );

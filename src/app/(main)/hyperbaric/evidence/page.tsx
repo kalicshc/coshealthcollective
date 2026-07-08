@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { ACCENTS } from "@/lib/accents";
+import { ServiceHero, gradientTextStyle } from "@/components/ServiceHero";
+import { GlassCard } from "@/components/GlassCard";
+import { PageCtaFooter } from "@/components/PageCtaFooter";
+import { TrackedLink } from "@/components/analytics/TrackedLink";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/hyperbaric/evidence" },
@@ -7,15 +11,18 @@ export const metadata: Metadata = {
   description: "Evidence-based hyperbaric oxygen therapy outcomes by condition. Fourteen indications reviewed across four tiers of clinical evidence — with honest clinical context.",
 };
 
+const A = ACCENTS.hyperbaric;
+
+// Tier color coding: Tier 1 carries the full hyperbaric accent; lower tiers
+// step away from it (sky → violet → slate blue) so the evidence strength
+// stays visually distinct at a glance.
 const tiers = [
   {
     tier: "Tier 1",
     stars: "★★★★",
     label: "Well-Established",
     sublabel: "FDA-approved indications, multiple RCTs, meta-analyses, and/or specialty guideline endorsement",
-    color: "hsl(177,70%,59%)",
-    colorBg: "hsla(177,70%,59%,0.08)",
-    colorBorder: "hsla(177,70%,59%,0.25)",
+    rgb: A.rgb,
     conditions: [
       {
         title: "Wound Healing & Surgical Recovery",
@@ -73,9 +80,7 @@ const tiers = [
     stars: "★★★",
     label: "Strong Emerging Evidence",
     sublabel: "Well-designed RCTs with clear benefit — research actively advancing",
-    color: "hsl(188,88%,62%)",
-    colorBg: "hsla(188,88%,62%,0.06)",
-    colorBorder: "hsla(188,88%,62%,0.2)",
+    rgb: "26,182,249",
     conditions: [
       {
         title: "Post-Concussion Syndrome & TBI",
@@ -118,9 +123,7 @@ const tiers = [
     stars: "★★",
     label: "Promising Early Evidence",
     sublabel: "Consistent findings in observational studies and smaller trials — larger RCTs needed",
-    color: "hsl(271,74%,65%)",
-    colorBg: "hsla(271,74%,65%,0.06)",
-    colorBorder: "hsla(271,74%,65%,0.2)",
+    rgb: "168,100,232",
     conditions: [
       {
         title: "Athletic Recovery & Performance",
@@ -151,9 +154,7 @@ const tiers = [
     stars: "★",
     label: "Mechanistically Plausible",
     sublabel: "Preclinical and early human data — promising but requiring larger confirmatory studies",
-    color: "hsl(210,70%,65%)",
-    colorBg: "hsla(210,70%,65%,0.06)",
-    colorBorder: "hsla(210,70%,65%,0.2)",
+    rgb: "103,166,228",
     conditions: [
       {
         title: "Alzheimer's & Cognitive Decline",
@@ -181,44 +182,17 @@ const tiers = [
   },
 ];
 
-const glassCard = {
-  background: "hsla(210,22%,22%,0.5)",
-  border: "1px solid hsla(177,70%,59%,0.15)",
-  backdropFilter: "blur(12px)",
-} as React.CSSProperties;
-
 export default function EvidencePage() {
   return (
-    <div className="page-bg pt-28">
-      {/* Header */}
-      <section className="relative py-20 lg:py-24 text-center">
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: "radial-gradient(ellipse at 50% 0%, hsla(177,70%,59%,0.1) 0%, transparent 60%)" }}
-          aria-hidden="true"
-        />
-        <div className="relative mx-auto max-w-3xl px-5">
-          <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: "hsl(177,70%,62%)" }}>
-            Clinical Evidence
-          </p>
-          <h1 className="text-4xl font-black text-white lg:text-6xl mb-5">
-            One Therapy.{" "}
-            <span
-              style={{
-                background: "linear-gradient(135deg, hsl(177,88%,62%), hsl(210,70%,58%))",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              Fourteen Conditions.
-            </span>
-          </h1>
-          <p style={{ color: "hsl(210,25%,65%)", fontSize: "17px", lineHeight: "1.7" }}>
-            Four tiers of evidence. Honest clinical perspective on every indication — including what the studies show, where the science is still building, and what to be skeptical of. Because informed patients make the best decisions.
-          </p>
-        </div>
-      </section>
+    <div className="page-bg">
+      <ServiceHero
+        service="hyperbaric"
+        compact
+        eyebrow="Clinical Evidence"
+        title="One Therapy."
+        titleAccent="Fourteen Conditions."
+        subhead="Four tiers of evidence. Honest clinical perspective on every indication — including what the studies show, where the science is still building, and what to be skeptical of. Because informed patients make the best decisions."
+      />
 
       {/* Evidence tiers */}
       {tiers.map((tier, ti) => (
@@ -227,17 +201,20 @@ export default function EvidencePage() {
           className="py-16 lg:py-20"
           style={{
             background: ti % 2 === 1 ? "hsla(210,22%,13%,0.6)" : "transparent",
-            borderTop: "1px solid hsla(177,70%,59%,0.08)",
+            borderTop: `1px solid rgba(${A.rgb},0.08)`,
           }}
         >
           <div className="mx-auto max-w-5xl px-5 lg:px-8">
-            {/* Tier header */}
-            <div className="mb-10 rounded-2xl p-6" style={{ background: tier.colorBg, border: `1px solid ${tier.colorBorder}` }}>
+            {/* Tier header — keeps per-tier color coding */}
+            <div
+              className="mb-10 rounded-2xl p-6"
+              style={{ background: `rgba(${tier.rgb},0.07)`, border: `1px solid rgba(${tier.rgb},0.22)` }}
+            >
               <div className="flex flex-wrap items-center gap-4">
-                <span className="text-2xl font-black" style={{ color: tier.color }}>{tier.stars}</span>
+                <span className="text-2xl font-black" style={{ color: `rgb(${tier.rgb})` }}>{tier.stars}</span>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold uppercase tracking-widest" style={{ color: tier.color }}>{tier.tier}</span>
+                    <span className="text-xs font-bold uppercase tracking-widest" style={{ color: `rgb(${tier.rgb})` }}>{tier.tier}</span>
                     <span className="font-black text-lg text-white">{tier.label}</span>
                   </div>
                   <p className="text-sm mt-0.5" style={{ color: "hsl(210,25%,62%)" }}>{tier.sublabel}</p>
@@ -248,7 +225,7 @@ export default function EvidencePage() {
             {/* Conditions */}
             <div className="space-y-6">
               {tier.conditions.map((c) => (
-                <div key={c.title} className="rounded-2xl p-7" style={glassCard}>
+                <GlassCard key={c.title} service="hyperbaric">
                   <div className="flex flex-wrap items-start gap-3 mb-4">
                     <h3 className="text-xl font-black text-white">{c.title}</h3>
                     {c.urgent && (
@@ -264,7 +241,7 @@ export default function EvidencePage() {
                   <div className="flex flex-col gap-2 mb-5">
                     {c.bullets.map((b) => (
                       <div key={b} className="flex items-start gap-2.5 text-sm leading-relaxed" style={{ color: "hsl(210,25%,72%)" }}>
-                        <span className="mt-1.5 h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: tier.color }} />
+                        <span className="mt-1.5 h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: `rgb(${tier.rgb})` }} />
                         {b}
                       </div>
                     ))}
@@ -291,12 +268,12 @@ export default function EvidencePage() {
 
                   <div
                     className="mt-4 rounded-xl px-4 py-3 text-xs leading-relaxed"
-                    style={{ background: `${tier.colorBg}`, border: `1px solid ${tier.colorBorder}` }}
+                    style={{ background: `rgba(${tier.rgb},0.07)`, border: `1px solid rgba(${tier.rgb},0.22)` }}
                   >
-                    <span className="font-bold uppercase tracking-wider" style={{ color: tier.color }}>Honest take: </span>
+                    <span className="font-bold uppercase tracking-wider" style={{ color: `rgb(${tier.rgb})` }}>Honest take: </span>
                     <span style={{ color: "hsl(210,25%,68%)" }}>{c.honest}</span>
                   </div>
-                </div>
+                </GlassCard>
               ))}
             </div>
           </div>
@@ -306,47 +283,49 @@ export default function EvidencePage() {
       {/* CTA */}
       <section className="py-20 lg:py-24">
         <div className="mx-auto max-w-3xl px-5 text-center">
-          <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: "hsl(177,70%,62%)" }}>
+          <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: `rgb(${A.rgb})` }}>
             Pre-Launch Access
           </p>
           <h2 className="text-3xl font-black text-white lg:text-4xl mb-5">
             Opening Summer 2026.{" "}
-            <span
-              style={{
-                background: "linear-gradient(135deg, hsl(177,88%,62%), hsl(210,70%,58%))",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              Register now.
-            </span>
+            <span style={gradientTextStyle("hyperbaric")}>Register now.</span>
           </h2>
           <p className="mb-8" style={{ color: "hsl(210,25%,62%)", fontSize: "17px" }}>
             No commitment. Lock in your 25% founding member discount before we open.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
+            <TrackedLink
               href="/hyperbaric"
+              event="cta_click"
+              analytics={{ page: "hyperbaric-evidence", source: "evidence-cta-register", service: "hyperbaric", label: "Register — 25% Off at Launch" }}
               className="rounded-full px-8 py-4 font-bold text-sm hover:opacity-90 transition-opacity"
               style={{
-                background: "linear-gradient(135deg, hsl(177,70%,59%), hsl(210,70%,55%))",
+                background: `linear-gradient(135deg, ${A.from}, ${A.to})`,
                 color: "hsl(210,32%,10%)",
-                boxShadow: "0 8px 32px hsla(177,70%,50%,0.3)",
+                boxShadow: `0 8px 32px rgba(${A.rgb},0.3)`,
               }}
             >
               Register — 25% Off at Launch
-            </Link>
-            <Link
+            </TrackedLink>
+            <TrackedLink
               href="/hyperbaric/why-2ata"
+              event="cta_click"
+              analytics={{ page: "hyperbaric-evidence", source: "evidence-cta-why-2ata", service: "hyperbaric", label: "Why 2.0 ATA Matters" }}
               className="rounded-full px-8 py-4 text-sm font-semibold hover:opacity-80 transition-opacity"
-              style={{ border: "1px solid hsla(177,70%,59%,0.4)", color: "hsl(177,70%,72%)" }}
+              style={{ border: `1px solid rgba(${A.rgb},0.4)`, color: `rgb(${A.rgb})` }}
             >
               Why 2.0 ATA Matters →
-            </Link>
+            </TrackedLink>
           </div>
         </div>
       </section>
+
+      <PageCtaFooter
+        service="hyperbaric"
+        heading="Be first when we open."
+        body="Lock in your early-access discount before the chamber opens."
+        primaryCta={{ label: "Get Early Access", href: "/hyperbaric#early-access" }}
+      />
     </div>
   );
 }

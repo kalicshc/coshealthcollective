@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
-import Link from "next/link";
 import { ACCENTS, type ServiceKey } from "@/lib/accents";
 import { clinicFacts } from "@/lib/clinicFacts";
+import { TrackedLink } from "@/components/analytics/TrackedLink";
+import type { AnalyticsProps } from "@/lib/analytics";
 
 /**
  * Shared end-of-page CTA + contact strip. Replaces the hand-rolled
@@ -15,15 +16,29 @@ type Props = {
   heading?: string;
   body?: ReactNode;
   primaryCta?: { label: string; href: string; external?: boolean };
+  /**
+   * Extra analytics props merged into the primary CTA's click event
+   * (book_redirect for external hrefs, cta_click for internal). The CTA is
+   * always tracked; without this prop the source falls back to the ?source=
+   * already carried by bookingUrl/hintLink hrefs.
+   */
+  analytics?: AnalyticsProps;
   /** Extra fine print (e.g. medical disclaimer) under the contact line */
   disclaimer?: ReactNode;
 };
+
+/** Pull the ?source= attribution a bookingUrl/hintLink href already carries. */
+function sourceFromHref(href: string): string | undefined {
+  const match = href.match(/[?&]source=([^&#]+)/);
+  return match ? decodeURIComponent(match[1]) : undefined;
+}
 
 export function PageCtaFooter({
   service = "brand",
   heading = "Questions? Let's talk.",
   body,
   primaryCta,
+  analytics,
   disclaimer,
 }: Props) {
   const a = ACCENTS[service];
@@ -47,25 +62,15 @@ export function PageCtaFooter({
           )}
           {primaryCta != null && (
             <div className="mt-7">
-              {primaryCta.external ? (
-                <a
-                  href={primaryCta.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block rounded-full px-8 py-3.5 text-sm font-bold hover:opacity-85 transition-opacity"
-                  style={{ background: `linear-gradient(135deg, ${a.from}, ${a.to})`, color: "hsl(210,32%,10%)" }}
-                >
-                  {primaryCta.label}
-                </a>
-              ) : (
-                <Link
-                  href={primaryCta.href}
-                  className="inline-block rounded-full px-8 py-3.5 text-sm font-bold hover:opacity-85 transition-opacity"
-                  style={{ background: `linear-gradient(135deg, ${a.from}, ${a.to})`, color: "hsl(210,32%,10%)" }}
-                >
-                  {primaryCta.label}
-                </Link>
-              )}
+              <TrackedLink
+                href={primaryCta.href}
+                external={primaryCta.external}
+                analytics={{ service, label: primaryCta.label, source: sourceFromHref(primaryCta.href), ...analytics }}
+                className="inline-block rounded-full px-8 py-3.5 text-sm font-bold hover:opacity-85 transition-opacity"
+                style={{ background: `linear-gradient(135deg, ${a.from}, ${a.to})`, color: "hsl(210,32%,10%)" }}
+              >
+                {primaryCta.label}
+              </TrackedLink>
             </div>
           )}
           <p className="mt-7 text-sm" style={{ color: "hsl(210,25%,62%)" }}>

@@ -3,7 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Phone, Mail, ChevronRight } from "lucide-react";
 import { clinicFacts } from "@/lib/clinicFacts";
-import { bookingUrl } from "@/lib/bookingLinks";
+import { ACCENTS } from "@/lib/accents";
+import { BlogCtaBlock } from "@/components/BlogCtaBlock";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/blog/hyperbaric-oxygen-therapy-colorado-springs" },
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
   description: "Hyperbaric oxygen therapy in Colorado Springs delivers 15× normal tissue oxygen levels. Peer-reviewed evidence for wound healing, Long COVID, fibromyalgia, hearing loss, and cellular anti-aging.",
 };
 
-const WAITLIST_URL = bookingUrl("meetGreet", "blog-hyperbaric-oxygen-therapy-colorado-springs");
+const A = ACCENTS.hyperbaric;
 
 const toc = [
   { id: "what-is-hbot", label: "What Is HBOT?" },
@@ -29,8 +30,8 @@ const conditions = [
     stat: "2.35×",
     statLabel: "higher healing rate",
     detail: "Cochrane review of 10 RCTs (531 patients). Major amputation rate drops from 26% to 10.7% in diabetic wounds. Skin graft survival: 97.7% with HBOT vs 92.3% conventional.",
-    color: "hsl(177, 70%, 59%)",
-    colorBg: "hsla(177, 70%, 59%, 0.08)",
+    color: `rgb(${A.rgb})`,
+    colorBg: `rgba(${A.rgb},0.08)`,
   },
   {
     name: "Sudden Hearing Loss",
@@ -133,10 +134,10 @@ export default function HBOTBlogPost() {
           <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, hsla(210,32%,8%,0.65) 0%, hsla(210,32%,8%,0.93) 55%, hsl(210,32%,8%) 85%)" }} />
           <div className="absolute inset-0 flex flex-col justify-end pb-12 px-5 lg:px-8">
             <div className="container mx-auto max-w-4xl">
-              <Link href="/blog" className="inline-flex items-center gap-1.5 mb-6 text-sm hover:opacity-80" style={{ color: "hsl(177, 70%, 65%)" }}>
+              <Link href="/blog" className="inline-flex items-center gap-1.5 mb-6 text-sm hover:opacity-80" style={{ color: `rgb(${A.rgb})` }}>
                 <ArrowLeft className="w-4 h-4" /> Back to All Articles
               </Link>
-              <span className="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4" style={{ background: "hsl(177, 70%, 59%)", color: "hsl(210, 32%, 10%)" }}>
+              <span className="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4" style={{ background: `rgb(${A.rgb})`, color: "hsl(210, 32%, 10%)" }}>
                 HBOT
               </span>
               <h1 className="text-3xl lg:text-5xl font-bold leading-tight mb-4" style={{ color: "hsl(0, 0%, 100%)" }}>
@@ -151,19 +152,19 @@ export default function HBOTBlogPost() {
           <div className="max-w-4xl mx-auto">
 
             {/* Key stat callout */}
-            <div className="rounded-2xl p-8 mb-10 text-center" style={{ background: "linear-gradient(135deg, hsla(177,70%,50%,0.15), hsla(200,70%,50%,0.15))", border: "1px solid hsla(177,70%,50%,0.3)" }}>
-              <div className="text-6xl font-black mb-2" style={{ color: "hsl(177, 70%, 65%)" }}>15×</div>
+            <div className="rounded-2xl p-8 mb-10 text-center" style={{ background: `linear-gradient(135deg, rgba(${A.rgb},0.15), hsla(200,70%,50%,0.15))`, border: `1px solid rgba(${A.rgb},0.3)` }}>
+              <div className="text-6xl font-black mb-2" style={{ color: `rgb(${A.rgb})` }}>15×</div>
               <div className="text-lg font-semibold mb-1" style={{ color: "hsl(0, 0%, 95%)" }}>Normal Tissue Oxygen Levels</div>
               <div className="text-sm" style={{ color: "hsl(0, 0%, 65%)" }}>Achieved at 2.0 ATA — what makes therapeutic HBOT fundamentally different</div>
             </div>
 
             {/* Table of contents */}
-            <div className="rounded-2xl p-6 mb-10" style={{ background: "hsla(210, 22%, 18%, 0.8)", border: "1px solid hsla(177,70%,50%,0.15)" }}>
-              <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: "hsl(177, 70%, 65%)" }}>In This Article</p>
+            <div className="rounded-2xl p-6 mb-10" style={{ background: "hsla(210, 22%, 18%, 0.8)", border: `1px solid rgba(${A.rgb},0.15)` }}>
+              <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: `rgb(${A.rgb})` }}>In This Article</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {toc.map((item) => (
                   <a key={item.id} href={`#${item.id}`} className="flex items-center gap-2 text-sm hover:opacity-80 transition-opacity" style={{ color: "hsl(210, 30%, 80%)" }}>
-                    <ChevronRight className="w-3 h-3 flex-shrink-0" style={{ color: "hsl(177, 70%, 59%)" }} />
+                    <ChevronRight className="w-3 h-3 flex-shrink-0" style={{ color: `rgb(${A.rgb})` }} />
                     {item.label}
                   </a>
                 ))}
@@ -177,7 +178,7 @@ export default function HBOTBlogPost() {
 
             {/* What is HBOT */}
             <div id="what-is-hbot" className="mb-12">
-              <h2 className="text-2xl lg:text-3xl font-bold mb-4" style={{ color: "hsl(177, 70%, 65%)" }}>What Is Hyperbaric Oxygen Therapy?</h2>
+              <h2 className="text-2xl lg:text-3xl font-bold mb-4" style={{ color: `rgb(${A.rgb})` }}>What Is Hyperbaric Oxygen Therapy?</h2>
               <p className="leading-relaxed mb-4" style={{ color: "hsl(210, 25%, 82%)" }}>
                 Hyperbaric oxygen therapy means breathing pure (100%) oxygen inside a pressurized chamber at greater than normal atmospheric pressure. "Hyperbaric" literally means elevated pressure. At sea level, atmospheric pressure is 1 ATA (atmosphere absolute). Therapeutic HBOT runs at 1.5 to 3.0 ATA depending on the protocol.
               </p>
@@ -191,11 +192,11 @@ export default function HBOTBlogPost() {
 
             {/* How it works */}
             <div id="how-it-works" className="mb-12">
-              <h2 className="text-2xl lg:text-3xl font-bold mb-6" style={{ color: "hsl(177, 70%, 65%)" }}>How HBOT Works: The Four Biological Mechanisms</h2>
+              <h2 className="text-2xl lg:text-3xl font-bold mb-6" style={{ color: `rgb(${A.rgb})` }}>How HBOT Works: The Four Biological Mechanisms</h2>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                 {[
-                  { num: "01", title: "Angiogenesis", body: "HBOT stimulates the growth of new blood vessels (angiogenesis) by upregulating VEGF and other growth factors. More vessels mean better perfusion to previously oxygen-starved tissue — a permanent structural improvement, not a temporary effect.", color: "hsl(177, 70%, 59%)" },
+                  { num: "01", title: "Angiogenesis", body: "HBOT stimulates the growth of new blood vessels (angiogenesis) by upregulating VEGF and other growth factors. More vessels mean better perfusion to previously oxygen-starved tissue — a permanent structural improvement, not a temporary effect.", color: `rgb(${A.rgb})` },
                   { num: "02", title: "Stem Cell Mobilization", body: "A single 2.0 ATA session can mobilize stem cells from bone marrow into circulation by 800%. These circulating stem cells home to sites of injury and participate in tissue repair — a mechanism unavailable to any drug.", color: "hsl(200, 80%, 65%)" },
                   { num: "03", title: "Inflammation Control", body: "HBOT downregulates pro-inflammatory cytokines (TNF-α, IL-1β, IL-6) while preserving the acute inflammatory response needed for healing. The net effect is reduced chronic inflammation without immunosuppression.", color: "hsl(280, 70%, 65%)" },
                   { num: "04", title: "Senescent Cell Clearance", body: "Repeated HBOT sessions at 2.0 ATA trigger apoptosis in senescent cells (damaged 'zombie cells' that drive aging and inflammation) while simultaneously lengthening telomeres in immune cells — documented in peer-reviewed human trials.", color: "hsl(45, 90%, 60%)" },
@@ -211,7 +212,7 @@ export default function HBOTBlogPost() {
 
             {/* Conditions */}
             <div id="conditions" className="mb-12">
-              <h2 className="text-2xl lg:text-3xl font-bold mb-2" style={{ color: "hsl(177, 70%, 65%)" }}>Conditions & Clinical Evidence</h2>
+              <h2 className="text-2xl lg:text-3xl font-bold mb-2" style={{ color: `rgb(${A.rgb})` }}>Conditions & Clinical Evidence</h2>
               <p className="leading-relaxed mb-8" style={{ color: "hsl(210, 25%, 72%)" }}>
                 The following evidence comes from peer-reviewed meta-analyses and RCTs. We present the numbers as they are — no hedging, no cherry-picking.
               </p>
@@ -236,17 +237,17 @@ export default function HBOTBlogPost() {
 
             {/* Why 2.0 ATA */}
             <div id="why-2ata" className="mb-12">
-              <h2 className="text-2xl lg:text-3xl font-bold mb-4" style={{ color: "hsl(177, 70%, 65%)" }}>Why 2.0 ATA? The Pressure That Actually Works</h2>
+              <h2 className="text-2xl lg:text-3xl font-bold mb-4" style={{ color: `rgb(${A.rgb})` }}>Why 2.0 ATA? The Pressure That Actually Works</h2>
               <p className="leading-relaxed mb-4" style={{ color: "hsl(210, 25%, 82%)" }}>
                 The consumer wellness market has flooded with soft-shell "hyperbaric" chambers operating at 1.3 ATA. At 1.3 ATA breathing air (not pure O₂), the additional oxygen delivered to tissues is marginal — insufficient to trigger angiogenesis, stem cell mobilization, or senolytic effects.
               </p>
               <p className="leading-relaxed mb-6" style={{ color: "hsl(210, 25%, 82%)" }}>
                 Every published RCT showing the outcomes listed above used <strong style={{ color: "hsl(0,0%,95%)" }}>2.0 ATA or higher with 100% oxygen</strong>. That is the minimum pressure required to dissolve oxygen into plasma at therapeutically meaningful concentrations. It's why we chose 2.0 ATA as our standard and why we won't offer lower-pressure alternatives that underdeliver.
               </p>
-              <div className="rounded-2xl p-6" style={{ background: "hsla(177, 70%, 50%, 0.08)", border: "1px solid hsla(177, 70%, 50%, 0.25)" }}>
+              <div className="rounded-2xl p-6" style={{ background: `rgba(${A.rgb},0.08)`, border: `1px solid rgba(${A.rgb},0.25)` }}>
                 <p className="text-sm leading-relaxed" style={{ color: "hsl(210, 30%, 82%)" }}>
-                  <strong style={{ color: "hsl(177, 70%, 70%)" }}>Learn more:</strong> See our full breakdown of pressure, oxygen delivery, and why the ATA number matters at{" "}
-                  <Link href="/hyperbaric/why-2ata" className="underline hover:opacity-80" style={{ color: "hsl(177, 70%, 65%)" }}>
+                  <strong style={{ color: `rgb(${A.rgb})` }}>Learn more:</strong> See our full breakdown of pressure, oxygen delivery, and why the ATA number matters at{" "}
+                  <Link href="/hyperbaric/why-2ata" className="underline hover:opacity-80" style={{ color: `rgb(${A.rgb})` }}>
                     coshealthcollective.com/hyperbaric/why-2ata
                   </Link>.
                 </p>
@@ -255,7 +256,7 @@ export default function HBOTBlogPost() {
 
             {/* What to expect */}
             <div id="what-to-expect" className="mb-12">
-              <h2 className="text-2xl lg:text-3xl font-bold mb-4" style={{ color: "hsl(177, 70%, 65%)" }}>What to Expect at a Session</h2>
+              <h2 className="text-2xl lg:text-3xl font-bold mb-4" style={{ color: `rgb(${A.rgb})` }}>What to Expect at a Session</h2>
               <div className="space-y-3">
                 {[
                   ["Before", "No special preparation is needed. Avoid alcohol for 24 hours prior. Wear comfortable, loose-fitting clothes — we'll provide a 100% cotton gown to reduce static risk."],
@@ -264,7 +265,7 @@ export default function HBOTBlogPost() {
                   ["Frequency", "For therapeutic protocols, sessions are typically 5 days per week for 4–12 weeks. For maintenance and longevity, many patients transition to 1–3 sessions per week indefinitely."],
                 ].map(([label, text]) => (
                   <div key={label} className="flex gap-4 rounded-xl p-5" style={{ background: "hsla(210, 22%, 18%, 0.7)" }}>
-                    <div className="font-bold text-sm flex-shrink-0 w-20 pt-0.5" style={{ color: "hsl(177, 70%, 65%)" }}>{label}</div>
+                    <div className="font-bold text-sm flex-shrink-0 w-20 pt-0.5" style={{ color: `rgb(${A.rgb})` }}>{label}</div>
                     <p className="text-sm leading-relaxed" style={{ color: "hsl(210, 25%, 80%)" }}>{text}</p>
                   </div>
                 ))}
@@ -273,7 +274,7 @@ export default function HBOTBlogPost() {
 
             {/* Safety */}
             <div id="safety" className="mb-12">
-              <h2 className="text-2xl lg:text-3xl font-bold mb-4" style={{ color: "hsl(177, 70%, 65%)" }}>Is HBOT Safe?</h2>
+              <h2 className="text-2xl lg:text-3xl font-bold mb-4" style={{ color: `rgb(${A.rgb})` }}>Is HBOT Safe?</h2>
               <p className="leading-relaxed mb-4" style={{ color: "hsl(210, 25%, 82%)" }}>
                 HBOT has decades of clinical use and an excellent safety record. The most common side effect is mild ear pressure during pressurization — similar to descending in an airplane — which resolves by equalizing (yawning, swallowing, or using the Valsalva maneuver).
               </p>
@@ -287,13 +288,13 @@ export default function HBOTBlogPost() {
 
             {/* FAQ */}
             <div id="faq" className="mb-12">
-              <h2 className="text-2xl lg:text-3xl font-bold mb-6" style={{ color: "hsl(177, 70%, 65%)" }}>Frequently Asked Questions</h2>
+              <h2 className="text-2xl lg:text-3xl font-bold mb-6" style={{ color: `rgb(${A.rgb})` }}>Frequently Asked Questions</h2>
               <div className="space-y-3">
                 {faqs.map((faq) => (
                   <details key={faq.q} className="rounded-xl overflow-hidden group" style={{ background: "hsla(210, 22%, 18%, 0.8)" }}>
                     <summary className="flex items-center justify-between gap-4 p-5 cursor-pointer font-semibold list-none" style={{ color: "hsl(0, 0%, 95%)" }}>
                       {faq.q}
-                      <ChevronRight className="w-4 h-4 flex-shrink-0 group-open:rotate-90 transition-transform" style={{ color: "hsl(177, 70%, 65%)" }} />
+                      <ChevronRight className="w-4 h-4 flex-shrink-0 group-open:rotate-90 transition-transform" style={{ color: `rgb(${A.rgb})` }} />
                     </summary>
                     <div className="px-5 pb-5">
                       <p className="text-sm leading-relaxed" style={{ color: "hsl(210, 25%, 78%)" }}>{faq.a}</p>
@@ -304,53 +305,32 @@ export default function HBOTBlogPost() {
             </div>
 
             {/* Internal links */}
-            <div className="rounded-2xl p-6 mb-10" style={{ background: "hsla(210, 22%, 18%, 0.6)", border: "1px solid hsla(177, 70%, 50%, 0.15)" }}>
-              <p className="text-sm font-bold uppercase tracking-wider mb-3" style={{ color: "hsl(177, 70%, 65%)" }}>Explore More</p>
+            <div className="rounded-2xl p-6 mb-10" style={{ background: "hsla(210, 22%, 18%, 0.6)", border: `1px solid rgba(${A.rgb},0.15)` }}>
+              <p className="text-sm font-bold uppercase tracking-wider mb-3" style={{ color: `rgb(${A.rgb})` }}>Explore More</p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <Link href="/hyperbaric" className="flex items-center gap-2 text-sm hover:opacity-80" style={{ color: "hsl(210, 30%, 80%)" }}>
-                  <ChevronRight className="w-3.5 h-3.5" style={{ color: "hsl(177, 70%, 59%)" }} />
+                  <ChevronRight className="w-3.5 h-3.5" style={{ color: `rgb(${A.rgb})` }} />
                   HBOT Overview & Conditions
                 </Link>
                 <Link href="/hyperbaric/evidence" className="flex items-center gap-2 text-sm hover:opacity-80" style={{ color: "hsl(210, 30%, 80%)" }}>
-                  <ChevronRight className="w-3.5 h-3.5" style={{ color: "hsl(177, 70%, 59%)" }} />
+                  <ChevronRight className="w-3.5 h-3.5" style={{ color: `rgb(${A.rgb})` }} />
                   Full Clinical Evidence Database
                 </Link>
                 <Link href="/hyperbaric/why-2ata" className="flex items-center gap-2 text-sm hover:opacity-80" style={{ color: "hsl(210, 30%, 80%)" }}>
-                  <ChevronRight className="w-3.5 h-3.5" style={{ color: "hsl(177, 70%, 59%)" }} />
+                  <ChevronRight className="w-3.5 h-3.5" style={{ color: `rgb(${A.rgb})` }} />
                   Why 2.0 ATA Matters
                 </Link>
               </div>
             </div>
 
             {/* CTA */}
-            <div className="rounded-3xl p-8 lg:p-10 text-center" style={{ background: "linear-gradient(135deg, hsla(177,70%,50%,0.15), hsla(200,70%,50%,0.15))", border: "1px solid hsla(177,70%,50%,0.3)" }}>
-              <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "hsl(177, 70%, 65%)" }}>Colorado Springs Health Collective</p>
-              <h3 className="text-2xl lg:text-3xl font-bold mb-3" style={{ color: "hsl(0, 0%, 100%)" }}>
-                Ready to Start HBOT?
-              </h3>
-              <p className="mb-6 max-w-lg mx-auto" style={{ color: "hsl(210, 30%, 80%)" }}>
-                We're accepting founding members at 25% off launch pricing. Join the waitlist now and lock in your rate before we open.
-              </p>
-              <a
-                href={WAITLIST_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block px-8 py-4 rounded-full font-semibold text-lg"
-                style={{ background: "linear-gradient(135deg, hsl(177,70%,59%), hsl(200,70%,55%))", color: "hsl(210, 32%, 10%)", boxShadow: "0 8px 32px hsla(177,70%,50%,0.3)" }}
-              >
-                Join the Waitlist — 25% Off
-              </a>
-              <div className="flex flex-col md:flex-row items-center justify-center gap-6 mt-8">
-                <a href={`tel:${clinicFacts.contact.phoneTel}`} className="flex items-center gap-2 hover:opacity-80">
-                  <Phone className="w-4 h-4" style={{ color: "hsl(177, 70%, 65%)" }} />
-                  <span className="text-sm" style={{ color: "hsl(0, 0%, 85%)" }}>{clinicFacts.contact.phone}</span>
-                </a>
-                <a href={`mailto:${clinicFacts.contact.email}`} className="flex items-center gap-2 hover:opacity-80">
-                  <Mail className="w-4 h-4" style={{ color: "hsl(177, 70%, 65%)" }} />
-                  <span className="text-sm" style={{ color: "hsl(0, 0%, 85%)" }}>{clinicFacts.contact.email}</span>
-                </a>
-              </div>
-            </div>
+            <BlogCtaBlock
+              service="hyperbaric"
+              source="blog-hyperbaric-oxygen-therapy-colorado-springs"
+              appt="meetGreet"
+              heading="Ready to Start HBOT?"
+              body="We're accepting founding members at 25% off launch pricing. Join the waitlist now and lock in your rate before we open."
+            />
 
           </div>
         </div>

@@ -124,7 +124,7 @@ const CTA_BY_TAG: Record<ChatCtaTag, ChatCta> = {
     tag: "members",
     kind: "book",
     book: { label: "Member Login", href: MEMBER_LOGIN, external: true },
-    learnMore: { label: "Member resources", href: "/members" },
+    learnMore: { label: "Member resources", href: "/resources" },
   },
   business: {
     tag: "business",
@@ -179,7 +179,7 @@ const CTA_BY_TAG: Record<ChatCtaTag, ChatCta> = {
   "strength-wellness-coaching": {
     tag: "strength-wellness-coaching",
     kind: "book",
-    book: { label: "Strength & Wellness Coaching", href: "/strength-wellness-coaching" },
+    book: { label: "Strength & Wellness Coaching", href: "/personal-training" },
     learnMore: { label: "Book a Meet & Greet", href: BOOK_MEET_GREET, external: true },
   },
   "allergy-slit": {

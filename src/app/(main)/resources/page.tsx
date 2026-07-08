@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { ChevronDown, Calculator } from "lucide-react";
+import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { ServiceHero } from "@/components/ServiceHero";
 import { MemberPortals } from "@/components/MemberPortals";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
@@ -39,8 +39,10 @@ export default function ResourcesPage() {
             </p>
           </div>
 
-          <Link
+          <TrackedLink
             href="/resources/calculators"
+            event="cta_click"
+            analytics={{ page: "resources", source: "resources-calculators", service: "brand", label: "Risk Calculators" }}
             className="group flex items-center gap-5 rounded-2xl p-6 transition-all hover:-translate-y-0.5"
             style={{
               background: "hsla(210,22%,22%,0.5)",
@@ -64,7 +66,7 @@ export default function ResourcesPage() {
               className="w-5 h-5 -rotate-90 transition-transform group-hover:translate-x-1"
               style={{ color: "hsl(45,90%,60%)" }}
             />
-          </Link>
+          </TrackedLink>
         </div>
       </section>
 

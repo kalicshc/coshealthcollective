@@ -4,8 +4,8 @@ import { ComingSoonService } from "@/components/ComingSoonService";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/personal-training" },
-  title: "Personal Training Colorado Springs | Strength Training & Fitness Plans",
-  description: "Personalized strength and fitness training in Colorado Springs. Custom workout plans tailored to your goals, abilities, and lifestyle. Focus on education, proper technique, injury prevention, and lasting results.",
+  title: "Personal Training & Wellness Coaching Colorado Springs | Strength, Fitness & Health Coaching",
+  description: "Personalized strength training and wellness coaching in Colorado Springs. Custom workout plans, nutrition guidance, stress reduction, and health navigation — tailored to your goals, abilities, and lifestyle.",
 };
 
 export default function Page() {
@@ -13,10 +13,10 @@ export default function Page() {
     <ComingSoonService
       service="brand"
       icon={Dumbbell}
-      eyebrow="Personalized Fitness"
-      title="Personal Training"
-      description="Personalized strength and fitness plans tailored to your goals, abilities, and lifestyle. Focus on education and proper strength training techniques to prevent injury and achieve lasting results."
-      bullets={['Custom workout plans', 'Technique & injury prevention', 'Lasting results']}
+      eyebrow="Fitness & Whole-Person Coaching"
+      title="Personal Training & Wellness Coaching"
+      description="Personalized strength and fitness plans tailored to your goals, abilities, and lifestyle — with education and proper technique to prevent injury and build lasting results. Coaching extends beyond the gym when you want it to: nutrition guidance, stress reduction, and health navigation for complete mind-body wellness."
+      bullets={['Custom workout plans', 'Technique & injury prevention', 'Nutrition & stress guidance', 'Lasting results']}
     />
   );
 }

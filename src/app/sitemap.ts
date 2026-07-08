@@ -19,7 +19,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "/iv-therapy", priority: 0.8, changeFrequency: "monthly" },
     { url: "/aesthetics", priority: 0.8, changeFrequency: "monthly" },
     { url: "/health-coaching", priority: 0.75, changeFrequency: "monthly" },
-    { url: "/strength-wellness-coaching", priority: 0.75, changeFrequency: "monthly" },
     { url: "/personal-training", priority: 0.75, changeFrequency: "monthly" },
     { url: "/precision-medicine", priority: 0.75, changeFrequency: "monthly" },
     { url: "/allergy-slit", priority: 0.75, changeFrequency: "monthly" },

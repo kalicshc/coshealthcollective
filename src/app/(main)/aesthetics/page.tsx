@@ -3,6 +3,7 @@ import { ACCENTS } from "@/lib/accents";
 import { ServiceHero, gradientTextStyle } from "@/components/ServiceHero";
 import { GlassCard } from "@/components/GlassCard";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
+import { ReviewStrip } from "@/components/ReviewStrip";
 import { hintLink } from "@/lib/bookingLinks";
 
 export const metadata: Metadata = {
@@ -94,11 +95,18 @@ export default function Aesthetics() {
         </div>
       </section>
 
+      <section className="pt-12 pb-4">
+        <div className="mx-auto max-w-4xl px-5 lg:px-8">
+          <ReviewStrip variant="strip" service="brand" source="aesthetics-reviews" />
+        </div>
+      </section>
+
       <PageCtaFooter
         service="brand"
         heading="Ready to get started?"
         body="$45 consultation — or FREE with your DPC membership."
-        primaryCta={{ label: "Book Your Consultation", href: SKIN_CARE_URL, external: true }}
+        primaryCta={{ label: "Book Your Consultation", href: hintLink("rxSkincare", "aesthetics-footer"), external: true }}
+        analytics={{ page: "aesthetics", source: "aesthetics-footer", service: "brand", label: "Book Your Consultation" }}
       />
     </div>
   );

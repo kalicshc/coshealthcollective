@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { clinicFacts, usd } from "@/lib/clinicFacts";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
 import { ReviewStrip } from "@/components/ReviewStrip";
+import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { bookingUrl } from "@/lib/bookingLinks";
 
 export const metadata: Metadata = {
@@ -61,8 +61,7 @@ const pricingFeatures = [
   "Ongoing follow-up, medication management, and adjustments once established",
 ];
 
-const BOOKING_URL =
-  bookingUrl("freeConsult", "hormone-glp1");
+const PAGE = "glp1";
 
 export default function GLP1Page() {
   return (
@@ -122,10 +121,9 @@ export default function GLP1Page() {
                 Semaglutide and tirzepatide care that fits your weight, hormones, and long-term goals — not just a prescription and a refill.
               </p>
               <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-                <Link
-                  href={BOOKING_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <TrackedLink
+                  href={bookingUrl("freeConsult", "glp1-hero")}
+                  analytics={{ page: PAGE, source: "glp1-hero", service: "hormone", label: "Book a Free Consult", appt: "freeConsult" }}
                   className="rounded-full px-7 py-4 text-sm font-semibold hover:opacity-90 transition-opacity"
                   style={{
                     background: "linear-gradient(135deg, hsl(188,88%,54%), hsl(271,74%,55%))",
@@ -134,7 +132,7 @@ export default function GLP1Page() {
                   }}
                 >
                   Book a Free Consult
-                </Link>
+                </TrackedLink>
               </div>
             </div>
 
@@ -338,10 +336,9 @@ export default function GLP1Page() {
               Book a free consult. No commitment — just a real conversation about whether this fits.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Link
-                href={BOOKING_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <TrackedLink
+                href={bookingUrl("freeConsult", "glp1-cta")}
+                analytics={{ page: PAGE, source: "glp1-cta", service: "hormone", label: "Book a Free Consult", appt: "freeConsult" }}
                 className="rounded-full px-7 py-4 text-sm font-semibold hover:opacity-90 transition-opacity"
                 style={{
                   background: "linear-gradient(135deg, hsl(188,88%,54%), hsl(271,74%,55%))",
@@ -349,7 +346,7 @@ export default function GLP1Page() {
                 }}
               >
                 Book a Free Consult
-              </Link>
+              </TrackedLink>
             </div>
           </div>
         </div>
@@ -364,7 +361,8 @@ export default function GLP1Page() {
         service="hormone"
         heading="Ready to talk GLP-1?"
         body="Book a free consult, or reach out — we'll help you decide if medically-managed weight loss fits your goals."
-        primaryCta={{ label: "Book a Free Consult", href: BOOKING_URL, external: true }}
+        primaryCta={{ label: "Book a Free Consult", href: bookingUrl("freeConsult", "glp1-footer"), external: true }}
+        analytics={{ page: PAGE, source: "glp1-footer", service: "hormone", label: "Book a Free Consult", appt: "freeConsult" }}
       />
     </div>
   );

@@ -23,6 +23,10 @@ const nextConfig: NextConfig = {
         destination: "https://coshealthcollective.com/:path*",
         permanent: true,
       },
+      // Consolidated routes (2026-07): /members duplicated /resources, and the
+      // two training stubs merged into /personal-training.
+      { source: "/members", destination: "/resources", permanent: true },
+      { source: "/strength-wellness-coaching", destination: "/personal-training", permanent: true },
     ];
   },
 };

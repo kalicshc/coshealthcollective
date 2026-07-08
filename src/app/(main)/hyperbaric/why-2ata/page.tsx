@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { ACCENTS } from "@/lib/accents";
+import { ServiceHero, gradientTextStyle } from "@/components/ServiceHero";
+import { GlassCard, glassCardStyle } from "@/components/GlassCard";
+import { PageCtaFooter } from "@/components/PageCtaFooter";
+import { TrackedLink } from "@/components/analytics/TrackedLink";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/hyperbaric/why-2ata" },
   title: "Why 2.0 ATA | Colorado Springs Health Collective — Hyperbaric",
   description: "The clinical case for 2.0 ATA hyperbaric oxygen therapy. Pressure-specific outcomes, research by indication, and why soft chambers don't replicate real HBOT.",
 };
+
+const A = ACCENTS.hyperbaric;
 
 const pressureData = [
   {
@@ -88,57 +94,39 @@ const refs = [
   "Cochrane Reviews on Hyperbaric Oxygen Therapy (multiple, 2005–2023).",
 ];
 
-const glassCard = {
-  background: "hsla(210,22%,22%,0.5)",
-  border: "1px solid hsla(177,70%,59%,0.18)",
-  backdropFilter: "blur(12px)",
-} as React.CSSProperties;
-
+// Feature "bubble" panel — deeper glass than the standard card, tinted with
+// the hyperbaric accent.
 const glassBubble = {
-  background: "linear-gradient(155deg, hsla(177,40%,10%,0.95), hsla(210,40%,10%,0.95))",
-  border: "1px solid hsla(177,70%,59%,0.28)",
+  background: "linear-gradient(155deg, rgba(4,40,44,0.95), hsla(210,40%,10%,0.95))",
+  border: `1px solid rgba(${A.rgb},0.28)`,
   backdropFilter: "blur(16px)",
-  boxShadow: "0 0 80px hsla(177,70%,55%,0.08), 0 32px 80px rgba(2,6,23,0.42)",
+  boxShadow: `0 0 80px rgba(${A.rgb},0.08), 0 32px 80px rgba(2,6,23,0.42)`,
 } as React.CSSProperties;
 
-const gradientText = {
-  background: "linear-gradient(135deg, hsl(177,88%,62%), hsl(210,70%,58%))",
-  WebkitBackgroundClip: "text" as const,
-  WebkitTextFillColor: "transparent" as const,
-  backgroundClip: "text" as const,
-};
+const gradientText = gradientTextStyle("hyperbaric");
 
 export default function Why2ATAPage() {
   return (
-    <div className="page-bg pt-28">
-      {/* Header */}
-      <section className="relative py-20 lg:py-24 text-center">
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: "radial-gradient(ellipse at 50% 0%, hsla(177,70%,59%,0.1) 0%, transparent 60%)" }}
-          aria-hidden="true"
-        />
-        <div className="relative mx-auto max-w-3xl px-5">
-          <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: "hsl(177,70%,62%)" }}>
-            The Pressure Evidence
-          </p>
-          <h1 className="text-4xl font-black text-white lg:text-6xl mb-5" style={{ textShadow: "0 2px 24px rgba(0,0,0,0.5)" }}>
-            Why{" "}
-            <span style={gradientText}>2.0 ATA</span>{" "}
-            Is Not<br />
+    <div className="page-bg">
+      <ServiceHero
+        service="hyperbaric"
+        compact
+        eyebrow="The Pressure Evidence"
+        title={
+          <>
+            Why <span style={gradientText}>2.0 ATA</span> Is Not
+            <br />
             Just a Number.
-          </h1>
-          <p style={{ color: "hsl(210,25%,65%)", fontSize: "17px", lineHeight: "1.7" }}>
-            Most providers in Colorado Springs operate at 1.3–1.6 ATA. There is a clinical reason that every major research trial, every FDA-approved indication, and every UHMS guideline specifies 2.0 ATA or higher. Here is what the evidence actually says.
-          </p>
-        </div>
-      </section>
+          </>
+        }
+        subhead="Most providers in Colorado Springs operate at 1.3–1.6 ATA. There is a clinical reason that every major research trial, every FDA-approved indication, and every UHMS guideline specifies 2.0 ATA or higher. Here is what the evidence actually says."
+      />
 
       {/* Medical definition */}
       <section className="py-16 lg:py-20">
         <div className="mx-auto max-w-4xl px-5 lg:px-8">
           <div className="rounded-3xl p-8 lg:p-12" style={glassBubble}>
-            <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "hsl(177,70%,62%)" }}>
+            <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: `rgb(${A.rgb})` }}>
               The Medical Definition
             </p>
             <h2 className="text-3xl font-black text-white mb-6">
@@ -164,11 +152,11 @@ export default function Why2ATAPage() {
       {/* Soft chamber problems */}
       <section
         className="py-16 lg:py-20"
-        style={{ background: "hsla(210,22%,14%,0.7)", borderTop: "1px solid hsla(177,70%,59%,0.1)" }}
+        style={{ background: "hsla(210,22%,14%,0.7)", borderTop: `1px solid rgba(${A.rgb},0.1)` }}
       >
         <div className="mx-auto max-w-5xl px-5 lg:px-8">
           <div className="text-center mb-12">
-            <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "hsl(177,70%,62%)" }}>
+            <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: `rgb(${A.rgb})` }}>
               The 1.3–1.6 ATA Problem
             </p>
             <h2 className="text-3xl font-black text-white lg:text-4xl">
@@ -182,10 +170,10 @@ export default function Why2ATAPage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {softChamberProblems.map((p) => (
-              <div key={p.title} className="rounded-2xl p-6" style={glassCard}>
-                <h3 className="font-bold mb-2 text-sm" style={{ color: "hsl(177,70%,65%)" }}>{p.title}</h3>
+              <GlassCard key={p.title} service="hyperbaric">
+                <h3 className="font-bold mb-2 text-sm" style={{ color: `rgb(${A.rgb})` }}>{p.title}</h3>
                 <p style={{ color: "hsl(210,25%,62%)", fontSize: "14px", lineHeight: "1.65" }}>{p.body}</p>
-              </div>
+              </GlassCard>
             ))}
           </div>
         </div>
@@ -198,7 +186,7 @@ export default function Why2ATAPage() {
             <div className="flex items-start gap-4 mb-5">
               <div className="text-2xl mt-1">⚠️</div>
               <div>
-                <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "hsl(177,70%,62%)" }}>
+                <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: `rgb(${A.rgb})` }}>
                   The One Exception
                 </p>
                 <h2 className="font-black text-white" style={{ fontSize: "clamp(1.4rem, 3vw, 2rem)" }}>
@@ -224,11 +212,11 @@ export default function Why2ATAPage() {
       {/* Pressure by indication table */}
       <section
         className="py-16 lg:py-20"
-        style={{ background: "hsla(210,22%,14%,0.7)", borderTop: "1px solid hsla(177,70%,59%,0.1)" }}
+        style={{ background: "hsla(210,22%,14%,0.7)", borderTop: `1px solid rgba(${A.rgb},0.1)` }}
       >
         <div className="mx-auto max-w-5xl px-5 lg:px-8">
           <div className="text-center mb-12">
-            <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "hsl(177,70%,62%)" }}>
+            <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: `rgb(${A.rgb})` }}>
               Pressure-Specific Outcomes
             </p>
             <h2 className="text-3xl font-black text-white lg:text-4xl">
@@ -242,7 +230,7 @@ export default function Why2ATAPage() {
 
           <div className="space-y-4">
             {pressureData.map((row) => (
-              <div key={row.indication} className="rounded-2xl p-6" style={glassCard}>
+              <GlassCard key={row.indication} service="hyperbaric">
                 <div className="flex flex-wrap items-start gap-4">
                   <div className="min-w-[180px]">
                     <div className="font-black text-sm mb-2" style={{ color: "#fff" }}>{row.indication}</div>
@@ -255,7 +243,7 @@ export default function Why2ATAPage() {
                   </div>
                   <p className="flex-1" style={{ color: "hsl(210,25%,62%)", fontSize: "14px", lineHeight: "1.65" }}>{row.finding}</p>
                 </div>
-              </div>
+              </GlassCard>
             ))}
           </div>
         </div>
@@ -265,7 +253,7 @@ export default function Why2ATAPage() {
       <section className="py-16 lg:py-20">
         <div className="mx-auto max-w-4xl px-5 lg:px-8">
           <div className="rounded-3xl p-8 lg:p-12 text-center" style={glassBubble}>
-            <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: "hsl(177,70%,62%)" }}>
+            <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: `rgb(${A.rgb})` }}>
               The Bottom Line
             </p>
             <h2 className="text-3xl font-black text-white mb-6 lg:text-4xl">
@@ -279,24 +267,28 @@ export default function Why2ATAPage() {
               Most local providers operate below this threshold. We built this clinic specifically because the clinical evidence demanded it.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
+              <TrackedLink
                 href="/hyperbaric/evidence"
+                event="cta_click"
+                analytics={{ page: "hyperbaric-why-2ata", source: "why-2ata-bottom-evidence", service: "hyperbaric", label: "See Full Evidence Library" }}
                 className="rounded-full px-8 py-3.5 text-sm font-semibold hover:opacity-80 transition-opacity"
-                style={{ border: "1px solid hsla(177,70%,59%,0.4)", color: "hsl(177,70%,72%)" }}
+                style={{ border: `1px solid rgba(${A.rgb},0.4)`, color: `rgb(${A.rgb})` }}
               >
                 See Full Evidence Library →
-              </Link>
-              <Link
+              </TrackedLink>
+              <TrackedLink
                 href="/hyperbaric"
+                event="cta_click"
+                analytics={{ page: "hyperbaric-why-2ata", source: "why-2ata-bottom-register", service: "hyperbaric", label: "Register — 25% Off at Launch" }}
                 className="rounded-full px-8 py-3.5 text-sm font-bold hover:opacity-90 transition-opacity"
                 style={{
-                  background: "linear-gradient(135deg, hsl(177,70%,59%), hsl(210,70%,55%))",
+                  background: `linear-gradient(135deg, ${A.from}, ${A.to})`,
                   color: "hsl(210,32%,10%)",
-                  boxShadow: "0 8px 32px hsla(177,70%,50%,0.25)",
+                  boxShadow: `0 8px 32px rgba(${A.rgb},0.25)`,
                 }}
               >
                 Register — 25% Off at Launch
-              </Link>
+              </TrackedLink>
             </div>
           </div>
         </div>
@@ -305,8 +297,8 @@ export default function Why2ATAPage() {
       {/* References */}
       <section className="pb-16">
         <div className="mx-auto max-w-4xl px-5 lg:px-8">
-          <details className="rounded-2xl p-6" style={glassCard}>
-            <summary className="text-xs font-bold uppercase tracking-widest cursor-pointer select-none" style={{ color: "hsl(177,70%,59%)" }}>
+          <details className="rounded-2xl p-6" style={glassCardStyle("hyperbaric")}>
+            <summary className="text-xs font-bold uppercase tracking-widest cursor-pointer select-none" style={{ color: `rgb(${A.rgb})` }}>
               References ({refs.length})
             </summary>
             <ol className="mt-4 space-y-2 list-decimal list-inside">
@@ -317,6 +309,13 @@ export default function Why2ATAPage() {
           </details>
         </div>
       </section>
+
+      <PageCtaFooter
+        service="hyperbaric"
+        heading="Be first when we open."
+        body="Lock in your early-access discount before the chamber opens."
+        primaryCta={{ label: "Get Early Access", href: "/hyperbaric#early-access" }}
+      />
     </div>
   );
 }

@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { CheckCircle, Users, Heart, Shield, ExternalLink } from "lucide-react";
 import { submitEmployerInquiry } from "@/lib/api";
+import { trackEvent } from "@/lib/analytics";
+import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { ACCENTS } from "@/lib/accents";
 import { ServiceHero, gradientTextStyle } from "@/components/ServiceHero";
 import { GlassCard } from "@/components/GlassCard";
@@ -42,6 +44,7 @@ export default function ForBusinesses() {
         sourcePage: "/for-businesses",
       });
       setSubmitted(true);
+      trackEvent("form_submit", { page: "for-businesses", service: "dpc", source: "for-businesses-interest" });
       e.currentTarget.reset();
       setResponseType("Email");
     } catch (err) {
@@ -109,29 +112,41 @@ export default function ForBusinesses() {
           <div className="grid md:grid-cols-2 gap-5">
             <GlassCard service="hormone" className="!p-8 flex flex-col">
               <div className="flex items-center gap-3 mb-4">
-                <Heart className="w-7 h-7" style={{ color: "hsl(330,70%,65%)" }} />
-                <h3 className="text-xl font-bold" style={{ color: "hsl(330,70%,65%)" }}>Zion Health Share</h3>
+                <Heart className="w-7 h-7" style={{ color: `rgb(${ACCENTS.brand.rgb})` }} />
+                <h3 className="text-xl font-bold" style={{ color: `rgb(${ACCENTS.brand.rgb})` }}>Zion Health Share</h3>
               </div>
               <p className="text-sm font-medium mb-4" style={{ color: "hsl(45,90%,60%)" }}>Plans starting at $84/month</p>
               <p className="mb-6 text-sm leading-relaxed flex-grow" style={{ color: "hsl(210,25%,75%)" }}>
                 A health share is a community of members who share medical expenses together. It&apos;s not insurance, but provides affordable catastrophic coverage for hospital visits, surgeries, and major medical events.
               </p>
-              <a href="https://zionhealthshare.org/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold hover:opacity-80 transition-opacity" style={{ color: "hsl(330,70%,65%)" }}>
+              <TrackedLink
+                href="https://zionhealthshare.org/"
+                event="cta_click"
+                analytics={{ page: "for-businesses", source: "for-businesses-partners", service: "dpc", label: "Zion Health Share" }}
+                className="inline-flex items-center gap-2 text-sm font-semibold hover:opacity-80 transition-opacity"
+                style={{ color: `rgb(${ACCENTS.brand.rgb})` }}
+              >
                 Learn more about Zion Health Share <ExternalLink className="w-4 h-4" />
-              </a>
+              </TrackedLink>
             </GlassCard>
             <GlassCard service="dpc" className="!p-8 flex flex-col">
               <div className="flex items-center gap-3 mb-4">
-                <Shield className="w-7 h-7" style={{ color: "hsl(200,70%,65%)" }} />
-                <h3 className="text-xl font-bold" style={{ color: "hsl(200,70%,65%)" }}>Virtuous Benefits</h3>
+                <Shield className="w-7 h-7" style={{ color: `rgb(${ACCENTS.dpc.rgb})` }} />
+                <h3 className="text-xl font-bold" style={{ color: `rgb(${ACCENTS.dpc.rgb})` }}>Virtuous Benefits</h3>
               </div>
               <p className="text-sm font-medium mb-4" style={{ color: "hsl(45,90%,60%)" }}>ACA-Compliant Group Coverage</p>
               <p className="mb-6 text-sm leading-relaxed flex-grow" style={{ color: "hsl(210,25%,75%)" }}>
                 Full ACA-compliant health insurance bundled with DPC membership. Virtuous negotiates transparent pricing on labs, imaging, specialists, and hospital care—giving your team comprehensive coverage with cost predictability.
               </p>
-              <a href="https://virtuousbenefits.care/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold hover:opacity-80 transition-opacity" style={{ color: "hsl(200,70%,65%)" }}>
+              <TrackedLink
+                href="https://virtuousbenefits.care/"
+                event="cta_click"
+                analytics={{ page: "for-businesses", source: "for-businesses-partners", service: "dpc", label: "Virtuous Benefits" }}
+                className="inline-flex items-center gap-2 text-sm font-semibold hover:opacity-80 transition-opacity"
+                style={{ color: `rgb(${ACCENTS.dpc.rgb})` }}
+              >
                 Learn more about Virtuous Benefits <ExternalLink className="w-4 h-4" />
-              </a>
+              </TrackedLink>
             </GlassCard>
           </div>
           <p className="mt-8 text-center text-sm italic max-w-3xl mx-auto" style={{ color: "hsl(210,25%,62%)" }}>

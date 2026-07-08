@@ -101,7 +101,8 @@ export default function PrecisionMedicine() {
         service="dpc"
         heading="Ready to learn more?"
         body="Schedule a free meet and greet to discuss how precision medicine can support your health journey."
-        primaryCta={{ label: "Book a Free Meet & Greet", href: MEET_GREET_URL, external: true }}
+        primaryCta={{ label: "Book a Free Meet & Greet", href: bookingUrl("meetGreet", "precision-medicine-footer"), external: true }}
+        analytics={{ page: "precision-medicine", source: "precision-medicine-footer", service: "dpc", label: "Book a Free Meet & Greet", appt: "meetGreet" }}
       />
     </div>
   );

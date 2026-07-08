@@ -6,6 +6,8 @@ import { ACCENTS } from "@/lib/accents";
 import { ServiceHero, gradientTextStyle } from "@/components/ServiceHero";
 import { GlassCard } from "@/components/GlassCard";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
+import { ReviewStrip } from "@/components/ReviewStrip";
+import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { bookingUrl } from "@/lib/bookingLinks";
 
 export const metadata: Metadata = {
@@ -15,7 +17,6 @@ export const metadata: Metadata = {
   keywords: "Sarah Crist nurse practitioner, Logan Crist physician assistant, Colorado Springs DPC providers, healthcare team Colorado Springs",
 };
 
-const MEET_GREET_URL = bookingUrl("meetGreet", "about");
 const ACCENT = ACCENTS.brand;
 
 // Both founder cards share this identical frame so the pair reads as a set.
@@ -90,10 +91,10 @@ export default function About() {
                 or eliminate medications while achieving their personal wellness goals.
               </p>
               <div className="flex justify-center">
-                <a
+                <TrackedLink
                   href="https://www.linkedin.com/in/loganmcrist/"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  event="cta_click"
+                  analytics={{ page: "about", source: "about-linkedin", service: "brand", label: "Connect on LinkedIn" }}
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-200 hover:scale-105"
                   style={{ background: "hsla(210,90%,40%,0.12)", border: "1px solid hsla(210,90%,50%,0.3)" }}
                 >
@@ -101,13 +102,13 @@ export default function About() {
                     <FaLinkedin className="w-5 h-5" style={{ color: "#0A66C2" }} />
                     <CheckCircle
                       className="absolute -bottom-1 -right-1 w-3 h-3"
-                      style={{ color: "hsl(177,70%,55%)", background: "hsl(210,32%,28%)", borderRadius: "50%" }}
+                      style={{ color: "hsl(45,90%,60%)", background: "hsl(210,32%,28%)", borderRadius: "50%" }}
                     />
                   </div>
                   <span className="text-sm font-semibold" style={{ color: "hsl(210,80%,75%)" }}>
                     Connect on LinkedIn
                   </span>
-                </a>
+                </TrackedLink>
               </div>
             </GlassCard>
           </div>
@@ -139,11 +140,18 @@ export default function About() {
         </div>
       </section>
 
+      <section className="pt-12 pb-4">
+        <div className="mx-auto max-w-4xl px-5 lg:px-8">
+          <ReviewStrip variant="strip" service="brand" source="about-reviews" />
+        </div>
+      </section>
+
       <PageCtaFooter
         service="brand"
         heading="Ready to experience healthcare differently?"
         body="Start with a free Meet & Greet with Logan or Sarah. No commitment, no paperwork — just a conversation to see if CSHC is the right fit for your goals."
-        primaryCta={{ label: "Book a Free Meet & Greet", href: MEET_GREET_URL, external: true }}
+        primaryCta={{ label: "Book a Free Meet & Greet", href: bookingUrl("meetGreet", "about-footer"), external: true }}
+        analytics={{ page: "about", source: "about-footer", service: "brand", label: "Book a Free Meet & Greet", appt: "meetGreet" }}
       />
     </div>
   );

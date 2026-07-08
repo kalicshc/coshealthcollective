@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ExternalLink, FileText } from "lucide-react";
+import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { ACCENTS } from "@/lib/accents";
 import { ServiceHero, gradientTextStyle } from "@/components/ServiceHero";
 import { GlassCard } from "@/components/GlassCard";
@@ -60,15 +61,14 @@ export default function CommunityEvents() {
                   <div className="flex-grow">
                     <h3 className="text-xl lg:text-2xl font-bold mb-2 text-white">{event.title}</h3>
                     <p className="text-sm leading-relaxed mb-4" style={{ color: "hsl(210,25%,75%)" }}>{event.description}</p>
-                    <a
+                    <TrackedLink
                       href={event.calendlyLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      analytics={{ page: "community-events", source: "community-events-schedule", service: "brand", label: event.title }}
                       className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity"
                       style={{ background: `linear-gradient(135deg, ${ACCENT.from}, ${ACCENT.to})`, color: "hsl(210,32%,10%)" }}
                     >
                       View Schedule &amp; Sign Up <ExternalLink className="w-4 h-4" />
-                    </a>
+                    </TrackedLink>
                   </div>
                 </div>
               </GlassCard>

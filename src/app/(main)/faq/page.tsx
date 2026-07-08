@@ -3,12 +3,11 @@ import { clinicFacts, usd } from "@/lib/clinicFacts";
 import { ServiceHero } from "@/components/ServiceHero";
 import { Accordion } from "@/components/Accordion";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
+import { ReviewStrip } from "@/components/ReviewStrip";
 import { bookingUrl } from "@/lib/bookingLinks";
 
 // Server component: the FAQ answers render in the HTML (good for SEO/AI
 // search); only the shared <Accordion> ships client JS.
-
-const MEET_GREET_URL = bookingUrl("meetGreet", "faq");
 
 const faqs = [
   {
@@ -66,7 +65,7 @@ export default function FAQ() {
       >
         <p className="text-sm" style={{ color: "hsl(210,25%,60%)" }}>
           Looking for DPC-specific questions?{" "}
-          <Link href="/direct-primary-care#faq" className="underline hover:opacity-80" style={{ color: "hsl(177,70%,59%)" }}>
+          <Link href="/direct-primary-care#faq" className="underline hover:opacity-80" style={{ color: "rgb(60,120,255)" }}>
             See our Direct Primary Care FAQ →
           </Link>
         </p>
@@ -80,11 +79,18 @@ export default function FAQ() {
         </div>
       </section>
 
+      <section className="pt-12 pb-4">
+        <div className="mx-auto max-w-4xl px-5 lg:px-8">
+          <ReviewStrip variant="strip" service="brand" source="faq-reviews" />
+        </div>
+      </section>
+
       <PageCtaFooter
         service="brand"
         heading="Still have questions?"
         body="We're happy to walk you through how CSHC works and which services are the right fit for your goals."
-        primaryCta={{ label: "Schedule a Free Meet & Greet", href: MEET_GREET_URL, external: true }}
+        primaryCta={{ label: "Schedule a Free Meet & Greet", href: bookingUrl("meetGreet", "faq-footer"), external: true }}
+        analytics={{ page: "faq", source: "faq-footer", service: "brand", label: "Schedule a Free Meet & Greet", appt: "meetGreet" }}
       />
     </div>
   );
