@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Bandage, Hourglass, Flame, Dumbbell, Zap, Wind, Brain, Ear } from "lucide-react";
 import { clinicFacts } from "@/lib/clinicFacts";
 import { ACCENTS } from "@/lib/accents";
 import { SceneSection, Eyebrow, SCENE_H, SCENE_P } from "@/components/SceneSection";
@@ -32,52 +33,52 @@ const gradientClip = {
 
 const conditions = [
   {
-    icon: "🩹",
+    icon: Bandage,
     title: "Wound Healing & Surgical Recovery",
     body: "Post-mastectomy. Aesthetic surgery. Abdominal wounds. HBOT is FDA-approved for compromised tissue repair — delivering oxygenation that no other therapy can reach.",
     tags: ["Post-Mastectomy", "Aesthetic Surgery", "Skin Grafts"],
   },
   {
-    icon: "⏳",
+    icon: Hourglass,
     title: "Anti-Aging & Longevity",
     body: "37% fewer senescent cells. 20%+ telomere lengthening. Real reversal of cellular aging — measured in human trials, not animals.",
     tags: ["Telomeres", "Senescent Cells", "Skin & Collagen"],
   },
   {
-    icon: "🔥",
+    icon: Flame,
     title: "Autoimmune & Inflammation",
     body: "Systemic reduction of TNF-α and IL-6 — the inflammatory drivers behind UC, RA, psoriasis, and chronic disease. 50% clinical remission in a blinded UC trial vs. 0% in the control group.",
     tags: ["Ulcerative Colitis", "Rheumatoid Arthritis", "Psoriasis"],
   },
   {
-    icon: "💪",
+    icon: Dumbbell,
     title: "Muscle, Tendon & Athletic Recovery",
     body: "Accelerate biological repair of damaged muscle and connective tissue. Higher training density. Lower injury risk. Confirmed in a 2026 meta-analysis of 10 RCTs.",
     tags: ["Muscle Repair", "Tendon Healing", "Performance"],
   },
   {
-    icon: "⚡",
+    icon: Zap,
     title: "Chronic Pain & Fibromyalgia",
     body: "Beat fibromyalgia medications head-to-head in a randomized trial. HBOT modifies the neurological root of pain — not just the symptoms. 87.5–100% pain relief rates documented.",
     tags: ["Fibromyalgia", "CRPS", "Nerve Pain"],
   },
   {
-    icon: "💨",
+    icon: Wind,
     title: "Long COVID Recovery",
     body: "Microvascular damage. Neuroinflammation. Mitochondrial dysfunction. HBOT addresses all three — with durable improvements confirmed at 1-year follow-up.",
     tags: ["Brain Fog", "Fatigue", "Cardiac Function"],
   },
   {
-    icon: "🧠",
+    icon: Brain,
     title: "Brain & Neurological Recovery",
     body: "Reawaken dormant neurons after stroke. Reverse TBI effects years — even decades — after injury. Confirmed by SPECT and fNIRS brain imaging in clinical trials.",
     tags: ["Stroke", "TBI / Concussion", "Cognitive Function"],
   },
   {
-    icon: "👂",
+    icon: Ear,
     title: "Sudden Hearing Loss",
     body: "Guideline-endorsed. 2.61× higher recovery rate. Time is everything — the sooner you start, the better the outcome.",
-    tags: ["SSNHL", "⏰ Time-Sensitive", "Guideline-Endorsed"],
+    tags: ["SSNHL", "Time-Sensitive", "Guideline-Endorsed"],
   },
 ];
 
@@ -241,7 +242,9 @@ export default function HyperbaricPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
             {conditions.map((c) => (
               <GlassCard key={c.title} service="hyperbaric" className="!p-6">
-                <div className="text-3xl mb-3">{c.icon}</div>
+                <div className="mb-3">
+                  <c.icon className="w-8 h-8" strokeWidth={1.75} style={{ color: `rgb(${A.rgb})` }} aria-hidden />
+                </div>
                 <h3 className="font-bold mb-2 text-white" style={{ fontSize: "17px" }}>{c.title}</h3>
                 <p className="mb-4 text-sm leading-6 text-slate-300">{c.body}</p>
                 <div className="flex flex-wrap gap-1.5">

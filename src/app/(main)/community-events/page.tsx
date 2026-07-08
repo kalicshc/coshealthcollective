@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ExternalLink, FileText } from "lucide-react";
+import { Dumbbell, ExternalLink, FileText } from "lucide-react";
 import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { ACCENTS } from "@/lib/accents";
 import { ServiceHero, gradientTextStyle } from "@/components/ServiceHero";
@@ -14,7 +14,7 @@ const events = [
     title: "Community Movement",
     description: "Join us for outdoor group fitness sessions. All fitness levels welcome. Activities vary by session and may include hiking, running, strength training, and more.",
     calendlyLink: "https://calendly.com/dpc-coshealthcollective/group-workout",
-    icon: "💪",
+    icon: Dumbbell,
   },
 ];
 
@@ -56,7 +56,7 @@ export default function CommunityEvents() {
                     className="w-16 h-16 lg:w-20 lg:h-20 rounded-2xl flex items-center justify-center text-3xl lg:text-4xl flex-shrink-0"
                     style={{ background: `linear-gradient(135deg, ${ACCENT.from}, ${ACCENT.to})` }}
                   >
-                    {event.icon}
+                    <event.icon className="w-8 h-8 lg:w-10 lg:h-10" strokeWidth={1.75} style={{ color: "hsl(210,32%,10%)" }} aria-hidden />
                   </div>
                   <div className="flex-grow">
                     <h3 className="text-xl lg:text-2xl font-bold mb-2 text-white">{event.title}</h3>
