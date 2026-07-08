@@ -9,6 +9,9 @@ import { serviceSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/JsonLd";
 
 export const metadata: Metadata = {
+  // Placeholder page for now (2026-07-08): reachable by direct link only —
+  // noindexed, out of the sitemap, and unplugged from the chatbot CTA list.
+  robots: { index: false, follow: false },
   alternates: { canonical: "/aesthetics" },
   title: "Anti-Aging Skin Care Colorado Springs | Prescription Tretinoin & Compounds",
   description: "Medical-grade anti-aging skin care in Colorado Springs via Skin Medicinals. Prescription tretinoin, niacinamide, vitamin C/E, resveratrol & turmeric compounds. $45 consultation or FREE with DPC membership.",

@@ -72,7 +72,6 @@ Rules:
 
 ## Service pages
 - \`iv-therapy\` — IV therapy
-- \`aesthetics\` — aesthetics / cosmetic
 - \`weight-loss\` — weight-loss program overview
 - \`glp1\` — GLP-1 / semaglutide / tirzepatide details
 - \`precision-medicine\` — precision medicine

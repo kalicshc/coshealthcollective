@@ -13,7 +13,6 @@ export type ChatCtaTag =
   | "business"
   // Service pages
   | "iv-therapy"
-  | "aesthetics"
   | "weight-loss"
   | "glp1"
   | "precision-medicine"
@@ -138,12 +137,6 @@ const CTA_BY_TAG: Record<ChatCtaTag, ChatCta> = {
     tag: "iv-therapy",
     kind: "book",
     book: { label: "IV Therapy", href: "/iv-therapy" },
-    learnMore: { label: "Book a Meet & Greet", href: BOOK_MEET_GREET, external: true },
-  },
-  aesthetics: {
-    tag: "aesthetics",
-    kind: "book",
-    book: { label: "Aesthetics", href: "/aesthetics" },
     learnMore: { label: "Book a Meet & Greet", href: BOOK_MEET_GREET, external: true },
   },
   "weight-loss": {
