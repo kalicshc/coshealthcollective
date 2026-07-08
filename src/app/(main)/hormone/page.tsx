@@ -9,6 +9,7 @@ import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { SceneSection, SCENE_H, SCENE_P } from "@/components/SceneSection";
 import { RatingChip } from "@/components/ReviewStrip";
 import { JourneyCurve } from "@/components/JourneyCurve";
+import { CriticalWindowTimeline } from "@/components/CriticalWindowTimeline";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/hormone" },
@@ -37,11 +38,15 @@ const symptomGroups = [
   { title: "Sexual + urinary", items: ["low libido", "dryness", "pain with sex", "recurrent UTIs", "bladder irritation", "feeling shut down"] },
 ];
 
-const whatWeDo = [
-  { title: "Look at the full hormone picture", text: "Estradiol, progesterone, and testosterone are discussed together instead of pretending one hormone explains everything." },
-  { title: "Take symptoms seriously", text: "Brain, body, sexual health, urinary symptoms, and long-term risks all belong in the conversation." },
-  { title: "Build a personalized plan", text: "Treatment decisions should match your stage of life, goals, history, and actual symptoms rather than a generic protocol." },
+// What's at stake in the critical window (mirrors the women's story page)
+const stakes = [
+  { label: "Bone", text: "Estrogen guards your skeleton — once it's gone, bone loss accelerates and fractures climb." },
+  { label: "Muscle", text: "It helps you hold onto muscle and strength — the foundation of staying independent." },
+  { label: "Heart", text: "Heart disease is the #1 killer of postmenopausal women — more than every cancer combined." },
+  { label: "Brain", text: "It fuels focus, memory, and mood." },
+  { label: "Metabolism", text: "It holds the line on blood sugar and visceral fat." },
 ];
+
 
 const PriceStrip = () => (
   <p className="mt-3 text-xs lg:text-sm" style={{ color: "hsl(210,22%,72%)" }}>
@@ -445,15 +450,14 @@ export default function HormonePage() {
       {/* ── 3. THE EDUCATION — journey, symptoms, testosterone, WHI ──── */}
 
       {/* The Hormone Journey — photo scene with the animated curve */}
-      <SceneSection image="/images/hormone/window-backdrop-v2.webp" scrim="side" minHeight="88vh">
+      <SceneSection image="/images/hormone/journey-v2.webp" scrim="side" minHeight="88vh">
         <p className="text-sm font-semibold uppercase tracking-[0.22em] text-fuchsia-100/80">The Hormone Journey</p>
         <h2 className="mt-4 text-3xl font-bold text-white lg:text-4xl" style={{ textShadow: SCENE_H }}>
-          Hormones do not change the same way throughout life
+          Your hormones don&apos;t fade quietly. They lurch.
         </h2>
         <p className="mt-4 max-w-2xl text-lg leading-relaxed text-white/95" style={{ textShadow: SCENE_P }}>
-          A simple way to think about it: hormones are more predictable for years, then perimenopause becomes
-          the chaotic transition, and menopause creates a new lower baseline. That shift is real. It affects
-          far more than temperature regulation.
+          Your ovaries wind down unevenly. Progesterone — your calm, sleep hormone — usually drops first. So
+          the first sign often isn&apos;t a hot flash. It&apos;s anxiety and 2 a.m. wake-ups.
         </p>
         <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
           <div>
@@ -505,104 +509,28 @@ export default function HormonePage() {
         </div>
       </section>
 
-      {/* The Forgotten Hormone — photo scene with the 10x reveal */}
-      <SceneSection image="/images/hormone/reviews-backdrop-v1.webp" scrim="side" minHeight="80vh">
-        <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-fuchsia-100/80">
-              The Forgotten Hormone
-            </p>
-            <h2 className="mt-4 text-3xl font-bold text-white lg:text-4xl" style={{ textShadow: SCENE_H }}>
-              Testosterone matters in women too
-            </h2>
-            <p className="mt-5 text-base leading-8 text-white/95" style={{ textShadow: SCENE_P }}>
-              This is one of the biggest gaps in women&apos;s care. Testosterone affects libido, motivation,
-              energy, and sexual function, yet many women are never told it belongs in the conversation at all.
-            </p>
-          </div>
-          <div
-            className="rounded-[34px] border p-8 lg:p-10"
-            style={{
-              borderColor: "hsla(331,95%,72%,0.25)",
-              background: "linear-gradient(135deg, hsla(331,95%,72%,0.15), hsla(271,74%,55%,0.18), hsla(222,45%,8%,0.85))",
-              backdropFilter: "blur(10px)",
-            }}
-          >
-            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-fuchsia-100/90">Key Point</p>
-            <div className="mt-6 text-5xl font-bold leading-none text-white lg:text-6xl">10x</div>
-            <p className="mt-4 max-w-xl text-xl font-semibold text-white">
-              Women produce far more testosterone than estradiol when measured on the same scale.
-            </p>
-            <p className="mt-5 max-w-2xl text-base leading-8 text-slate-200">
-              That does not mean every woman needs testosterone therapy. It means the hormone should not be
-              ignored or treated like it only matters in men.
-            </p>
-          </div>
+      {/* The Critical Window — timeline + what's at stake (from the women's story) */}
+      <SceneSection image="/images/hormone/window-backdrop-v2.webp" scrim="side" minHeight="88vh">
+        <p className="text-sm font-semibold uppercase tracking-[0.22em] text-fuchsia-100/80">The whole idea in one line</p>
+        <h2 className="mt-4 text-3xl font-bold text-white lg:text-4xl" style={{ textShadow: SCENE_H }}>
+          There&apos;s a critical window — and it closes sooner than you think.
+        </h2>
+        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-white/95" style={{ textShadow: SCENE_P }}>
+          From your 40s to roughly 5–10 years after your last period, your body is still responsive to
+          estrogen — bones stay healthy, arteries stay flexible, the brain still uses estrogen the way
+          it&apos;s meant to. <strong className="text-white">This is the window where you shape the next 30
+          years.</strong>
+        </p>
+        <div className="mt-10">
+          <CriticalWindowTimeline />
         </div>
-      </SceneSection>
-
-      {/* What Happened — the WHI numbers */}
-      <section className="py-14 lg:py-20">
-        <div className="mx-auto max-w-6xl px-4 lg:px-8">
-          <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-fuchsia-100/80">
-                What Happened
-              </p>
-              <h2 className="mt-4 text-3xl font-bold text-white lg:text-4xl">
-                One bad message changed women&apos;s care for decades
-              </h2>
-              <p className="mt-4 text-lg leading-relaxed text-slate-300">
-                For years, hormone therapy was framed around fear instead of careful interpretation. The result
-                was a generation of women and clinicians backing away from treatment without understanding what
-                the data actually showed.
-              </p>
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          {stakes.map((s) => (
+            <div key={s.label} className="rounded-2xl border border-white/10 bg-slate-950/70 p-4" style={{ backdropFilter: "blur(8px)" }}>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-fuchsia-100/75">{s.label}</p>
+              <p className="mt-2 text-sm leading-6 text-slate-300">{s.text}</p>
             </div>
-            <div className="grid gap-5 md:grid-cols-3">
-              {[
-                { value: "24%", label: "The scary relative-risk headline" },
-                { value: "0.1%", label: "The much smaller absolute-risk number" },
-                { value: "1 in 1,000", label: "The scale most women were never told" },
-              ].map((stat) => (
-                <div key={stat.value} className="service-card-transparent rounded-[28px] p-6">
-                  <div className="text-4xl font-bold text-white">{stat.value}</div>
-                  <p className="mt-3 text-sm leading-7 text-slate-300">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="mt-8 service-card-transparent rounded-[30px] p-7">
-            <p className="text-base leading-8 text-slate-300">
-              The point is not that hormones are for everyone. The point is that women deserve the actual
-              context, not a simplified fear story that shut down informed decision-making.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* What We Do Differently — photo scene */}
-      <SceneSection image="/images/hormone/final-backdrop-v1.webp" scrim="side" minHeight="80vh">
-        <div className="grid gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-fuchsia-100/80">
-              What We Do Differently
-            </p>
-            <h2 className="mt-4 text-3xl font-bold text-white lg:text-4xl" style={{ textShadow: SCENE_H }}>
-              Education first. Personalization second. No minimizing.
-            </h2>
-            <p className="mt-4 text-lg leading-relaxed text-white/95" style={{ textShadow: SCENE_P }}>
-              A good plan starts with clarity. That means explaining where symptoms may fit, where they may
-              not, and which options make sense for your stage of life and goals.
-            </p>
-          </div>
-          <div className="grid gap-5 md:grid-cols-3">
-            {whatWeDo.map((item) => (
-              <div key={item.title} className="rounded-[20px] border border-white/10 bg-slate-950/70 p-5" style={{ backdropFilter: "blur(8px)" }}>
-                <h3 className="text-lg font-bold text-white">{item.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-slate-300">{item.text}</p>
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
       </SceneSection>
 
