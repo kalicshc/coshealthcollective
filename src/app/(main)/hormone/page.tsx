@@ -6,6 +6,7 @@ import { PageCtaFooter } from "@/components/PageCtaFooter";
 import { bookingUrl } from "@/lib/bookingLinks";
 import { CredentialHero } from "@/components/CredentialHero";
 import { ReviewStrip } from "@/components/ReviewStrip";
+import { TrackedLink } from "@/components/analytics/TrackedLink";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/hormone" },
@@ -40,14 +41,32 @@ export default function HormonePage() {
       className="relative"
       style={{ background: "linear-gradient(180deg, hsla(210,32%,11%,0.7), hsla(210,32%,12%,0.56))" }}
     >
-      {/* ── FIRST VIEWPORT: panes + chevron, fills exactly one screen ── */}
-      <div className="container mx-auto px-4 lg:px-6 max-w-6xl min-h-screen flex flex-col pt-24 pb-6 md:pt-40 lg:pt-44 xl:pt-32 lg:pb-8">
+      {/* ── FIRST VIEWPORT: glass panes over a full-bleed photo scene ── */}
+      <div className="relative overflow-hidden">
+        <Image
+          src="/images/hormone/journey-backdrop.webp"
+          alt=""
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
+        />
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{ background: "radial-gradient(ellipse 85% 80% at 50% 45%, hsla(222,45%,6%,0.88) 0%, hsla(222,45%,6%,0.62) 60%, hsla(222,45%,6%,0.3) 100%)" }}
+        />
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-32"
+          style={{ background: "linear-gradient(0deg, hsl(210,32%,8%), transparent)" }}
+        />
+      <div className="relative z-10 container mx-auto px-4 lg:px-6 max-w-6xl min-h-screen flex flex-col pt-24 pb-6 md:pt-40 lg:pt-44 xl:pt-32 lg:pb-8">
 
         {/* ── WOMEN'S HEALTH PANE (top, slightly smaller) ── */}
         <section
           className="relative overflow-hidden rounded-3xl border p-5 lg:p-7"
           style={{
-            background: "linear-gradient(135deg, hsla(331,95%,65%,0.16), hsla(271,74%,55%,0.18), hsla(210,32%,14%,0.94))",
+            background: "hsla(222,45%,8%,0.72)",
+            backdropFilter: "blur(10px)",
             borderColor: "hsla(331,80%,72%,0.28)",
             boxShadow: "0 24px 80px rgba(2,6,23,0.45)",
           }}
@@ -123,29 +142,32 @@ export default function HormonePage() {
             </div>
 
             <div className="mt-4 flex flex-col items-center justify-center gap-2 sm:flex-row sm:flex-wrap">
-              <Link
-                href={BOOKING_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <TrackedLink
+                href={bookingUrl("freeConsult", "hormone-hub-womens")}
+                analytics={{ page: "hormone", source: "hormone-hub-womens", service: "hormone", appt: "freeConsult", label: "Free Consult" }}
                 className="pointer-events-auto relative z-10 px-5 py-2.5 rounded-full text-sm font-semibold transition-opacity hover:opacity-90"
                 style={{ background: "hsl(0,0%,100%)", color: "hsl(294,40%,12%)" }}
               >
                 Free Consult
-              </Link>
-              <Link
+              </TrackedLink>
+              <TrackedLink
                 href="/hormone/womens-health"
+                event="cta_click"
+                analytics={{ page: "hormone", source: "hormone-hub-womens", service: "hormone", label: "Learn More" }}
                 className="pointer-events-auto relative z-10 px-5 py-2.5 rounded-full text-sm font-semibold text-white hover:opacity-90 transition-opacity"
                 style={{ background: "linear-gradient(135deg, hsl(331,95%,65%), hsl(271,74%,52%))" }}
               >
                 Learn More
-              </Link>
-              <Link
+              </TrackedLink>
+              <TrackedLink
                 href="/hormone/womens-health/quiz"
+                event="cta_click"
+                analytics={{ page: "hormone", source: "hormone-hub-womens", service: "hormone", label: "Take the Quiz" }}
                 className="pointer-events-auto relative z-10 px-5 py-2.5 rounded-full text-sm font-semibold transition-opacity hover:opacity-90"
                 style={{ background: "rgba(255,255,255,0.08)", color: "#fff", border: "1px solid rgba(255,255,255,0.18)" }}
               >
                 Take the Quiz
-              </Link>
+              </TrackedLink>
             </div>
 
             <PriceStrip />
@@ -163,7 +185,8 @@ export default function HormonePage() {
           <section
             className="relative overflow-hidden rounded-3xl border p-6 lg:p-7"
             style={{
-              background: "linear-gradient(135deg, hsla(271,74%,55%,0.18), hsla(188,88%,54%,0.14), hsla(210,32%,14%,0.94))",
+              background: "hsla(222,45%,8%,0.72)",
+              backdropFilter: "blur(10px)",
               borderColor: "hsla(271,74%,55%,0.28)",
               boxShadow: "0 20px 60px rgba(2,6,23,0.35)",
             }}
@@ -225,22 +248,23 @@ export default function HormonePage() {
               </div>
 
               <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
-                <Link
-                  href={BOOKING_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <TrackedLink
+                  href={bookingUrl("freeConsult", "hormone-hub-glp1")}
+                  analytics={{ page: "hormone", source: "hormone-hub-glp1", service: "hormone", appt: "freeConsult", label: "Free Consult" }}
                   className="pointer-events-auto relative z-10 px-4 py-2 rounded-full text-xs font-semibold transition-opacity hover:opacity-90"
                   style={{ background: "hsl(0,0%,100%)", color: "hsl(244,40%,12%)" }}
                 >
                   Free Consult
-                </Link>
-                <Link
+                </TrackedLink>
+                <TrackedLink
                   href="/hormone/glp1"
+                  event="cta_click"
+                  analytics={{ page: "hormone", source: "hormone-hub-glp1", service: "hormone", label: "Learn More" }}
                   className="pointer-events-auto relative z-10 px-4 py-2 rounded-full text-xs font-semibold text-white hover:opacity-90 transition-opacity"
                   style={{ background: "linear-gradient(135deg, hsl(271,74%,55%), hsl(188,88%,54%))" }}
                 >
                   Learn More
-                </Link>
+                </TrackedLink>
               </div>
             </div>
           </section>
@@ -249,7 +273,8 @@ export default function HormonePage() {
           <section
             className="relative overflow-hidden rounded-3xl border p-6 lg:p-7"
             style={{
-              background: "linear-gradient(135deg, hsla(188,88%,54%,0.16), hsla(216,79%,46%,0.2), hsla(210,32%,14%,0.94))",
+              background: "hsla(222,45%,8%,0.72)",
+              backdropFilter: "blur(10px)",
               borderColor: "hsla(188,88%,54%,0.28)",
               boxShadow: "0 20px 60px rgba(2,6,23,0.35)",
             }}
@@ -311,29 +336,32 @@ export default function HormonePage() {
               </div>
 
               <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
-                <Link
-                  href={BOOKING_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <TrackedLink
+                  href={bookingUrl("freeConsult", "hormone-hub-mens")}
+                  analytics={{ page: "hormone", source: "hormone-hub-mens", service: "hormone", appt: "freeConsult", label: "Free Consult" }}
                   className="pointer-events-auto relative z-10 px-4 py-2 rounded-full text-xs font-semibold transition-opacity hover:opacity-90"
                   style={{ background: "hsl(0,0%,100%)", color: "hsl(210,32%,10%)" }}
                 >
                   Free Consult
-                </Link>
-                <Link
+                </TrackedLink>
+                <TrackedLink
                   href="/hormone/mens-health"
+                  event="cta_click"
+                  analytics={{ page: "hormone", source: "hormone-hub-mens", service: "hormone", label: "Learn More" }}
                   className="pointer-events-auto relative z-10 px-4 py-2 rounded-full text-xs font-semibold text-white hover:opacity-90 transition-opacity"
                   style={{ background: "linear-gradient(135deg, hsl(188,88%,54%), hsl(216,79%,46%))" }}
                 >
                   Learn More
-                </Link>
-                <Link
+                </TrackedLink>
+                <TrackedLink
                   href="/hormone/mens-health/quiz"
+                  event="cta_click"
+                  analytics={{ page: "hormone", source: "hormone-hub-mens", service: "hormone", label: "Take the Quiz" }}
                   className="pointer-events-auto relative z-10 px-4 py-2 rounded-full text-xs font-semibold transition-opacity hover:opacity-90"
                   style={{ background: "rgba(255,255,255,0.08)", color: "#fff", border: "1px solid rgba(255,255,255,0.18)" }}
                 >
                   Take the Quiz
-                </Link>
+                </TrackedLink>
               </div>
             </div>
           </section>
@@ -371,6 +399,7 @@ export default function HormonePage() {
           </span>
         </a>
 
+      </div>
       </div>
 
       {/* ── SECOND VIEWPORT: a whole-person approach (zig-zag with imagery) ── */}
