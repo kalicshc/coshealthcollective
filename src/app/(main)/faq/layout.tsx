@@ -41,7 +41,7 @@ const faqSchema = {
       name: "What are your three divisions and how do they work together?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "CSHC Direct Primary Care is our membership-based primary care practice with unlimited visits and at-cost labs. CSHC Hormone & Weight Loss Clinic offers clinician-guided hormone optimization for men and women, including GLP-1 weight loss therapy. CSHC Hyperbaric (opening Summer 2026) will bring Colorado Springs' only accessible 2.0 ATA hyperbaric oxygen chamber.",
+        text: `CSHC Direct Primary Care is our membership-based primary care practice with unlimited visits and at-cost labs. CSHC Hormone & Weight Loss Clinic offers clinician-guided hormone optimization for men and women, including GLP-1 weight loss therapy. CSHC Hyperbaric (opening ${clinicFacts.hbot.openingDate}) will bring Colorado Springs' only accessible 2.0 ATA hyperbaric oxygen chamber.`,
       },
     },
     {
@@ -70,10 +70,10 @@ const faqSchema = {
     },
     {
       "@type": "Question",
-      name: "When will the Hormone & Weight Loss Clinic and Hyperbaric be available?",
+      name: "When will Hyperbaric open?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "CSHC Hyperbaric is planned to open Summer 2026. Early access members receive 25% off. The Hormone & Weight Loss Clinic is currently in development — sign up for early access through our contact form.",
+        text: `The Hormone & Weight Loss Clinic is accepting patients — book a free consult to get started. CSHC Hyperbaric is planned to open ${clinicFacts.hbot.openingDate}. Early access members receive 25% off.`,
       },
     },
     {

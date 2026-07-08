@@ -40,7 +40,7 @@ export const clinicFacts = {
   },
   hbot: {
     pressure: "2.0 ATA",
-    openingDate: "Summer 2026",
+    openingDate: "Fall 2026",
     earlyAccessDiscountPercent: 25,
   },
 } as const;

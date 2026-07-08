@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ArrowRight, CheckCircle, ExternalLink } from "lucide-react";
 import { submitDpcInquiry, submitHbotEarlyAccess, submitHormoneInquiry } from "@/lib/api";
 import { bookingUrl } from "@/lib/bookingLinks";
+import { clinicFacts } from "@/lib/clinicFacts";
 
 type FormType = "dpc" | "hormone" | "hbot";
 
@@ -132,7 +133,7 @@ const CARDS = [
     formType: "hormone" as FormType,
     href: bookingUrl("freeConsult", "clinic-cards"),
     external: true,
-    badge: "Coming Soon",
+    badge: "Accepting Patients",
     name: "Hormone + GLP Clinic",
     tagline: "Perimenopause, menopause, HRT, and GLP-1 weight loss — all in one practice.",
     pills: ["HRT", "GLP-1 / Semaglutide", "Menopause", "Weight Loss"],
@@ -156,7 +157,7 @@ const CARDS = [
     formType: "hbot" as FormType,
     href: "https://hbotwebsite.vercel.app",
     external: true,
-    badge: "Opening Summer 2026",
+    badge: `Opening ${clinicFacts.hbot.openingDate}`,
     name: "Hyperbaric Oxygen Clinic",
     tagline: "Colorado Springs' only 2.0 ATA chamber. The pressure clinical research was actually done at.",
     pills: ["2.0 ATA", "Brain Recovery", "Sports Recovery", "Wound Healing"],

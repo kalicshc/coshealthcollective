@@ -159,6 +159,26 @@ const IMAGES = {
       "white text. Near-abstract. Wide cinematic.",
     w: 2200, h: 1400,
   },
+  // ── Hormone sub-page heroes — violet/rose moods (ACCENTS.hormone) ──────
+  "mens-hero": {
+    prompt:
+      "A rugged Colorado granite ridgeline under a clearing storm at dusk, hard-edged rock and " +
+      "wind-blown snow in deep slate and violet tones, one restrained shaft of cool rose-gold " +
+      "light striking a distant crag in the UPPER RIGHT corner only. The left half and lower " +
+      "two-thirds of the frame are near-black storm shadow with zero highlights — deliberately " +
+      "dark to hold a large white headline. Strong, grounded, unsentimental. Wide cinematic.",
+    w: 2200, h: 1400,
+  },
+  "glp1-hero": {
+    prompt:
+      "A high Colorado trail switchbacking up toward a dawn-lit summit, a thin band of warm " +
+      "rose-violet first light on the top ridgeline at the TOP of the frame only — a feeling of " +
+      "steady forward progress. The lower two-thirds and left half of the frame fall into deep, " +
+      "even, near-black violet shadow with soft haze and no highlights — deliberately dark to " +
+      "hold a large white headline. Hopeful but disciplined. Wide cinematic.",
+    w: 2200, h: 1400,
+  },
+
   // ── Brand-gold support pages (about / blog / faq) — warm golden moods ──
   "about-hero": {
     dir: "brand",

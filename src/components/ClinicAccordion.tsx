@@ -6,6 +6,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { submitHbotEarlyAccess } from "@/lib/api";
 import ClinicQuestionForm from "@/components/ClinicQuestionForm";
 import { ACCENTS } from "@/lib/accents";
+import { clinicFacts } from "@/lib/clinicFacts";
 import { bookingUrl } from "@/lib/bookingLinks";
 
 type ClinicKey = "dpc" | "hormone" | "hyperbaric";
@@ -74,7 +75,7 @@ const CLINICS: Clinic[] = [
     key: "hormone",
     name: "Hormone & Metabolic Clinic",
     shortName: "Hormone",
-    status: "Now Open",
+    status: "Accepting Patients",
     statusKind: "open",
     tagline: "Hormone care that addresses the whole picture.",
     body:
@@ -97,7 +98,7 @@ const CLINICS: Clinic[] = [
     key: "hyperbaric",
     name: "Hyperbaric Oxygen",
     shortName: "Hyperbaric",
-    status: "Opening Summer 2026",
+    status: `Opening ${clinicFacts.hbot.openingDate}`,
     statusKind: "soon",
     tagline: "2.0 ATA oxygen therapy is coming.",
     body:

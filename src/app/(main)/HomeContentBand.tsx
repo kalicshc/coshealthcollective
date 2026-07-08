@@ -21,7 +21,7 @@ const SERVICES = [
   {
     href: "/hormone",
     accent: "210,80,250",
-    kicker: "Now Open",
+    kicker: "Accepting Patients",
     title: "Hormone & Metabolic Clinic",
     body: `HRT for perimenopause and menopause, TRT for men, and GLP-1 weight-loss therapy. Initial consult ${usd(clinicFacts.hormone.initialConsult)}, then ${usd(clinicFacts.hormone.monthlyManagement)}/month management.`,
     cta: "Explore hormone care",

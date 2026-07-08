@@ -36,9 +36,20 @@ export function RatingChip({ service = "brand", source }: { service?: ServiceKey
   );
 }
 
+// Rotate the shared review pool by a stable hash of the placement's `source`
+// so different pages lead with different reviewers instead of everyone
+// showing the first review in the list. Deterministic → SSR-safe.
+function rotationFor(source: string): number {
+  let h = 0;
+  for (let i = 0; i < source.length; i++) h = (h * 33 + source.charCodeAt(i)) % 997;
+  return h % GOOGLE_REVIEWS.length;
+}
+
 export function ReviewStrip({ variant = "strip", count = 3, service = "brand", source, extraSlot }: Props) {
   const a = ACCENTS[service];
-  const reviews = GOOGLE_REVIEWS.slice(0, variant === "strip" ? 1 : count);
+  const start = rotationFor(source);
+  const rotated = [...GOOGLE_REVIEWS.slice(start), ...GOOGLE_REVIEWS.slice(0, start)];
+  const reviews = rotated.slice(0, variant === "strip" ? 1 : count);
 
   if (variant === "strip") {
     const r = reviews[0];

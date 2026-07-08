@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ACCENTS } from "@/lib/accents";
+import { clinicFacts } from "@/lib/clinicFacts";
 import { ServiceHero, gradientTextStyle } from "@/components/ServiceHero";
 import { GlassCard } from "@/components/GlassCard";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
@@ -287,7 +288,7 @@ export default function EvidencePage() {
             Pre-Launch Access
           </p>
           <h2 className="text-3xl font-black text-white lg:text-4xl mb-5">
-            Opening Summer 2026.{" "}
+            Opening {clinicFacts.hbot.openingDate}.{" "}
             <span style={gradientTextStyle("hyperbaric")}>Register now.</span>
           </h2>
           <p className="mb-8" style={{ color: "hsl(210,25%,62%)", fontSize: "17px" }}>

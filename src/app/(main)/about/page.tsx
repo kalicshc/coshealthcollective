@@ -3,6 +3,7 @@ import Image from "next/image";
 import { CheckCircle } from "lucide-react";
 import { FaLinkedin } from "react-icons/fa6";
 import { ACCENTS } from "@/lib/accents";
+import { clinicFacts } from "@/lib/clinicFacts";
 import { SceneSection, Eyebrow, SCENE_H, SCENE_P } from "@/components/SceneSection";
 import { CoPrimaryCtas } from "@/components/CoPrimaryCtas";
 import { GlassCard } from "@/components/GlassCard";
@@ -179,7 +180,7 @@ export default function About() {
           We started with Direct Primary Care because it was the fastest way to make a difference — care that&apos;s built
           around people, not billing codes. Now we&apos;re building the rest of the campus. CSHC Hormone &amp; Weight Loss
           Clinic brings hormone optimization and GLP-1 therapy to patients who&apos;ve been dismissed or underserved.
-          CSHC Hyperbaric is launching Summer 2026 as Colorado Springs&apos; only accessible 2.0 ATA hyperbaric chamber
+          CSHC Hyperbaric is launching {clinicFacts.hbot.openingDate} as Colorado Springs&apos; only accessible 2.0 ATA hyperbaric chamber
           outside of UC Health.
         </p>
         <p className="mx-auto mt-5 max-w-3xl text-lg leading-relaxed text-white/95" style={{ textShadow: SCENE_P }}>

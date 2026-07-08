@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { CheckCircle, Users, Heart, Shield, ExternalLink } from "lucide-react";
 import { submitEmployerInquiry } from "@/lib/api";
+import { clinicFacts } from "@/lib/clinicFacts";
 import { trackEvent } from "@/lib/analytics";
 import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { ACCENTS } from "@/lib/accents";
@@ -270,21 +271,21 @@ export default function ForBusinesses() {
         <div className="mx-auto max-w-4xl px-5 lg:px-8">
           <GlassCard service="brand" className="!p-8 lg:!p-10">
             <h2 className="text-2xl lg:text-3xl font-black mb-4 text-center text-white">
-              More CSHC Benefits <span style={gradientTextStyle("brand")}>Coming for Teams</span>
+              More CSHC Benefits <span style={gradientTextStyle("brand")}>for Teams</span>
             </h2>
             <p className="text-center mb-8" style={{ color: "hsl(210,25%,75%)" }}>
-              As we expand, we&apos;re building employer options across all three CSHC divisions. Get on the early access list for:
+              Employer options extend across all three CSHC divisions:
             </p>
             <div className="grid md:grid-cols-2 gap-5">
               <div className="rounded-2xl p-6" style={{ background: "hsla(280,22%,22%,0.6)", border: `1px solid rgba(${ACCENTS.hormone.rgb},0.25)` }}>
-                <span className="text-xs font-bold uppercase tracking-widest block mb-2" style={{ color: `rgb(${ACCENTS.hormone.rgb})` }}>Coming Soon</span>
+                <span className="text-xs font-bold uppercase tracking-widest block mb-2" style={{ color: `rgb(${ACCENTS.hormone.rgb})` }}>Available</span>
                 <h3 className="font-bold text-lg mb-2 text-white">CSHC Hormone &amp; Weight Loss Clinic</h3>
                 <p className="text-sm" style={{ color: "hsl(210,25%,75%)" }}>
-                  Group pricing for hormone optimization and GLP-1 weight loss programs for employees and their spouses.
+                  Group pricing for hormone optimization and GLP-1 weight loss programs for employees and their spouses. Ask us for team rates.
                 </p>
               </div>
               <div className="rounded-2xl p-6" style={{ background: "hsla(177,22%,22%,0.6)", border: `1px solid rgba(${ACCENTS.hyperbaric.rgb},0.25)` }}>
-                <span className="text-xs font-bold uppercase tracking-widest block mb-2" style={{ color: `rgb(${ACCENTS.hyperbaric.rgb})` }}>Opening Summer 2026</span>
+                <span className="text-xs font-bold uppercase tracking-widest block mb-2" style={{ color: `rgb(${ACCENTS.hyperbaric.rgb})` }}>Opening {clinicFacts.hbot.openingDate}</span>
                 <h3 className="font-bold text-lg mb-2 text-white">CSHC Hyperbaric</h3>
                 <p className="text-sm" style={{ color: "hsl(210,25%,75%)" }}>
                   Corporate packages for hyperbaric oxygen therapy at Colorado Springs&apos; only 2.0 ATA chamber outside UC Health. Early access members receive 25% off at launch.

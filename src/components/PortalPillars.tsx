@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { submitHbotEarlyAccess, submitDpcInquiry } from "@/lib/api";
 import { bookingUrl } from "@/lib/bookingLinks";
+import { clinicFacts } from "@/lib/clinicFacts";
 
 const MEET_GREET_URL =
   bookingUrl("meetGreet", "portal-pillars");
@@ -61,7 +62,7 @@ const PILLARS: Pillar[] = [
   {
     id: "hbot",
     href: "/hyperbaric",
-    eyebrow: "Opening Summer 2026",
+    eyebrow: `Opening ${clinicFacts.hbot.openingDate}`,
     clinic: "CSHC Hyperbaric",
     headline: "2.0 ATA oxygen therapy is coming.",
     body: "A clinic-based chamber built around the pressure used in stronger HBOT research, with early access pricing locked in before launch.",
