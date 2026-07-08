@@ -5,6 +5,8 @@ import { ServiceHero, gradientTextStyle } from "@/components/ServiceHero";
 import { GlassCard } from "@/components/GlassCard";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
 import { bookingUrl } from "@/lib/bookingLinks";
+import { serviceSchema } from "@/lib/schema";
+import { JsonLd } from "@/components/JsonLd";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/allergy-slit" },
@@ -36,9 +38,17 @@ const allergenGroups = [
   { title: "Environmental Allergens", items: ["Dust mites", "Mold spores", "Pet dander (cats, dogs)"] },
 ];
 
+const allergySlitSchema = serviceSchema({
+  type: "MedicalTherapy",
+  name: "Allergy Testing & Sublingual Immunotherapy (SLIT)",
+  description: "Evidence-based allergy testing and sublingual immunotherapy (SLIT) in Colorado Springs. At-home allergy treatment without injections. Seasonal and environmental allergy relief.",
+  path: "/allergy-slit",
+});
+
 export default function AllergySlit() {
   return (
     <div>
+      <JsonLd data={allergySlitSchema} />
       <ServiceHero
         service="dpc"
         eyebrow="No Weekly Shots · At-Home Drops"

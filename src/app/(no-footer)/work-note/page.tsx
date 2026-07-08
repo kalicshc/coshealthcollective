@@ -1,5 +1,7 @@
 "use client";
 
+import { Printer } from "lucide-react";
+
 export default function WorkNote() {
   return (
     <div className="work-note-container">
@@ -39,7 +41,7 @@ export default function WorkNote() {
       `}</style>
 
       <div className="print-btn no-print">
-        <button onClick={() => window.print()}>🖨 Print / Save as PDF</button>
+        <button onClick={() => window.print()}><Printer size={14} style={{ verticalAlign: "-2px", marginRight: 6 }} /> Print / Save as PDF</button>
       </div>
 
       <div className="work-note-page">

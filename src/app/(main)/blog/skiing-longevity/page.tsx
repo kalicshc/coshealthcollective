@@ -5,6 +5,8 @@ import { Phone, Mail, ArrowLeft, CheckCircle, Dumbbell } from "lucide-react";
 import { clinicFacts } from "@/lib/clinicFacts";
 import { ACCENTS } from "@/lib/accents";
 import { BlogCtaBlock } from "@/components/BlogCtaBlock";
+import { breadcrumbSchema } from "@/lib/schema";
+import { JsonLd } from "@/components/JsonLd";
 
 const A = ACCENTS.brand;
 
@@ -26,16 +28,23 @@ const articleSchema = {
   headline: "Skiing Into Your 70s: A Colorado Springs Guide to Longevity on the Slopes",
   description: "Strength training, nutrition, sleep, and recovery for lifelong skiers in Colorado.",
   datePublished: "2026-01-15",
+  dateModified: "2026-07-08",
   author: { "@type": "Organization", name: "Colorado Springs Health Collective" },
   publisher: { "@type": "Organization", name: "Colorado Springs Health Collective", url: "https://coshealthcollective.com", logo: { "@type": "ImageObject", url: "https://coshealthcollective.com/logo-main.png" } },
   mainEntityOfPage: { "@type": "WebPage", "@id": "https://coshealthcollective.com/blog/skiing-longevity" },
   image: "https://coshealthcollective.com/blog/skiing-hero.jpg",
 };
 
+const breadcrumbs = breadcrumbSchema([
+  { name: "Blog", path: "/blog" },
+  { name: "Skiing Into Your 70s", path: "/blog/skiing-longevity" },
+]);
+
 export default function BlogSkiingLongevity() {
   return (
     <div className="min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <JsonLd data={breadcrumbs} />
       <section className="relative" style={{ background: "hsl(210, 32%, 8%)" }}>
 
         <div className="relative h-[60vh] min-h-[420px] overflow-hidden">
@@ -163,7 +172,7 @@ export default function BlogSkiingLongevity() {
               </div>
               <div className="px-6 pb-6">
                 <p className="leading-relaxed" style={{ color: "hsl(0, 0%, 82%)" }}>
-                  Starting around age 30, we lose 3–5% of muscle mass per decade without deliberate resistance training. By 70 that&apos;s potentially 20% less muscle than your peak — which explains why unfit 70-year-olds struggle on terrain that fit ones handle easily. Resistance training 2–4 days per week year-round reverses this at any age. The research is unambiguous on this point.
+                  Starting around age 30, we lose 3–5% of muscle mass per decade without deliberate resistance training. By 70 that&apos;s potentially 20% less muscle than your peak — which explains why unfit 70-year-olds struggle on terrain that fit ones handle easily. Resistance training 2–4 days per week year-round can rebuild strength and muscle at any age — a finding well supported across the research.
                 </p>
               </div>
             </div>

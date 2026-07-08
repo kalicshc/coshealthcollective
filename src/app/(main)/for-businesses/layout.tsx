@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { serviceSchema } from "@/lib/schema";
+import { JsonLd } from "@/components/JsonLd";
 
 export const metadata: Metadata = {
   title: "DPC for Businesses Colorado Springs | Employee Healthcare Benefit | CSHC",
@@ -19,9 +21,25 @@ export const metadata: Metadata = {
     description:
       "Give your employees same-day care, direct provider access, and no copays. DPC as a company benefit in Colorado Springs.",
     url: "https://coshealthcollective.com/for-businesses",
+    images: [{ url: "/images/dpc/business-hero.webp", alt: "DPC for Businesses — Colorado Springs Health Collective" }],
   },
 };
 
+// JSON-LD lives in the layout because the page itself is a client component.
+const forBusinessesSchema = serviceSchema({
+  type: "Service",
+  name: "Direct Primary Care for Businesses",
+  description:
+    "Offer your team real primary care as a tax-deductible business benefit. CSHC Direct Primary Care for employers — fewer sick days, happier employees, transparent pricing.",
+  path: "/for-businesses",
+  image: "/images/dpc/business-hero.webp",
+});
+
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return (
+    <>
+      <JsonLd data={forBusinessesSchema} />
+      {children}
+    </>
+  );
 }

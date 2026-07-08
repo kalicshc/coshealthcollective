@@ -54,20 +54,31 @@ const SCENES: Scene[] = [
   { type: "vision", side: "center", tint: ACCENTS.brand.rgb },
 ];
 
-const DEFAULT_IMAGES = ["/preview/scene1.png", "/preview/scene2.png", "/preview/scene3.png", "/preview/scene4.png", "/preview/scene5.png", "/preview/scene5.png"];
+// Fallbacks for the draft /preview/home route (no props). Same aurora WebPs the
+// real homepage passes in (src/app/(main)/page.tsx) — the old scene*.png drafts
+// were deleted (~12 MB of unused PNG).
+const DEFAULT_IMAGES = ["/images/home/aurora1.webp", "/images/home/aurora2.webp", "/images/home/aurora3.webp", "/images/home/aurora4.webp", "/images/home/aurora5-night.webp", "/images/home/aurora6.webp"];
 
 // Review quotes live in src/lib/reviews.ts (shared with ReviewStrip on interior pages).
 const REVIEWS = GOOGLE_REVIEWS;
 
-const STORY: { title: string; body: string; image: string }[] = [
-  { title: "You're not a number here.", body: "We're a collective of providers building something different. Whether you're here for primary care, hormone optimization, or recovery — you're a whole human with strengths, stressors, habits, and goals. Our job is to help you move the needle.", image: "/images/story/01-who-we-are-opt.jpg" },
-  { title: "We live for this.", body: "We mountain bike, hike, camp, and explore with Henry, Mila, our daughter, and each other. We care about the outdoors, wildlife, and building a life that stays strong as the years stack up.", image: "/images/story/02-colorado-life-opt.jpg" },
-  { title: "For people who refuse to slow down.", body: "Our members want to age with strength, clarity, and energy. Parents who want more years for their kids. Athletes who want to recover smarter. Adults who know something feels off and want real answers — not dismissals.", image: "/images/story/03-best-fit-opt.jpg" },
-  { title: "We got tired of rushed medicine.", body: "In the traditional model, the incentive is volume: more visits, less time. That means shorter conversations, slower access, and worse follow-through — while costs keep climbing.", image: "/images/story/04-rushed-medicine-opt.jpg" },
-  { title: "The system fails people at every turn.", body: "Women dismissed during menopause — told their labs were 'normal' while their quality of life collapsed. Men written off when testosterone was 'in range' but off. Recovery tools locked behind hospital programs most people can't access or afford.", image: "/images/story/05-insurance-barriers-opt.jpg" },
-  { title: "A collective built to fill the gaps.", body: "Direct primary care that puts your provider in your corner. Hormone optimization for the patients who've been dismissed. And hyperbaric oxygen therapy at 2.0 ATA, because no one else was bringing it here at a price people can actually access.", image: "/images/story/06-why-dpc-opt.jpg" },
-  { title: "We're building the campus.", body: "We left careers in emergency medicine and hospital systems because we saw what's possible when care is built for people — not billing cycles. We started with direct primary care, and we're working toward a full health campus where all of it lives under one roof.", image: "/images/story/07-the-leap-opt.jpg" },
+// Story photos render through next/image (lazy + right-sized), so each entry
+// carries its intrinsic dimensions. Rendered width is min(400px,78vw) on
+// desktop and capped ~min(230px,50vw) on mobile (see the .stry-photo rules).
+const STORY: { title: string; body: string; image: string; w: number; h: number }[] = [
+  { title: "You're not a number here.", body: "We're a collective of providers building something different. Whether you're here for primary care, hormone optimization, or recovery — you're a whole human with strengths, stressors, habits, and goals. Our job is to help you move the needle.", image: "/images/story/01-who-we-are-opt.jpg", w: 987, h: 1037 },
+  { title: "We live for this.", body: "We mountain bike, hike, camp, and explore with Henry, Mila, our daughter, and each other. We care about the outdoors, wildlife, and building a life that stays strong as the years stack up.", image: "/images/story/02-colorado-life-opt.jpg", w: 900, h: 1200 },
+  { title: "For people who refuse to slow down.", body: "Our members want to age with strength, clarity, and energy. Parents who want more years for their kids. Athletes who want to recover smarter. Adults who know something feels off and want real answers — not dismissals.", image: "/images/story/03-best-fit-opt.jpg", w: 764, h: 1200 },
+  { title: "We got tired of rushed medicine.", body: "In the traditional model, the incentive is volume: more visits, less time. That means shorter conversations, slower access, and worse follow-through — while costs keep climbing.", image: "/images/story/04-rushed-medicine-opt.jpg", w: 900, h: 1200 },
+  { title: "The system fails people at every turn.", body: "Women dismissed during menopause — told their labs were 'normal' while their quality of life collapsed. Men written off when testosterone was 'in range' but off. Recovery tools locked behind hospital programs most people can't access or afford.", image: "/images/story/05-insurance-barriers-opt.jpg", w: 900, h: 1200 },
+  { title: "A collective built to fill the gaps.", body: "Direct primary care that puts your provider in your corner. Hormone optimization for the patients who've been dismissed. And hyperbaric oxygen therapy at 2.0 ATA, because no one else was bringing it here at a price people can actually access.", image: "/images/story/06-why-dpc-opt.jpg", w: 800, h: 1200 },
+  { title: "We're building the campus.", body: "We left careers in emergency medicine and hospital systems because we saw what's possible when care is built for people — not billing cycles. We started with direct primary care, and we're working toward a full health campus where all of it lives under one roof.", image: "/images/story/07-the-leap-opt.jpg", w: 1019, h: 1200 },
 ];
+
+// Shared with PreviewHomeClient so its react-dom preload() of the first story
+// photo requests the SAME optimized URL next/image will use (via getImageProps).
+export const STORY_IMG_SIZES = "(max-width: 639px) 230px, 400px";
+export const STORY_PRELOAD = { src: STORY[0].image, width: STORY[0].w, height: STORY[0].h };
 
 const NAV_LABELS = ["Welcome", "Direct Primary Care", "Hormone & Metabolic", "Hyperbaric", "Our Story", "Reviews", "Our Journey"];
 
@@ -149,7 +160,7 @@ function StoryCarousel({ tint }: { tint: string }) {
           {/* whole photo visible (no crop) */}
           <div className="stry-photo" style={{ width: "min(400px,78vw)", borderRadius: 18, overflow: "hidden", flexShrink: 0,
             border: `1px solid rgba(${tint},0.5)`, boxShadow: `0 24px 60px rgba(0,0,0,0.5), 0 0 50px rgba(${tint},0.22)` }}>
-            <img src={s.image} alt={s.title} style={{ display: "block", width: "100%", height: "auto", objectFit: "contain" }} />
+            <Image src={s.image} alt={s.title} width={s.w} height={s.h} sizes={STORY_IMG_SIZES} style={{ display: "block", width: "100%", height: "auto", objectFit: "contain" }} />
           </div>
           <div style={{ flex: 1, minWidth: 250, maxWidth: 380, textAlign: "left" }}>
             <p style={{ fontSize: "clamp(1.3rem,2vw,1.7rem)", fontWeight: 800, color: "#fff", marginBottom: 12, lineHeight: 1.1, textShadow: "0 2px 16px rgba(0,0,0,0.85)" }}>{s.title}</p>
@@ -246,6 +257,10 @@ export default function PhotoFlythrough({ images, masks }: { images?: string[]; 
   function jumpTo(k: number) {
     const sec = sectionRef.current;
     if (!sec) return;
+    // A jump can cross several scenes faster than the ±1 mount window fetches
+    // them — warm the destination photo now so it's decoded when we arrive.
+    const destSrc = images?.[Math.max(0, k - 1)] ?? DEFAULT_IMAGES[Math.max(0, k - 1)];
+    if (destSrc) new window.Image().src = destSrc;
     const docTop = sec.getBoundingClientRect().top + window.scrollY;
     const travel = sec.offsetHeight - window.innerHeight;
     const b = SCENE_BOUNDS[k - 1];
@@ -373,13 +388,23 @@ export default function PhotoFlythrough({ images, masks }: { images?: string[]; 
       <LeftNav active={navIdx} onJump={jumpTo} hidden={navHidden} />
 
       <div ref={stageRef} className="sticky top-0 h-screen w-full overflow-hidden" style={{ background: "hsl(220,32%,6%)", height: "100dvh" }}>
-        {SCENES.map((s, i) => (
-          <div key={i} ref={(el) => { sceneRefs.current[i] = el; }} className="absolute inset-0"
-            style={{ backgroundImage: `url('${images?.[i] ?? DEFAULT_IMAGES[i]}')`, backgroundSize: "cover", backgroundPosition: "center 42%", opacity: 0, willChange: "transform, opacity" }} aria-hidden>
-            {/* recolor ONLY the aurora ribbons to the current scroll color */}
-            <AuroraTint mask={masks?.[i]} stops={i === 0 ? D0_STOPS : SCENE_AURORA[i]} />
-          </div>
-        ))}
+        {SCENES.map((s, i) => {
+          // Memory guard: only scenes near the current scroll position keep a
+          // decoded background + `will-change` compositor layer — distant scenes
+          // drop both (6 full-viewport layers otherwise live for the whole page).
+          // `navIdx` only changes at scene boundaries (guarded in apply()), so
+          // this re-renders at boundaries, never per frame. The ±1 window mounts
+          // the next photo a full scene before its fade-in, so it fetches +
+          // decodes during the previous scene. At load navIdx=0 → scenes 0–1.
+          const near = Math.abs(i - Math.max(0, navIdx - 1)) <= 1;
+          return (
+            <div key={i} ref={(el) => { sceneRefs.current[i] = el; }} className="absolute inset-0"
+              style={{ backgroundImage: near ? `url('${images?.[i] ?? DEFAULT_IMAGES[i]}')` : undefined, backgroundSize: "cover", backgroundPosition: "center 42%", opacity: 0, willChange: near ? "transform, opacity" : "auto" }} aria-hidden>
+              {/* recolor ONLY the aurora ribbons to the current scroll color */}
+              <AuroraTint mask={masks?.[i]} stops={i === 0 ? D0_STOPS : SCENE_AURORA[i]} />
+            </div>
+          );
+        })}
 
         {/* Light grounding gradient only at the very bottom — the per-letter 3D
             shadows handle text readability, so the photo + aurora stay bright. */}

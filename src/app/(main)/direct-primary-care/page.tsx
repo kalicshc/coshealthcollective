@@ -1,5 +1,7 @@
 import { clinicFacts, usd } from "@/lib/clinicFacts";
 import { ACCENTS } from "@/lib/accents";
+import { serviceSchema, faqSchema } from "@/lib/schema";
+import { JsonLd } from "@/components/JsonLd";
 import { hintLink } from "@/lib/bookingLinks";
 import { SceneSection, Eyebrow, SCENE_H, SCENE_P } from "@/components/SceneSection";
 import { CoPrimaryCtas } from "@/components/CoPrimaryCtas";
@@ -135,9 +137,28 @@ function DpcCtas({ source, size, align }: { source: string; size?: "md" | "lg"; 
   );
 }
 
+const dpcSchema = serviceSchema({
+  type: "Service",
+  name: "Direct Primary Care Membership",
+  description:
+    "CSHC Direct Primary Care in Colorado Springs — $100/month for unlimited visits, same-day access, no copays, and labs at cost. Real primary care without insurance red tape.",
+  path: "/direct-primary-care",
+  image: "/images/dpc/dpc-hero.webp",
+  offers: [
+    { name: "Individual membership (per month)", price: clinicFacts.dpc.individualMonthly },
+    { name: "Couples membership (per month)", price: clinicFacts.dpc.couplesMonthly },
+    { name: `Child add-on, age ${clinicFacts.dpc.childAgeMin}+ (per month)`, price: clinicFacts.dpc.childAddOnMonthly },
+    { name: "One-time registration fee (per household)", price: clinicFacts.dpc.registrationFee },
+  ],
+});
+
+const dpcFaqSchema = faqSchema(dpcFaqs.map(({ question, answer }) => ({ question, answer })));
+
 export default function DirectPrimaryCare() {
   return (
     <div className="pb-20 lg:pb-0">
+      <JsonLd data={dpcSchema} />
+      <JsonLd data={dpcFaqSchema} />
       <h1 className="sr-only">Direct Primary Care Colorado Springs — Unlimited Visits, No Copays, {usd(clinicFacts.dpc.individualMonthly)}/Month DPC Membership</h1>
 
       {/* ── 1. CINEMATIC HERO ─────────────────────────────────────────── */}

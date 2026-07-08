@@ -45,6 +45,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "/media", priority: 0.6, changeFrequency: "monthly" },
     { url: "/hormone/mens-health/quiz", priority: 0.8, changeFrequency: "monthly" },
     { url: "/hormone/womens-health/quiz", priority: 0.8, changeFrequency: "monthly" },
+    { url: "/privacy-policy", priority: 0.3, changeFrequency: "yearly" },
+    { url: "/terms-of-service", priority: 0.3, changeFrequency: "yearly" },
+    { url: "/hipaa-notice", priority: 0.3, changeFrequency: "yearly" },
   ];
 
   return routes.map(({ url, priority, changeFrequency }) => ({

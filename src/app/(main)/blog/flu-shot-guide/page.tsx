@@ -5,6 +5,8 @@ import { Phone, Mail, ArrowLeft, CheckCircle, AlertTriangle, Users } from "lucid
 import { clinicFacts } from "@/lib/clinicFacts";
 import { ACCENTS } from "@/lib/accents";
 import { BlogCtaBlock } from "@/components/BlogCtaBlock";
+import { breadcrumbSchema } from "@/lib/schema";
+import { JsonLd } from "@/components/JsonLd";
 
 const A = ACCENTS.brand;
 
@@ -26,16 +28,23 @@ const articleSchema = {
   headline: "How the Flu Shot Works: Safety, Risks & Why You Should Get Vaccinated",
   description: "Proven safety profile, potential risks, and why vaccination matters every flu season.",
   datePublished: "2025-12-15",
+  dateModified: "2025-12-15",
   author: { "@type": "Organization", name: "Colorado Springs Health Collective" },
   publisher: { "@type": "Organization", name: "Colorado Springs Health Collective", url: "https://coshealthcollective.com", logo: { "@type": "ImageObject", url: "https://coshealthcollective.com/logo-main.png" } },
   mainEntityOfPage: { "@type": "WebPage", "@id": "https://coshealthcollective.com/blog/flu-shot-guide" },
   image: "https://coshealthcollective.com/blog/flu-shot-hero.jpg",
 };
 
+const breadcrumbs = breadcrumbSchema([
+  { name: "Blog", path: "/blog" },
+  { name: "How the Flu Shot Works", path: "/blog/flu-shot-guide" },
+]);
+
 export default function BlogFluShotGuide() {
   return (
     <div className="min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <JsonLd data={breadcrumbs} />
       <section className="relative" style={{ background: "hsl(210, 32%, 8%)" }}>
 
         <div className="relative h-[60vh] min-h-[420px] overflow-hidden">

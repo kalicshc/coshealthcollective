@@ -7,6 +7,8 @@ import { GlassCard } from "@/components/GlassCard";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
 import { ReviewStrip } from "@/components/ReviewStrip";
 import { hintLink } from "@/lib/bookingLinks";
+import { serviceSchema } from "@/lib/schema";
+import { JsonLd } from "@/components/JsonLd";
 
 const { telehealth, inPerson } = clinicFacts.urgentCare;
 const ACCENT = ACCENTS.dpc;
@@ -52,9 +54,21 @@ const erWarnings = [
   "Loss of consciousness",
 ];
 
+const urgentCareSchema = serviceSchema({
+  type: "Service",
+  name: "Urgent Care & Telehealth",
+  description: `Skip the ER. Urgent care and telehealth visits in Colorado Springs for UTIs, strep, flu, COVID, lacerations, infections, and minor injuries. Flat rate pricing: ${usd(telehealth)} telehealth, ${usd(inPerson)} in-person or in-home. Same-day appointments available.`,
+  path: "/urgent-care",
+  offers: [
+    { name: "Telehealth visit", price: telehealth },
+    { name: "In-person or in-home visit", price: inPerson },
+  ],
+});
+
 export default function UrgentCare() {
   return (
     <div>
+      <JsonLd data={urgentCareSchema} />
       <ServiceHero
         service="dpc"
         eyebrow="Simple · Transparent · Local"

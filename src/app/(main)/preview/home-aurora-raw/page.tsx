@@ -11,12 +11,12 @@ export const metadata: Metadata = {
 // mask). This shows the aurora photos in their natural, untouched hues — i.e. what
 // the flythrough looked like before any color-gradient grading was applied.
 const AURORA_IMAGES = [
-  "/preview/aurora1.webp", // DPC
-  "/preview/aurora2.webp", // Hormone
-  "/preview/aurora3.webp", // Hyperbaric
-  "/preview/aurora4.webp", // Our Story
-  "/preview/aurora5-night.webp", // Reviews
-  "/preview/aurora6.webp", // Our Journey — sunrise
+  "/images/home/aurora1.webp", // DPC
+  "/images/home/aurora2.webp", // Hormone
+  "/images/home/aurora3.webp", // Hyperbaric
+  "/images/home/aurora4.webp", // Our Story
+  "/images/home/aurora5-night.webp", // Reviews
+  "/images/home/aurora6.webp", // Our Journey — sunrise
 ];
 
 // Empty strings → AuroraTint renders nothing → raw, ungraded photos.

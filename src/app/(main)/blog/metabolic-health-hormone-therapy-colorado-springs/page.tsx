@@ -4,6 +4,8 @@ import Link from "next/link";
 import { ArrowLeft, Phone, Mail, ChevronRight } from "lucide-react";
 import { clinicFacts } from "@/lib/clinicFacts";
 import { BlogCtaBlock } from "@/components/BlogCtaBlock";
+import { breadcrumbSchema } from "@/lib/schema";
+import { JsonLd } from "@/components/JsonLd";
 
 export const metadata: Metadata = {
   title: "Why Metabolic Health Is the Foundation of Safe, Effective Hormone Therapy | CSHC Colorado Springs",
@@ -89,6 +91,12 @@ export default function MetabolicHealthHormonePost() {
             image: "https://coshealthcollective.com/blog/metabolic-health-hero.jpg",
           }),
         }}
+      />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Blog", path: "/blog" },
+          { name: "Why Metabolic Health Is the Foundation of Hormone Therapy", path: "/blog/metabolic-health-hormone-therapy-colorado-springs" },
+        ])}
       />
 
       <script

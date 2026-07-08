@@ -5,6 +5,8 @@ import { ArrowLeft, Phone, Mail, ChevronRight } from "lucide-react";
 import { clinicFacts } from "@/lib/clinicFacts";
 import { ACCENTS } from "@/lib/accents";
 import { BlogCtaBlock } from "@/components/BlogCtaBlock";
+import { breadcrumbSchema } from "@/lib/schema";
+import { JsonLd } from "@/components/JsonLd";
 
 const A = ACCENTS.hormone;
 
@@ -94,6 +96,12 @@ export default function WhyMenopauseEvolutionPost() {
             ],
           }),
         }}
+      />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Blog", path: "/blog" },
+          { name: "Why Do Women Go Through Menopause?", path: "/blog/why-menopause-evolution-colorado-springs" },
+        ])}
       />
 
       <script

@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
+import { TriangleAlert } from "lucide-react";
 import { ACCENTS } from "@/lib/accents";
 import { clinicFacts } from "@/lib/clinicFacts";
 import { ServiceHero, gradientTextStyle } from "@/components/ServiceHero";
 import { GlassCard } from "@/components/GlassCard";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
 import { TrackedLink } from "@/components/analytics/TrackedLink";
+import { breadcrumbSchema } from "@/lib/schema";
+import { JsonLd } from "@/components/JsonLd";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/hyperbaric/evidence" },
@@ -68,7 +71,7 @@ const tiers = [
         urgent: false,
         bullets: [
           "RCT (74 patients, 6 months–3 years post-stroke): significant improvements in neurological function — SPECT confirmed reactivated brain regions",
-          "Retrospective analysis (162 patients): 86% achieved clinically significant cognitive improvement after 40–60 sessions at 2.0 ATA",
+          "Retrospective, uncontrolled analysis (162 patients): 86% showed clinically significant cognitive improvement after 40–60 sessions at 2.0 ATA — controlled trials still needed to confirm",
           "fNIRS studies confirm improvements in Fugl-Meyer motor scores",
         ],
         protocol: "2.0 ATA · 90 min · 40–60 sessions · Best results 6 months to several years post-stroke",
@@ -183,9 +186,15 @@ const tiers = [
   },
 ];
 
+const evidenceBreadcrumbs = breadcrumbSchema([
+  { name: "Hyperbaric Oxygen Therapy", path: "/hyperbaric" },
+  { name: "HBOT Evidence Library", path: "/hyperbaric/evidence" },
+]);
+
 export default function EvidencePage() {
   return (
     <div className="page-bg">
+      <JsonLd data={evidenceBreadcrumbs} />
       <ServiceHero
         service="hyperbaric"
         compact
@@ -253,7 +262,8 @@ export default function EvidencePage() {
                       className="rounded-xl px-4 py-3 mb-4 text-xs"
                       style={{ background: "hsla(45,90%,55%,0.08)", border: "1px solid hsla(45,90%,55%,0.25)", color: "hsl(45,90%,72%)" }}
                     >
-                      ⚠️ {c.warning}
+                      <TriangleAlert className="inline-block w-3.5 h-3.5 mr-1.5 -mt-0.5" strokeWidth={2} aria-hidden />
+                      {c.warning}
                     </div>
                   )}
 

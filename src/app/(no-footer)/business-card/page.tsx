@@ -510,6 +510,7 @@ export default function BusinessCard() {
                     <div className="bc-b-clinic-name">Hyperbaric Oxygen</div>
                     <div className="bc-b-clinic-items">
                       <div className="bc-b-item">2.0 ATA · Clinical-grade</div>
+                      <div className="bc-b-item">Opening Fall 2026</div>
                       <div className="bc-b-item">Wound healing</div>
                       <div className="bc-b-item">Ulcerative colitis</div>
                       <div className="bc-b-item">Long COVID</div>

@@ -10,12 +10,29 @@ import { SceneSection, SCENE_H, SCENE_P } from "@/components/SceneSection";
 import { RatingChip } from "@/components/ReviewStrip";
 import { JourneyCurve } from "@/components/JourneyCurve";
 import { CriticalWindowTimeline } from "@/components/CriticalWindowTimeline";
+import { serviceSchema } from "@/lib/schema";
+import { JsonLd } from "@/components/JsonLd";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/hormone" },
   title: "Hormone + Metabolic Care | Colorado Springs Health Collective",
   description: "Evidence-based hormone care for women and men in Colorado Springs. HRT, TRT, GLP-1, perimenopause, menopause, and metabolic health — all in one care pathway.",
+  openGraph: {
+    images: [{ url: "/images/hormone/journey-backdrop.webp", alt: "Hormone + Metabolic Care — Colorado Springs Health Collective" }],
+  },
 };
+
+const hormoneSchema = serviceSchema({
+  type: "MedicalTherapy",
+  name: "Hormone & Metabolic Care",
+  description: "Evidence-based hormone care for women and men in Colorado Springs. HRT, TRT, GLP-1, perimenopause, menopause, and metabolic health — all in one care pathway.",
+  path: "/hormone",
+  image: "/images/hormone/journey-backdrop.webp",
+  offers: [
+    { name: "Initial consult (includes first month)", price: clinicFacts.hormone.initialConsult },
+    { name: "Ongoing management (per month)", price: clinicFacts.hormone.monthlyManagement },
+  ],
+});
 
 const BOOKING_URL =
   bookingUrl("freeConsult", "hormone");
@@ -68,6 +85,7 @@ export default function HormonePage() {
       className="relative"
       style={{ background: "linear-gradient(180deg, hsla(210,32%,11%,0.7), hsla(210,32%,12%,0.56))" }}
     >
+      <JsonLd data={hormoneSchema} />
       {/* ── 1. CINEMATIC HERO — one clean screen, then sections ──────── */}
       <SceneSection
         image="/images/hormone/journey-backdrop.webp"

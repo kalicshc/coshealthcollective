@@ -7,6 +7,8 @@ import { StickyCtaBar } from "@/components/StickyCtaBar";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
 import { ReviewStrip, RatingChip } from "@/components/ReviewStrip";
 import { bookingUrl } from "@/lib/bookingLinks";
+import { serviceSchema, breadcrumbSchema } from "@/lib/schema";
+import { JsonLd } from "@/components/JsonLd";
 
 // The men's hormone page on the epic-scene language (womens-health/hormone
 // hub): cinematic hero → symptoms → the evaluation → the honest version of
@@ -16,7 +18,27 @@ export const metadata: Metadata = {
   alternates: { canonical: "/hormone/mens-health" },
   title: "Men's Hormone Health + TRT | Colorado Springs Health Collective",
   description: "Comprehensive men's hormone care in Colorado Springs. Low testosterone, TRT optimization, fatigue, recovery, libido — a full evaluation before any treatment.",
+  openGraph: {
+    images: [{ url: "/images/hormone/mens-hero.webp", alt: "Men's Hormone Health + TRT — Colorado Springs Health Collective" }],
+  },
 };
+
+const mensSchema = serviceSchema({
+  type: "MedicalTherapy",
+  name: "Men's Hormone Health & TRT",
+  description: "Comprehensive men's hormone care in Colorado Springs. Low testosterone, TRT optimization, fatigue, recovery, libido — a full evaluation before any treatment.",
+  path: "/hormone/mens-health",
+  image: "/images/hormone/mens-hero.webp",
+  offers: [
+    { name: "Initial consult (includes first month)", price: clinicFacts.hormone.initialConsult },
+    { name: "Ongoing management (per month)", price: clinicFacts.hormone.monthlyManagement },
+  ],
+});
+
+const mensBreadcrumbs = breadcrumbSchema([
+  { name: "Hormone + Metabolic Care", path: "/hormone" },
+  { name: "Men's Hormone Health", path: "/hormone/mens-health" },
+]);
 
 const ACCENT = ACCENTS.hormone;
 const PAGE = "mens-health";
@@ -65,6 +87,8 @@ function MensCtas({ source, size, align }: { source: string; size?: "md" | "lg";
 export default function MensHealthPage() {
   return (
     <div className="pb-20 lg:pb-0">
+      <JsonLd data={mensSchema} />
+      <JsonLd data={mensBreadcrumbs} />
       <h1 className="sr-only">Men&apos;s Hormone Therapy &amp; TRT Colorado Springs — Testosterone Replacement, Low T Treatment</h1>
 
       {/* ── 1. CINEMATIC HERO ─────────────────────────────────────────── */}

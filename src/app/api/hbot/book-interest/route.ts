@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
     await sendConfirmation(
       data.email,
       firstName,
-      "🎉 Your 25% HBOT discount is confirmed!",
+      "Your 25% HBOT discount is confirmed!",
       `<p>You're officially on our Hyperbaric Oxygen Therapy early access list — and your <strong>25% discount is locked in</strong>.</p>
        <p style="background:#f0fdf4;border-left:4px solid #0d9488;padding:12px 16px;border-radius:4px;margin:20px 0">
          <strong>Save this email and bring it to your first appointment</strong> to redeem your 25% off.

@@ -1,5 +1,7 @@
 "use client";
 
+import { Nut, Salad, Wheat, Apple, Bean, Droplets, Sprout, Pill, CircleCheck, Ban, Utensils, Footprints, Lightbulb, CupSoda, Croissant, Beef, Drumstick, Ham, Beer } from "lucide-react";
+
 export default function HeartHealthyGuide() {
   return (
     <div>
@@ -29,14 +31,14 @@ export default function HeartHealthyGuide() {
         .hh-section-heading.amber { background: #fefcbf; color: #744210; }
         .food-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 18px; margin-bottom: 14px; }
         .food-item { display: flex; gap: 10px; align-items: flex-start; }
-        .food-icon { width: 34px; height: 34px; border-radius: 8px; background: #f0fff4; border: 1.5px solid #9ae6b4; display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; margin-top: 1px; }
+        .food-icon { width: 34px; height: 34px; border-radius: 8px; background: #f0fff4; border: 1.5px solid #9ae6b4; display: flex; align-items: center; justify-content: center; color: #38a169; flex-shrink: 0; margin-top: 1px; }
         .food-body h3 { font-size: 12px; font-weight: 700; margin: 0 0 1px; color: #1a202c; }
         .food-body .food-dose { font-size: 9.5px; color: #38a169; font-weight: 600; margin-bottom: 3px; }
         .food-body ul { list-style: none; margin: 0; padding: 0; }
         .food-body ul li { font-size: 10.5px; color: #4a5568; line-height: 1.45; padding-left: 10px; position: relative; }
         .food-body ul li::before { content: "·"; position: absolute; left: 2px; color: #38a169; font-size: 14px; line-height: 1.2; }
         .fiber-callout { background: #e6fffa; border: 1.5px solid #81e6d9; border-radius: 10px; padding: 12px 16px; display: flex; gap: 14px; align-items: flex-start; margin-top: 4px; }
-        .fiber-callout .fiber-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+        .fiber-callout .fiber-icon { color: #2b7a7a; flex-shrink: 0; margin-top: 2px; }
         .fiber-callout h3 { font-size: 12px; font-weight: 700; color: #234e52; margin: 0 0 4px; }
         .fiber-callout p { font-size: 10.5px; color: #285e61; margin: 0; line-height: 1.5; }
         .hh-divider { border: none; border-top: 1px solid #e2e8f0; margin: 14px 0; }
@@ -58,7 +60,7 @@ export default function HeartHealthyGuide() {
         .exercise-box { background: #fffaf0; border: 1.5px solid #fbd38d; border-radius: 10px; padding: 12px 14px; }
         .exercise-box ul { list-style: none; margin: 0; padding: 0; }
         .exercise-box ul li { font-size: 10.5px; color: #4a5568; line-height: 1.5; padding-left: 16px; position: relative; margin-bottom: 4px; }
-        .exercise-box ul li::before { content: "🏃"; position: absolute; left: 0; font-size: 10px; top: 1px; }
+        .exercise-box ul li::before { content: "•"; position: absolute; left: 4px; color: #dd6b20; font-size: 13px; top: 0; }
         .tips-box ul { list-style: none; margin: 0; padding: 0; }
         .tips-box ul li { font-size: 10.5px; color: #4a5568; line-height: 1.5; padding-left: 26px; position: relative; margin-bottom: 5px; }
         .tip-num { position: absolute; left: 0; top: 0; width: 18px; height: 18px; background: #2b7a7a; color: white; border-radius: 50%; font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
@@ -88,20 +90,20 @@ export default function HeartHealthyGuide() {
           </div>
         </div>
 
-        <div className="hh-section-heading green">✅ &nbsp;Foods to Add Every Day</div>
+        <div className="hh-section-heading green"><CircleCheck size={13} strokeWidth={2.5} /> Foods to Add Every Day</div>
 
         <div className="food-grid">
           {[
-            { icon: "🥜", name: "Nuts", dose: "~1 oz (23 almonds) daily", tips: ["Almonds, walnuts, pistachios, peanuts, cashews", "Add to oatmeal, salads, or eat as a snack", "Choose unsalted varieties"] },
-            { icon: "🥦", name: "Vegetables — especially leafy greens", dose: "At least 2–3 cups daily", tips: ["Spinach, kale, broccoli, Brussels sprouts", "Fresh, frozen, or roasted — all count"] },
-            { icon: "🌾", name: "Oats and Barley", dose: "1–2 servings daily", tips: ["Steel-cut or rolled oats (not instant flavored packets)", "Barley in soups or as a side dish instead of rice", "Oat bran added to smoothies or baked goods"] },
-            { icon: "🍓", name: "Fruits", dose: "2–3 servings daily", tips: ["Berries (blueberries, strawberries, raspberries)", "Apples, pears, oranges, grapefruit", "Choose whole fruit over juice"] },
-            { icon: "🫘", name: "Beans and Legumes", dose: "½ cup daily", tips: ["Black beans, kidney beans, chickpeas, lentils", "Add to salads, soups, tacos, or make hummus", "Try bean-based pasta as a substitute"] },
-            { icon: "🫒", name: "Healthy Oils", dose: "Use in place of butter", tips: ["Extra-virgin olive oil for cooking and dressings", "Avocado and avocado oil", "Use instead of butter or margarine"] },
-            { icon: "🫛", name: "Soy Foods", dose: "1–2 servings daily", tips: ["Tofu in stir-fries or scrambles", "Edamame as a snack or in salads", "Unsweetened soy milk · Tempeh"] },
+            { icon: Nut, name: "Nuts", dose: "~1 oz (23 almonds) daily", tips: ["Almonds, walnuts, pistachios, peanuts, cashews", "Add to oatmeal, salads, or eat as a snack", "Choose unsalted varieties"] },
+            { icon: Salad, name: "Vegetables — especially leafy greens", dose: "At least 2–3 cups daily", tips: ["Spinach, kale, broccoli, Brussels sprouts", "Fresh, frozen, or roasted — all count"] },
+            { icon: Wheat, name: "Oats and Barley", dose: "1–2 servings daily", tips: ["Steel-cut or rolled oats (not instant flavored packets)", "Barley in soups or as a side dish instead of rice", "Oat bran added to smoothies or baked goods"] },
+            { icon: Apple, name: "Fruits", dose: "2–3 servings daily", tips: ["Berries (blueberries, strawberries, raspberries)", "Apples, pears, oranges, grapefruit", "Choose whole fruit over juice"] },
+            { icon: Bean, name: "Beans and Legumes", dose: "½ cup daily", tips: ["Black beans, kidney beans, chickpeas, lentils", "Add to salads, soups, tacos, or make hummus", "Try bean-based pasta as a substitute"] },
+            { icon: Droplets, name: "Healthy Oils", dose: "Use in place of butter", tips: ["Extra-virgin olive oil for cooking and dressings", "Avocado and avocado oil", "Use instead of butter or margarine"] },
+            { icon: Sprout, name: "Soy Foods", dose: "1–2 servings daily", tips: ["Tofu in stir-fries or scrambles", "Edamame as a snack or in salads", "Unsweetened soy milk · Tempeh"] },
           ].map((food) => (
             <div className="food-item" key={food.name}>
-              <div className="food-icon">{food.icon}</div>
+              <div className="food-icon"><food.icon size={17} strokeWidth={2} /></div>
               <div className="food-body">
                 <h3>{food.name}</h3>
                 <div className="food-dose">{food.dose}</div>
@@ -113,9 +115,9 @@ export default function HeartHealthyGuide() {
 
         <hr className="hh-divider" />
 
-        <div className="hh-section-heading teal">💊 &nbsp;Supplements</div>
+        <div className="hh-section-heading teal"><Pill size={13} strokeWidth={2.5} /> Supplements</div>
         <div className="fiber-callout">
-          <div className="fiber-icon">💊</div>
+          <div className="fiber-icon"><Pill size={22} strokeWidth={1.75} /></div>
           <div>
             <h3>Psyllium Husk Fiber Supplement (e.g. Metamucil)</h3>
             <p>Take <strong>5–10 grams daily</strong> (about 1–2 tablespoons of powder or 4–6 capsules). Take before meals with a full glass of water. Start with a lower dose and increase gradually to avoid bloating or gas. Studies show psyllium can lower LDL cholesterol by <strong>5–10%</strong>.</p>
@@ -130,18 +132,18 @@ export default function HeartHealthyGuide() {
 
       {/* PAGE 2 */}
       <div className="hh-page">
-        <div className="hh-section-heading red">🚫 &nbsp;Foods to Limit or Avoid</div>
+        <div className="hh-section-heading red"><Ban size={13} strokeWidth={2.5} /> Foods to Limit or Avoid</div>
         <div className="avoid-grid">
           {[
-            { title: "🧁 Sugary Foods & Drinks", items: ["Soda, sweet tea, lemonade, punch", "Candy, cookies, cakes, pastries", "Ice cream, sweetened yogurt"], tip: "Limit added sugar to <25 g/day (6 tsp)" },
-            { title: "🍞 Refined Carbohydrates", items: ["White bread, white rice, regular pasta", "Crackers, chips, pretzels", "Sweetened breakfast cereals"], tip: "Choose whole grain versions instead" },
-            { title: "🥩 Saturated Fats", items: ["Fatty cuts of beef, pork, lamb", "Chicken skin, full-fat cheese & cream", "Butter, lard, coconut & palm oil"], tip: null },
-            { title: "🍟 Fried Foods", items: ["French fries, fried chicken, onion rings"], tip: "Bake, grill, or air-fry instead" },
-            { title: "🌭 Processed Meats", items: ["Bacon, sausage, hot dogs", "Deli meats"], tip: null },
-            { title: "🍺 Alcohol", items: ["Raises triglycerides — limit or avoid"], tip: "If you drink: max 1 drink/day" },
+            { icon: CupSoda, title: "Sugary Foods & Drinks", items: ["Soda, sweet tea, lemonade, punch", "Candy, cookies, cakes, pastries", "Ice cream, sweetened yogurt"], tip: "Limit added sugar to <25 g/day (6 tsp)" },
+            { icon: Croissant, title: "Refined Carbohydrates", items: ["White bread, white rice, regular pasta", "Crackers, chips, pretzels", "Sweetened breakfast cereals"], tip: "Choose whole grain versions instead" },
+            { icon: Beef, title: "Saturated Fats", items: ["Fatty cuts of beef, pork, lamb", "Chicken skin, full-fat cheese & cream", "Butter, lard, coconut & palm oil"], tip: null },
+            { icon: Drumstick, title: "Fried Foods", items: ["French fries, fried chicken, onion rings"], tip: "Bake, grill, or air-fry instead" },
+            { icon: Ham, title: "Processed Meats", items: ["Bacon, sausage, hot dogs", "Deli meats"], tip: null },
+            { icon: Beer, title: "Alcohol", items: ["Raises triglycerides — limit or avoid"], tip: "If you drink: max 1 drink/day" },
           ].map((card) => (
             <div className="avoid-card" key={card.title}>
-              <h3>{card.title}</h3>
+              <h3><card.icon size={12} strokeWidth={2.25} /> {card.title}</h3>
               <ul>
                 {card.items.map((item) => <li key={item}>{item}</li>)}
                 {card.tip && <li className="avoid-tip">{card.tip}</li>}
@@ -152,7 +154,7 @@ export default function HeartHealthyGuide() {
 
         <hr className="hh-divider" />
 
-        <div className="hh-section-heading blue">🍽️ &nbsp;Sample Day of Eating</div>
+        <div className="hh-section-heading blue"><Utensils size={13} strokeWidth={2.5} /> Sample Day of Eating</div>
         <div className="sample-grid">
           {[
             { label: "Breakfast", items: ["Oatmeal with walnuts & blueberries", "Sprinkle of cinnamon", "Psyllium mixed in water", "Unsweetened soy milk"] },
@@ -172,7 +174,7 @@ export default function HeartHealthyGuide() {
 
         <div className="bottom-grid">
           <div>
-            <div className="hh-section-heading amber">🏃 &nbsp;Exercise</div>
+            <div className="hh-section-heading amber"><Footprints size={13} strokeWidth={2.5} /> Exercise</div>
             <div className="exercise-box">
               <ul>
                 <li>150 min/week of moderate activity (brisk walking, cycling, swimming)</li>
@@ -183,7 +185,7 @@ export default function HeartHealthyGuide() {
             </div>
           </div>
           <div>
-            <div className="hh-section-heading teal">💡 &nbsp;Quick Tips</div>
+            <div className="hh-section-heading teal"><Lightbulb size={13} strokeWidth={2.5} /> Quick Tips</div>
             <div className="tips-box">
               <ul>
                 {[

@@ -8,6 +8,8 @@ import { glassCardStyle } from "@/components/GlassCard";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
 import { ReviewStrip, RatingChip } from "@/components/ReviewStrip";
 import { bookingUrl } from "@/lib/bookingLinks";
+import { serviceSchema, breadcrumbSchema } from "@/lib/schema";
+import { JsonLd } from "@/components/JsonLd";
 
 // The GLP-1 page on the epic-scene language (womens-health/hormone hub):
 // cinematic hero → what makes this different → the medications → who it's
@@ -17,7 +19,27 @@ export const metadata: Metadata = {
   alternates: { canonical: "/hormone/glp1" },
   title: "GLP-1 Weight Loss | Colorado Springs Health Collective",
   description: "Semaglutide and tirzepatide in Colorado Springs with a real metabolic review. GLP-1 care that fits your weight, hormones, and long-term goals.",
+  openGraph: {
+    images: [{ url: "/images/hormone/glp1-hero.webp", alt: "GLP-1 Weight Loss — Colorado Springs Health Collective" }],
+  },
 };
+
+const glp1Schema = serviceSchema({
+  type: "MedicalTherapy",
+  name: "GLP-1 Weight Loss Therapy",
+  description: "Semaglutide and tirzepatide in Colorado Springs with a real metabolic review. GLP-1 care that fits your weight, hormones, and long-term goals.",
+  path: "/hormone/glp1",
+  image: "/images/hormone/glp1-hero.webp",
+  offers: [
+    { name: "Initial consult (includes first month)", price: clinicFacts.hormone.initialConsult },
+    { name: "Ongoing management (per month)", price: clinicFacts.hormone.monthlyManagement },
+  ],
+});
+
+const glp1Breadcrumbs = breadcrumbSchema([
+  { name: "Hormone + Metabolic Care", path: "/hormone" },
+  { name: "GLP-1 Weight Loss", path: "/hormone/glp1" },
+]);
 
 const ACCENT = ACCENTS.hormone;
 const PAGE = "glp1";
@@ -76,6 +98,8 @@ function Glp1Ctas({ source, size, align }: { source: string; size?: "md" | "lg";
 export default function GLP1Page() {
   return (
     <div className="pb-20 lg:pb-0">
+      <JsonLd data={glp1Schema} />
+      <JsonLd data={glp1Breadcrumbs} />
       <h1 className="sr-only">GLP-1 Weight Loss Colorado Springs — Semaglutide (Ozempic/Wegovy) and Tirzepatide (Mounjaro/Zepbound) with Metabolic Review</h1>
 
       {/* ── 1. CINEMATIC HERO ─────────────────────────────────────────── */}

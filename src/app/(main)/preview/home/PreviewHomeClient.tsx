@@ -9,13 +9,20 @@
  */
 
 import { preload } from "react-dom";
-import PhotoFlythrough from "./PhotoFlythrough";
+import { getImageProps } from "next/image";
+import PhotoFlythrough, { STORY_IMG_SIZES, STORY_PRELOAD } from "./PhotoFlythrough";
 
 export default function PreviewHomeClient({ images, masks, label = "Preview · Sunset" }: { images?: string[]; masks?: string[]; label?: string }) {
   // Warm the very first scene (hero photo + its aurora mask) so it paints
   // immediately instead of waiting on a cold fetch as the page mounts.
   if (images?.[0]) preload(images[0], { as: "image" });
   if (masks?.[0]) preload(masks[0], { as: "image" });
+  // Warm the first Our Story carousel photo too (this used to be a <link
+  // rel=preload> in the (main) layout, firing on EVERY page). getImageProps
+  // mirrors the carousel's <Image> exactly, so the preloaded URL matches the
+  // optimized one next/image will actually request — no double download.
+  const { props: storyImg } = getImageProps({ ...STORY_PRELOAD, alt: "", sizes: STORY_IMG_SIZES });
+  preload(storyImg.src, { as: "image", imageSrcSet: storyImg.srcSet, imageSizes: storyImg.sizes });
   return (
     <div className="pv-fly">
       {label ? (

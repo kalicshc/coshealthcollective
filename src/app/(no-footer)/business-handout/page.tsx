@@ -1,6 +1,6 @@
 "use client";
 
-import { Stethoscope, Phone, Calendar, Network, Droplets, Sparkles, Dumbbell, CheckCircle, Mail, Pill, Dna, Building2, DollarSign, Users, TrendingUp } from "lucide-react";
+import { Stethoscope, Phone, Calendar, Network, Droplets, Sparkles, Dumbbell, CheckCircle, Mail, Pill, Dna, Building2, DollarSign, Users, TrendingUp, Printer, Briefcase, Handshake } from "lucide-react";
 
 export default function BusinessHandout() {
   return (
@@ -31,7 +31,7 @@ export default function BusinessHandout() {
         .print-button:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
       `}</style>
 
-      <button className="print-button no-print" onClick={() => window.print()}>🖨️ Print Both Pages</button>
+      <button className="print-button no-print" onClick={() => window.print()}><Printer size={15} style={{ verticalAlign: "-2px", marginRight: 6 }} /> Print Both Pages</button>
 
       {/* PAGE 1 */}
       <div className="page-content page-break">
@@ -89,12 +89,12 @@ export default function BusinessHandout() {
       <div className="page-content">
         <h2 className="section-title-page2">Flexible Plan Options for Every Business</h2>
         {[
-          { emoji: "💼", title: "Full Coverage - Employer Paid", desc: "Your company pays 100% of DPC membership as a premium benefit.", bullets: ["Maximum employee satisfaction and utilization", "Tax deductible as a business expense"] },
-          { emoji: "🤝", title: "Shared Cost - Split Investment", desc: "Flexible split between employer and employee (50/50, 70/30, or custom).", bullets: ["Shared commitment to employee health", "Employer portion is tax deductible", "Makes premium benefits affordable for growing companies"] },
-          { emoji: "✨", title: "Voluntary Benefit - Employee Paid", desc: "Employees pay via payroll deduction or direct enrollment—you facilitate, they pay.", bullets: ["Zero cost to your business, maximum recruiting value", "Potential pre-tax payroll deduction saves employees money", "Healthier team = reduced absenteeism and higher productivity", "Shows you invest in employee wellbeing"] },
+          { icon: Briefcase, title: "Full Coverage - Employer Paid", desc: "Your company pays 100% of DPC membership as a premium benefit.", bullets: ["Maximum employee satisfaction and utilization", "Tax deductible as a business expense"] },
+          { icon: Handshake, title: "Shared Cost - Split Investment", desc: "Flexible split between employer and employee (50/50, 70/30, or custom).", bullets: ["Shared commitment to employee health", "Employer portion is tax deductible", "Makes premium benefits affordable for growing companies"] },
+          { icon: Sparkles, title: "Voluntary Benefit - Employee Paid", desc: "Employees pay via payroll deduction or direct enrollment—you facilitate, they pay.", bullets: ["Zero cost to your business, maximum recruiting value", "Potential pre-tax payroll deduction saves employees money", "Healthier team = reduced absenteeism and higher productivity", "Shows you invest in employee wellbeing"] },
         ].map((plan) => (
           <div className="plan-box" key={plan.title}>
-            <div className="plan-title">{plan.emoji} {plan.title}</div>
+            <div className="plan-title"><plan.icon size={15} style={{ verticalAlign: "-2px", marginRight: 6 }} /> {plan.title}</div>
             <p className="text-sm text-gray-700 mb-2">{plan.desc}</p>
             <ul className="text-sm text-gray-600 space-y-1 ml-5">{plan.bullets.map((b) => <li key={b}>• {b}</li>)}</ul>
           </div>
@@ -122,8 +122,8 @@ export default function BusinessHandout() {
           <h2 className="text-xl font-bold mb-1.5">Ready to Transform Your Employee Benefits?</h2>
           <p className="text-base mb-2.5">Contact us today for a custom quote tailored to your business.</p>
           <div className="text-base font-semibold space-y-0.5">
-            <div>📞 (440) 371-3063</div>
-            <div>✉️ dpc@coshealthcollective.com</div>
+            <div><Phone size={14} style={{ verticalAlign: "-2px", marginRight: 6 }} /> (440) 371-3063</div>
+            <div><Mail size={14} style={{ verticalAlign: "-2px", marginRight: 6 }} /> dpc@coshealthcollective.com</div>
           </div>
         </div>
       </div>

@@ -5,6 +5,8 @@ import { Phone, Mail, ArrowLeft, Calendar, DollarSign, Clock, MessageCircle, Che
 import { clinicFacts } from "@/lib/clinicFacts";
 import { ACCENTS } from "@/lib/accents";
 import { BlogCtaBlock } from "@/components/BlogCtaBlock";
+import { breadcrumbSchema } from "@/lib/schema";
+import { JsonLd } from "@/components/JsonLd";
 
 const A = ACCENTS.dpc;
 
@@ -26,16 +28,23 @@ const articleSchema = {
   headline: "Why Direct Primary Care Is the Future of Health (And Why It Matters for You)",
   description: "No insurance hoops, no rushed visits — how DPC is redefining healthcare in Colorado Springs.",
   datePublished: "2025-08-15",
+  dateModified: "2025-08-15",
   author: { "@type": "Organization", name: "Colorado Springs Health Collective" },
   publisher: { "@type": "Organization", name: "Colorado Springs Health Collective", url: "https://coshealthcollective.com", logo: { "@type": "ImageObject", url: "https://coshealthcollective.com/logo-main.png" } },
   mainEntityOfPage: { "@type": "WebPage", "@id": "https://coshealthcollective.com/blog/why-direct-primary-care" },
   image: "https://coshealthcollective.com/blog/why-dpc-hero.jpg",
 };
 
+const breadcrumbs = breadcrumbSchema([
+  { name: "Blog", path: "/blog" },
+  { name: "Why Direct Primary Care Is the Future of Health", path: "/blog/why-direct-primary-care" },
+]);
+
 export default function BlogWhyDirectPrimaryCare() {
   return (
     <div className="min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <JsonLd data={breadcrumbs} />
       <section className="relative" style={{ background: "hsl(210, 32%, 8%)" }}>
 
         <div className="relative h-[60vh] min-h-[420px] overflow-hidden">

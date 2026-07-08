@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
+import { TriangleAlert } from "lucide-react";
 import { ACCENTS } from "@/lib/accents";
 import { ServiceHero, gradientTextStyle } from "@/components/ServiceHero";
 import { GlassCard, glassCardStyle } from "@/components/GlassCard";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
 import { TrackedLink } from "@/components/analytics/TrackedLink";
+import { breadcrumbSchema } from "@/lib/schema";
+import { JsonLd } from "@/components/JsonLd";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/hyperbaric/why-2ata" },
@@ -105,9 +108,15 @@ const glassBubble = {
 
 const gradientText = gradientTextStyle("hyperbaric");
 
+const why2ataBreadcrumbs = breadcrumbSchema([
+  { name: "Hyperbaric Oxygen Therapy", path: "/hyperbaric" },
+  { name: "Why 2.0 ATA", path: "/hyperbaric/why-2ata" },
+]);
+
 export default function Why2ATAPage() {
   return (
     <div className="page-bg">
+      <JsonLd data={why2ataBreadcrumbs} />
       <ServiceHero
         service="hyperbaric"
         compact
@@ -184,7 +193,7 @@ export default function Why2ATAPage() {
         <div className="mx-auto max-w-4xl px-5 lg:px-8">
           <div className="rounded-3xl p-8 lg:p-12" style={glassBubble}>
             <div className="flex items-start gap-4 mb-5">
-              <div className="text-2xl mt-1">⚠️</div>
+              <TriangleAlert className="w-7 h-7 mt-1 flex-shrink-0" strokeWidth={1.75} style={{ color: "hsl(45,90%,60%)" }} aria-hidden />
               <div>
                 <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: `rgb(${A.rgb})` }}>
                   The One Exception

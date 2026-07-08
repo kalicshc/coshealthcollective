@@ -4,18 +4,18 @@ import { HomeContentBand } from "./HomeContentBand";
 
 // Homepage is now the cinematic aurora photo-flythrough (raw, un-color-graded
 // photos: empty masks skip the per-scene tint layer). The previous section-based
-// homepage is preserved in page-classic.tsx.bak if we ever need to revert.
+// homepage lives in git history (page-classic.tsx.bak, removed 2026-07-08).
 // Title/description/OG come from the root layout; canonical is declared here.
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 const AURORA_IMAGES = [
-  "/preview/aurora1.webp", // DPC
-  "/preview/aurora2.webp", // Hormone
-  "/preview/aurora3.webp", // Hyperbaric
-  "/preview/aurora4.webp", // Our Story
-  "/preview/aurora5-night.webp", // Reviews
-  "/preview/aurora6.webp", // Our Journey — sunrise
+  "/images/home/aurora1.webp", // DPC
+  "/images/home/aurora2.webp", // Hormone
+  "/images/home/aurora3.webp", // Hyperbaric
+  "/images/home/aurora4.webp", // Our Story
+  "/images/home/aurora5-night.webp", // Reviews
+  "/images/home/aurora6.webp", // Our Journey — sunrise
 ];
 
 const NO_MASKS = ["", "", "", "", "", ""];

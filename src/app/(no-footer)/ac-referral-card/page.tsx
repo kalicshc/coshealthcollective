@@ -559,13 +559,13 @@ export default function AcReferralCard() {
                       "--tier-name-to":   AC_RED,
                       "--tier-glow":      "hsla(5,78%,57%,0.45)",
                     } as React.CSSProperties}>
-                      <div className="bc-b-tier-name">Vaginal Estrogen Cream</div>
+                      <div className="bc-b-tier-name">Topical Estrogen</div>
                       <div className="bc-b-tier-row">
-                        <span className="bc-b-tier-price">$75</span>
-                        <span className="bc-b-tier-desc">one-time consult</span>
+                        <span className="bc-b-tier-price">$89</span>
+                        <span className="bc-b-tier-desc">telehealth visit</span>
                       </div>
                       <div className="bc-b-tier-note">
-                        no membership required
+                        covers 3 months &middot; no membership required
                       </div>
                     </div>
                   </div>

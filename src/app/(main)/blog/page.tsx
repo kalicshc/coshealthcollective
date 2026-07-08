@@ -53,7 +53,7 @@ const articles = [
   {
     slug: "hyperbaric-oxygen-therapy-colorado-springs",
     title: "Hyperbaric Oxygen Therapy in Colorado Springs: What the Clinical Evidence Shows",
-    description: "How HBOT delivers 15× normal oxygen levels to accelerate healing, reduce inflammation, and reverse cellular aging — backed by peer-reviewed research.",
+    description: "How HBOT delivers 15× normal oxygen levels to accelerate healing, reduce inflammation, and target markers of cellular aging — backed by peer-reviewed research.",
     date: "April 2026",
     category: "HBOT",
     categoryColor: ACCENTS.hyperbaric.statusDot,

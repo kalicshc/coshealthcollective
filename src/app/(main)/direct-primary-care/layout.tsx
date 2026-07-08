@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     description:
       "Unlimited primary care visits, same-day access, and at-cost labs for $100/month. No insurance. No copays. Just a provider who knows your name.",
     url: "https://coshealthcollective.com/direct-primary-care",
+    images: [{ url: "/images/dpc/dpc-hero.webp", alt: "Direct Primary Care — Colorado Springs Health Collective" }],
   },
 };
 

@@ -8,6 +8,8 @@ import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { SectionView } from "@/components/analytics/SectionView";
 import { GlassCard } from "@/components/GlassCard";
 import { EarlyAccessForm } from "@/components/EarlyAccessForm";
+import { serviceSchema } from "@/lib/schema";
+import { JsonLd } from "@/components/JsonLd";
 
 // The hyperbaric "epic page" — pre-launch conversion arc: the 2.0 ATA claim →
 // the science → the differentiator → what it treats → evidence philosophy →
@@ -71,7 +73,7 @@ const conditions = [
   {
     icon: Brain,
     title: "Brain & Neurological Recovery",
-    body: "Reawaken dormant neurons after stroke. Reverse TBI effects years — even decades — after injury. Confirmed by SPECT and fNIRS brain imaging in clinical trials.",
+    body: "Reactivate dormant neurons after stroke. Improve TBI-related deficits years — even decades — after injury. Documented with SPECT and fNIRS brain imaging in clinical trials.",
     tags: ["Stroke", "TBI / Concussion", "Cognitive Function"],
   },
   {
@@ -101,9 +103,27 @@ const mechanisms = [
   },
 ];
 
+// Pre-launch: the chamber opens in Fall 2026, so the offer is marked PreOrder
+// (waitlist) — nothing here may imply the service currently operates.
+const hyperbaricSchema = serviceSchema({
+  type: "MedicalTherapy",
+  name: "Hyperbaric Oxygen Therapy (HBOT)",
+  description: `Colorado Springs' only accessible ${clinicFacts.hbot.pressure} hyperbaric oxygen chamber — opening ${clinicFacts.hbot.openingDate}. HBOT for fibromyalgia, Long COVID, wound healing, anti-aging, and athletic recovery. Join the waitlist.`,
+  path: "/hyperbaric",
+  image: "/images/hyperbaric/hbot-hero.webp",
+  offers: [
+    {
+      name: "Early-access waitlist",
+      description: `Opening ${clinicFacts.hbot.openingDate} — waitlist members receive a ${clinicFacts.hbot.earlyAccessDiscountPercent}% early-access discount.`,
+      availability: "https://schema.org/PreOrder",
+    },
+  ],
+});
+
 export default function HyperbaricPage() {
   return (
     <div className="pb-20 lg:pb-0">
+      <JsonLd data={hyperbaricSchema} />
       {/* ── 1. CINEMATIC HERO — the 2.0 ATA claim + early access ──────── */}
       <SceneSection image="/images/hyperbaric/hbot-hero.webp" scrim="radial" minHeight="100svh" priority contentClassName="text-center" scrollCue="#science">
         <div className="pt-12">

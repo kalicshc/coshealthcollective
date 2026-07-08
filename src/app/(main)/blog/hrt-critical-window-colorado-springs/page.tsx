@@ -5,6 +5,8 @@ import { ArrowLeft, Phone, Mail, ChevronRight } from "lucide-react";
 import { clinicFacts } from "@/lib/clinicFacts";
 import { ACCENTS } from "@/lib/accents";
 import { BlogCtaBlock } from "@/components/BlogCtaBlock";
+import { breadcrumbSchema } from "@/lib/schema";
+import { JsonLd } from "@/components/JsonLd";
 
 const A = ACCENTS.hormone;
 
@@ -151,6 +153,12 @@ export default function HRTCriticalWindowPost() {
             ],
           }),
         }}
+      />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Blog", path: "/blog" },
+          { name: "The Critical Window Hypothesis for HRT", path: "/blog/hrt-critical-window-colorado-springs" },
+        ])}
       />
 
       <script

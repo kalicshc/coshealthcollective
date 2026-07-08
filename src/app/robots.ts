@@ -6,28 +6,16 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
+        // Internal print/flyer pages (the (no-footer), (kiosk), and (referral)
+        // route groups) are NOT listed here on purpose: their layouts set
+        // robots noindex, and a Disallow would stop Google from ever seeing
+        // that noindex. A per-slug list also went stale every time a flyer was
+        // added. Only truly non-page paths belong below.
         disallow: [
           "/api/",
           "/members/",
           "/preview/",
           "/_next/",
-          "/ac-welcome",
-          "/business-card",
-          "/business-handout",
-          "/business-handout-1",
-          "/business-handout-2",
-          "/event-banner",
-          "/gym-flyer",
-          "/heart-healthy-guide",
-          "/iv-therapy-flyer",
-          "/longevity-toolkit",
-          "/mailroom-flyer",
-          "/mailroom-flyer-2",
-          "/patient-flyer",
-          "/tshirt",
-          "/tshirt-back",
-          "/waiver",
-          "/work-note",
         ],
       },
     ],

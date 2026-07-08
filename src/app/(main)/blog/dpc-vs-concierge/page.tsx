@@ -5,6 +5,8 @@ import { Phone, Mail, ArrowLeft, CheckCircle, Users, Briefcase, Heart, Mountain 
 import { clinicFacts } from "@/lib/clinicFacts";
 import { ACCENTS } from "@/lib/accents";
 import { BlogCtaBlock } from "@/components/BlogCtaBlock";
+import { breadcrumbSchema } from "@/lib/schema";
+import { JsonLd } from "@/components/JsonLd";
 
 const A = ACCENTS.dpc;
 
@@ -33,6 +35,11 @@ const articleSchema = {
   image: "https://coshealthcollective.com/blog/dpc-hero.jpg",
 };
 
+const breadcrumbs = breadcrumbSchema([
+  { name: "Blog", path: "/blog" },
+  { name: "Direct Primary Care vs. Concierge Medicine", path: "/blog/dpc-vs-concierge" },
+]);
+
 const comparisonData = [
   { feature: "Cost Structure", dpc: "$50-150/month flat fee", concierge: "$1,500-$10,000+ annual retainer" },
   { feature: "Insurance Billing", dpc: "No insurance billing", concierge: "Still bills insurance for services" },
@@ -48,6 +55,7 @@ export default function BlogDpcVsConcierge() {
   return (
     <div className="min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <JsonLd data={breadcrumbs} />
       <section className="relative" style={{ background: "hsl(210, 32%, 8%)" }}>
 
         <div className="relative h-[60vh] min-h-[420px] overflow-hidden">

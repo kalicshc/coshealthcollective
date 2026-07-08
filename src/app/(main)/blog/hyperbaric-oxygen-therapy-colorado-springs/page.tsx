@@ -5,6 +5,8 @@ import { ArrowLeft, Phone, Mail, ChevronRight } from "lucide-react";
 import { clinicFacts } from "@/lib/clinicFacts";
 import { ACCENTS } from "@/lib/accents";
 import { BlogCtaBlock } from "@/components/BlogCtaBlock";
+import { breadcrumbSchema } from "@/lib/schema";
+import { JsonLd } from "@/components/JsonLd";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/blog/hyperbaric-oxygen-therapy-colorado-springs" },
@@ -53,7 +55,7 @@ const conditions = [
     name: "Long COVID & Brain Fog",
     stat: "86%",
     statLabel: "cognitive improvement",
-    detail: "Retrospective analysis of 162 patients: 86% achieved clinically significant cognitive improvement after 40–60 sessions at 2.0 ATA.",
+    detail: "In a retrospective, uncontrolled analysis of 162 patients, 86% showed clinically significant cognitive improvement after 40–60 sessions at 2.0 ATA. Controlled trials are still needed to confirm the effect.",
     color: "hsl(350, 70%, 65%)",
     colorBg: "hsla(350, 70%, 65%, 0.08)",
   },
@@ -112,12 +114,20 @@ export default function HBOTBlogPost() {
             "@context": "https://schema.org",
             "@type": "Article",
             headline: "Hyperbaric Oxygen Therapy in Colorado Springs: What the Clinical Evidence Shows",
-            description: "How HBOT delivers 15× normal oxygen levels to accelerate healing, reduce inflammation, and reverse cellular aging.",
+            description: "How HBOT delivers 15× normal oxygen levels to accelerate healing, reduce inflammation, and target markers of cellular aging.",
             datePublished: "2026-04-21",
+            dateModified: "2026-07-08",
             author: { "@type": "Organization", name: "Colorado Springs Health Collective" },
             publisher: { "@type": "Organization", name: "Colorado Springs Health Collective", url: "https://coshealthcollective.com" },
+            image: "https://coshealthcollective.com/blog/hbot-hero.jpg",
           }),
         }}
+      />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Blog", path: "/blog" },
+          { name: "Hyperbaric Oxygen Therapy in Colorado Springs", path: "/blog/hyperbaric-oxygen-therapy-colorado-springs" },
+        ])}
       />
 
       <section className="relative" style={{ background: "hsl(210, 32%, 8%)" }}>
@@ -173,7 +183,7 @@ export default function HBOTBlogPost() {
 
             {/* Intro */}
             <p className="text-lg leading-relaxed mb-8" style={{ color: "hsl(210, 25%, 85%)" }}>
-              Hyperbaric oxygen therapy has been used in medicine for decades — but most people's exposure to it has been through vague wellness marketing or a friend who swears by it without being able to explain why. The actual science is more interesting than either the hype or the skepticism. At therapeutic pressures, HBOT triggers biological changes that no drug or supplement can replicate. This article walks through the mechanism and the clinical evidence, specifically as it applies to what we offer in Colorado Springs.
+              Hyperbaric oxygen therapy has been used in medicine for decades — but most people's exposure to it has been through vague wellness marketing or a friend who swears by it without being able to explain why. The actual science is more interesting than either the hype or the skepticism. At therapeutic pressures, HBOT triggers biological changes that no drug or supplement can replicate. This article walks through the mechanism and the clinical evidence, specifically as it applies to what we're bringing to Colorado Springs.
             </p>
 
             {/* What is HBOT */}
@@ -183,7 +193,7 @@ export default function HBOTBlogPost() {
                 Hyperbaric oxygen therapy means breathing pure (100%) oxygen inside a pressurized chamber at greater than normal atmospheric pressure. "Hyperbaric" literally means elevated pressure. At sea level, atmospheric pressure is 1 ATA (atmosphere absolute). Therapeutic HBOT runs at 1.5 to 3.0 ATA depending on the protocol.
               </p>
               <p className="leading-relaxed mb-4" style={{ color: "hsl(210, 25%, 82%)" }}>
-                At Colorado Springs Health Collective, we operate at <strong style={{ color: "hsl(0,0%,95%)" }}>2.0 ATA</strong> — the pressure level used in every major RCT demonstrating meaningful clinical outcomes. This isn't a detail. Pressure determines oxygen delivery, and oxygen delivery determines what HBOT can actually do.
+                Our chamber at Colorado Springs Health Collective will operate at <strong style={{ color: "hsl(0,0%,95%)" }}>2.0 ATA</strong> when we open in Fall 2026 — the pressure level used in every major RCT demonstrating meaningful clinical outcomes. This isn't a detail. Pressure determines oxygen delivery, and oxygen delivery determines what HBOT can actually do.
               </p>
               <p className="leading-relaxed" style={{ color: "hsl(210, 25%, 82%)" }}>
                 Under normal conditions, oxygen is carried almost entirely by red blood cells (hemoglobin). At 2.0 ATA breathing 100% O₂, oxygen also dissolves directly into blood plasma at concentrations 10–15 times higher than normal. That plasma-dissolved oxygen can reach tissues that red blood cells can't access — injured tissue, inflamed tissue, or tissue with compromised blood flow.
@@ -196,8 +206,8 @@ export default function HBOTBlogPost() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                 {[
-                  { num: "01", title: "Angiogenesis", body: "HBOT stimulates the growth of new blood vessels (angiogenesis) by upregulating VEGF and other growth factors. More vessels mean better perfusion to previously oxygen-starved tissue — a permanent structural improvement, not a temporary effect.", color: `rgb(${A.rgb})` },
-                  { num: "02", title: "Stem Cell Mobilization", body: "A single 2.0 ATA session can mobilize stem cells from bone marrow into circulation by 800%. These circulating stem cells home to sites of injury and participate in tissue repair — a mechanism unavailable to any drug.", color: "hsl(200, 80%, 65%)" },
+                  { num: "01", title: "Angiogenesis", body: "HBOT stimulates the growth of new blood vessels (angiogenesis) by upregulating VEGF and other growth factors. More vessels mean better perfusion to previously oxygen-starved tissue — a structural change that can persist beyond the treatment course, not just a temporary effect.", color: `rgb(${A.rgb})` },
+                  { num: "02", title: "Stem Cell Mobilization", body: "In one study (Thom et al., 2006), a single 2.0 ATA session roughly doubled circulating stem cells, and by the 20th session they had increased about eightfold. These circulating stem cells home to sites of injury and participate in tissue repair — a mechanism unavailable to any drug.", color: "hsl(200, 80%, 65%)" },
                   { num: "03", title: "Inflammation Control", body: "HBOT downregulates pro-inflammatory cytokines (TNF-α, IL-1β, IL-6) while preserving the acute inflammatory response needed for healing. The net effect is reduced chronic inflammation without immunosuppression.", color: "hsl(280, 70%, 65%)" },
                   { num: "04", title: "Senescent Cell Clearance", body: "Repeated HBOT sessions at 2.0 ATA trigger apoptosis in senescent cells (damaged 'zombie cells' that drive aging and inflammation) while simultaneously lengthening telomeres in immune cells — documented in peer-reviewed human trials.", color: "hsl(45, 90%, 60%)" },
                 ].map((m) => (
@@ -242,7 +252,7 @@ export default function HBOTBlogPost() {
                 The consumer wellness market has flooded with soft-shell "hyperbaric" chambers operating at 1.3 ATA. At 1.3 ATA breathing air (not pure O₂), the additional oxygen delivered to tissues is marginal — insufficient to trigger angiogenesis, stem cell mobilization, or senolytic effects.
               </p>
               <p className="leading-relaxed mb-6" style={{ color: "hsl(210, 25%, 82%)" }}>
-                Every published RCT showing the outcomes listed above used <strong style={{ color: "hsl(0,0%,95%)" }}>2.0 ATA or higher with 100% oxygen</strong>. That is the minimum pressure required to dissolve oxygen into plasma at therapeutically meaningful concentrations. It's why we chose 2.0 ATA as our standard and why we won't offer lower-pressure alternatives that underdeliver.
+                Every published RCT showing the outcomes listed above used <strong style={{ color: "hsl(0,0%,95%)" }}>2.0 ATA or higher with 100% oxygen</strong>. That is the minimum pressure required to dissolve oxygen into plasma at therapeutically meaningful concentrations. It's why we chose 2.0 ATA as our standard for the chamber we're opening in Fall 2026, and why we won't offer lower-pressure alternatives that underdeliver.
               </p>
               <div className="rounded-2xl p-6" style={{ background: `rgba(${A.rgb},0.08)`, border: `1px solid rgba(${A.rgb},0.25)` }}>
                 <p className="text-sm leading-relaxed" style={{ color: "hsl(210, 30%, 82%)" }}>

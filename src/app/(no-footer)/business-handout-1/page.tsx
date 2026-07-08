@@ -1,6 +1,6 @@
 "use client";
 
-import { Stethoscope, Phone, Calendar, Network, Droplets, Sparkles, Dumbbell, CheckCircle, Mail, Pill, Dna } from "lucide-react";
+import { Stethoscope, Phone, Calendar, Network, Droplets, Sparkles, Dumbbell, CheckCircle, Mail, Pill, Dna, Printer } from "lucide-react";
 
 export default function BusinessHandout1() {
   return (
@@ -22,7 +22,7 @@ export default function BusinessHandout1() {
         .print-button:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
       `}</style>
 
-      <button className="print-button no-print" onClick={() => window.print()}>🖨️ Print Page 1</button>
+      <button className="print-button no-print" onClick={() => window.print()}><Printer size={15} style={{ verticalAlign: "-2px", marginRight: 6 }} /> Print Page 1</button>
 
       <img src="/logo-main.png" alt="Colorado Springs Health Collective - Direct Primary Care" className="header-image" />
 

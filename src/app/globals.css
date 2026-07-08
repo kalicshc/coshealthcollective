@@ -8,7 +8,9 @@
   --color-primary-bg: hsl(210, 32%, 12%);
   --color-secondary-bg: hsl(210, 28%, 16%);
   --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* No --font-mono override: Geist Mono was never used in the UI (no font-mono
+     classes anywhere), so the font import was dropped from the root layout.
+     <code> elements fall back to Tailwind's default ui-monospace stack. */
 }
 
 /* gradient shorthand used across all pages — transparent so mountain shows */

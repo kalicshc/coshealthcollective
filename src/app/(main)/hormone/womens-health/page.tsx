@@ -11,6 +11,8 @@ import { StickyCtaBar } from "@/components/StickyCtaBar";
 import { SectionView } from "@/components/analytics/SectionView";
 import { Accordion } from "@/components/Accordion";
 import { bookingUrl } from "@/lib/bookingLinks";
+import { serviceSchema, faqSchema, breadcrumbSchema } from "@/lib/schema";
+import { JsonLd } from "@/components/JsonLd";
 
 // The women's hormone health "epic page" — conversion arc: validation →
 // proof → objection-killing → action. Copy sources: the Critical Window deck
@@ -21,7 +23,27 @@ export const metadata: Metadata = {
   alternates: { canonical: "/hormone/womens-health" },
   title: "Women's Hormone Health | Colorado Springs Health Collective",
   description: "Evidence-based perimenopause and menopause care in Colorado Springs. Hormone therapy, HRT, and whole-body care for women who are tired of being dismissed.",
+  openGraph: {
+    images: [{ url: "/images/hormone/womens-hero.webp", alt: "Women's Hormone Health — Colorado Springs Health Collective" }],
+  },
 };
+
+const womensSchema = serviceSchema({
+  type: "MedicalTherapy",
+  name: "Women's Hormone Health — Perimenopause & Menopause Care",
+  description: "Evidence-based perimenopause and menopause care in Colorado Springs. Hormone therapy, HRT, and whole-body care for women who are tired of being dismissed.",
+  path: "/hormone/womens-health",
+  image: "/images/hormone/womens-hero.webp",
+  offers: [
+    { name: "Initial consult (includes first month)", price: clinicFacts.hormone.initialConsult },
+    { name: "Ongoing management (per month)", price: clinicFacts.hormone.monthlyManagement },
+  ],
+});
+
+const womensBreadcrumbs = breadcrumbSchema([
+  { name: "Hormone + Metabolic Care", path: "/hormone" },
+  { name: "Women's Hormone Health", path: "/hormone/womens-health" },
+]);
 
 const PAGE = "womens-health";
 
@@ -179,6 +201,41 @@ const faqs = [
   },
 ];
 
+// Plain-text mirror of the `faqs` accordion above for the FAQPage schema —
+// the JSX answers can't be serialized, so keep these in sync with the copy.
+const womensFaqSchema = faqSchema([
+  {
+    question: "Isn't HRT dangerous? I heard it causes breast cancer.",
+    answer:
+      "That fear traces to one study — the Women's Health Initiative, 2002. The average woman studied was 63, over a decade past menopause, given an older synthetic formulation started too late — and that result was applied to every 50-year-old in America. Flip the timing and the picture changes: a 2016 randomized trial (ELITE) found that starting estradiol early actually slowed artery disease. In November 2025, the FDA removed the boxed warnings from menopausal hormone therapy.",
+  },
+  {
+    question: "What are my options in 2026 — and are they all equal?",
+    answer:
+      "No — the differences matter. Transdermal estradiol (patch or gel) has no demonstrated clot risk and is the modern default. Oral estradiol carries a higher clot risk than transdermal. Micronized (bioidentical) progesterone has a better safety profile than synthetic progestins and also aids sleep. Pellets can't be titrated or reversed quickly — be cautious. Fezolinetant (Veozah) is a non-hormonal option that targets the brain mechanism of hot flashes. We walk through the differences with you.",
+  },
+  {
+    question: "Do I have to take hormones?",
+    answer:
+      "No — and we won't push them. We follow the stepwise approach recommended by The Menopause Society and ACOG: lifestyle is the foundation for every woman, with or without hormones. Mild symptoms often respond to lifestyle alone. For bothersome symptoms in the window (under 60, within 10 years of your last period), HRT is appropriate and effective — roughly 75% fewer hot flashes — paired with lifestyle, not instead of it. If HRT is contraindicated for you, there are real non-hormonal options, and vaginal estrogen is often still fine.",
+  },
+  {
+    question: "Am I too late? My last period was years ago.",
+    answer:
+      "It depends where you are — and that's exactly what the consult sorts out. Within roughly 10 years of your last period and under 60, systemic HRT generally remains on the table. Beyond that, starting systemic hormones carries more risk and lifestyle becomes the primary intervention — but symptoms like dryness, pain with sex, and recurrent UTIs can still be treated effectively (often with local vaginal estrogen) at nearly any age. Too late for one tool is not too late for help.",
+  },
+  {
+    question: "Is testosterone really part of women's care?",
+    answer:
+      "Yes — it's one of the biggest gaps in women's medicine. Measured on the same scale, women produce far more testosterone than estradiol, and it affects libido, motivation, energy, and sexual function. That doesn't mean every woman needs testosterone therapy — it means the hormone belongs in the conversation instead of being treated like it only matters in men.",
+  },
+  {
+    question: "What actually happens at the free consult?",
+    answer:
+      "A real conversation — no commitment, no pressure. We listen to your story, explain where your symptoms may fit (and where they may not), and lay out what a workup would look like: which labs, what they cost, and which treatment paths make sense for your stage of life. You leave with clarity either way.",
+  },
+]);
+
 const fuchsia = "hsl(331,95%,72%)";
 
 // Homepage-grade text shadows for words sitting directly on photos
@@ -195,6 +252,9 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 export default function WomensHealthEpicPage() {
   return (
     <div className="pb-20 lg:pb-0">
+      <JsonLd data={womensSchema} />
+      <JsonLd data={womensFaqSchema} />
+      <JsonLd data={womensBreadcrumbs} />
       <h1 className="sr-only">
         Women&apos;s Hormone Therapy Colorado Springs — Perimenopause, Menopause &amp; HRT Care
       </h1>

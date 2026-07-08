@@ -11,6 +11,7 @@ export const metadata: Metadata = {
     description:
       `The pressure that matters. CSHC Hyperbaric brings 2.0 ATA HBOT to Colorado Springs — the same level used in serious clinical research. Opening ${clinicFacts.hbot.openingDate}.`,
     url: "https://coshealthcollective.com/hyperbaric",
+    images: [{ url: "/images/hyperbaric/hbot-hero.webp", alt: "Hyperbaric Oxygen Therapy — Colorado Springs Health Collective" }],
   },
 };
 

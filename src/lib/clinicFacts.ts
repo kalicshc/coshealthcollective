@@ -26,7 +26,7 @@ export const clinicFacts = {
     couplesMonthly: 180,
     childAddOnMonthly: 60,
     childAgeMin: 2,
-    registrationFee: 50,
+    registrationFee: 100,
   },
   urgentCare: {
     telehealth: 85,

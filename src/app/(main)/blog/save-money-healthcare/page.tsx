@@ -5,6 +5,8 @@ import { Phone, Mail, ArrowLeft, CheckCircle } from "lucide-react";
 import { clinicFacts } from "@/lib/clinicFacts";
 import { ACCENTS } from "@/lib/accents";
 import { BlogCtaBlock } from "@/components/BlogCtaBlock";
+import { breadcrumbSchema } from "@/lib/schema";
+import { JsonLd } from "@/components/JsonLd";
 
 const A = ACCENTS.dpc;
 
@@ -26,16 +28,23 @@ const articleSchema = {
   headline: "How to Save Money on Healthcare: 7 Smart Strategies Most People Don't Know",
   description: "Cash-pay options, discount pharmacies, imaging price shopping, and how to avoid surprise bills.",
   datePublished: "2026-02-15",
+  dateModified: "2026-02-15",
   author: { "@type": "Organization", name: "Colorado Springs Health Collective" },
   publisher: { "@type": "Organization", name: "Colorado Springs Health Collective", url: "https://coshealthcollective.com", logo: { "@type": "ImageObject", url: "https://coshealthcollective.com/logo-main.png" } },
   mainEntityOfPage: { "@type": "WebPage", "@id": "https://coshealthcollective.com/blog/save-money-healthcare" },
   image: "https://coshealthcollective.com/blog/save-money-hero.jpg",
 };
 
+const breadcrumbs = breadcrumbSchema([
+  { name: "Blog", path: "/blog" },
+  { name: "How to Save Money on Healthcare", path: "/blog/save-money-healthcare" },
+]);
+
 export default function BlogSaveMoneyHealthcare() {
   return (
     <div className="min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <JsonLd data={breadcrumbs} />
       <section className="relative" style={{ background: "hsl(210, 32%, 8%)" }}>
 
         <div className="relative h-[60vh] min-h-[420px] overflow-hidden">

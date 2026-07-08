@@ -11,12 +11,12 @@ export const metadata: Metadata = {
 // matter — and because the tint lives inside the scene, its color crossfades in
 // lockstep with the photo.
 const AURORA_IMAGES = [
-  "/preview/aurora1.webp", // DPC
-  "/preview/aurora2.webp", // Hormone
-  "/preview/aurora3.webp", // Hyperbaric
-  "/preview/aurora4.webp", // Our Story
-  "/preview/aurora5-night.webp", // Reviews — darker night sky so the aurora pops
-  "/preview/aurora6.webp", // Our Journey — sunrise (no tint)
+  "/images/home/aurora1.webp", // DPC
+  "/images/home/aurora2.webp", // Hormone
+  "/images/home/aurora3.webp", // Hyperbaric
+  "/images/home/aurora4.webp", // Our Story
+  "/images/home/aurora5-night.webp", // Reviews — darker night sky so the aurora pops
+  "/images/home/aurora6.webp", // Our Journey — sunrise (no tint)
 ];
 
 // Masks that isolate ONLY the aurora ribbons in each photo — the tint recolors

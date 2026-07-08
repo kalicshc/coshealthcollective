@@ -5,6 +5,8 @@ import { GlassCard } from "@/components/GlassCard";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
 import { ReviewStrip } from "@/components/ReviewStrip";
 import { hintLink } from "@/lib/bookingLinks";
+import { serviceSchema } from "@/lib/schema";
+import { JsonLd } from "@/components/JsonLd";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/aesthetics" },
@@ -29,9 +31,17 @@ const steps = [
   { title: "Ongoing support", description: "We track your progress and adjust your prescription as needed to achieve the best results." },
 ];
 
+const aestheticsSchema = serviceSchema({
+  type: "Service",
+  name: "Prescription Anti-Aging Skin Care",
+  description: "Medical-grade anti-aging skin care in Colorado Springs via Skin Medicinals. Prescription tretinoin, niacinamide, vitamin C/E, resveratrol & turmeric compounds. $45 consultation or FREE with DPC membership.",
+  path: "/aesthetics",
+});
+
 export default function Aesthetics() {
   return (
     <div>
+      <JsonLd data={aestheticsSchema} />
       <ServiceHero
         service="brand"
         eyebrow="Medical-Grade Anti-Aging"
