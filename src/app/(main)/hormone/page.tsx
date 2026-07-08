@@ -534,24 +534,10 @@ export default function HormonePage() {
         </div>
       </SceneSection>
 
-      {/* ── 4. Social proof + the full article ───────────────────────── */}
+      {/* ── 4. Social proof ───────────────────────────────────────────── */}
       <section className="py-14 lg:py-20">
         <div className="mx-auto max-w-6xl px-4 lg:px-8">
           <ReviewStrip variant="strip" service="hormone" source="hormone-hub-reviews" />
-          <div className="mt-12 flex justify-center">
-            <TrackedLink
-              href="/blog/metabolic-health-hormone-therapy-colorado-springs"
-              event="cta_click"
-              analytics={{ page: "hormone", source: "hormone-hub-article", service: "hormone", label: "Read the full article" }}
-              className="px-8 py-4 rounded-full text-base font-semibold text-white hover:opacity-90 transition-opacity"
-              style={{
-                background: "linear-gradient(135deg, hsl(331,95%,65%), hsl(271,74%,52%))",
-                boxShadow: "0 16px 40px hsla(331,80%,55%,0.4)",
-              }}
-            >
-              Read the full article →
-            </TrackedLink>
-          </div>
         </div>
       </section>
       <PageCtaFooter
