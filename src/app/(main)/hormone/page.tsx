@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { clinicFacts, usd } from "@/lib/clinicFacts";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
 import { bookingUrl } from "@/lib/bookingLinks";
@@ -9,6 +8,7 @@ import { ReviewStrip } from "@/components/ReviewStrip";
 import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { SceneSection, SCENE_H, SCENE_P } from "@/components/SceneSection";
 import { RatingChip } from "@/components/ReviewStrip";
+import { JourneyCurve } from "@/components/JourneyCurve";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/hormone" },
@@ -22,6 +22,26 @@ const BOOKING_URL =
 const womensChips = ["Brain fog", "Low libido", "Mood changes", "Fatigue", "Sleep disruption"];
 const mensChips = ["Low T", "Fatigue", "Low libido", "Recovery"];
 const glpChips = ["Semaglutide", "Tirzepatide", "Metabolic review", "Body comp"];
+
+// Education content — originally designed for the standalone women's health
+// education page; lives here as the hub's lower half.
+const journeySteps = [
+  { phase: "Stable years", title: "More predictable hormone signaling", text: "Cycles can still be difficult, but hormone patterns are usually more consistent and easier to map." },
+  { phase: "Perimenopause", title: "The chaotic transition", text: "Hormones do not decline in a straight line. They swing, spike, and crash. That is why symptoms can feel random and intense." },
+  { phase: "Post-menopause", title: "A different baseline", text: "This is not just aging. Estradiol and progesterone are now profoundly lower, and the body feels that shift everywhere." },
+];
+
+const symptomGroups = [
+  { title: "Brain + mood", items: ["brain fog", "sleep disruption", "anxiety", "feeling flat", "irritability", "new attention issues"] },
+  { title: "Body", items: ["joint pain", "fatigue", "weight changes", "muscle loss", "slower recovery", "hot flashes"] },
+  { title: "Sexual + urinary", items: ["low libido", "dryness", "pain with sex", "recurrent UTIs", "bladder irritation", "feeling shut down"] },
+];
+
+const whatWeDo = [
+  { title: "Look at the full hormone picture", text: "Estradiol, progesterone, and testosterone are discussed together instead of pretending one hormone explains everything." },
+  { title: "Take symptoms seriously", text: "Brain, body, sexual health, urinary symptoms, and long-term risks all belong in the conversation." },
+  { title: "Build a personalized plan", text: "Treatment decisions should match your stage of life, goals, history, and actual symptoms rather than a generic protocol." },
+];
 
 const PriceStrip = () => (
   <p className="mt-3 text-xs lg:text-sm" style={{ color: "hsl(210,22%,72%)" }}>
@@ -422,216 +442,168 @@ export default function HormonePage() {
 
       </div>
 
-      {/* ── 3. A whole-person approach — full-bleed photo scenes ─────── */}
-      <style>{`
-        @keyframes wp-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
-        @keyframes wp-glow { 0%,100% { filter: drop-shadow(0 12px 36px hsla(331,95%,60%,0.30)); } 50% { filter: drop-shadow(0 18px 48px hsla(331,95%,60%,0.55)); } }
-        @keyframes wp-glow-v { 0%,100% { filter: drop-shadow(0 12px 36px hsla(271,74%,60%,0.30)); } 50% { filter: drop-shadow(0 18px 48px hsla(271,74%,60%,0.55)); } }
-        @keyframes wp-glow-c { 0%,100% { filter: drop-shadow(0 12px 36px hsla(188,88%,54%,0.28)); } 50% { filter: drop-shadow(0 18px 48px hsla(188,88%,54%,0.50)); } }
-        @keyframes wp-spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-      `}</style>
-      <section id="whole-person" className="scroll-mt-24 pt-16 lg:pt-24 pb-6">
+      {/* ── 3. THE EDUCATION — journey, symptoms, testosterone, WHI ──── */}
+
+      {/* The Hormone Journey — photo scene with the animated curve */}
+      <SceneSection image="/images/hormone/window-backdrop-v2.webp" scrim="side" minHeight="88vh">
+        <p className="text-sm font-semibold uppercase tracking-[0.22em] text-fuchsia-100/80">The Hormone Journey</p>
+        <h2 className="mt-4 text-3xl font-bold text-white lg:text-4xl" style={{ textShadow: SCENE_H }}>
+          Hormones do not change the same way throughout life
+        </h2>
+        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-white/95" style={{ textShadow: SCENE_P }}>
+          A simple way to think about it: hormones are more predictable for years, then perimenopause becomes
+          the chaotic transition, and menopause creates a new lower baseline. That shift is real. It affects
+          far more than temperature regulation.
+        </p>
+        <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+          <div>
+            <JourneyCurve />
+          </div>
+          <div className="space-y-4">
+            {journeySteps.map((step) => (
+              <div key={step.phase} className="rounded-[20px] border border-white/10 bg-slate-950/70 p-5" style={{ backdropFilter: "blur(8px)" }}>
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-fuchsia-100/75">{step.phase}</p>
+                <h3 className="mt-2 text-xl font-bold text-white">{step.title}</h3>
+                <p className="mt-2 text-sm leading-7 text-slate-300">{step.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </SceneSection>
+
+      {/* It's Not Just Hot Flashes — symptom grid */}
+      <section className="py-14 lg:py-20">
         <div className="mx-auto max-w-6xl px-4 lg:px-8">
-            {/* Header */}
-            <div className="text-center">
-              <p className="text-xs font-bold uppercase tracking-[0.22em]" style={{ color: "hsl(331,95%,72%)" }}>
-                Beyond the prescription
+          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-fuchsia-100/80">
+                It&apos;s Not Just Hot Flashes
               </p>
-              <h2
-                className="mt-4 text-4xl font-bold leading-[1.05] lg:text-6xl xl:text-7xl"
-                style={{ color: "hsl(0,0%,100%)", textShadow: "0 10px 34px rgba(0,0,0,0.4)" }}
-              >
-                <span
-                  className="block"
-                  style={{
-                    background: "linear-gradient(135deg, hsl(340,100%,82%), hsl(281,86%,67%), hsl(189,100%,70%))",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                    filter: "drop-shadow(0 8px 18px rgba(0,0,0,0.28))",
-                  }}
-                >
-                  A whole-person approach
-                </span>
+              <h2 className="mt-4 text-3xl font-bold text-white lg:text-4xl">
+                The full-body picture is why so many women feel missed
               </h2>
-              <p
-                className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed lg:text-xl"
-                style={{ color: "hsl(210,22%,85%)" }}
-              >
-                Hormone therapy can be transformative — but hormones don&apos;t act in isolation. They flow into a system of enzymes, receptors, and metabolic pathways that decide whether those hormones help or harm. That system is your metabolic health.
+              <p className="mt-4 text-lg leading-relaxed text-slate-300">
+                Most women were never told how many symptoms can connect back to changing hormones. Seeing the
+                whole pattern can be validating on its own, because it finally gives the experience a structure.
               </p>
             </div>
-
+            <div className="grid gap-5 md:grid-cols-3">
+              {symptomGroups.map((group) => (
+                <div key={group.title} className="service-card-transparent rounded-[28px] p-6">
+                  <h3 className="text-xl font-bold text-white">{group.title}</h3>
+                  <div className="mt-5 flex flex-wrap gap-3">
+                    {group.items.map((item) => (
+                      <span key={item} className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-slate-200">
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* 01 — the terrain (photo scene, image LEFT, content RIGHT) */}
-      <SceneSection image="/images/hormone/window-backdrop-v2.webp" scrim="side" minHeight="80vh">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 items-center">
-                <div className="relative order-1 md:order-1">
-                  <div
-                    className="relative aspect-square rounded-3xl overflow-hidden"
-                    style={{ animation: "wp-float 9s ease-in-out infinite, wp-glow 7s ease-in-out infinite" }}
-                  >
-                    <Image
-                      src="/hormone/whole-person/01-metabolic.png"
-                      alt="Glowing cell with orbiting enzymes — metabolic foundation of hormone therapy"
-                      fill
-                      sizes="(min-width: 768px) 50vw, 100vw"
-                      className="object-cover"
-                    />
-                    {/* Soft rotating ring overlay */}
-                    <div
-                      className="pointer-events-none absolute inset-6 rounded-full border"
-                      style={{
-                        borderColor: "hsla(331,95%,72%,0.18)",
-                        animation: "wp-spin-slow 40s linear infinite",
-                      }}
-                      aria-hidden="true"
-                    />
-                  </div>
-                </div>
-                <div className="order-2 md:order-2">
-                  <div className="flex items-center gap-3 mb-2">
-                    <span
-                      className="text-5xl lg:text-6xl font-black leading-none"
-                      style={{
-                        background: "linear-gradient(135deg, hsl(331,95%,72%), hsl(340,100%,82%))",
-                        WebkitBackgroundClip: "text",
-                        WebkitTextFillColor: "transparent",
-                        backgroundClip: "text",
-                      }}
-                      aria-hidden="true"
-                    >
-                      01
-                    </span>
-                    <p className="text-xs font-bold uppercase tracking-[0.2em]" style={{ color: "hsl(331,95%,78%)" }}>
-                      The terrain
-                    </p>
-                  </div>
-                  <h3 className="text-2xl font-bold text-white lg:text-3xl" style={{ textShadow: SCENE_H }}>
-                    Metabolic health is the foundation
-                  </h3>
-                  <p className="mt-4 text-lg italic" style={{ color: "hsl(210,22%,92%)", textShadow: SCENE_P }}>
-                    Same hormone, different body — different outcome.
-                  </p>
-                  <p className="mt-4 text-base leading-8" style={{ color: "hsl(210,22%,90%)", textShadow: SCENE_P }}>
-                    Your body doesn&apos;t just receive hormones — it processes them. Chronic inflammation, insulin resistance, and excess belly fat throw that processing off, so byproducts that should be cleared safely instead build up where they shouldn&apos;t — including in brain tissue. The result: the same dose can help one person and quietly burden another. Fixing the terrain first — the inflammation, the metabolic load — is what lets hormone therapy work <em>with</em> your body instead of against it.
-                  </p>
-                </div>
-              </div>
-      </SceneSection>
-
-      {/* 02 — the personal piece (photo scene, content LEFT, image RIGHT) */}
+      {/* The Forgotten Hormone — photo scene with the 10x reveal */}
       <SceneSection image="/images/hormone/reviews-backdrop-v1.webp" scrim="side" minHeight="80vh">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 items-center">
-                <div className="order-2 md:order-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <span
-                      className="text-5xl lg:text-6xl font-black leading-none"
-                      style={{
-                        background: "linear-gradient(135deg, hsl(271,74%,68%), hsl(281,86%,75%))",
-                        WebkitBackgroundClip: "text",
-                        WebkitTextFillColor: "transparent",
-                        backgroundClip: "text",
-                      }}
-                      aria-hidden="true"
-                    >
-                      02
-                    </span>
-                    <p className="text-xs font-bold uppercase tracking-[0.2em]" style={{ color: "hsl(271,74%,82%)" }}>
-                      The personal piece
-                    </p>
-                  </div>
-                  <h3 className="text-2xl font-bold text-white lg:text-3xl" style={{ textShadow: SCENE_H }}>
-                    Two genes change the math
-                  </h3>
-                  <p className="mt-4 text-lg italic" style={{ color: "hsl(210,22%,92%)", textShadow: SCENE_P }}>
-                    Your genome decides how your body handles estrogen — and how your brain ages.
-                  </p>
-                  <p className="mt-4 text-base leading-8" style={{ color: "hsl(210,22%,90%)", textShadow: SCENE_P }}>
-                    COMT (Val158Met) governs how quickly you clear estrogen byproducts. ApoE shapes how your brain handles lipids and amyloid. Both interact with what researchers call the &quot;healthy cell bias&quot; — estrogen is deeply neuroprotective when neurons are healthy, and surprisingly burdensome when they&apos;re not. The same therapy can preserve memory in one body and accelerate decline in another. Knowing your genotype can help guide treatment decisions and other work that needs to be done.
-                  </p>
-                </div>
-                <div className="relative order-1 md:order-2">
-                  <div
-                    className="relative aspect-square rounded-3xl overflow-hidden"
-                    style={{ animation: "wp-float 11s ease-in-out infinite reverse, wp-glow-v 8s ease-in-out infinite" }}
-                  >
-                    <Image
-                      src="/hormone/whole-person/02-brain-dna.png"
-                      alt="Glowing brain interwoven with DNA double helix — genetics and brain timing"
-                      fill
-                      sizes="(min-width: 768px) 50vw, 100vw"
-                      className="object-cover"
-                    />
-                    <div
-                      className="pointer-events-none absolute inset-6 rounded-full border"
-                      style={{
-                        borderColor: "hsla(271,74%,68%,0.18)",
-                        animation: "wp-spin-slow 50s linear infinite reverse",
-                      }}
-                      aria-hidden="true"
-                    />
-                  </div>
-                </div>
-              </div>
+        <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-fuchsia-100/80">
+              The Forgotten Hormone
+            </p>
+            <h2 className="mt-4 text-3xl font-bold text-white lg:text-4xl" style={{ textShadow: SCENE_H }}>
+              Testosterone matters in women too
+            </h2>
+            <p className="mt-5 text-base leading-8 text-white/95" style={{ textShadow: SCENE_P }}>
+              This is one of the biggest gaps in women&apos;s care. Testosterone affects libido, motivation,
+              energy, and sexual function, yet many women are never told it belongs in the conversation at all.
+            </p>
+          </div>
+          <div
+            className="rounded-[34px] border p-8 lg:p-10"
+            style={{
+              borderColor: "hsla(331,95%,72%,0.25)",
+              background: "linear-gradient(135deg, hsla(331,95%,72%,0.15), hsla(271,74%,55%,0.18), hsla(222,45%,8%,0.85))",
+              backdropFilter: "blur(10px)",
+            }}
+          >
+            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-fuchsia-100/90">Key Point</p>
+            <div className="mt-6 text-5xl font-bold leading-none text-white lg:text-6xl">10x</div>
+            <p className="mt-4 max-w-xl text-xl font-semibold text-white">
+              Women produce far more testosterone than estradiol when measured on the same scale.
+            </p>
+            <p className="mt-5 max-w-2xl text-base leading-8 text-slate-200">
+              That does not mean every woman needs testosterone therapy. It means the hormone should not be
+              ignored or treated like it only matters in men.
+            </p>
+          </div>
+        </div>
       </SceneSection>
 
-      {/* 03 — same biology (photo scene, image LEFT, content RIGHT) */}
+      {/* What Happened — the WHI numbers */}
+      <section className="py-14 lg:py-20">
+        <div className="mx-auto max-w-6xl px-4 lg:px-8">
+          <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-fuchsia-100/80">
+                What Happened
+              </p>
+              <h2 className="mt-4 text-3xl font-bold text-white lg:text-4xl">
+                One bad message changed women&apos;s care for decades
+              </h2>
+              <p className="mt-4 text-lg leading-relaxed text-slate-300">
+                For years, hormone therapy was framed around fear instead of careful interpretation. The result
+                was a generation of women and clinicians backing away from treatment without understanding what
+                the data actually showed.
+              </p>
+            </div>
+            <div className="grid gap-5 md:grid-cols-3">
+              {[
+                { value: "24%", label: "The scary relative-risk headline" },
+                { value: "0.1%", label: "The much smaller absolute-risk number" },
+                { value: "1 in 1,000", label: "The scale most women were never told" },
+              ].map((stat) => (
+                <div key={stat.value} className="service-card-transparent rounded-[28px] p-6">
+                  <div className="text-4xl font-bold text-white">{stat.value}</div>
+                  <p className="mt-3 text-sm leading-7 text-slate-300">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="mt-8 service-card-transparent rounded-[30px] p-7">
+            <p className="text-base leading-8 text-slate-300">
+              The point is not that hormones are for everyone. The point is that women deserve the actual
+              context, not a simplified fear story that shut down informed decision-making.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* What We Do Differently — photo scene */}
       <SceneSection image="/images/hormone/final-backdrop-v1.webp" scrim="side" minHeight="80vh">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 items-center">
-                <div className="relative order-1 md:order-1">
-                  <div
-                    className="relative aspect-square rounded-3xl overflow-hidden"
-                    style={{ animation: "wp-float 10s ease-in-out infinite, wp-glow-c 9s ease-in-out infinite" }}
-                  >
-                    <Image
-                      src="/hormone/whole-person/03-loop.png"
-                      alt="Two arrows forming a circular loop — vicious cycle of low testosterone and metabolism"
-                      fill
-                      sizes="(min-width: 768px) 50vw, 100vw"
-                      className="object-cover"
-                    />
-                    <div
-                      className="pointer-events-none absolute inset-6 rounded-full border"
-                      style={{
-                        borderColor: "hsla(188,88%,62%,0.18)",
-                        animation: "wp-spin-slow 60s linear infinite",
-                      }}
-                      aria-hidden="true"
-                    />
-                  </div>
-                </div>
-                <div className="order-2 md:order-2">
-                  <div className="flex items-center gap-3 mb-2">
-                    <span
-                      className="text-5xl lg:text-6xl font-black leading-none"
-                      style={{
-                        background: "linear-gradient(135deg, hsl(188,88%,62%), hsl(189,100%,75%))",
-                        WebkitBackgroundClip: "text",
-                        WebkitTextFillColor: "transparent",
-                        backgroundClip: "text",
-                      }}
-                      aria-hidden="true"
-                    >
-                      03
-                    </span>
-                    <p className="text-xs font-bold uppercase tracking-[0.2em]" style={{ color: "hsl(188,88%,78%)" }}>
-                      Same biology
-                    </p>
-                  </div>
-                  <h3 className="text-2xl font-bold text-white lg:text-3xl" style={{ textShadow: SCENE_H }}>
-                    Men live in the same loop
-                  </h3>
-                  <p className="mt-4 text-lg italic" style={{ color: "hsl(210,22%,92%)", textShadow: SCENE_P }}>
-                    Low T and metabolism reinforce each other.
-                  </p>
-                  <p className="mt-4 text-base leading-8" style={{ color: "hsl(210,22%,90%)", textShadow: SCENE_P }}>
-                    Visceral fat raises aromatase, which converts testosterone into estrogen — which deepens metabolic dysfunction, which lowers testosterone further. The cycle feeds itself. Many men labeled &quot;low T&quot; actually have a metabolic problem in disguise — and fixing that problem can restore testosterone without lifelong replacement. We optimize the system first, then decide what, if anything, you actually need from the prescription pad.
-                  </p>
-                </div>
+        <div className="grid gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-fuchsia-100/80">
+              What We Do Differently
+            </p>
+            <h2 className="mt-4 text-3xl font-bold text-white lg:text-4xl" style={{ textShadow: SCENE_H }}>
+              Education first. Personalization second. No minimizing.
+            </h2>
+            <p className="mt-4 text-lg leading-relaxed text-white/95" style={{ textShadow: SCENE_P }}>
+              A good plan starts with clarity. That means explaining where symptoms may fit, where they may
+              not, and which options make sense for your stage of life and goals.
+            </p>
+          </div>
+          <div className="grid gap-5 md:grid-cols-3">
+            {whatWeDo.map((item) => (
+              <div key={item.title} className="rounded-[20px] border border-white/10 bg-slate-950/70 p-5" style={{ backdropFilter: "blur(8px)" }}>
+                <h3 className="text-lg font-bold text-white">{item.title}</h3>
+                <p className="mt-3 text-sm leading-7 text-slate-300">{item.text}</p>
               </div>
+            ))}
+          </div>
+        </div>
       </SceneSection>
 
       {/* ── 4. Social proof + the full article ───────────────────────── */}
