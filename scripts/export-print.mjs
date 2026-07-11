@@ -168,6 +168,38 @@ const PRINT_PAGES = [
     description: '5\' × 2\' Event Banner (large format)',
   },
   {
+    name: 'cw-carousel-1',
+    path: '/cw-social-post?s=1',
+    viewport: { width: 540, height: 540 },
+    scale: 2,                                // 540 CSS px × 2 = 1080×1080 (IG/TikTok square)
+    description: '1080×1080 Critical Window carousel 1/4 — hook + date/venue (aurora)',
+    pdf: false,
+  },
+  {
+    name: 'cw-carousel-2',
+    path: '/cw-social-post?s=2',
+    viewport: { width: 540, height: 540 },
+    scale: 2,
+    description: '1080×1080 Critical Window carousel 2/4 — why this decade matters',
+    pdf: false,
+  },
+  {
+    name: 'cw-carousel-3',
+    path: '/cw-social-post?s=3',
+    viewport: { width: 540, height: 540 },
+    scale: 2,
+    description: '1080×1080 Critical Window carousel 3/4 — what you\'ll walk away with',
+    pdf: false,
+  },
+  {
+    name: 'cw-carousel-4',
+    path: '/cw-social-post?s=4',
+    viewport: { width: 540, height: 540 },
+    scale: 2,
+    description: '1080×1080 Critical Window carousel 4/4 — CTA + full logistics (golden valley)',
+    pdf: false,
+  },
+  {
     name: 'tshirt-back',
     path: '/tshirt-back',
     viewport: { width: 1152, height: 960 },
@@ -208,7 +240,7 @@ const EXPORT_CSS = `
   /* Print-page shells: strip preview padding so the artboard sits at 0,0 */
   .bc-shell, .gs-shell, .gst-shell, .fc-shell, .pf-shell, .gym-shell,
   .iv-shell, .mr-shell, .bh-shell, .ev-shell, .lt-shell, .hh-shell,
-  .hbot-shell, .hf-shell, .sf-shell {
+  .hbot-shell, .hf-shell, .sf-shell, .cwsp-shell {
     padding: 0 !important; margin: 0 !important;
     min-height: auto !important; background: transparent !important;
   }
@@ -294,7 +326,7 @@ async function exportPage(browser, config) {
     await tab.setViewport({
       width: config.viewport.width,
       height: config.viewport.height,
-      deviceScaleFactor: SCALE,
+      deviceScaleFactor: config.scale ?? SCALE,
     });
 
     const url = `${BASE_URL}${config.path}`;

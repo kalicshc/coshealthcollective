@@ -40,6 +40,10 @@ export async function submitFreeConsult(data: { firstName: string; lastName: str
   return post("/api/free-consult", { ...data, sourcePage: "/free-consult" });
 }
 
+export async function submitCriticalWindowRsvp(data: { firstName: string; lastName: string; email: string }) {
+  return post("/api/critical-window-rsvp", { ...data, sourcePage: "/rsvp" });
+}
+
 type ClinicQuestionPayload = {
   firstName: string;
   lastName: string;
