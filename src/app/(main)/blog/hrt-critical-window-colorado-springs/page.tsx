@@ -396,10 +396,6 @@ export default function HRTCriticalWindowPost() {
             <div className="rounded-2xl p-6 mb-10" style={{ background: "hsla(210, 22%, 18%, 0.6)", border: "1px solid hsla(330, 70%, 55%, 0.15)" }}>
               <p className="text-sm font-bold uppercase tracking-wider mb-3" style={{ color: "hsl(330, 70%, 72%)" }}>Explore More</p>
               <div className="flex flex-col sm:flex-row gap-3 flex-wrap">
-                <Link href="/hormone/womens-health" className="flex items-center gap-2 text-sm hover:opacity-80" style={{ color: "hsl(210, 30%, 80%)" }}>
-                  <ChevronRight className="w-3.5 h-3.5" style={{ color: "hsl(330, 70%, 65%)" }} />
-                  Women's Health Overview
-                </Link>
                 <Link href="/hormone" className="flex items-center gap-2 text-sm hover:opacity-80" style={{ color: "hsl(210, 30%, 80%)" }}>
                   <ChevronRight className="w-3.5 h-3.5" style={{ color: "hsl(330, 70%, 65%)" }} />
                   Hormone & Metabolic Clinic

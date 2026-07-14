@@ -10,7 +10,7 @@ import { JsonLd } from "@/components/JsonLd";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/allergy-slit" },
-  title: "Allergy Testing & SLIT Therapy | Colorado Springs Health Collective",
+  title: "Allergy Testing & SLIT Therapy",
   description: "Evidence-based allergy testing and sublingual immunotherapy (SLIT) in Colorado Springs. At-home allergy treatment without injections. Seasonal and environmental allergy relief.",
   keywords: "allergy testing Colorado Springs, SLIT therapy, sublingual immunotherapy, seasonal allergies, environmental allergies, allergy drops, allergy treatment without shots",
 };

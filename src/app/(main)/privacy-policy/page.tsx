@@ -4,7 +4,7 @@ import { clinicFacts } from "@/lib/clinicFacts";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/privacy-policy" },
-  title: "Privacy Policy | Colorado Springs Health Collective",
+  title: "Privacy Policy",
   description: "Privacy Policy for Colorado Springs Health Collective. Learn how we collect, use, and protect your personal information.",
 };
 

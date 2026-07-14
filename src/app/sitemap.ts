@@ -9,7 +9,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "/", priority: 1.0, changeFrequency: "weekly" },
     { url: "/direct-primary-care", priority: 0.95, changeFrequency: "weekly" },
     { url: "/hormone", priority: 0.95, changeFrequency: "weekly" },
-    { url: "/hormone/womens-health", priority: 0.9, changeFrequency: "weekly" },
     { url: "/hormone/mens-health", priority: 0.9, changeFrequency: "weekly" },
     { url: "/hormone/glp1", priority: 0.9, changeFrequency: "weekly" },
     { url: "/hyperbaric", priority: 0.9, changeFrequency: "weekly" },

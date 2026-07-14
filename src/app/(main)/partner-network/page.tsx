@@ -8,7 +8,7 @@ import { bookingUrl } from "@/lib/bookingLinks";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/partner-network" },
-  title: "Cash Pay Partner Network | Colorado Springs Health Collective",
+  title: "Cash Pay Partner Network",
   description: "Trusted healthcare providers in Colorado Springs offering transparent cash-pay pricing. Physical therapy, occupational therapy, injury recovery, cardiac testing. No insurance surprises.",
   keywords: "cash pay healthcare Colorado Springs, transparent pricing medical, physical therapy cash pay, occupational therapy, cardiac testing Colorado Springs, injury recovery",
 };

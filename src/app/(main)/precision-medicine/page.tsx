@@ -8,7 +8,7 @@ import { bookingUrl } from "@/lib/bookingLinks";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/precision-medicine" },
-  title: "Precision Medicine & Advanced Testing | Colorado Springs Health Collective",
+  title: "Precision Medicine & Advanced Testing",
   description: "Clinician-guided precision medicine in Colorado Springs. Pharmacogenomics, metabolic panels, cardiometabolic testing, and allergy evaluation. Evidence-based, personalized care.",
   keywords: "precision medicine Colorado Springs, pharmacogenomics testing, metabolic health panels, cardiometabolic testing, advanced diagnostics Colorado Springs",
 };

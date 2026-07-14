@@ -318,10 +318,6 @@ export default function MetabolicHealthHormonePost() {
                   <ChevronRight className="w-3.5 h-3.5" style={{ color: "hsl(331, 70%, 65%)" }} />
                   Hormone &amp; Metabolic Clinic
                 </Link>
-                <Link href="/hormone/womens-health" className="flex items-center gap-2 text-sm hover:opacity-80" style={{ color: "hsl(210, 30%, 80%)" }}>
-                  <ChevronRight className="w-3.5 h-3.5" style={{ color: "hsl(331, 70%, 65%)" }} />
-                  Women&apos;s Health Overview
-                </Link>
                 <Link href="/hormone/mens-health" className="flex items-center gap-2 text-sm hover:opacity-80" style={{ color: "hsl(210, 30%, 80%)" }}>
                   <ChevronRight className="w-3.5 h-3.5" style={{ color: "hsl(331, 70%, 65%)" }} />
                   Men&apos;s Health + TRT

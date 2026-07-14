@@ -14,7 +14,7 @@ import { bookingUrl } from "@/lib/bookingLinks";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/about" },
-  title: "Meet Your Healthcare Team | Colorado Springs Health Collective",
+  title: "Meet Your Healthcare Team",
   description: "Meet Sarah Crist ARNP and Logan Crist PA-C, the founders behind Colorado Springs Health Collective — building CSHC Direct Primary Care, CSHC Hormone & Weight Loss Clinic, and CSHC Hyperbaric.",
   keywords: "Sarah Crist nurse practitioner, Logan Crist physician assistant, Colorado Springs DPC providers, healthcare team Colorado Springs",
 };

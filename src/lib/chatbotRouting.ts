@@ -98,7 +98,7 @@ const CTA_BY_TAG: Record<ChatCtaTag, ChatCta> = {
     tag: "hormone-womens-quiz",
     kind: "book",
     book: { label: "Take the Women's Hormone Quiz", href: "/hormone/womens-health/quiz" },
-    learnMore: { label: "Women's hormone health", href: "/hormone/womens-health" },
+    learnMore: { label: "Women's hormone health", href: "/hormone" },
   },
   "hormone-mens-quiz": {
     tag: "hormone-mens-quiz",

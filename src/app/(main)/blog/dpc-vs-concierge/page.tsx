@@ -11,7 +11,7 @@ import { JsonLd } from "@/components/JsonLd";
 const A = ACCENTS.dpc;
 
 export const metadata: Metadata = {
-  title: "Direct Primary Care vs. Concierge Medicine: Colorado Springs Guide | Colorado Springs Health Collective",
+  title: "Direct Primary Care vs. Concierge Medicine: Colorado Springs Guide",
   description: "Understanding the differences between Direct Primary Care and concierge medicine in Colorado Springs. Compare costs, services, and which model best fits your healthcare needs.",
   alternates: { canonical: "/blog/dpc-vs-concierge" },
   openGraph: {

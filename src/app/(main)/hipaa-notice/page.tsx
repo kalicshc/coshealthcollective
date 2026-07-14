@@ -3,7 +3,7 @@ import { clinicFacts } from "@/lib/clinicFacts";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/hipaa-notice" },
-  title: "HIPAA Notice of Privacy Practices | Colorado Springs Health Collective",
+  title: "HIPAA Notice of Privacy Practices",
   description: "Notice of Privacy Practices for Colorado Springs Health Collective. Learn how we use and protect your medical information.",
 };
 

@@ -3,7 +3,7 @@ import { clinicFacts } from "@/lib/clinicFacts";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/terms-of-service" },
-  title: "Terms of Service | Colorado Springs Health Collective",
+  title: "Terms of Service",
   description: "Terms of Service for Colorado Springs Health Collective. Governing your use of our websites and non-clinical services.",
 };
 

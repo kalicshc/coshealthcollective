@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Community Event Participation Waiver | Colorado Springs Health Collective",
+  title: "Community Event Participation Waiver",
   description: "Participation waiver for Colorado Springs Health Collective community events.",
 };
 

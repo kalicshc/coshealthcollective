@@ -21,22 +21,36 @@ export const clinicFacts = {
     domain: "coshealthcollective.com",
     siteUrl: "https://coshealthcollective.com",
   },
+  /**
+   * One-time enrollment fee — the SAME for every membership: DPC, hormone
+   * (HRT/TRT/GLP-1), and the combo. Per household for DPC/family plans.
+   * For hormone plans the first month includes the comprehensive consult,
+   * lab ordering, and lab review — so "first month all-in" is
+   * enrollmentFee + monthly, derived where displayed (never hardcoded).
+   */
+  enrollmentFee: 100,
   dpc: {
     individualMonthly: 100,
     couplesMonthly: 180,
     childAddOnMonthly: 60,
     childAgeMin: 2,
-    registrationFee: 100,
   },
   urgentCare: {
     telehealth: 85,
     inPerson: 115,
   },
   hormone: {
-    initialConsult: 200,
     monthlyManagement: 100,
     topicalEstrogenTelehealth: 89,
     topicalEstrogenDurationMonths: 3,
+  },
+  /**
+   * Hormone/TRT/GLP-1 + DPC combo membership: one enrollmentFee (not two),
+   * then this flat monthly for both memberships. The +$60 add-on framing and
+   * $40/mo savings vs buying separately are computed where displayed.
+   */
+  combo: {
+    monthly: 160,
   },
   hbot: {
     pressure: "2.0 ATA",

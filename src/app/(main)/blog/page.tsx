@@ -15,7 +15,7 @@ const goldDeep = "hsl(38, 92%, 56%)";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/blog" },
-  title: "Healthcare Blog | Colorado Springs Health Collective",
+  title: "Healthcare Blog",
   description: "Discover how Direct Primary Care is transforming healthcare in Colorado Springs. Get insights on whole-person wellness, preventive care, and building authentic relationships with your healthcare provider.",
 };
 

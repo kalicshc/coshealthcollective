@@ -27,6 +27,10 @@ const nextConfig: NextConfig = {
       // two training stubs merged into /personal-training.
       { source: "/members", destination: "/resources", permanent: true },
       { source: "/strength-wellness-coaching", destination: "/personal-training", permanent: true },
+      // 2026-07: the standalone women's health page merged INTO /hormone —
+      // women's care is the flagship and now IS the hormone page. The quiz
+      // still lives at /hormone/womens-health/quiz (not redirected).
+      { source: "/hormone/womens-health", destination: "/hormone", permanent: true },
     ];
   },
 };

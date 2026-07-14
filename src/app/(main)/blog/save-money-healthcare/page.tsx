@@ -11,7 +11,7 @@ import { JsonLd } from "@/components/JsonLd";
 const A = ACCENTS.dpc;
 
 export const metadata: Metadata = {
-  title: "How to Save Money on Healthcare: 7 Smart Strategies | Colorado Springs Health Collective",
+  title: "How to Save Money on Healthcare: 7 Smart Strategies",
   description: "Learn practical ways to save money on healthcare—from cash-pay options and discount pharmacies to imaging price shopping and avoiding surprise bills.",
   alternates: { canonical: "/blog/save-money-healthcare" },
   openGraph: {

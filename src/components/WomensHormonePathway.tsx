@@ -1120,7 +1120,7 @@ export default function WomensHormonePathway() {
                       Book a Free Consult
                     </Link>
                     <Link
-                      href="/hormone/womens-health"
+                      href="/hormone"
                       className="text-sm font-medium text-slate-400 hover:text-white transition"
                     >
                       Learn more about our approach →

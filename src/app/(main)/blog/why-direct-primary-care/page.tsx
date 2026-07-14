@@ -11,7 +11,7 @@ import { JsonLd } from "@/components/JsonLd";
 const A = ACCENTS.dpc;
 
 export const metadata: Metadata = {
-  title: "Why Direct Primary Care Is the Future of Health | Colorado Springs Health Collective",
+  title: "Why Direct Primary Care Is the Future of Health",
   description: "Discover how Direct Primary Care in Colorado Springs is redefining healthcare: no insurance hoops, no rushed visits, just real care when you need it.",
   alternates: { canonical: "/blog/why-direct-primary-care" },
   openGraph: {

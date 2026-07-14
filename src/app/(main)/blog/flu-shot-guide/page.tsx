@@ -11,7 +11,7 @@ import { JsonLd } from "@/components/JsonLd";
 const A = ACCENTS.brand;
 
 export const metadata: Metadata = {
-  title: "How the Flu Shot Works: Safety, Risks & Why You Should Get Vaccinated | Colorado Springs Health Collective",
+  title: "How the Flu Shot Works: Safety, Risks & Why You Should Get Vaccinated",
   description: "Learn how the flu vaccine works to protect you, its proven safety profile, potential risks, and why getting vaccinated each flu season matters for you and your community.",
   alternates: { canonical: "/blog/flu-shot-guide" },
   openGraph: {

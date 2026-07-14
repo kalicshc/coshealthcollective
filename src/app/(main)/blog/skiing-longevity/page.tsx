@@ -11,7 +11,7 @@ import { JsonLd } from "@/components/JsonLd";
 const A = ACCENTS.brand;
 
 export const metadata: Metadata = {
-  title: "Skiing Into Your 70s: A Colorado Springs Guide to Longevity on the Slopes | Colorado Springs Health Collective",
+  title: "Skiing Into Your 70s: A Colorado Springs Guide to Longevity on the Slopes",
   description: "Learn how to keep skiing for decades with proper strength training, nutrition, sleep, and recovery. Colorado Springs longevity tips for lifelong skiers.",
   alternates: { canonical: "/blog/skiing-longevity" },
   openGraph: {

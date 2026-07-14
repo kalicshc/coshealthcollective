@@ -2,16 +2,15 @@ import { clinicFacts, usd } from "@/lib/clinicFacts";
 import { ACCENTS } from "@/lib/accents";
 import { serviceSchema, faqSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/JsonLd";
-import { hintLink } from "@/lib/bookingLinks";
 import { SceneSection, Eyebrow, SCENE_H, SCENE_P } from "@/components/SceneSection";
 import { CoPrimaryCtas } from "@/components/CoPrimaryCtas";
 import { StickyCtaBar } from "@/components/StickyCtaBar";
 import { ReviewStrip, RatingChip } from "@/components/ReviewStrip";
-import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { SectionView } from "@/components/analytics/SectionView";
 import { Accordion } from "@/components/Accordion";
 import { GlassCard } from "@/components/GlassCard";
 import { DpcInquiryForm } from "@/components/DpcInquiryForm";
+import { PricingColumns } from "@/components/PricingColumns";
 import {
   CheckCircle, Heart, Video, Clock, MessageCircle,
   Users, Shield, Droplets, Sparkles, Dumbbell, Scissors, Pill, FlaskConical,
@@ -80,7 +79,7 @@ const dpcFaqs = [
   {
     id: "pricing",
     question: "How much does membership cost?",
-    answer: `Individual membership is ${usd(clinicFacts.dpc.individualMonthly)}/month. Couples are ${usd(clinicFacts.dpc.couplesMonthly)}/month. Families add ${usd(clinicFacts.dpc.childAddOnMonthly)}/month per child over age ${clinicFacts.dpc.childAgeMin}. There is a one-time ${usd(clinicFacts.dpc.registrationFee)} registration fee per household for new members. No contracts — cancel anytime.`,
+    answer: `Every plan starts with a one-time ${usd(clinicFacts.enrollmentFee)} enrollment fee (per household), then a flat monthly rate. Individual membership is ${usd(clinicFacts.dpc.individualMonthly)}/month. Couples are ${usd(clinicFacts.dpc.couplesMonthly)}/month. Families add ${usd(clinicFacts.dpc.childAddOnMonthly)}/month per child over age ${clinicFacts.dpc.childAgeMin}. If you also want hormone or TRT care, the combo membership covers both for ${usd(clinicFacts.combo.monthly)}/month with a single enrollment fee. No contracts — cancel anytime.`,
   },
   {
     id: "still-need-insurance",
@@ -148,7 +147,8 @@ const dpcSchema = serviceSchema({
     { name: "Individual membership (per month)", price: clinicFacts.dpc.individualMonthly },
     { name: "Couples membership (per month)", price: clinicFacts.dpc.couplesMonthly },
     { name: `Child add-on, age ${clinicFacts.dpc.childAgeMin}+ (per month)`, price: clinicFacts.dpc.childAddOnMonthly },
-    { name: "One-time registration fee (per household)", price: clinicFacts.dpc.registrationFee },
+    { name: "One-time enrollment fee (per household)", price: clinicFacts.enrollmentFee },
+    { name: "DPC + hormone/TRT combo membership (per month)", price: clinicFacts.combo.monthly },
   ],
 });
 
@@ -292,64 +292,19 @@ export default function DirectPrimaryCare() {
 
       {/* ── 5. PRICING ────────────────────────────────────────────────── */}
       <section id="pricing" className="py-14 lg:py-20">
-        <div className="mx-auto max-w-6xl px-4 lg:px-8"><div className="mx-auto max-w-4xl">
+        <div className="mx-auto max-w-6xl px-4 lg:px-8"><div className="mx-auto max-w-5xl">
           <div className="mb-10 text-center">
             <Eyebrow color={EYEBROW}>Pricing</Eyebrow>
             <h2 className="mt-4 text-3xl font-bold text-white lg:text-4xl">
               Transparent pricing. No contracts.
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-slate-300">
-              One flat monthly fee covers your membership. Labs and medications are offered at or near cost.
-              Cancel anytime.
+              One-time {usd(clinicFacts.enrollmentFee)} enrollment per household, then a flat monthly rate.
+              Labs and medications at or near cost. Cancel anytime.
             </p>
           </div>
 
-          <div
-            className="rounded-[34px] border p-8 lg:p-10"
-            style={{
-              borderColor: `rgba(${ACCENT.rgb},0.22)`,
-              background: `linear-gradient(135deg, rgba(${ACCENT.rgb},0.14), hsla(238,90%,48%,0.16), hsla(210,22%,16%,0.72))`,
-              boxShadow: "0 24px 80px rgba(7,10,18,0.32)",
-            }}
-          >
-            <div className="h-0.5 w-16 rounded-full" style={{ background: `linear-gradient(135deg, ${ACCENT.from}, ${ACCENT.to})` }} />
-            <h3 className="mt-6 text-2xl font-black text-white">CSHC Direct Primary Care</h3>
-            <div className="mt-5 grid gap-x-8 gap-y-4 sm:grid-cols-3">
-              <div>
-                <span className="text-4xl font-black text-white">{usd(clinicFacts.dpc.individualMonthly)}</span>
-                <span className="ml-2 text-sm text-slate-400">/mo individual</span>
-              </div>
-              <div>
-                <span className="text-4xl font-black text-white">{usd(clinicFacts.dpc.couplesMonthly)}</span>
-                <span className="ml-2 text-sm text-slate-400">/mo couples</span>
-              </div>
-              <div>
-                <span className="text-4xl font-black text-white">+{usd(clinicFacts.dpc.childAddOnMonthly)}</span>
-                <span className="ml-2 text-sm text-slate-400">/mo per child over {clinicFacts.dpc.childAgeMin}</span>
-              </div>
-            </div>
-            <p className="mt-4 text-sm leading-7 text-slate-300">
-              One-time {usd(clinicFacts.dpc.registrationFee)} registration fee per household for new members.
-              Membership includes everything below — no copays, no per-visit charges, no surprises.
-            </p>
-            <div className="mt-7 grid gap-3 sm:grid-cols-2">
-              {includedBenefits.map((benefit) => (
-                <p key={benefit.title} className="rounded-2xl border border-white/10 bg-black/24 px-4 py-3 text-sm text-slate-200">
-                  {benefit.title}
-                </p>
-              ))}
-            </div>
-            <div className="mt-8 text-center">
-              <TrackedLink
-                href={hintLink("dpcMembershipSignup", "dpc-pricing")}
-                analytics={{ page: PAGE, source: "dpc-pricing", service: "dpc", label: "Become a Member" }}
-                className="inline-block rounded-full px-10 py-4 text-sm font-bold uppercase tracking-wide hover:opacity-85 transition-opacity"
-                style={{ background: `linear-gradient(135deg, ${ACCENT.from}, ${ACCENT.to})`, color: "#fff" }}
-              >
-                Become a Member
-              </TrackedLink>
-            </div>
-          </div>
+          <PricingColumns perspective="dpc" page={PAGE} source="dpc-pricing" />
 
           <div className="mt-10">
             <DpcCtas source="dpc-pricing-ctas" />

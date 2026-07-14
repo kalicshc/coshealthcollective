@@ -3,6 +3,7 @@ import { clinicFacts, usd } from "@/lib/clinicFacts";
 import { ACCENTS } from "@/lib/accents";
 import { SceneSection, Eyebrow, SCENE_H, SCENE_P } from "@/components/SceneSection";
 import { CoPrimaryCtas } from "@/components/CoPrimaryCtas";
+import { PricingColumns } from "@/components/PricingColumns";
 import { StickyCtaBar } from "@/components/StickyCtaBar";
 import { glassCardStyle } from "@/components/GlassCard";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
@@ -17,7 +18,7 @@ import { JsonLd } from "@/components/JsonLd";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/hormone/glp1" },
-  title: "GLP-1 Weight Loss | Colorado Springs Health Collective",
+  title: "GLP-1 Weight Loss",
   description: "Semaglutide and tirzepatide in Colorado Springs with a real metabolic review. GLP-1 care that fits your weight, hormones, and long-term goals.",
   openGraph: {
     images: [{ url: "/images/hormone/glp1-hero.webp", alt: "GLP-1 Weight Loss — Colorado Springs Health Collective" }],
@@ -31,8 +32,9 @@ const glp1Schema = serviceSchema({
   path: "/hormone/glp1",
   image: "/images/hormone/glp1-hero.webp",
   offers: [
-    { name: "Initial consult (includes first month)", price: clinicFacts.hormone.initialConsult },
-    { name: "Ongoing management (per month)", price: clinicFacts.hormone.monthlyManagement },
+    { name: "One-time enrollment fee", price: clinicFacts.enrollmentFee },
+    { name: "GLP-1 metabolic care membership (per month)", price: clinicFacts.hormone.monthlyManagement },
+    { name: "DPC + GLP-1 combo membership (per month)", price: clinicFacts.combo.monthly },
   ],
 });
 
@@ -73,13 +75,6 @@ const notForEveryone = [
   "Active pancreatitis",
   "Pregnancy or planning to become pregnant",
   "Severe kidney disease or certain GI conditions",
-];
-
-const pricingFeatures = [
-  "Symptoms, goals, risk factors, preferences, and special considerations",
-  "Lab ordering and a follow-up visit to review your results with you",
-  "Personalized treatment options and next-step recommendations",
-  "Ongoing follow-up, medication management, and adjustments once established",
 ];
 
 function Glp1Ctas({ source, size, align }: { source: string; size?: "md" | "lg"; align?: "center" | "left" }) {
@@ -210,45 +205,19 @@ export default function GLP1Page() {
 
       {/* ── 4. PRICING ────────────────────────────────────────────────── */}
       <section id="pricing" className="scroll-mt-20 py-14 lg:py-20">
-        <div className="mx-auto max-w-4xl px-4 lg:px-8">
+        <div className="mx-auto max-w-5xl px-4 lg:px-8">
           <div className="mb-10 text-center">
             <Eyebrow>Pricing</Eyebrow>
             <h2 className="mt-4 text-3xl font-bold text-white lg:text-4xl">
-              Transparent pricing
+              Simple pricing. Three ways in.
             </h2>
-          </div>
-          <div
-            className="rounded-[34px] border p-8 lg:p-10"
-            style={{
-              borderColor: `rgba(${ACCENT.rgb},0.22)`,
-              background: `linear-gradient(135deg, rgba(${ACCENT.rgb},0.14), hsla(272,90%,52%,0.16), hsla(210,22%,16%,0.72))`,
-              boxShadow: "0 24px 80px rgba(7,10,18,0.32)",
-            }}
-          >
-            <div className="h-0.5 w-16 rounded-full" style={{ background: `linear-gradient(135deg, ${ACCENT.from}, ${ACCENT.to})` }} />
-            <h3 className="mt-6 text-2xl font-black text-white">GLP-1 Metabolic Care</h3>
-            <div className="mt-5 flex flex-wrap gap-x-8 gap-y-3">
-              <div>
-                <span className="text-4xl font-black text-white">{usd(clinicFacts.hormone.initialConsult)}</span>
-                <span className="ml-2 text-sm text-slate-400">initial consult + first month</span>
-              </div>
-              <div>
-                <span className="text-3xl font-black text-white">{usd(clinicFacts.hormone.monthlyManagement)}</span>
-                <span className="ml-2 text-sm text-slate-400">/ month ongoing management</span>
-              </div>
-            </div>
-            <p className="mt-4 text-sm leading-7 text-slate-300">
-              Includes review of symptoms, goals, risk factors, preferences, and special considerations,
-              plus lab ordering and a visit to review the results together. Does not include lab costs or medications.
+            <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-slate-300">
+              One-time {usd(clinicFacts.enrollmentFee)} enrollment, then a flat monthly rate. Pick GLP-1 care,
+              primary care, or bundle both and save.
             </p>
-            <div className="mt-7 grid gap-3 sm:grid-cols-2">
-              {pricingFeatures.map((feature) => (
-                <p key={feature} className="rounded-2xl border border-white/10 bg-black/24 px-4 py-3 text-sm text-slate-200">
-                  {feature}
-                </p>
-              ))}
-            </div>
           </div>
+
+          <PricingColumns perspective="glp1" page={PAGE} source="glp1-pricing" />
         </div>
       </section>
 

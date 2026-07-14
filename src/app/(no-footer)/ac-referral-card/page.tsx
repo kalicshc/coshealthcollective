@@ -539,7 +539,7 @@ export default function AcReferralCard() {
                       <div className="bc-b-tier-name">HRT &middot; Perimenopause &amp; Menopause</div>
                       <div className="bc-b-tier-row">
                         <span className="bc-b-tier-price">$200</span>
-                        <span className="bc-b-tier-desc">consult + first month</span>
+                        <span className="bc-b-tier-desc">enrollment + first month</span>
                       </div>
                       <div className="bc-b-tier-row">
                         <span className="bc-b-tier-price">

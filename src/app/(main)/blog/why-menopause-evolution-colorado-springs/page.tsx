@@ -485,14 +485,6 @@ export default function WhyMenopauseEvolutionPost() {
                   The Critical Window Hypothesis for HRT
                 </Link>
                 <Link
-                  href="/hormone/womens-health"
-                  className="flex items-center gap-2 text-sm hover:opacity-80"
-                  style={{ color: "hsl(210, 30%, 80%)" }}
-                >
-                  <ChevronRight className="w-3.5 h-3.5" style={{ color: "hsl(330, 70%, 65%)" }} />
-                  Women&apos;s Health Overview
-                </Link>
-                <Link
                   href="/hormone"
                   className="flex items-center gap-2 text-sm hover:opacity-80"
                   style={{ color: "hsl(210, 30%, 80%)" }}

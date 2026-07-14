@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Patient Resources & Tools | Colorado Springs Health Collective",
+  title: "Patient Resources & Tools",
   description:
     "Trusted patient resources from CSHC in Colorado Springs — health calculators, screening guidelines, lab references, and tools to help you make informed decisions about your care.",
   keywords: [

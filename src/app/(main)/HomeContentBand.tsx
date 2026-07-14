@@ -23,7 +23,7 @@ const SERVICES = [
     accent: "210,80,250",
     kicker: "Accepting Patients",
     title: "Hormone & Metabolic Clinic",
-    body: `HRT for perimenopause and menopause, TRT for men, and GLP-1 weight-loss therapy. Initial consult ${usd(clinicFacts.hormone.initialConsult)}, then ${usd(clinicFacts.hormone.monthlyManagement)}/month management.`,
+    body: `HRT for perimenopause and menopause, TRT for men, and GLP-1 weight-loss therapy. ${usd(clinicFacts.hormone.monthlyManagement)}/month plus a one-time ${usd(clinicFacts.enrollmentFee)} enrollment — or ${usd(clinicFacts.combo.monthly)}/month bundled with DPC primary care.`,
     cta: "Explore hormone care",
   },
   {

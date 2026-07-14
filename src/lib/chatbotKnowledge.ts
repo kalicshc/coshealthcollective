@@ -17,7 +17,15 @@
 
 import { clinicFacts, usd } from "@/lib/clinicFacts";
 
-const { contact, dpc, urgentCare, hormone, hbot } = clinicFacts;
+const { contact, enrollmentFee, dpc, urgentCare, hormone, hbot, combo } = clinicFacts;
+
+// Derived numbers — keep the math here so a price change in clinicFacts.ts
+// can't leave the bot quoting stale totals or savings.
+const comboSeparateMonthly = hormone.monthlyManagement + dpc.individualMonthly;
+const comboMonthlySavings = comboSeparateMonthly - combo.monthly;
+const comboAddOnMonthly = combo.monthly - hormone.monthlyManagement;
+const hormoneFirstMonth = enrollmentFee + hormone.monthlyManagement;
+const comboFirstMonth = enrollmentFee + combo.monthly;
 
 export const KNOWLEDGE_BASE = `
 # Team
@@ -42,12 +50,13 @@ Three options, mix and match per visit:
 
 Membership-based primary care. Flat monthly fee, unlimited visits, no copays, no surprise bills, no insurance hassles.
 
-**Pricing**
+**Pricing** (every CSHC plan works the same way: one-time ${usd(enrollmentFee)} enrollment fee, then a flat monthly rate)
 - Individual: ${usd(dpc.individualMonthly)}/month
 - Couples (2 adults, same household): ${usd(dpc.couplesMonthly)}/month
 - Add ${usd(dpc.childAddOnMonthly)}/month per child over age ${dpc.childAgeMin}
-- One-time ${usd(dpc.registrationFee)} household registration fee for new members
+- One-time ${usd(enrollmentFee)} enrollment fee per household for new members
 - No contracts — cancel anytime
+- **Combo membership:** DPC + hormone/TRT care together is ${usd(combo.monthly)}/month total with a single enrollment fee (details in the Hormone section)
 
 **What's included**
 - Unlimited office, telehealth, and in-home visits
@@ -99,11 +108,18 @@ CTA: \`urgent\`.
 Three branches. Pricing is the SAME across all three — they're variations of the same care model.
 
 **Pricing (women's HRT, men's TRT, and GLP-1 — same for all three)**
-- Initial consult: ${usd(hormone.initialConsult)} (one-time, includes labs ordering and a follow-up to review them)
-- Ongoing monthly management: ${usd(hormone.monthlyManagement)}/month once established
+- One-time ${usd(enrollmentFee)} enrollment fee, then ${usd(hormone.monthlyManagement)}/month
+- First month total: ${usd(hormoneFirstMonth)} all-in — the first month includes the comprehensive initial consult, lab ordering, and a follow-up visit to review labs together
 - Lab costs and medications billed separately (not included)
 
-When someone asks "how much is HRT" or "how much is TRT" or "how much is GLP-1," the answer is the same: ${usd(hormone.initialConsult)} initial consult, then ${usd(hormone.monthlyManagement)}/month for ongoing management.
+When someone asks "how much is HRT" or "how much is TRT" or "how much is GLP-1," the answer is the same: ${usd(hormoneFirstMonth)} to get started (one-time ${usd(enrollmentFee)} enrollment + first month, which includes the full consult and lab review), then ${usd(hormone.monthlyManagement)}/month.
+
+**Combo membership (the bundle — applies to women's HRT, men's TRT, and GLP-1)**
+- ${usd(combo.monthly)}/month covers BOTH ongoing hormone/TRT management AND a full DPC primary-care membership (unlimited visits, direct provider access, labs and meds at or near cost)
+- One ${usd(enrollmentFee)} enrollment fee — not two — so first month is ${usd(comboFirstMonth)} all-in
+- Bought separately the two run ${usd(comboSeparateMonthly)}/month — the bundle saves ${usd(comboMonthlySavings)}/month
+- Framing for hormone patients: "add unlimited primary care for ${usd(comboAddOnMonthly)} more a month"
+- Bring this up when a hormone/TRT visitor mentions wanting primary care, a PCP, a regular provider, or asks "can you also handle my blood pressure / physicals / everyday stuff" — and when a DPC visitor asks about hormones, HRT, TRT, or GLP-1.
 
 ## Women's Hormone Health (HRT, perimenopause, menopause)
 

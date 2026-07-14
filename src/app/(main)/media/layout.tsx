@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Videos & Media | Colorado Springs Health Collective",
+  title: "Videos & Media",
   description:
     "Watch videos from Colorado Springs Health Collective — learn about direct primary care, hormone therapy, HBOT, and how we're building a different kind of healthcare practice.",
   keywords: [

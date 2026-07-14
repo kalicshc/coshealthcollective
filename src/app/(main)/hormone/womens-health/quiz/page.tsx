@@ -3,7 +3,7 @@ import WomensHormonePathway from "@/components/WomensHormonePathway";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/hormone/womens-health/quiz" },
-  title: "Women's Hormone Quiz | Colorado Springs Health Collective",
+  title: "Women's Hormone Quiz",
   description:
     "A free hormone assessment using the Greene Climacteric Scale. Identify whether progesterone, estrogen, or testosterone is driving your symptoms — no email required until the end.",
 };

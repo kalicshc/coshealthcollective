@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ArrowRight, Mail } from "lucide-react";
 import { CoBrandedHeader } from "@/components/referral/CoBrandedHeader";
 import { InterestForm } from "@/components/referral/InterestForm";
-import { clinicFacts } from "@/lib/clinicFacts";
+import { clinicFacts, usd } from "@/lib/clinicFacts";
 import { bookingUrl } from "@/lib/bookingLinks";
 
 // ─── PLACEHOLDERS — Logan to confirm/replace ───────────────────────────────
@@ -75,16 +75,16 @@ export default function AcWelcomePage() {
             </p>
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-8 mb-7">
               <div className="text-center">
-                <div className="text-3xl sm:text-4xl font-bold" style={{ color: "hsl(0, 0%, 100%)" }}>$200</div>
+                <div className="text-3xl sm:text-4xl font-bold" style={{ color: "hsl(0, 0%, 100%)" }}>{usd(clinicFacts.enrollmentFee + clinicFacts.hormone.monthlyManagement)}</div>
                 <div className="text-xs sm:text-sm mt-1" style={{ color: "hsl(210, 40%, 80%)" }}>
-                  Initial consult <span style={{ color: "hsl(210, 30%, 60%)" }}>+</span> first month
+                  Enrollment <span style={{ color: "hsl(210, 30%, 60%)" }}>+</span> first month, all-in
                 </div>
               </div>
               <div className="hidden sm:block w-px h-12" style={{ background: "hsla(177, 70%, 59%, 0.3)" }} />
               <div className="block sm:hidden h-px w-16 mx-auto" style={{ background: "hsla(177, 70%, 59%, 0.3)" }} />
               <div className="text-center">
                 <div className="text-3xl sm:text-4xl font-bold" style={{ color: "hsl(0, 0%, 100%)" }}>
-                  $100<span className="text-base font-medium" style={{ color: "hsl(210, 40%, 75%)" }}>/mo</span>
+                  {usd(clinicFacts.hormone.monthlyManagement)}<span className="text-base font-medium" style={{ color: "hsl(210, 40%, 75%)" }}>/mo</span>
                 </div>
                 <div className="text-xs sm:text-sm mt-1" style={{ color: "hsl(210, 40%, 80%)" }}>
                   Ongoing maintenance
