@@ -29,8 +29,6 @@ const goldDeep = "hsl(38, 92%, 56%)";
 const EYEBROW = "hsla(45,90%,78%,0.9)";
 
 // Both founder cards share this identical frame so the pair reads as a set.
-// TODO(Logan): supply a photo of Sarah (same rough crop as logan-photo) and
-// swap the initials tile below for an <Image> matching Logan's.
 function PortraitFrame({ children }: { children: React.ReactNode }) {
   return <div className="w-full aspect-square rounded-2xl overflow-hidden mb-6">{children}</div>;
 }
@@ -89,12 +87,13 @@ export default function About() {
             {/* Sarah */}
             <GlassCard service="brand" className="!p-8">
               <PortraitFrame>
-                <div
-                  className="flex h-full w-full items-center justify-center"
-                  style={{ background: "linear-gradient(135deg, hsl(280,70%,45%), hsl(320,70%,45%))" }}
-                >
-                  <span className="text-7xl font-black" style={{ color: "hsla(0,0%,100%,0.9)" }}>SC</span>
-                </div>
+                <Image
+                  src="/sarah-photo.jpg"
+                  alt="Sarah Crist, MSN, APRN, FNP-C, family nurse practitioner at Colorado Springs Health Collective"
+                  width={1000}
+                  height={1000}
+                  className="w-full h-full object-cover"
+                />
               </PortraitFrame>
               <h3 className="text-xl font-bold mb-1 text-center text-white">
                 Sarah Crist, MSN, APRN, FNP-C, AGACNP-BC
