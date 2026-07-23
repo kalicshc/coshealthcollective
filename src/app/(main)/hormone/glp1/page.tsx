@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { clinicFacts, usd } from "@/lib/clinicFacts";
+import { clinicFacts } from "@/lib/clinicFacts";
 import { ACCENTS } from "@/lib/accents";
 import { SceneSection, Eyebrow, SCENE_H, SCENE_P } from "@/components/SceneSection";
 import { CoPrimaryCtas } from "@/components/CoPrimaryCtas";
-import { PricingColumns } from "@/components/PricingColumns";
+import { SimplePricing } from "@/components/SimplePricing";
 import { StickyCtaBar } from "@/components/StickyCtaBar";
 import { glassCardStyle } from "@/components/GlassCard";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
@@ -206,18 +206,14 @@ export default function GLP1Page() {
       {/* ── 4. PRICING ────────────────────────────────────────────────── */}
       <section id="pricing" className="scroll-mt-20 py-14 lg:py-20">
         <div className="mx-auto max-w-5xl px-4 lg:px-8">
-          <div className="mb-10 text-center">
-            <Eyebrow>Pricing</Eyebrow>
-            <h2 className="mt-4 text-3xl font-bold text-white lg:text-4xl">
-              Simple pricing. Three ways in.
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-slate-300">
-              One-time {usd(clinicFacts.enrollmentFee)} enrollment, then a flat monthly rate. Pick GLP-1 care,
-              primary care, or bundle both and save.
-            </p>
-          </div>
-
-          <PricingColumns perspective="glp1" page={PAGE} source="glp1-pricing" />
+          <SimplePricing
+            service="hormone"
+            page={PAGE}
+            source="glp1-pricing"
+            heading="Simple GLP-1 pricing."
+            monthly={clinicFacts.hormone.monthlyManagement}
+            sub="A flat monthly rate — metabolic review and labs before any prescription, semaglutide or tirzepatide matched to you, body composition tracked through treatment. Labs and medications billed separately."
+          />
         </div>
       </section>
 

@@ -38,6 +38,7 @@ const navLinks = [
   { label: "Direct Primary Care", href: "/direct-primary-care" },
   { label: "Hormone & Weight Loss", href: "/hormone" },
   { label: "Hyperbaric", href: "/hyperbaric" },
+  { label: "Pricing", href: "/pricing" },
   { label: "About Us", href: "/about" },
   { label: "For Businesses", href: "/for-businesses" },
   { label: "Blog", href: "/blog" },

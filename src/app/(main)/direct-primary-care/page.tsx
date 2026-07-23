@@ -10,7 +10,7 @@ import { SectionView } from "@/components/analytics/SectionView";
 import { Accordion } from "@/components/Accordion";
 import { GlassCard } from "@/components/GlassCard";
 import { DpcInquiryForm } from "@/components/DpcInquiryForm";
-import { PricingColumns } from "@/components/PricingColumns";
+import { SimplePricing } from "@/components/SimplePricing";
 import {
   CheckCircle, Heart, Video, Clock, MessageCircle,
   Users, Shield, Droplets, Sparkles, Dumbbell, Scissors, Pill, FlaskConical,
@@ -293,18 +293,15 @@ export default function DirectPrimaryCare() {
       {/* ── 5. PRICING ────────────────────────────────────────────────── */}
       <section id="pricing" className="py-14 lg:py-20">
         <div className="mx-auto max-w-6xl px-4 lg:px-8"><div className="mx-auto max-w-5xl">
-          <div className="mb-10 text-center">
-            <Eyebrow color={EYEBROW}>Pricing</Eyebrow>
-            <h2 className="mt-4 text-3xl font-bold text-white lg:text-4xl">
-              Transparent pricing. No contracts.
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-slate-300">
-              One-time {usd(clinicFacts.enrollmentFee)} enrollment per household, then a flat monthly rate.
-              Labs and medications at or near cost. Cancel anytime.
-            </p>
-          </div>
-
-          <PricingColumns perspective="dpc" page={PAGE} source="dpc-pricing" />
+          <SimplePricing
+            service="dpc"
+            page={PAGE}
+            source="dpc-pricing"
+            heading="Transparent pricing. No contracts."
+            monthly={clinicFacts.dpc.individualMonthly}
+            sub="Your own provider — unlimited visits, direct text access, same-day appointments. Labs and medications at or near cost. Cancel anytime."
+            note={`Couples ${usd(clinicFacts.dpc.couplesMonthly)}/mo · kids +${usd(clinicFacts.dpc.childAddOnMonthly)}/mo (age ${clinicFacts.dpc.childAgeMin}+) · enrollment is per household`}
+          />
 
           <div className="mt-10">
             <DpcCtas source="dpc-pricing-ctas" />

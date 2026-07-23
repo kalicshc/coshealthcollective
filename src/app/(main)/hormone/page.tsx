@@ -10,7 +10,7 @@ import { CriticalWindowTimeline } from "@/components/CriticalWindowTimeline";
 import { StickyCtaBar } from "@/components/StickyCtaBar";
 import { SectionView } from "@/components/analytics/SectionView";
 import { Accordion } from "@/components/Accordion";
-import { PricingColumns } from "@/components/PricingColumns";
+import { SimplePricing } from "@/components/SimplePricing";
 import { serviceSchema, faqSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/JsonLd";
 
@@ -596,40 +596,15 @@ export default function HormonePage() {
       {/* ── 8. PRICING ────────────────────────────────────────────────── */}
       <section id="pricing" className="scroll-mt-20 py-14 lg:py-20">
         <div className="mx-auto max-w-6xl px-4 lg:px-8"><div className="mx-auto max-w-5xl">
-          <div className="mb-10 text-center">
-            <Eyebrow>Pricing</Eyebrow>
-            <h2 className="mt-4 text-3xl font-bold text-white lg:text-4xl">
-              Simple pricing. Three ways in.
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-slate-300">
-              One-time {usd(clinicFacts.enrollmentFee)} enrollment, then a flat monthly rate. Pick hormone care,
-              primary care, or bundle both and save. Same pricing for HRT, TRT, and GLP-1.
-            </p>
-          </div>
-
-          <PricingColumns perspective="womens" page={PAGE} source="hormone-pricing" />
-
-          <div
-            className="mt-6 rounded-[34px] border p-6 lg:p-8"
-            style={{
-              borderColor: "hsla(331,95%,72%,0.18)",
-              background: "linear-gradient(135deg, hsla(331,95%,72%,0.08), hsla(210,22%,16%,0.72))",
-            }}
-          >
-            <div className="h-0.5 w-12 rounded-full" style={{ background: `linear-gradient(135deg, ${fuchsia}, hsl(271,74%,55%))` }} />
-            <h3 className="mt-5 text-xl font-black text-white">Topical estrogen cream — telehealth only</h3>
-            <div className="mt-4 flex flex-wrap items-baseline gap-x-6 gap-y-2">
-              <div>
-                <span className="text-3xl font-black text-white">{usd(clinicFacts.hormone.topicalEstrogenTelehealth)}</span>
-                <span className="ml-2 text-sm text-slate-400">{clinicFacts.hormone.topicalEstrogenDurationMonths}-month telehealth visit</span>
-              </div>
-            </div>
-            <p className="mt-3 text-sm leading-7 text-slate-300">
-              A simple telehealth visit for topical estrogen cream only — covers{" "}
-              {clinicFacts.hormone.topicalEstrogenDurationMonths} months. For patients who already know they want
-              vaginal/topical estrogen and don&apos;t need the full hormone workup. Medication is billed separately.
-            </p>
-          </div>
+          <SimplePricing
+            service="hormone"
+            page={PAGE}
+            source="hormone-pricing"
+            heading="Simple pricing. Every plan."
+            monthly={clinicFacts.hormone.monthlyManagement}
+            sub="Same price for HRT, TRT, and GLP-1. Your first month includes the comprehensive consult, lab ordering, and lab review. Labs and medications billed separately."
+            note={`Just need topical estrogen cream? A ${usd(clinicFacts.hormone.topicalEstrogenTelehealth)} telehealth visit covers ${clinicFacts.hormone.topicalEstrogenDurationMonths} months — no membership needed.`}
+          />
 
           <div className="mt-10">
             <CoPrimaryCtas source="hormone-pricing" />

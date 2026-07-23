@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "/hyperbaric/evidence", priority: 0.75, changeFrequency: "monthly" },
     { url: "/hyperbaric/why-2ata", priority: 0.75, changeFrequency: "monthly" },
     { url: "/urgent-care", priority: 0.85, changeFrequency: "weekly" },
+    { url: "/pricing", priority: 0.9, changeFrequency: "weekly" },
     { url: "/iv-therapy", priority: 0.8, changeFrequency: "monthly" },
     { url: "/health-coaching", priority: 0.75, changeFrequency: "monthly" },
     { url: "/personal-training", priority: 0.75, changeFrequency: "monthly" },
