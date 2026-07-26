@@ -48,6 +48,34 @@ const dpcA = ACCENTS.dpc;
 const horA = ACCENTS.hormone;
 const hboA = ACCENTS.hyperbaric;
 
+// Member lab pricing vs published direct-to-consumer retail (July 2026).
+// Local to this page on purpose — not shared with other surfaces, so it
+// stays out of clinicFacts.ts.
+const LAB_ROWS: { name: string; note?: string; member: number; retail: number }[] = [
+  { name: "Complete Blood Count (CBC)", member: 3, retail: 29 },
+  { name: "TSH + Free T4", note: "retail price is TSH alone", member: 3, retail: 44 },
+  { name: "Magnesium", member: 4, retail: 39 },
+  { name: "Hemoglobin A1c", member: 4, retail: 39 },
+  { name: "Vitamin B12", member: 4, retail: 49 },
+  { name: "Folate", member: 5, retail: 65 },
+  { name: "Comprehensive Metabolic Panel (CMP)", member: 5, retail: 49 },
+  { name: "PSA", note: "includes reflex to Free PSA", member: 6, retail: 69 },
+  { name: "Lipid Panel", member: 6, retail: 59 },
+  { name: "hs-CRP", member: 8, retail: 65 },
+  { name: "Testosterone", member: 16, retail: 62 },
+  { name: "Lipoprotein(a)", member: 18, retail: 45 },
+  { name: "Vitamin D", member: 26, retail: 75 },
+];
+const LAB_MEMBER_TOTAL = LAB_ROWS.reduce((sum, r) => sum + r.member, 0);
+const LAB_RETAIL_TOTAL = LAB_ROWS.reduce((sum, r) => sum + r.retail, 0);
+const pctOff = (member: number, retail: number) => Math.round((1 - member / retail) * 100);
+// Whole multiples read stronger ("10x"); below 5x a rounded-up number would
+// overstate, so show one decimal there instead.
+const times = (member: number, retail: number) => {
+  const m = retail / member;
+  return m >= 5 ? `${Math.round(m)}x` : `${(Math.floor(m * 10) / 10).toFixed(1).replace(/\.0$/, "")}x`;
+};
+
 function VisitCard({
   accentRgb,
   title,
@@ -153,7 +181,110 @@ export default function Pricing() {
       </div>
       </section>
 
-      {/* ── 3. HYPERBARIC ─────────────────────────────────────────────── */}
+      {/* ── 3. MEMBER LAB PRICING ─────────────────────────────────────── */}
+      <section id="labs" className="scroll-mt-20 py-8 lg:py-10">
+        <div className="mx-auto max-w-6xl px-4 lg:px-8"><div className="mx-auto max-w-5xl">
+          <div
+            className="rounded-[34px] border p-8 lg:p-12"
+            style={{
+              borderColor: `rgba(${dpcA.rgb},0.2)`,
+              background: `linear-gradient(160deg, rgba(${dpcA.rgb},0.08), hsla(210,22%,16%,0.75))`,
+              boxShadow: "0 24px 80px rgba(7,10,18,0.4)",
+            }}
+          >
+            <Eyebrow color={`rgba(${dpcA.rgb},0.9)`}>How DPC Saves You Money</Eyebrow>
+            <h2 className="mt-4 text-3xl font-bold text-white lg:text-4xl">
+              Same blood draw. {pctOff(LAB_MEMBER_TOTAL, LAB_RETAIL_TOTAL)}% less.
+            </h2>
+            <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-300">
+              The {LAB_ROWS.length} labs below cost <strong className="text-white">{usd(LAB_MEMBER_TOTAL)}</strong>{" "}
+              at CoSHealth member pricing. Ordered individually through a national lab&rsquo;s
+              direct-to-consumer store, the same tests total{" "}
+              <strong className="text-white">{usd(LAB_RETAIL_TOTAL)}</strong>.
+            </p>
+
+            <div className="mt-8 overflow-x-auto">
+              <table className="w-full min-w-[26rem] text-sm">
+                <thead>
+                  <tr className="text-left text-xs font-bold uppercase tracking-wider text-slate-400">
+                    <th className="pb-3 pr-4">Lab</th>
+                    <th className="pb-3 pr-4 text-right">Retail</th>
+                    <th
+                      className="rounded-t-xl px-3 pb-3 pt-2 text-right"
+                      style={{ color: `rgba(${dpcA.rgb},1)`, background: `rgba(${dpcA.rgb},0.12)` }}
+                    >
+                      Members Pay
+                    </th>
+                    <th className="pb-3 pl-3 text-right">You Save</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {LAB_ROWS.map((row) => (
+                    <tr key={row.name} className="border-t border-white/10">
+                      <td className="py-2.5 pr-4 font-semibold text-white">
+                        {row.name}
+                        {row.note && (
+                          <span className="ml-2 hidden text-xs font-normal text-slate-400 sm:inline">
+                            {row.note}
+                          </span>
+                        )}
+                      </td>
+                      <td className="py-2.5 pr-4 text-right tabular-nums text-slate-400 line-through decoration-slate-500">
+                        {usd(row.retail)}
+                      </td>
+                      <td
+                        className="px-3 py-2.5 text-right text-lg font-black tabular-nums text-white"
+                        style={{ background: `rgba(${dpcA.rgb},0.12)` }}
+                      >
+                        {usd(row.member)}
+                      </td>
+                      <td className="py-2.5 pl-3 text-right">
+                        <span
+                          className="inline-block whitespace-nowrap rounded-full px-2.5 py-0.5 text-xs font-bold tabular-nums"
+                          style={{
+                            color: `rgba(${dpcA.rgb},1)`,
+                            background: `rgba(${dpcA.rgb},0.12)`,
+                            border: `1px solid rgba(${dpcA.rgb},0.3)`,
+                          }}
+                        >
+                          {pctOff(row.member, row.retail)}% off · {times(row.member, row.retail)}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot>
+                  <tr className="border-t-2 border-white/25 text-base font-black">
+                    <td className="pt-3 pr-4 text-white">All {LAB_ROWS.length} labs</td>
+                    <td className="pt-3 pr-4 text-right tabular-nums text-slate-400 line-through decoration-slate-500">
+                      {usd(LAB_RETAIL_TOTAL)}
+                    </td>
+                    <td
+                      className="rounded-b-xl px-3 pb-2 pt-3 text-right text-lg tabular-nums"
+                      style={{ color: `rgba(${dpcA.rgb},1)`, background: `rgba(${dpcA.rgb},0.12)` }}
+                    >
+                      {usd(LAB_MEMBER_TOTAL)}
+                    </td>
+                    <td className="pt-3 pl-3 text-right whitespace-nowrap tabular-nums text-white">
+                      {pctOff(LAB_MEMBER_TOTAL, LAB_RETAIL_TOTAL)}% off · {times(LAB_MEMBER_TOTAL, LAB_RETAIL_TOTAL)}
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            <p className="mt-6 text-xs leading-5 text-slate-400">
+              Retail prices are published direct-to-consumer list prices from a major national
+              lab, captured July 2026, and don&rsquo;t include the physician-order fee those
+              services add at checkout. Member pricing has no draw fee and no add-ons — the
+              price you see is the price you pay.
+            </p>
+          </div>
+        </div>
+      </div>
+      </section>
+
+      {/* ── 4. HYPERBARIC ─────────────────────────────────────────────── */}
       <section id="hyperbaric" className="scroll-mt-20 py-8 lg:py-10">
         <div className="mx-auto max-w-6xl px-4 lg:px-8"><div className="mx-auto max-w-5xl">
           <div
