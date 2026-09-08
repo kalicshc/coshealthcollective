@@ -1,4 +1,5 @@
 import { track } from "@vercel/analytics";
+import type { ApptKey } from "@/lib/bookingLinks";
 
 /**
  * Typed wrapper around Vercel Analytics custom events so event names and
@@ -33,7 +34,7 @@ export type AnalyticsProps = {
   service?: "hormone" | "dpc" | "hyperbaric" | "brand";
   /** human-readable CTA text */
   label?: string;
-  appt?: "meetGreet" | "freeConsult";
+  appt?: ApptKey;
   step?: string | number;
 };
 

@@ -7,7 +7,7 @@ import { PageCtaFooter } from "@/components/PageCtaFooter";
 import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { JsonLd } from "@/components/JsonLd";
 import { serviceSchema } from "@/lib/schema";
-import { hintLink } from "@/lib/bookingLinks";
+import { hintLink, bookingUrl } from "@/lib/bookingLinks";
 
 const PAGE = "pricing";
 const { enrollmentFee, dpc, urgentCare, hormone, combo, hbot } = clinicFacts;
@@ -158,7 +158,7 @@ export default function Pricing() {
               body="A video visit with a provider from anywhere in Colorado — prescriptions sent to your pharmacy when appropriate."
               cta={{
                 label: "Book Telehealth",
-                href: hintLink("urgentCareTelehealth", "pricing-visits"),
+                href: bookingUrl("telehealth", "pricing-visits"),
                 source: "pricing-visits-telehealth",
                 service: "dpc",
               }}

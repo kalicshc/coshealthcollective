@@ -1,6 +1,6 @@
 import { ACCENTS, type ServiceKey } from "@/lib/accents";
 import { clinicFacts } from "@/lib/clinicFacts";
-import { bookingUrl } from "@/lib/bookingLinks";
+import { bookingUrl, type ApptKey } from "@/lib/bookingLinks";
 import { TrackedLink } from "@/components/analytics/TrackedLink";
 
 /**
@@ -19,7 +19,7 @@ type Props = {
   source: string;
   heading?: string;
   body?: string;
-  appt?: "meetGreet" | "freeConsult";
+  appt?: ApptKey;
 };
 
 export function BlogCtaBlock({

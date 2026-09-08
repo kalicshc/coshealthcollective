@@ -6,7 +6,7 @@ import { ServiceHero, gradientTextStyle } from "@/components/ServiceHero";
 import { GlassCard } from "@/components/GlassCard";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
 import { ReviewStrip } from "@/components/ReviewStrip";
-import { hintLink } from "@/lib/bookingLinks";
+import { hintLink, bookingUrl } from "@/lib/bookingLinks";
 import { serviceSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/JsonLd";
 
@@ -87,7 +87,7 @@ export default function UrgentCare() {
         }
         ctas={[
           { label: `Book In Person · ${usd(inPerson)}`, href: hintLink("urgentCareInPerson", "urgent-care"), external: true, variant: "primary" },
-          { label: `Book Telehealth · ${usd(telehealth)}`, href: hintLink("urgentCareTelehealth", "urgent-care"), external: true, variant: "ghost" },
+          { label: `Book Telehealth · ${usd(telehealth)}`, href: bookingUrl("telehealth", "urgent-care"), external: true, variant: "ghost" },
         ]}
       />
 

@@ -31,6 +31,30 @@ const nextConfig: NextConfig = {
       // women's care is the flagship and now IS the hormone page. The quiz
       // still lives at /hormone/womens-health/quiz (not redirected).
       { source: "/hormone/womens-health", destination: "/hormone", permanent: true },
+      // Short QR-code routes for PRINTED material (fridge magnet). Short URLs
+      // keep the QR sparse enough to scan at small print sizes. 302 on purpose
+      // so the printed codes can be retargeted without reprinting. Do NOT
+      // remove — magnets in the wild point here forever.
+      {
+        source: "/uc",
+        destination:
+          "https://colorado-springs-health-collective-direct-primary-care.hint.com/signup/urgentcarevisit?source=magnet",
+        permanent: false,
+      },
+      {
+        source: "/th",
+        destination:
+          "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-ec8b65946e958f69&source=magnet",
+        permanent: false,
+      },
+      // Vehicle door-decal QR (car-decal-door). 302 on purpose so printed
+      // vinyl can be retargeted without a reprint. Must be DEPLOYED before
+      // any decal with the QR goes to the print shop.
+      {
+        source: "/car",
+        destination: "/?source=car-decal",
+        permanent: false,
+      },
     ];
   },
 };

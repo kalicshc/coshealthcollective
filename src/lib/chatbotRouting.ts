@@ -62,7 +62,7 @@ export type ChatCta = {
 
 const BOOK_MEET_GREET = bookingUrl("meetGreet", "chatbot");
 const BOOK_HORMONE_CONSULT = bookingUrl("freeConsult", "chatbot");
-const BOOK_TELEHEALTH = hintLink("urgentCareTelehealth", "chatbot");
+const BOOK_TELEHEALTH = bookingUrl("telehealth", "chatbot");
 const DPC_MEMBERSHIP_SIGNUP = hintLink("dpcMembershipSignup", "chatbot");
 const MEMBER_LOGIN = hintLink("memberLogin", "chatbot");
 
