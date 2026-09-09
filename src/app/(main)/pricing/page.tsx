@@ -7,7 +7,7 @@ import { PageCtaFooter } from "@/components/PageCtaFooter";
 import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { JsonLd } from "@/components/JsonLd";
 import { serviceSchema } from "@/lib/schema";
-import { hintLink, bookingUrl } from "@/lib/bookingLinks";
+import { bookingUrl } from "@/lib/bookingLinks";
 
 const PAGE = "pricing";
 const { enrollmentFee, dpc, urgentCare, hormone, combo, hbot } = clinicFacts;
@@ -145,7 +145,7 @@ export default function Pricing() {
               body="Same-day sick and injury care at the clinic — or we come to you in-home. One flat price covers the visit, no surprise charges after."
               cta={{
                 label: "Book In-Person",
-                href: hintLink("urgentCareInPerson", "pricing-visits"),
+                href: bookingUrl("urgentCareInPerson", "pricing-visits"),
                 source: "pricing-visits-inperson",
                 service: "dpc",
               }}

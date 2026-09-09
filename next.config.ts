@@ -38,7 +38,7 @@ const nextConfig: NextConfig = {
       {
         source: "/uc",
         destination:
-          "https://colorado-springs-health-collective-direct-primary-care.hint.com/signup/urgentcarevisit?source=magnet",
+          "https://colorado-springs-health-collective-direct-primary-care.hint.com/booking?appointment-type=appty-c127397b6906edd2&source=magnet",
         permanent: false,
       },
       {

@@ -6,7 +6,7 @@ import { ServiceHero, gradientTextStyle } from "@/components/ServiceHero";
 import { GlassCard } from "@/components/GlassCard";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
 import { ReviewStrip } from "@/components/ReviewStrip";
-import { hintLink, bookingUrl } from "@/lib/bookingLinks";
+import { bookingUrl } from "@/lib/bookingLinks";
 import { serviceSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/JsonLd";
 
@@ -86,7 +86,7 @@ export default function UrgentCare() {
           </>
         }
         ctas={[
-          { label: `Book In Person · ${usd(inPerson)}`, href: hintLink("urgentCareInPerson", "urgent-care"), external: true, variant: "primary" },
+          { label: `Book In Person · ${usd(inPerson)}`, href: bookingUrl("urgentCareInPerson", "urgent-care"), external: true, variant: "primary" },
           { label: `Book Telehealth · ${usd(telehealth)}`, href: bookingUrl("telehealth", "urgent-care"), external: true, variant: "ghost" },
         ]}
       />
@@ -191,7 +191,7 @@ export default function UrgentCare() {
         body="Schedule online in minutes, or reach out and we'll help you pick the right visit type."
         primaryCta={{
           label: "Book Your Visit",
-          href: hintLink("urgentCareInPerson", "urgent-care-footer"),
+          href: bookingUrl("urgentCareInPerson", "urgent-care-footer"),
           external: true,
         }}
         analytics={{ page: "urgent-care", source: "urgent-care-footer", service: "dpc", label: "Book Your Visit" }}
