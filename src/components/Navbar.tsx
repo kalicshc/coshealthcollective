@@ -4,21 +4,19 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { Menu, X, Users, ArrowLeft, CalendarCheck } from "lucide-react";
-import { bookingUrl } from "@/lib/bookingLinks";
-import { trackEvent } from "@/lib/analytics";
+import { Menu, X, Users, ArrowLeft, UserPlus } from "lucide-react";
+import { bookingUrl, WAITLIST_CTA } from "@/lib/bookingLinks";
+import { TrackedLink } from "@/components/analytics/TrackedLink";
 
-// The one always-available conversion action: a free Meet & Greet.
+// The one always-available conversion action. While we're not taking new
+// patients it's the waitlist, not a booking — bookingUrl() decides which, and
+// TrackedLink renders an internal link or an outbound one to match.
 function BookButton({ compact, source, onNavigate }: { compact?: boolean; source: string; onNavigate?: () => void }) {
   return (
-    <a
+    <TrackedLink
       href={bookingUrl("meetGreet", source)}
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={() => {
-        trackEvent("book_redirect", { source, appt: "meetGreet", label: "Book Free Meet & Greet" });
-        onNavigate?.();
-      }}
+      analytics={{ source, appt: "meetGreet", label: WAITLIST_CTA }}
+      onClick={onNavigate}
       className={`inline-flex items-center gap-2 rounded-full font-bold transition-opacity hover:opacity-85 ${
         compact ? "px-3.5 py-1 text-xs" : "px-4 py-1.5 text-sm"
       }`}
@@ -28,9 +26,9 @@ function BookButton({ compact, source, onNavigate }: { compact?: boolean; source
         boxShadow: "0 4px 18px hsla(45, 90%, 55%, 0.3)",
       }}
     >
-      <CalendarCheck className={compact ? "w-3.5 h-3.5" : "w-4 h-4"} />
-      Book Free Meet &amp; Greet
-    </a>
+      <UserPlus className={compact ? "w-3.5 h-3.5" : "w-4 h-4"} />
+      {WAITLIST_CTA}
+    </TrackedLink>
   );
 }
 
@@ -209,20 +207,18 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-2">
-          <a
+          <TrackedLink
             href={bookingUrl("meetGreet", "nav-mobile")}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => trackEvent("book_redirect", { source: "nav-mobile", appt: "meetGreet", label: "Book" })}
+            analytics={{ source: "nav-mobile", appt: "meetGreet", label: "Waitlist" }}
             className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold"
             style={{
               background: "linear-gradient(135deg, hsl(45, 90%, 60%), hsl(36, 90%, 52%))",
               color: "hsl(210, 32%, 10%)",
             }}
           >
-            <CalendarCheck className="w-3.5 h-3.5" />
-            Book
-          </a>
+            <UserPlus className="w-3.5 h-3.5" />
+            Waitlist
+          </TrackedLink>
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="p-2 rounded-lg transition-colors"
@@ -247,23 +243,19 @@ export function Navbar() {
           }}
         >
           <div className="flex flex-col gap-3">
-            <a
+            <TrackedLink
               href={bookingUrl("meetGreet", "nav-mobile-menu")}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => {
-                trackEvent("book_redirect", { source: "nav-mobile-menu", appt: "meetGreet", label: "Book Free Meet & Greet" });
-                setIsOpen(false);
-              }}
+              analytics={{ source: "nav-mobile-menu", appt: "meetGreet", label: WAITLIST_CTA }}
+              onClick={() => setIsOpen(false)}
               className="flex items-center justify-center gap-2 py-3 px-4 rounded-lg text-base font-bold"
               style={{
                 background: "linear-gradient(135deg, hsl(45, 90%, 60%), hsl(36, 90%, 52%))",
                 color: "hsl(210, 32%, 10%)",
               }}
             >
-              <CalendarCheck className="w-4 h-4" />
-              Book a Free Meet &amp; Greet
-            </a>
+              <UserPlus className="w-4 h-4" />
+              {WAITLIST_CTA}
+            </TrackedLink>
             {navLinks.map((link) => (
               <Link
                 key={link.label}

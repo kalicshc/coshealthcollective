@@ -7,9 +7,10 @@ import { SimplePricing } from "@/components/SimplePricing";
 import { StickyCtaBar } from "@/components/StickyCtaBar";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
 import { ReviewStrip, RatingChip } from "@/components/ReviewStrip";
-import { bookingUrl } from "@/lib/bookingLinks";
+import { WAITLIST_CTA, bookingUrl } from "@/lib/bookingLinks";
 import { serviceSchema, breadcrumbSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/JsonLd";
+import { WaitlistNotice } from "@/components/WaitlistNotice";
 
 // The men's hormone page on the epic-scene language (womens-health/hormone
 // hub): cinematic hero → symptoms → the evaluation → the honest version of
@@ -71,7 +72,7 @@ function MensCtas({ source, size, align }: { source: string; size?: "md" | "lg";
     <CoPrimaryCtas
       service="hormone"
       source={source}
-      primary={{ label: "Book a Free Consult", appt: "freeConsult" }}
+      primary={{ label: WAITLIST_CTA, appt: "freeConsult" }}
       secondary={{ label: "Take the Symptom Quiz", href: "/hormone/mens-health/quiz", analyticsLabel: "Take the quiz" }}
       size={size}
       align={align}
@@ -122,7 +123,9 @@ export default function MensHealthPage() {
             <MensCtas source="mens-health-hero" size="lg" align="left" />
           </div>
         </div>
+
       </SceneSection>
+      <WaitlistNotice service="hormone" interest="hormone" source="mens-health-notice" />
 
       {/* ── 2. FULL-BLEED SCENE — the symptoms ────────────────────────── */}
       <SceneSection image="/images/hormone/window-backdrop-v2.webp" scrim="side" id="symptoms">
@@ -224,15 +227,15 @@ export default function MensHealthPage() {
         service="hormone"
         heading="Wondering if it's your hormones?"
         body="Book a free consult, or reach out — we'll help you figure out whether testosterone or metabolic care is the right next step."
-        primaryCta={{ label: "Book a Free Consult", href: bookingUrl("freeConsult", "mens-health-footer"), external: true }}
-        analytics={{ page: PAGE, source: "mens-health-footer", service: "hormone", label: "Book a Free Consult", appt: "freeConsult" }}
+        primaryCta={{ label: WAITLIST_CTA, href: bookingUrl("freeConsult", "mens-health-footer"), external: true }}
+        analytics={{ page: PAGE, source: "mens-health-footer", service: "hormone", label: WAITLIST_CTA, appt: "freeConsult" }}
       />
 
       <StickyCtaBar
         service="hormone"
         source="mens-health"
         appt="freeConsult"
-        bookLabel="Book a Free Consult"
+        bookLabel={WAITLIST_CTA}
         secondaryHref="/hormone/mens-health/quiz"
         secondaryLabel="Symptom Quiz"
       />

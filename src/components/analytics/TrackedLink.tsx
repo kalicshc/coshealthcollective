@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import type { AnchorHTMLAttributes, ReactNode } from "react";
+import type { AnchorHTMLAttributes, MouseEvent, ReactNode } from "react";
 import { trackEvent, type AnalyticsEvent, type AnalyticsProps } from "@/lib/analytics";
 
 /**
@@ -20,10 +20,19 @@ type Props = {
   children: ReactNode;
 } & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href">;
 
-export function TrackedLink({ href, event, analytics = {}, external, children, ...rest }: Props) {
-  const isExternal = external ?? /^https?:\/\//.test(href);
+export function TrackedLink({ href, event, analytics = {}, external, children, onClick: callerOnClick, ...rest }: Props) {
+  // A root-relative href can never be external, even if a caller passes
+  // external: true — that's how every gated booking CTA keeps working after
+  // bookingUrl() starts returning the on-site /waitlist path.
+  const isAbsolute = /^https?:\/\//.test(href);
+  const isExternal = isAbsolute && (external ?? true);
   const name: AnalyticsEvent = event ?? (isExternal ? "book_redirect" : "cta_click");
-  const onClick = () => trackEvent(name, analytics);
+  // Compose, don't replace: a caller's onClick (closing a menu, etc.) must not
+  // silently drop the analytics event.
+  const onClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    trackEvent(name, analytics);
+    callerOnClick?.(e);
+  };
 
   if (isExternal) {
     return (

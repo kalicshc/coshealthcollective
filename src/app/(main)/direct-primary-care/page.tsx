@@ -1,4 +1,5 @@
 import { clinicFacts, usd } from "@/lib/clinicFacts";
+import { WAITLIST_CTA } from "@/lib/bookingLinks";
 import { ACCENTS } from "@/lib/accents";
 import { serviceSchema, faqSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/JsonLd";
@@ -31,7 +32,7 @@ const blueDeep = "hsl(215,95%,66%)";
 
 const EYEBROW = "hsla(205,95%,82%,0.85)";
 
-const DPC_PRIMARY = { label: "Book a Free Meet & Greet", appt: "meetGreet" as const };
+const DPC_PRIMARY = { label: WAITLIST_CTA, appt: "meetGreet" as const };
 const DPC_SECONDARY = { label: "See Pricing", href: "#pricing" };
 
 const includedBenefits = [
@@ -119,7 +120,7 @@ const dpcFaqs = [
   {
     id: "how-to-join",
     question: "How do I become a member?",
-    answer: `The easiest first step is a free Meet & Greet with Logan or Sarah — a no-commitment conversation to see if CSHC DPC is the right fit for you. From there, enrollment is simple and handled through our online portal. You can also call or text us at ${clinicFacts.contact.phone} or email ${clinicFacts.contact.email} with any questions.`,
+    answer: `We're not accepting new patients right now, so the first step is joining the waitlist — we'll reach out as soon as we have availability, and we'll start with a no-commitment conversation to see if CSHC DPC is the right fit for you. You can also call or text us at ${clinicFacts.contact.phone} or email ${clinicFacts.contact.email} with any questions.`,
   },
 ];
 
@@ -166,7 +167,7 @@ export default function DirectPrimaryCare() {
         <div className="max-w-3xl pt-20">
           <div className="flex flex-wrap items-center gap-3">
             <span className="rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em]" style={{ border: `1px solid rgba(${ACCENT.rgb},0.3)`, background: `rgba(${ACCENT.rgb},0.12)`, color: "hsl(220,95%,88%)" }}>
-              Direct Primary Care · Now Enrolling
+              Direct Primary Care · Waitlist
             </span>
             <RatingChip service="dpc" source="dpc-hero" />
           </div>
@@ -193,10 +194,15 @@ export default function DirectPrimaryCare() {
             Flat monthly fee. Unlimited access. Providers who actually know you. No copays, no surprise
             bills, no insurance games.
           </p>
+          <p className="mt-4 max-w-2xl text-base font-semibold" style={{ color: `rgb(${ACCENT.rgb})`, textShadow: "0 4px 16px rgba(0,0,0,0.35)" }}>
+            We&apos;re not accepting new patients right now — join the waitlist and we&apos;ll reach out as soon as we
+            have availability.
+          </p>
           <div className="mt-9">
             <DpcCtas source="dpc-hero" size="lg" align="left" />
           </div>
         </div>
+
       </SceneSection>
 
       {/* ── 2. VALIDATION — primary care is broken ────────────────────── */}
@@ -355,8 +361,8 @@ export default function DirectPrimaryCare() {
           Ready to meet your new care team?
         </h2>
         <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-white/95" style={{ textShadow: SCENE_P }}>
-          Start with a free Meet &amp; Greet — no commitment, no paperwork, just a conversation about
-          whether this is the right fit for you.
+          We&apos;re not accepting new patients right now. Join the waitlist and we&apos;ll reach out as soon
+          as we have availability.
         </p>
         <div className="mt-8">
           <DpcCtas source="dpc-final" size="lg" />
@@ -381,7 +387,7 @@ export default function DirectPrimaryCare() {
         service="dpc"
         source="dpc"
         appt="meetGreet"
-        bookLabel="Free Meet & Greet"
+        bookLabel={WAITLIST_CTA}
         secondaryHref="#pricing"
         secondaryLabel="Pricing"
       />

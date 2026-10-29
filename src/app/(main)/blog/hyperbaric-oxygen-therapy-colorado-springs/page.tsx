@@ -193,7 +193,7 @@ export default function HBOTBlogPost() {
                 Hyperbaric oxygen therapy means breathing pure (100%) oxygen inside a pressurized chamber at greater than normal atmospheric pressure. "Hyperbaric" literally means elevated pressure. At sea level, atmospheric pressure is 1 ATA (atmosphere absolute). Therapeutic HBOT runs at 1.5 to 3.0 ATA depending on the protocol.
               </p>
               <p className="leading-relaxed mb-4" style={{ color: "hsl(210, 25%, 82%)" }}>
-                Our chamber at Colorado Springs Health Collective will operate at <strong style={{ color: "hsl(0,0%,95%)" }}>2.0 ATA</strong> when we open in Fall 2026 — the pressure level used in every major RCT demonstrating meaningful clinical outcomes. This isn't a detail. Pressure determines oxygen delivery, and oxygen delivery determines what HBOT can actually do.
+                Our chamber at Colorado Springs Health Collective will operate at <strong style={{ color: "hsl(0,0%,95%)" }}>2.0 ATA</strong> when we open — the pressure level used in every major RCT demonstrating meaningful clinical outcomes. This isn't a detail. Pressure determines oxygen delivery, and oxygen delivery determines what HBOT can actually do.
               </p>
               <p className="leading-relaxed" style={{ color: "hsl(210, 25%, 82%)" }}>
                 Under normal conditions, oxygen is carried almost entirely by red blood cells (hemoglobin). At 2.0 ATA breathing 100% O₂, oxygen also dissolves directly into blood plasma at concentrations 10–15 times higher than normal. That plasma-dissolved oxygen can reach tissues that red blood cells can't access — injured tissue, inflamed tissue, or tissue with compromised blood flow.
@@ -252,7 +252,7 @@ export default function HBOTBlogPost() {
                 The consumer wellness market has flooded with soft-shell "hyperbaric" chambers operating at 1.3 ATA. At 1.3 ATA breathing air (not pure O₂), the additional oxygen delivered to tissues is marginal — insufficient to trigger angiogenesis, stem cell mobilization, or senolytic effects.
               </p>
               <p className="leading-relaxed mb-6" style={{ color: "hsl(210, 25%, 82%)" }}>
-                Every published RCT showing the outcomes listed above used <strong style={{ color: "hsl(0,0%,95%)" }}>2.0 ATA or higher with 100% oxygen</strong>. That is the minimum pressure required to dissolve oxygen into plasma at therapeutically meaningful concentrations. It's why we chose 2.0 ATA as our standard for the chamber we're opening in Fall 2026, and why we won't offer lower-pressure alternatives that underdeliver.
+                Every published RCT showing the outcomes listed above used <strong style={{ color: "hsl(0,0%,95%)" }}>2.0 ATA or higher with 100% oxygen</strong>. That is the minimum pressure required to dissolve oxygen into plasma at therapeutically meaningful concentrations. It's why we chose 2.0 ATA as our standard for the chamber we're building, and why we won't offer lower-pressure alternatives that underdeliver.
               </p>
               <div className="rounded-2xl p-6" style={{ background: `rgba(${A.rgb},0.08)`, border: `1px solid rgba(${A.rgb},0.25)` }}>
                 <p className="text-sm leading-relaxed" style={{ color: "hsl(210, 30%, 82%)" }}>
@@ -339,7 +339,7 @@ export default function HBOTBlogPost() {
               source="blog-hyperbaric-oxygen-therapy-colorado-springs"
               appt="meetGreet"
               heading="Ready to Start HBOT?"
-              body="We're accepting founding members at 25% off launch pricing. Join the waitlist now and lock in your rate before we open."
+              body="We don't have an opening date yet. Join the waitlist and waitlist members get 25% off launch pricing when we open."
             />
 
           </div>

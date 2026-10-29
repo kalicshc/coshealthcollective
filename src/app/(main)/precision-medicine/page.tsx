@@ -4,7 +4,7 @@ import { ACCENTS } from "@/lib/accents";
 import { ServiceHero, gradientTextStyle } from "@/components/ServiceHero";
 import { GlassCard } from "@/components/GlassCard";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
-import { bookingUrl } from "@/lib/bookingLinks";
+import { WAITLIST_CTA, bookingUrl } from "@/lib/bookingLinks";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/precision-medicine" },
@@ -56,7 +56,7 @@ export default function PrecisionMedicine() {
           </>
         }
         ctas={[
-          { label: "Book a Free Meet & Greet", href: MEET_GREET_URL, external: true, variant: "primary" },
+          { label: WAITLIST_CTA, href: MEET_GREET_URL, external: true, variant: "primary" },
           { label: "Learn About DPC Membership", href: "/direct-primary-care", variant: "ghost" },
         ]}
       />
@@ -101,8 +101,8 @@ export default function PrecisionMedicine() {
         service="dpc"
         heading="Ready to learn more?"
         body="Schedule a free meet and greet to discuss how precision medicine can support your health journey."
-        primaryCta={{ label: "Book a Free Meet & Greet", href: bookingUrl("meetGreet", "precision-medicine-footer"), external: true }}
-        analytics={{ page: "precision-medicine", source: "precision-medicine-footer", service: "dpc", label: "Book a Free Meet & Greet", appt: "meetGreet" }}
+        primaryCta={{ label: WAITLIST_CTA, href: bookingUrl("meetGreet", "precision-medicine-footer"), external: true }}
+        analytics={{ page: "precision-medicine", source: "precision-medicine-footer", service: "dpc", label: WAITLIST_CTA, appt: "meetGreet" }}
       />
     </div>
   );

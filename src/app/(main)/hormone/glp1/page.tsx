@@ -8,9 +8,10 @@ import { StickyCtaBar } from "@/components/StickyCtaBar";
 import { glassCardStyle } from "@/components/GlassCard";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
 import { ReviewStrip, RatingChip } from "@/components/ReviewStrip";
-import { bookingUrl } from "@/lib/bookingLinks";
+import { WAITLIST_CTA, bookingUrl } from "@/lib/bookingLinks";
 import { serviceSchema, breadcrumbSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/JsonLd";
+import { WaitlistNotice } from "@/components/WaitlistNotice";
 
 // The GLP-1 page on the epic-scene language (womens-health/hormone hub):
 // cinematic hero → what makes this different → the medications → who it's
@@ -82,7 +83,7 @@ function Glp1Ctas({ source, size, align }: { source: string; size?: "md" | "lg";
     <CoPrimaryCtas
       service="hormone"
       source={source}
-      primary={{ label: "Book a Free Consult", appt: "freeConsult" }}
+      primary={{ label: WAITLIST_CTA, appt: "freeConsult" }}
       secondary={{ label: "See Pricing", href: "#pricing" }}
       size={size}
       align={align}
@@ -133,7 +134,9 @@ export default function GLP1Page() {
             <Glp1Ctas source="glp1-hero" size="lg" align="left" />
           </div>
         </div>
+
       </SceneSection>
+      <WaitlistNotice service="hormone" interest="hormone" source="glp1-notice" />
 
       {/* ── 2. FULL-BLEED SCENE — what makes this different ───────────── */}
       <SceneSection image="/images/hormone/window-backdrop-v2.webp" scrim="side" id="different">
@@ -238,15 +241,15 @@ export default function GLP1Page() {
         service="hormone"
         heading="Ready to talk GLP-1?"
         body="Book a free consult, or reach out — we'll help you decide if medically-managed weight loss fits your goals."
-        primaryCta={{ label: "Book a Free Consult", href: bookingUrl("freeConsult", "glp1-footer"), external: true }}
-        analytics={{ page: PAGE, source: "glp1-footer", service: "hormone", label: "Book a Free Consult", appt: "freeConsult" }}
+        primaryCta={{ label: WAITLIST_CTA, href: bookingUrl("freeConsult", "glp1-footer"), external: true }}
+        analytics={{ page: PAGE, source: "glp1-footer", service: "hormone", label: WAITLIST_CTA, appt: "freeConsult" }}
       />
 
       <StickyCtaBar
         service="hormone"
         source="glp1"
         appt="freeConsult"
-        bookLabel="Book a Free Consult"
+        bookLabel={WAITLIST_CTA}
         secondaryHref="#pricing"
         secondaryLabel="Pricing"
       />

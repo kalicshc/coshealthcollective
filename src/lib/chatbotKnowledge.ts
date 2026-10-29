@@ -76,13 +76,13 @@ DPC is not insurance. It doesn't cover specialist visits, hospitalization, surge
 - "Can you handle my chronic conditions?" — Yes. Longer visits and direct provider access make chronic-condition management one of the strongest parts of DPC.
 - "What about telehealth?" — Yes, included at no extra cost. Plus in-office and in-home.
 
-**First step:** free Meet & Greet with Sarah or Logan — no commitment, no paperwork. Use the \`dpc\` CTA when a visitor wants to take the next step.
+**First step:** the waitlist. We are NOT accepting new patients right now, so there are no Meet & Greets or consults to book. Tell visitors plainly that we're not accepting new patients and that joining the waitlist means we reach out as soon as we have availability. Use the \`dpc\` CTA when a visitor wants to take the next step — it points at the waitlist.
 
 ---
 
 # Urgent Care (no membership required)
 
-For acute, non-emergency issues. Anyone can book — DPC members get it free.
+For acute, non-emergency issues. Not taking new visits right now — visitors join the same waitlist. DPC members get urgent care free once we reopen.
 
 **Pricing**
 - Telehealth: ${usd(urgentCare.telehealth)}
@@ -162,7 +162,7 @@ CTA: \`glp1\` for the GLP-1 page, or \`hormone\` for general hormone consult boo
 
 # Hyperbaric Oxygen Therapy (HBOT)
 
-Opening ${hbot.openingDate} at ${hbot.pressure} — currently a waitlist with a ${hbot.earlyAccessDiscountPercent}% early-access discount locked in for waitlist members.
+Opening date ${hbot.openingDate} — there is NO opening date set, and it is explicitly not this fall. Never name or guess a date. Waitlist members get a ${hbot.earlyAccessDiscountPercent}% early-access discount when we open. Pressure will be ${hbot.pressure}.
 
 **Why ${hbot.pressure} matters:** Most local providers run 1.3–1.6 ATA. The published clinical evidence on HBOT — wound healing, anti-inflammation, telomere lengthening, neurological recovery — was built at ${hbot.pressure}. CSHC will be the only accessible ${hbot.pressure} chamber in Colorado Springs outside of UC Health.
 

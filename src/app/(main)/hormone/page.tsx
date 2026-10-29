@@ -341,6 +341,10 @@ export default function HormonePage() {
               older. We take the opposite approach: listen closely, explain what is happening, and build a real
               treatment plan around it.
             </p>
+            <p className="mt-4 max-w-2xl text-base font-semibold" style={{ color: fuchsia, textShadow: "0 4px 16px rgba(0,0,0,0.35)" }}>
+              We&apos;re not accepting new patients right now — join the waitlist and we&apos;ll reach out as soon as
+              we have availability.
+            </p>
             <div className="mt-9">
               <CoPrimaryCtas source="hormone-hero" size="lg" align="left" />
             </div>
@@ -654,6 +658,10 @@ export default function HormonePage() {
           <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-white/95" style={{ textShadow: SCENE_P }}>
             If you feel like something has shifted and nobody has put the pieces together clearly, that is exactly
             where this conversation should begin.
+          </p>
+          <p className="mx-auto mt-4 max-w-2xl text-base font-semibold" style={{ color: fuchsia, textShadow: SCENE_P }}>
+            We&apos;re not accepting new patients right now. Join the waitlist and we&apos;ll reach out as soon as we
+            have availability.
           </p>
           <div className="mt-8">
             <CoPrimaryCtas source="hormone-final" size="lg" />

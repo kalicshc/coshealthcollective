@@ -10,7 +10,7 @@ import { GlassCard } from "@/components/GlassCard";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
 import { ReviewStrip, RatingChip } from "@/components/ReviewStrip";
 import { TrackedLink } from "@/components/analytics/TrackedLink";
-import { bookingUrl } from "@/lib/bookingLinks";
+import { WAITLIST_CTA, bookingUrl } from "@/lib/bookingLinks";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/about" },
@@ -71,7 +71,7 @@ export default function About() {
             <CoPrimaryCtas
               service="brand"
               source="about-hero"
-              primary={{ label: "Book a Free Meet & Greet", appt: "meetGreet" }}
+              primary={{ label: WAITLIST_CTA, appt: "meetGreet" }}
               secondary={{ label: "Our Vision", href: "#vision" }}
               size="lg"
               align="left"
@@ -179,8 +179,8 @@ export default function About() {
           We started with Direct Primary Care because it was the fastest way to make a difference — care that&apos;s built
           around people, not billing codes. Now we&apos;re building the rest of the campus. CSHC Hormone &amp; Weight Loss
           Clinic brings hormone optimization and GLP-1 therapy to patients who&apos;ve been dismissed or underserved.
-          CSHC Hyperbaric is launching {clinicFacts.hbot.openingDate} as Colorado Springs&apos; only accessible 2.0 ATA hyperbaric chamber
-          outside of UC Health.
+          CSHC Hyperbaric will be Colorado Springs&apos; only accessible 2.0 ATA hyperbaric chamber outside of UC Health —
+          the opening date is still {clinicFacts.hbot.openingDate}.
         </p>
         <p className="mx-auto mt-5 max-w-3xl text-lg leading-relaxed text-white/95" style={{ textShadow: SCENE_P }}>
           Our goal is a full health campus where primary care, hormone optimization, and hyperbaric recovery work together
@@ -197,9 +197,9 @@ export default function About() {
       <PageCtaFooter
         service="brand"
         heading="Ready to experience healthcare differently?"
-        body="Start with a free Meet & Greet with Logan or Sarah. No commitment, no paperwork — just a conversation to see if CSHC is the right fit for your goals."
-        primaryCta={{ label: "Book a Free Meet & Greet", href: bookingUrl("meetGreet", "about-footer"), external: true }}
-        analytics={{ page: "about", source: "about-footer", service: "brand", label: "Book a Free Meet & Greet", appt: "meetGreet" }}
+        body="We're not accepting new patients right now. Join the waitlist and we'll reach out as soon as we have availability."
+        primaryCta={{ label: WAITLIST_CTA, href: bookingUrl("meetGreet", "about-footer"), external: true }}
+        analytics={{ page: "about", source: "about-footer", service: "brand", label: WAITLIST_CTA, appt: "meetGreet" }}
       />
     </div>
   );

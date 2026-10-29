@@ -17,7 +17,7 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { clinicFacts } from "@/lib/clinicFacts";
 import { ACCENTS } from "@/lib/accents";
-import { bookingUrl } from "@/lib/bookingLinks";
+import { WAITLIST_CTA, bookingUrl } from "@/lib/bookingLinks";
 import { GOOGLE_REVIEWS } from "@/lib/reviews";
 import { trackEvent } from "@/lib/analytics";
 
@@ -37,16 +37,16 @@ type Scene = {
 // DPC royal blue, Hormone violet, Hyperbaric teal; gold for the close.
 const SCENES: Scene[] = [
   { type: "clinic", side: "left", tint: ACCENTS.dpc.rgb,
-    status: "Now Enrolling", name: "Direct Primary Care", tagline: "$100/month. A provider who actually knows you.",
+    status: "Waitlist", name: "Direct Primary Care", tagline: "$100/month. A provider who actually knows you.",
     services: ["Unlimited visits", "Same / next-day care", "No surprise bills", "Labs at cost"],
-    cta: "Book a Free Meet & Greet", href: MEET_GREET_URL, external: true, cta2: "Learn more", href2: "/direct-primary-care", showRating: true },
+    cta: WAITLIST_CTA, href: MEET_GREET_URL, external: true, cta2: "Learn more", href2: "/direct-primary-care", showRating: true },
   { type: "clinic", side: "right", tint: ACCENTS.hormone.rgb,
-    status: "Accepting Patients", name: "Hormone & Metabolic Clinic", tagline: "Hormone care that addresses the whole picture.",
+    status: "Waitlist", name: "Hormone & Metabolic Clinic", tagline: "Hormone care that addresses the whole picture.",
     services: ["Perimenopause + menopause", "Men's health & TRT", "GLP-1 weight loss", "Personalized plans"],
-    cta: "Book a Free Consult", href: HORMONE_CONSULT_URL, external: true, cta2: "Learn more", href2: "/hormone",
+    cta: WAITLIST_CTA, href: HORMONE_CONSULT_URL, external: true, cta2: "Learn more", href2: "/hormone",
     credential: "/perry-academy-perimenopause-badge.png", showRating: true },
   { type: "clinic", side: "left", tint: ACCENTS.hyperbaric.rgb,
-    status: `Opening ${clinicFacts.hbot.openingDate}`, name: "Hyperbaric Oxygen", tagline: "2.0 ATA oxygen therapy is coming.",
+    status: `Opening date ${clinicFacts.hbot.openingDate}`, name: "Hyperbaric Oxygen", tagline: "2.0 ATA oxygen therapy, opening date TBD.",
     services: ["Fibromyalgia", "UC + Crohn's", "Long COVID", "Sports recovery"],
     cta: "Join the Waitlist", href: "/hyperbaric", cta2: "Learn more", href2: "/hyperbaric" },
   { type: "story", side: "center", tint: "52,210,200" },
@@ -459,8 +459,10 @@ export default function PhotoFlythrough({ images, masks }: { images?: string[]; 
                 <div className="stg" style={{ transitionDelay: "560ms", display: "flex", alignItems: "center", gap: 22, flexWrap: "wrap" }}>
                   <a
                     href={s.href}
-                    {...(s.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                    onClick={() => trackEvent(s.external ? "book_redirect" : "cta_click", { page: "home", source: "home-fly", label: s.cta })}
+                    {...(s.external && /^https?:\/\//.test(s.href ?? "")
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                    onClick={() => trackEvent(/^https?:\/\//.test(s.href ?? "") ? "book_redirect" : "cta_click", { page: "home", source: "home-fly", label: s.cta })}
                     className="vc-cta no-underline"
                     style={{ pointerEvents: "auto", display: "inline-flex", alignItems: "center", gap: 10, color: "#fff", fontSize: "1.05rem", fontWeight: 700, paddingBottom: 6, borderBottom: `2px solid rgb(${s.tint})` }}
                   >

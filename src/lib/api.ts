@@ -70,3 +70,15 @@ export async function submitClinicQuestion(
     sourcePage: data.sourcePage,
   });
 }
+
+export async function submitWaitlist(data: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  interest: string;
+  notes: string;
+  source: string;
+}) {
+  return post("/api/waitlist", { ...data, sourcePage: "/waitlist" });
+}

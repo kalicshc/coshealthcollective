@@ -1,5 +1,5 @@
 import { ACCENTS, type ServiceKey } from "@/lib/accents";
-import { bookingUrl, type ApptKey } from "@/lib/bookingLinks";
+import { ACCEPTING_NEW_PATIENTS, WAITLIST_CTA, bookingUrl, type ApptKey } from "@/lib/bookingLinks";
 import { TrackedLink } from "@/components/analytics/TrackedLink";
 
 /**
@@ -36,7 +36,7 @@ type Props = {
   size?: "md" | "lg";
 };
 
-const DEFAULT_PRIMARY: CtaSpec = { label: "Book a Free Consult", appt: "freeConsult" };
+const DEFAULT_PRIMARY: CtaSpec = { label: ACCEPTING_NEW_PATIENTS ? "Book a Free Consult" : WAITLIST_CTA, appt: "freeConsult" };
 const DEFAULT_SECONDARY: CtaSpec = { label: "Take the 3-Minute Symptom Quiz", href: "/hormone/womens-health/quiz", analyticsLabel: "Take the Quiz" };
 
 export function CoPrimaryCtas({
@@ -54,7 +54,9 @@ export function CoPrimaryCtas({
     <div className={`flex flex-col sm:flex-row items-center gap-4 ${align === "center" ? "justify-center" : "justify-start"}`}>
       <TrackedLink
         href={primaryHref}
-        event={primary.appt ? "book_redirect" : "cta_click"}
+        // Let TrackedLink classify: a gated CTA points at the internal
+        // /waitlist page, which is a cta_click, not an outbound booking.
+        event={primary.appt && ACCEPTING_NEW_PATIENTS ? "book_redirect" : undefined}
         analytics={{ source, service, appt: primary.appt, label: primary.analyticsLabel ?? primary.label }}
         className={`rounded-full font-bold hover:opacity-85 transition-opacity ${pad}`}
         style={{ background: `linear-gradient(135deg, ${a.from}, ${a.to})`, color: "#fff", boxShadow: `0 12px 36px rgba(${a.rgb},0.35)` }}

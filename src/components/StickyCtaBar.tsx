@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ACCENTS, type ServiceKey } from "@/lib/accents";
-import { bookingUrl, type ApptKey } from "@/lib/bookingLinks";
+import { ACCEPTING_NEW_PATIENTS, WAITLIST_CTA, bookingUrl, type ApptKey } from "@/lib/bookingLinks";
 import { trackEvent } from "@/lib/analytics";
 
 /**
@@ -31,13 +31,17 @@ export function StickyCtaBar({
   source,
   service = "hormone",
   appt = "freeConsult",
-  bookLabel = "Book a Free Consult",
+  bookLabel = ACCEPTING_NEW_PATIENTS ? "Book a Free Consult" : WAITLIST_CTA,
   primaryHref,
   secondaryHref = "/hormone/womens-health/quiz",
   secondaryLabel = "3-Min Quiz",
 }: Props) {
   const [visible, setVisible] = useState(false);
   const a = ACCENTS[service];
+  // While new patients are paused, bookingUrl() hands back the on-site
+  // /waitlist path — which must stay in-tab like any other internal link.
+  const primaryUrl = primaryHref ?? bookingUrl(appt, `${source}-sticky`);
+  const outbound = /^https?:\/\//.test(primaryUrl);
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.85);
@@ -57,13 +61,13 @@ export function StickyCtaBar({
       }}
     >
       <a
-        href={primaryHref ?? bookingUrl(appt, `${source}-sticky`)}
-        {...(primaryHref ? {} : { target: "_blank", rel: "noopener noreferrer" })}
+        href={primaryUrl}
+        {...(outbound ? { target: "_blank", rel: "noopener noreferrer" } : {})}
         onClick={() =>
-          trackEvent(primaryHref ? "cta_click" : "book_redirect", {
+          trackEvent(outbound ? "book_redirect" : "cta_click", {
             source: `${source}-sticky`,
             service,
-            ...(primaryHref ? {} : { appt }),
+            ...(outbound ? { appt } : {}),
             label: bookLabel,
           })
         }

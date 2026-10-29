@@ -47,7 +47,7 @@ function FreeConsultForm() {
           You&apos;re all set.
         </p>
         <p className="text-base" style={{ color: "hsl(210,25%,72%)" }}>
-          We&apos;ll reach out to schedule your free consult — your $25 enrollment credit is locked in.
+          We&apos;ll reach out as soon as we have availability — your $25 enrollment credit is saved for you.
         </p>
       </div>
     );
@@ -125,7 +125,7 @@ function FreeConsultForm() {
           color: "hsl(210,32%,10%)",
         }}
       >
-        {status === "loading" ? "Saving your spot…" : "Book My Free Consult →"}
+        {status === "loading" ? "Adding you…" : "Join the Waitlist →"}
       </button>
       {status === "error" && (
         <p className="text-center text-sm" style={{ color: "hsl(0,80%,70%)" }}>

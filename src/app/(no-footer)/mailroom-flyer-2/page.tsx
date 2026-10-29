@@ -133,7 +133,7 @@ export default function MailroomFlyer2() {
             <div className="cta-section">
               <div className="cta-headline"><ArrowRight style={{ width: 18, height: 18 }} /> Take Back Control of Your Healthcare</div>
               <div className="cta-text">No more waiting. No more surprise bills. No more being just a number.</div>
-              <div className="cta-action">Book a FREE Meet &amp; Greet — Scan the QR Code Below</div>
+              <div className="cta-action">Join Our Waitlist — Scan the QR Code Below</div>
             </div>
 
             <div className="footer-section">

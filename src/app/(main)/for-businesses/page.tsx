@@ -285,7 +285,7 @@ export default function ForBusinesses() {
                 </p>
               </div>
               <div className="rounded-2xl p-6" style={{ background: "hsla(177,22%,22%,0.6)", border: `1px solid rgba(${ACCENTS.hyperbaric.rgb},0.25)` }}>
-                <span className="text-xs font-bold uppercase tracking-widest block mb-2" style={{ color: `rgb(${ACCENTS.hyperbaric.rgb})` }}>Opening {clinicFacts.hbot.openingDate}</span>
+                <span className="text-xs font-bold uppercase tracking-widest block mb-2" style={{ color: `rgb(${ACCENTS.hyperbaric.rgb})` }}>Opening date {clinicFacts.hbot.openingDate}</span>
                 <h3 className="font-bold text-lg mb-2 text-white">CSHC Hyperbaric</h3>
                 <p className="text-sm" style={{ color: "hsl(210,25%,75%)" }}>
                   Corporate packages for hyperbaric oxygen therapy at Colorado Springs&apos; only 2.0 ATA chamber outside UC Health. Early access members receive 25% off at launch.

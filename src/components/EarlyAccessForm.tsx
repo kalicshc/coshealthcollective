@@ -50,7 +50,8 @@ export function EarlyAccessForm({ source = "hbot" }: { source?: string }) {
           You&apos;re on the list.
         </p>
         <p className="text-sm" style={{ color: "hsl(210,25%,65%)" }}>
-          We&apos;ll contact you when we open with your {clinicFacts.hbot.earlyAccessDiscountPercent}% discount locked in.
+          We&apos;ll contact you when we open. Waitlist members get{" "}
+          {clinicFacts.hbot.earlyAccessDiscountPercent}% off.
         </p>
       </div>
     );
@@ -98,7 +99,7 @@ export function EarlyAccessForm({ source = "hbot" }: { source?: string }) {
           color: "hsl(210,32%,10%)",
         }}
       >
-        {status === "loading" ? "Saving your spot…" : `Lock In My ${clinicFacts.hbot.earlyAccessDiscountPercent}% Discount →`}
+        {status === "loading" ? "Adding you…" : "Join the Waitlist →"}
       </button>
       {status === "error" && (
         <p className="text-center text-xs" style={{ color: "hsl(0,80%,70%)" }}>

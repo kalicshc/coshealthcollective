@@ -13,7 +13,7 @@ const SERVICES = [
   {
     href: "/direct-primary-care",
     accent: "64,150,246",
-    kicker: "Now Enrolling",
+    kicker: "Waitlist",
     title: "Direct Primary Care",
     body: `A membership with your own provider for ${usd(clinicFacts.dpc.individualMonthly)}/month — unlimited visits, same-day access, no copays, wholesale labs and medications. Couples ${usd(clinicFacts.dpc.couplesMonthly)}/month.`,
     cta: "Explore DPC membership",
@@ -21,7 +21,7 @@ const SERVICES = [
   {
     href: "/hormone",
     accent: "210,80,250",
-    kicker: "Accepting Patients",
+    kicker: "Waitlist",
     title: "Hormone & Metabolic Clinic",
     body: `HRT for perimenopause and menopause, TRT for men, and GLP-1 weight-loss therapy. ${usd(clinicFacts.hormone.monthlyManagement)}/month plus a one-time ${usd(clinicFacts.enrollmentFee)} enrollment — or ${usd(clinicFacts.combo.monthly)}/month bundled with DPC primary care.`,
     cta: "Explore hormone care",
@@ -29,9 +29,9 @@ const SERVICES = [
   {
     href: "/hyperbaric",
     accent: "20,225,235",
-    kicker: `Opening ${clinicFacts.hbot.openingDate}`,
+    kicker: `Opening date ${clinicFacts.hbot.openingDate}`,
     title: "Hyperbaric Oxygen Therapy",
-    body: `True ${clinicFacts.hbot.pressure} hard-shell hyperbaric chambers for recovery, healing, and longevity — join the waitlist for ${clinicFacts.hbot.earlyAccessDiscountPercent}% early-access pricing.`,
+    body: `True ${clinicFacts.hbot.pressure} hard-shell hyperbaric chambers for recovery, healing, and longevity. No opening date yet — waitlist members get ${clinicFacts.hbot.earlyAccessDiscountPercent}% off early-access pricing.`,
     cta: "Explore hyperbaric",
   },
 ] as const;

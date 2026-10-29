@@ -1,5 +1,5 @@
 import { ExternalLink, Info } from "lucide-react";
-import { bookingUrl } from "@/lib/bookingLinks";
+import { WAITLIST_CTA, bookingUrl } from "@/lib/bookingLinks";
 import { ACCENTS } from "@/lib/accents";
 import { ServiceHero } from "@/components/ServiceHero";
 import { glassCardStyle } from "@/components/GlassCard";
@@ -125,7 +125,7 @@ export default function RemoteMonitoring() {
         service="dpc"
         heading="Want your devices to actually talk to your care team?"
         body="As a member of Colorado Springs Health Collective, your home monitoring data syncs directly to your provider through Guava Health — so we can spot trends, adjust your care plan, and follow up between visits."
-        primaryCta={{ label: "Book a Free Meet & Greet", href: MEET_GREET_URL, external: true }}
+        primaryCta={{ label: WAITLIST_CTA, href: MEET_GREET_URL, external: true }}
       />
     </div>
   );

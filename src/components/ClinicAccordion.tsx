@@ -7,7 +7,7 @@ import { submitHbotEarlyAccess } from "@/lib/api";
 import ClinicQuestionForm from "@/components/ClinicQuestionForm";
 import { ACCENTS } from "@/lib/accents";
 import { clinicFacts } from "@/lib/clinicFacts";
-import { bookingUrl } from "@/lib/bookingLinks";
+import { WAITLIST_CTA, bookingUrl } from "@/lib/bookingLinks";
 
 type ClinicKey = "dpc" | "hormone" | "hyperbaric";
 
@@ -61,13 +61,13 @@ const CLINICS: Clinic[] = [
     key: "dpc",
     name: "Direct Primary Care",
     shortName: "DPC",
-    status: "Now Enrolling",
+    status: "Waitlist",
     statusKind: "live",
     tagline: "$100/month. A provider who actually knows you.",
     body:
       "Membership-based primary care without the insurance maze — unlimited visits, same or next-day appointments, no surprise bills, and labs at cost. The foundation of great health is a provider who answers your call.",
     services: ["Unlimited visits", "Same/next-day care", "No surprise bills", "Labs at cost"],
-    cta: { type: "single", primary: { label: "Book a Free Meet & Greet", href: MEET_GREET_URL, external: true } },
+    cta: { type: "single", primary: { label: WAITLIST_CTA, href: MEET_GREET_URL, external: true } },
     learnMoreHref: "/direct-primary-care",
     accent: ACCENT.blue,
   },
@@ -75,7 +75,7 @@ const CLINICS: Clinic[] = [
     key: "hormone",
     name: "Hormone & Metabolic Clinic",
     shortName: "Hormone",
-    status: "Accepting Patients",
+    status: "Waitlist",
     statusKind: "open",
     tagline: "Hormone care that addresses the whole picture.",
     body:
@@ -85,7 +85,7 @@ const CLINICS: Clinic[] = [
     services: ["Perimenopause + menopause", "Men's health & TRT", "GLP-1 weight loss", "Personalized plans"],
     cta: {
       type: "multi",
-      primary: { label: "Book a Free Consult", href: HORMONE_CONSULT_URL, external: true },
+      primary: { label: WAITLIST_CTA, href: HORMONE_CONSULT_URL, external: true },
       secondary: [
         { label: "Men's Hormone Quiz", href: "/hormone/mens-health/quiz" },
         { label: "Women's Hormone Quiz", href: "/hormone/womens-health/quiz" },
@@ -98,9 +98,9 @@ const CLINICS: Clinic[] = [
     key: "hyperbaric",
     name: "Hyperbaric Oxygen",
     shortName: "Hyperbaric",
-    status: `Opening ${clinicFacts.hbot.openingDate}`,
+    status: `Opening date ${clinicFacts.hbot.openingDate}`,
     statusKind: "soon",
-    tagline: "2.0 ATA oxygen therapy is coming.",
+    tagline: "2.0 ATA oxygen therapy, opening date TBD.",
     body:
       "The only accessible 2.0 ATA hyperbaric chamber in Colorado Springs — research-grade pressure used to reduce inflammation, support recovery, and treat conditions that respond to oxygen at depth.",
     services: ["Fibromyalgia", "UC + Crohn's", "Long COVID", "Sports recovery"],
@@ -127,8 +127,10 @@ function GradientButton({
     <span className="clinic-cta-breathe block w-full">
       <Link
         href={href}
-        target={external ? "_blank" : undefined}
-        rel={external ? "noopener noreferrer" : undefined}
+        // A relative href (e.g. the gated /waitlist path) is never outbound,
+        // whatever the caller passed for `external`.
+        target={external && /^https?:\/\//.test(href) ? "_blank" : undefined}
+        rel={external && /^https?:\/\//.test(href) ? "noopener noreferrer" : undefined}
         className={`block w-full rounded-full px-6 py-3.5 text-center text-sm font-bold transition-all duration-200 hover:scale-[1.02] hover:brightness-110 ${className}`}
         style={{
           background: `linear-gradient(135deg, ${accent.from}, ${accent.to})`,

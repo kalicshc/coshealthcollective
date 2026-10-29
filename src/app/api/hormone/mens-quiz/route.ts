@@ -2,11 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { sendNotification, sendConfirmation, emailTemplate, formatFields } from "@/lib/mailer";
 import { validate } from "@/lib/validateForm";
 import { sendLifeboat } from "@/lib/leadLifeboat";
-import { bookingUrl } from "@/lib/bookingLinks";
+import { ACCEPTING_NEW_PATIENTS, bookingUrl, waitlistUrl } from "@/lib/bookingLinks";
 
 const BACKEND = process.env.PLATFORM_API_URL ?? "";
-const BOOKING_URL =
-  bookingUrl("freeConsult", "quiz-mens-email");
+// Absolute: this URL is rendered inside an email, where a root-relative
+// path has nothing to resolve against.
+const BOOKING_URL = ACCEPTING_NEW_PATIENTS
+  ? bookingUrl("freeConsult", "quiz-mens-email")
+  : waitlistUrl("quiz-mens-email", "hormone", { absolute: true });
 
 export async function POST(req: NextRequest) {
   const data = await req.json().catch(() => ({}));
@@ -94,7 +97,7 @@ export async function POST(req: NextRequest) {
       `<p style="margin:0 0 16px">Thank you for completing the hormone assessment. We've received your personalized results and a member of our team will be in touch with you soon.</p>
        ${data.mostBothersome ? `<p style="margin:0 0 16px">You noted that <strong>${data.mostBothersome}</strong> has been bothering you most — we'll make sure that's part of the conversation.</p>` : ""}
        <p style="margin:0 0 16px">Want to move faster? You can book a free consult directly:</p>
-       <p style="margin:0 0 24px"><a href="${BOOKING_URL}" style="display:inline-block;background:linear-gradient(135deg,#22d3ee,#8b2fe8);color:#fff;text-decoration:none;padding:12px 24px;border-radius:999px;font-weight:600;font-size:14px">Book a Free Consult</a></p>
+       <p style="margin:0 0 24px"><a href="${BOOKING_URL}" style="display:inline-block;background:linear-gradient(135deg,#22d3ee,#8b2fe8);color:#fff;text-decoration:none;padding:12px 24px;border-radius:999px;font-weight:600;font-size:14px">Join the Waitlist</a></p>
        <p style="margin:0;color:#64748b;font-size:13px">— The CSHC Hormone Team</p>`,
     );
   } catch (err) {

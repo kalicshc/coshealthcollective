@@ -4,7 +4,7 @@ import { ACCENTS } from "@/lib/accents";
 import { ServiceHero, gradientTextStyle } from "@/components/ServiceHero";
 import { GlassCard } from "@/components/GlassCard";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
-import { bookingUrl } from "@/lib/bookingLinks";
+import { WAITLIST_CTA, bookingUrl } from "@/lib/bookingLinks";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/partner-network" },
@@ -39,7 +39,7 @@ export default function PartnerNetwork() {
         titleAccent="Partner Network"
         subhead="Trusted providers we've personally vetted who offer fair, transparent pricing. No insurance surprises — know exactly what you'll pay before your visit."
         ctas={[
-          { label: "Book a Free Meet & Greet", href: MEET_GREET_URL, external: true, variant: "primary" },
+          { label: WAITLIST_CTA, href: MEET_GREET_URL, external: true, variant: "primary" },
           { label: "Learn About DPC Membership", href: "/direct-primary-care", variant: "ghost" },
         ]}
       />
@@ -110,8 +110,8 @@ export default function PartnerNetwork() {
         service="brand"
         heading="Want a referral?"
         body="Learn more about our partner network or get connected — schedule a free meet and greet."
-        primaryCta={{ label: "Book a Free Meet & Greet", href: bookingUrl("meetGreet", "partner-network-footer"), external: true }}
-        analytics={{ page: "partner-network", source: "partner-network-footer", service: "brand", label: "Book a Free Meet & Greet", appt: "meetGreet" }}
+        primaryCta={{ label: WAITLIST_CTA, href: bookingUrl("meetGreet", "partner-network-footer"), external: true }}
+        analytics={{ page: "partner-network", source: "partner-network-footer", service: "brand", label: WAITLIST_CTA, appt: "meetGreet" }}
       />
     </div>
   );

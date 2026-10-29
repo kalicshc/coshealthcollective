@@ -8,6 +8,7 @@ import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { JsonLd } from "@/components/JsonLd";
 import { serviceSchema } from "@/lib/schema";
 import { bookingUrl } from "@/lib/bookingLinks";
+import { WaitlistNotice } from "@/components/WaitlistNotice";
 
 const PAGE = "pricing";
 const { enrollmentFee, dpc, urgentCare, hormone, combo, hbot } = clinicFacts;
@@ -128,6 +129,7 @@ export default function Pricing() {
       <section id="memberships" className="scroll-mt-20 pt-32 pb-8 lg:pt-40">
         <div className="mx-auto max-w-6xl px-4 lg:px-8"><div className="mx-auto max-w-5xl">
           <h1 className="sr-only">Pricing</h1>
+      <WaitlistNotice service="brand" source="pricing-notice" />
           <PricingColumns perspective="dpc" page={PAGE} source="pricing-memberships" />
         </div>
       </div>
@@ -295,13 +297,13 @@ export default function Pricing() {
               boxShadow: "0 24px 80px rgba(7,10,18,0.4)",
             }}
           >
-            <Eyebrow color={`rgba(${hboA.rgb},0.9)`}>Hyperbaric — Opening {hbot.openingDate}</Eyebrow>
+            <Eyebrow color={`rgba(${hboA.rgb},0.9)`}>Hyperbaric — Opening date {hbot.openingDate}</Eyebrow>
             <h2 className="mt-4 text-3xl font-bold text-white lg:text-4xl">
               Session pricing announced at launch.
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-slate-300">
-              Our {hbot.pressure} clinical-grade hyperbaric chamber opens {hbot.openingDate}. Join the waitlist
-              now and lock in {hbot.earlyAccessDiscountPercent}% off early-access pricing when sessions go on sale.
+              Our {hbot.pressure} clinical-grade hyperbaric chamber does not have an opening date yet. Waitlist
+              members get {hbot.earlyAccessDiscountPercent}% off early-access pricing when sessions go on sale.
             </p>
             <div className="mt-8 flex justify-center">
               <TrackedLink
@@ -321,7 +323,7 @@ export default function Pricing() {
       <PageCtaFooter
         service="brand"
         heading="Not sure which fits?"
-        body="Start with a free Meet & Greet — no commitment, no paperwork. We'll walk through your goals and tell you honestly which plan (if any) makes sense."
+        body="We're not accepting new patients right now. Join the waitlist and we'll reach out as soon as we have availability — and we'll walk through your goals then and tell you honestly which plan (if any) makes sense."
       />
     </div>
   );

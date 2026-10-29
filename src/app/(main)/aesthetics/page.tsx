@@ -4,9 +4,10 @@ import { ServiceHero, gradientTextStyle } from "@/components/ServiceHero";
 import { GlassCard } from "@/components/GlassCard";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
 import { ReviewStrip } from "@/components/ReviewStrip";
-import { hintLink } from "@/lib/bookingLinks";
+import { WAITLIST_CTA, hintLink } from "@/lib/bookingLinks";
 import { serviceSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/JsonLd";
+import { WaitlistNotice } from "@/components/WaitlistNotice";
 
 export const metadata: Metadata = {
   // Placeholder page for now (2026-07-08): reachable by direct link only —
@@ -60,6 +61,7 @@ export default function Aesthetics() {
         ctas={[{ label: "Book Now — $45 Consult", href: SKIN_CARE_URL, external: true, variant: "primary" }]}
       />
 
+      <WaitlistNotice service="brand" interest="aesthetics" source="aesthetics-notice" />
       <div className="section-divider" />
 
       {/* Compounds */}
@@ -118,8 +120,8 @@ export default function Aesthetics() {
         service="brand"
         heading="Ready to get started?"
         body="$45 consultation — or FREE with your DPC membership."
-        primaryCta={{ label: "Book Your Consultation", href: hintLink("rxSkincare", "aesthetics-footer"), external: true }}
-        analytics={{ page: "aesthetics", source: "aesthetics-footer", service: "brand", label: "Book Your Consultation" }}
+        primaryCta={{ label: WAITLIST_CTA, href: hintLink("rxSkincare", "aesthetics-footer"), external: true }}
+        analytics={{ page: "aesthetics", source: "aesthetics-footer", service: "brand", label: WAITLIST_CTA }}
       />
     </div>
   );

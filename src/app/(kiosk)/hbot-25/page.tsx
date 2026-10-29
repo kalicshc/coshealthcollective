@@ -217,7 +217,7 @@ export default function HbotEarlyAccessLandingPage() {
             margin: 0,
           }}
         >
-          Coming {clinicFacts.hbot.openingDate}
+          Opening date {clinicFacts.hbot.openingDate}
         </p>
 
         <EarlyAccessForm />

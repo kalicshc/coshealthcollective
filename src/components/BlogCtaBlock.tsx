@@ -1,6 +1,6 @@
 import { ACCENTS, type ServiceKey } from "@/lib/accents";
 import { clinicFacts } from "@/lib/clinicFacts";
-import { bookingUrl, type ApptKey } from "@/lib/bookingLinks";
+import { ACCEPTING_NEW_PATIENTS, WAITLIST_CTA, bookingUrl, type ApptKey } from "@/lib/bookingLinks";
 import { TrackedLink } from "@/components/analytics/TrackedLink";
 
 /**
@@ -30,7 +30,11 @@ export function BlogCtaBlock({
   appt = "meetGreet",
 }: Props) {
   const a = ACCENTS[service];
-  const label = appt === "freeConsult" ? "Book a Free Consult" : "Book a Free Meet & Greet";
+  const label = !ACCEPTING_NEW_PATIENTS
+    ? WAITLIST_CTA
+    : appt === "freeConsult"
+      ? "Book a Free Consult"
+      : "Book a Free Meet & Greet";
   const href = bookingUrl(appt, source);
 
   return (

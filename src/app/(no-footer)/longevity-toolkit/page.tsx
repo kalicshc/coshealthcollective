@@ -241,7 +241,7 @@ export default function LongevityToolkit() {
               <div className="cta-boxes">
                 <a href={MEET_GREET_URL} target="_blank" rel="noopener noreferrer" className="cta-box-link">
                   <div className="cta-box">
-                    <h3 className="cta-box-title">Book a Free Meet &amp; Greet</h3>
+                    <h3 className="cta-box-title">Join the Waitlist</h3>
                     <p className="cta-box-desc">Learn about Direct Primary Care</p>
                     <canvas ref={meetGreetQrRef} className="cta-qr"></canvas>
                     <span className="cta-clickable">Click to schedule</span>

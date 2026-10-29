@@ -103,18 +103,18 @@ const mechanisms = [
   },
 ];
 
-// Pre-launch: the chamber opens in Fall 2026, so the offer is marked PreOrder
+// Pre-launch with no opening date set, so the offer is marked PreOrder
 // (waitlist) — nothing here may imply the service currently operates.
 const hyperbaricSchema = serviceSchema({
   type: "MedicalTherapy",
   name: "Hyperbaric Oxygen Therapy (HBOT)",
-  description: `Colorado Springs' only accessible ${clinicFacts.hbot.pressure} hyperbaric oxygen chamber — opening ${clinicFacts.hbot.openingDate}. HBOT for fibromyalgia, Long COVID, wound healing, anti-aging, and athletic recovery. Join the waitlist.`,
+  description: `Colorado Springs' only accessible ${clinicFacts.hbot.pressure} hyperbaric oxygen chamber — opening date ${clinicFacts.hbot.openingDate}. HBOT for fibromyalgia, Long COVID, wound healing, anti-aging, and athletic recovery. Join the waitlist.`,
   path: "/hyperbaric",
   image: "/images/hyperbaric/hbot-hero.webp",
   offers: [
     {
       name: "Early-access waitlist",
-      description: `Opening ${clinicFacts.hbot.openingDate} — waitlist members receive a ${clinicFacts.hbot.earlyAccessDiscountPercent}% early-access discount.`,
+      description: `Opening date ${clinicFacts.hbot.openingDate} — waitlist members receive a ${clinicFacts.hbot.earlyAccessDiscountPercent}% early-access discount.`,
       availability: "https://schema.org/PreOrder",
     },
   ],
@@ -143,7 +143,7 @@ export default function HyperbaricPage() {
                   Colorado Springs Health Collective
                 </p>
                 <p className="text-sm font-semibold leading-tight mt-0.5" style={gradientClip}>
-                  Hyperbaric Clinic — Opening {clinicFacts.hbot.openingDate}
+                  Hyperbaric Clinic — Opening date {clinicFacts.hbot.openingDate}
                 </p>
               </div>
             </div>
@@ -171,11 +171,11 @@ export default function HyperbaricPage() {
           </h1>
 
           <p className="mt-5 mb-2 font-semibold" style={{ color: `rgb(${A.rgb})`, fontSize: "clamp(1rem, 2vw, 1.2rem)", textShadow: SCENE_P }}>
-            Coming {clinicFacts.hbot.openingDate} — Lock In Your {clinicFacts.hbot.earlyAccessDiscountPercent}% Discount Today.
+            Opening date {clinicFacts.hbot.openingDate}. Waitlist members get {clinicFacts.hbot.earlyAccessDiscountPercent}% off when we open.
           </p>
 
           <p className="mb-7 max-w-xl mx-auto text-white/95" style={{ fontSize: "17px", lineHeight: "1.65", textShadow: SCENE_P }}>
-            Most local providers operate at 1.3–1.6 ATA. We&apos;re opening a clinical-grade chamber at{" "}
+            Most local providers operate at 1.3–1.6 ATA. We&apos;re building a clinical-grade chamber at{" "}
             <strong style={{ color: "#fff" }}>2.0 ATA</strong> — the pressure the clinical evidence was built on.
           </p>
 

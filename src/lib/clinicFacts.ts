@@ -53,8 +53,13 @@ export const clinicFacts = {
     monthly: 160,
   },
   hbot: {
+    /**
+     * No opening date as of 2026-10-29 (Logan): it is NOT this fall and we
+     * are not naming a new one. Surfaces read "Opening date TBD" — keep any
+     * new copy date-free rather than guessing a season.
+     */
     pressure: "2.0 ATA",
-    openingDate: "Fall 2026",
+    openingDate: "TBD",
     earlyAccessDiscountPercent: 25,
   },
 } as const;

@@ -5,7 +5,7 @@ import { SceneSection } from "@/components/SceneSection";
 import { Accordion } from "@/components/Accordion";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
 import { ReviewStrip } from "@/components/ReviewStrip";
-import { bookingUrl } from "@/lib/bookingLinks";
+import { WAITLIST_CTA, bookingUrl } from "@/lib/bookingLinks";
 
 // Server component: the FAQ answers render in the HTML (good for SEO/AI
 // search); only the shared <Accordion> ships client JS.
@@ -26,7 +26,7 @@ const faqs = [
   {
     id: "three-divisions",
     question: "What are your three divisions and how do they work together?",
-    answer: `CSHC Direct Primary Care is our membership-based primary care practice — unlimited visits, same-day access, and at-cost labs and medications for a flat monthly fee. CSHC Hormone & Weight Loss Clinic offers clinician-guided hormone optimization for men and women, including GLP-1 weight loss therapy (semaglutide, tirzepatide) and comprehensive HRT. CSHC Hyperbaric (opening ${clinicFacts.hbot.openingDate}) will bring Colorado Springs' only accessible ${clinicFacts.hbot.pressure} hyperbaric oxygen chamber — the same pressure used in clinical research. All three divisions are designed to work together so your care is coordinated, not fragmented.`,
+    answer: `CSHC Direct Primary Care is our membership-based primary care practice — unlimited visits, same-day access, and at-cost labs and medications for a flat monthly fee. CSHC Hormone & Weight Loss Clinic offers clinician-guided hormone optimization for men and women, including GLP-1 weight loss therapy (semaglutide, tirzepatide) and comprehensive HRT. CSHC Hyperbaric (opening date ${clinicFacts.hbot.openingDate}) will bring Colorado Springs' only accessible ${clinicFacts.hbot.pressure} hyperbaric oxygen chamber — the same pressure used in clinical research. All three divisions are designed to work together so your care is coordinated, not fragmented.`,
   },
   {
     id: "membership-required",
@@ -51,12 +51,12 @@ const faqs = [
   {
     id: "timeline",
     question: "When will Hyperbaric open?",
-    answer: `The Hormone & Weight Loss Clinic is accepting patients — book a free consult to get started. CSHC Hyperbaric is planned to open ${clinicFacts.hbot.openingDate}. We'll be the only non-hospital ${clinicFacts.hbot.pressure} chamber in Colorado Springs — early access members receive ${clinicFacts.hbot.earlyAccessDiscountPercent}% off when we open.`,
+    answer: `We're not accepting new patients right now — Direct Primary Care and the Hormone & Weight Loss Clinic are both on a waitlist, and we'll reach out as soon as we have availability. CSHC Hyperbaric does not have an opening date yet. We'll be the only non-hospital ${clinicFacts.hbot.pressure} chamber in Colorado Springs — waitlist members receive ${clinicFacts.hbot.earlyAccessDiscountPercent}% off when we open.`,
   },
   {
     id: "get-started",
     question: "How do I get started?",
-    answer: `The best first step is a free Meet & Greet with Logan or Sarah. This is an informal conversation — no commitment, no paperwork — just a chance to see if CSHC is the right fit for your health goals. You can also reach us directly at ${clinicFacts.contact.phone} or ${clinicFacts.contact.email}. If you're interested in hormone care, book a free consult — the clinic is accepting patients. For Hyperbaric, contact us to get on the early access list.`,
+    answer: `Join the waitlist — we're not accepting new patients right now, and we'll reach out as soon as we have availability. When we do, we start with an informal conversation with Logan or Sarah: no commitment, no paperwork, just a chance to see if CSHC is the right fit for your health goals. You can also reach us directly at ${clinicFacts.contact.phone} or ${clinicFacts.contact.email}. The same waitlist covers primary care, hormone care, and Hyperbaric.`,
   },
 ];
 
@@ -116,8 +116,8 @@ export default function FAQ() {
         service="brand"
         heading="Still have questions?"
         body="We're happy to walk you through how CSHC works and which services are the right fit for your goals."
-        primaryCta={{ label: "Schedule a Free Meet & Greet", href: bookingUrl("meetGreet", "faq-footer"), external: true }}
-        analytics={{ page: "faq", source: "faq-footer", service: "brand", label: "Schedule a Free Meet & Greet", appt: "meetGreet" }}
+        primaryCta={{ label: WAITLIST_CTA, href: bookingUrl("meetGreet", "faq-footer"), external: true }}
+        analytics={{ page: "faq", source: "faq-footer", service: "brand", label: WAITLIST_CTA, appt: "meetGreet" }}
       />
     </div>
   );

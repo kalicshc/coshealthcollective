@@ -296,7 +296,7 @@ export default function HbotFlyer() {
 
           <h2 className="hf-subhead">Your First HBOT Program<br />or Punch Card</h2>
 
-          <p className="hf-tag-teal">Coming {clinicFacts.hbot.openingDate} — Lock In Your Discount Today</p>
+          <p className="hf-tag-teal">Opening date {clinicFacts.hbot.openingDate}</p>
 
           <p className="hf-blurb">
             We&apos;re opening a clinical-grade <strong>{clinicFacts.hbot.pressure}</strong> hyperbaric chamber in Colorado Springs.

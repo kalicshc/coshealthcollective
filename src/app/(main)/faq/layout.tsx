@@ -41,7 +41,7 @@ const faqSchema = {
       name: "What are your three divisions and how do they work together?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: `CSHC Direct Primary Care is our membership-based primary care practice with unlimited visits and at-cost labs. CSHC Hormone & Weight Loss Clinic offers clinician-guided hormone optimization for men and women, including GLP-1 weight loss therapy. CSHC Hyperbaric (opening ${clinicFacts.hbot.openingDate}) will bring Colorado Springs' only accessible 2.0 ATA hyperbaric oxygen chamber.`,
+        text: `CSHC Direct Primary Care is our membership-based primary care practice with unlimited visits and at-cost labs. CSHC Hormone & Weight Loss Clinic offers clinician-guided hormone optimization for men and women, including GLP-1 weight loss therapy. CSHC Hyperbaric (opening date ${clinicFacts.hbot.openingDate}) will bring Colorado Springs' only accessible 2.0 ATA hyperbaric oxygen chamber.`,
       },
     },
     {
@@ -73,7 +73,7 @@ const faqSchema = {
       name: "When will Hyperbaric open?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: `The Hormone & Weight Loss Clinic is accepting patients — book a free consult to get started. CSHC Hyperbaric is planned to open ${clinicFacts.hbot.openingDate}. Early access members receive 25% off.`,
+        text: `We're not accepting new patients right now — Direct Primary Care and the Hormone & Weight Loss Clinic are both on a waitlist, and we'll reach out as soon as we have availability. CSHC Hyperbaric does not have an opening date yet; waitlist members receive 25% off.`,
       },
     },
     {
@@ -81,7 +81,7 @@ const faqSchema = {
       name: "How do I get started?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: `The best first step is a free Meet & Greet with Logan or Sarah. No commitment, no paperwork — just a conversation to see if CSHC is right for you. Call ${clinicFacts.contact.phone} or email ${clinicFacts.contact.email}.`,
+        text: `Join the waitlist — we're not accepting new patients right now, and we'll reach out as soon as we have availability. Call ${clinicFacts.contact.phone} or email ${clinicFacts.contact.email} with questions.`,
       },
     },
   ],

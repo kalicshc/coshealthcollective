@@ -3,11 +3,14 @@ import { sendNotification, sendConfirmation, emailTemplate, formatFields } from 
 import { GREENE_ITEMS, HORMONE_INFO, type HormoneType } from "@/lib/womensHormonePathway";
 import { validate } from "@/lib/validateForm";
 import { sendLifeboat } from "@/lib/leadLifeboat";
-import { bookingUrl } from "@/lib/bookingLinks";
+import { ACCEPTING_NEW_PATIENTS, bookingUrl, waitlistUrl } from "@/lib/bookingLinks";
 
 const BACKEND = process.env.PLATFORM_API_URL ?? "";
-const BOOKING_URL =
-  bookingUrl("freeConsult", "quiz-womens-email");
+// Absolute: this URL is rendered inside an email, where a root-relative
+// path has nothing to resolve against.
+const BOOKING_URL = ACCEPTING_NEW_PATIENTS
+  ? bookingUrl("freeConsult", "quiz-womens-email")
+  : waitlistUrl("quiz-womens-email", "hormone", { absolute: true });
 
 function cap(s: string) {
   return s.charAt(0).toUpperCase() + s.slice(1);
@@ -187,7 +190,7 @@ ${hormoneBlock("testosterone", testPct)}
   </p>
   <p style="margin:14px 0 0">
     <a href="${BOOKING_URL}" style="display:inline-block;background:linear-gradient(135deg,#e879f9,#a855f7);color:#fff;text-decoration:none;padding:13px 28px;border-radius:999px;font-weight:700;font-size:14px">
-      Book a Free Consult →
+      Join the Waitlist →
     </a>
   </p>
 </div>

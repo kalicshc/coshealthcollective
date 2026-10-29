@@ -10,6 +10,8 @@
  * src/components/JsonLd.tsx. Prices must come from src/lib/clinicFacts.ts.
  */
 
+import { ACCEPTING_NEW_PATIENTS } from "@/lib/bookingLinks";
+
 export const SITE_URL = "https://coshealthcollective.com";
 export const ORG_ID = `${SITE_URL}/#organization`;
 
@@ -20,7 +22,12 @@ export type ServiceOffer = {
   description?: string;
   /** Numeric USD price from clinicFacts. Omit when there is no fixed price. */
   price?: number;
-  /** e.g. "https://schema.org/PreOrder" for services that haven't opened yet. */
+  /**
+   * e.g. "https://schema.org/PreOrder" for services that haven't opened yet.
+   * Left unset, it follows the new-patient switch: while we're not accepting
+   * new patients every offer is LimitedAvailability, so structured data never
+   * advertises bookability the site doesn't have.
+   */
   availability?: string;
 };
 
@@ -51,7 +58,11 @@ export function serviceSchema(opts: {
             ...(offer.name ? { name: offer.name } : {}),
             ...(offer.description ? { description: offer.description } : {}),
             ...(offer.price !== undefined ? { price: offer.price } : {}),
-            ...(offer.availability ? { availability: offer.availability } : {}),
+            availability:
+              offer.availability ??
+              (ACCEPTING_NEW_PATIENTS
+                ? "https://schema.org/InStock"
+                : "https://schema.org/LimitedAvailability"),
           })),
         }
       : {}),

@@ -298,7 +298,7 @@ export default function EvidencePage() {
             Pre-Launch Access
           </p>
           <h2 className="text-3xl font-black text-white lg:text-4xl mb-5">
-            Opening {clinicFacts.hbot.openingDate}.{" "}
+            Opening date {clinicFacts.hbot.openingDate}.{" "}
             <span style={gradientTextStyle("hyperbaric")}>Register now.</span>
           </h2>
           <p className="mb-8" style={{ color: "hsl(210,25%,62%)", fontSize: "17px" }}>

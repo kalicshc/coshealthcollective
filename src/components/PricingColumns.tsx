@@ -1,7 +1,7 @@
 import { clinicFacts, usd } from "@/lib/clinicFacts";
 import { ACCENTS } from "@/lib/accents";
 import { TrackedLink } from "@/components/analytics/TrackedLink";
-import { bookingUrl, hintLink } from "@/lib/bookingLinks";
+import { ACCEPTING_NEW_PATIENTS, WAITLIST_CTA, bookingUrl, hintLink } from "@/lib/bookingLinks";
 
 /**
  * The unified three-column pricing table: DPC | Hormone | DPC + Hormone.
@@ -97,9 +97,11 @@ export function PricingColumns({
           ? `Couples ${usd(dpc.couplesMonthly)}/mo · kids +${usd(dpc.childAddOnMonthly)}/mo (age ${dpc.childAgeMin}+)`
           : "Couples & family plans available",
       cta:
-        perspective === "dpc"
-          ? { label: "Become a Member", href: hintLink("dpcMembershipSignup", `${source}-dpc`), appt: undefined }
-          : { label: "Free Meet & Greet", href: bookingUrl("meetGreet", `${source}-dpc`), appt: "meetGreet" as const },
+        !ACCEPTING_NEW_PATIENTS
+          ? { label: WAITLIST_CTA, href: bookingUrl("meetGreet", `${source}-dpc`), appt: "meetGreet" as const }
+          : perspective === "dpc"
+            ? { label: "Become a Member", href: hintLink("dpcMembershipSignup", `${source}-dpc`), appt: undefined }
+            : { label: "Free Meet & Greet", href: bookingUrl("meetGreet", `${source}-dpc`), appt: "meetGreet" as const },
     },
     {
       key: "hormone",
@@ -111,7 +113,7 @@ export function PricingColumns({
       highlight: false,
       bullets: HORMONE_BULLETS[perspective],
       footnote: "Labs & medications billed separately",
-      cta: { label: "Free Consult", href: bookingUrl("freeConsult", `${source}-hormone`), appt: "freeConsult" as const },
+      cta: { label: ACCEPTING_NEW_PATIENTS ? "Free Consult" : WAITLIST_CTA, href: bookingUrl("freeConsult", `${source}-hormone`), appt: "freeConsult" as const },
     },
     {
       key: "combo",
@@ -128,7 +130,7 @@ export function PricingColumns({
         "One enrollment fee — not two",
       ],
       footnote: `${usd(separateMonthly)}/mo value — bundled`,
-      cta: { label: "Free Consult", href: bookingUrl("freeConsult", `${source}-combo`), appt: "freeConsult" as const },
+      cta: { label: ACCEPTING_NEW_PATIENTS ? "Free Consult" : WAITLIST_CTA, href: bookingUrl("freeConsult", `${source}-combo`), appt: "freeConsult" as const },
     },
   ];
 

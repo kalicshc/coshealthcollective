@@ -1,4 +1,4 @@
-import { bookingUrl, hintLink } from "@/lib/bookingLinks";
+import { WAITLIST_CTA, bookingUrl, hintLink } from "@/lib/bookingLinks";
 
 export type ChatCtaTag =
   // Bookings & high-intent flows
@@ -79,19 +79,19 @@ const CTA_BY_TAG: Record<ChatCtaTag, ChatCta> = {
   dpc: {
     tag: "dpc",
     kind: "book",
-    book: { label: "Book Free Meet & Greet", href: BOOK_MEET_GREET, external: true },
+    book: { label: WAITLIST_CTA, href: BOOK_MEET_GREET, external: true },
     learnMore: { label: "Learn more about DPC", href: "/direct-primary-care" },
   },
   "dpc-membership": {
     tag: "dpc-membership",
     kind: "book",
-    book: { label: "Join DPC ($100/mo)", href: DPC_MEMBERSHIP_SIGNUP, external: true },
+    book: { label: WAITLIST_CTA, href: DPC_MEMBERSHIP_SIGNUP, external: true },
     learnMore: { label: "Learn more about DPC", href: "/direct-primary-care" },
   },
   hormone: {
     tag: "hormone",
     kind: "book",
-    book: { label: "Book Hormone Consult", href: BOOK_HORMONE_CONSULT, external: true },
+    book: { label: WAITLIST_CTA, href: BOOK_HORMONE_CONSULT, external: true },
     learnMore: { label: "Learn more", href: "/hormone" },
   },
   "hormone-womens-quiz": {
@@ -116,7 +116,7 @@ const CTA_BY_TAG: Record<ChatCtaTag, ChatCta> = {
   urgent: {
     tag: "urgent",
     kind: "book",
-    book: { label: "Book Telehealth Visit ($85)", href: BOOK_TELEHEALTH, external: true },
+    book: { label: WAITLIST_CTA, href: BOOK_TELEHEALTH, external: true },
     learnMore: { label: "About urgent care", href: "/urgent-care" },
   },
   members: {
@@ -137,7 +137,7 @@ const CTA_BY_TAG: Record<ChatCtaTag, ChatCta> = {
     tag: "iv-therapy",
     kind: "book",
     book: { label: "IV Therapy", href: "/iv-therapy" },
-    learnMore: { label: "Book a Meet & Greet", href: BOOK_MEET_GREET, external: true },
+    learnMore: { label: WAITLIST_CTA, href: BOOK_MEET_GREET, external: true },
   },
   "weight-loss": {
     tag: "weight-loss",
@@ -149,37 +149,37 @@ const CTA_BY_TAG: Record<ChatCtaTag, ChatCta> = {
     tag: "glp1",
     kind: "book",
     book: { label: "GLP-1 / Semaglutide", href: "/hormone/glp1" },
-    learnMore: { label: "Book a consult", href: BOOK_HORMONE_CONSULT, external: true },
+    learnMore: { label: WAITLIST_CTA, href: BOOK_HORMONE_CONSULT, external: true },
   },
   "precision-medicine": {
     tag: "precision-medicine",
     kind: "book",
     book: { label: "Precision Medicine", href: "/precision-medicine" },
-    learnMore: { label: "Book a Meet & Greet", href: BOOK_MEET_GREET, external: true },
+    learnMore: { label: WAITLIST_CTA, href: BOOK_MEET_GREET, external: true },
   },
   "health-coaching": {
     tag: "health-coaching",
     kind: "book",
     book: { label: "Health Coaching", href: "/health-coaching" },
-    learnMore: { label: "Book a Meet & Greet", href: BOOK_MEET_GREET, external: true },
+    learnMore: { label: WAITLIST_CTA, href: BOOK_MEET_GREET, external: true },
   },
   "personal-training": {
     tag: "personal-training",
     kind: "book",
     book: { label: "Personal Training", href: "/personal-training" },
-    learnMore: { label: "Book a Meet & Greet", href: BOOK_MEET_GREET, external: true },
+    learnMore: { label: WAITLIST_CTA, href: BOOK_MEET_GREET, external: true },
   },
   "strength-wellness-coaching": {
     tag: "strength-wellness-coaching",
     kind: "book",
     book: { label: "Strength & Wellness Coaching", href: "/personal-training" },
-    learnMore: { label: "Book a Meet & Greet", href: BOOK_MEET_GREET, external: true },
+    learnMore: { label: WAITLIST_CTA, href: BOOK_MEET_GREET, external: true },
   },
   "allergy-slit": {
     tag: "allergy-slit",
     kind: "book",
     book: { label: "Allergy SLIT", href: "/allergy-slit" },
-    learnMore: { label: "Book a Meet & Greet", href: BOOK_MEET_GREET, external: true },
+    learnMore: { label: WAITLIST_CTA, href: BOOK_MEET_GREET, external: true },
   },
   "longevity-toolkit": {
     tag: "longevity-toolkit",
@@ -190,7 +190,7 @@ const CTA_BY_TAG: Record<ChatCtaTag, ChatCta> = {
     tag: "remote-monitoring",
     kind: "book",
     book: { label: "Remote Monitoring", href: "/remote-monitoring" },
-    learnMore: { label: "Book a Meet & Greet", href: BOOK_MEET_GREET, external: true },
+    learnMore: { label: WAITLIST_CTA, href: BOOK_MEET_GREET, external: true },
   },
   referrals: {
     tag: "referrals",

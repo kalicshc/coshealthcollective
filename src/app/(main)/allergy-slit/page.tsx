@@ -4,7 +4,7 @@ import { ACCENTS } from "@/lib/accents";
 import { ServiceHero, gradientTextStyle } from "@/components/ServiceHero";
 import { GlassCard } from "@/components/GlassCard";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
-import { bookingUrl } from "@/lib/bookingLinks";
+import { WAITLIST_CTA, bookingUrl } from "@/lib/bookingLinks";
 import { serviceSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/JsonLd";
 
@@ -56,7 +56,7 @@ export default function AllergySlit() {
         titleAccent="SLIT Therapy"
         subhead="Long-term allergy relief without weekly injection visits. Available as a standalone consult or included with CSHC Direct Primary Care membership."
         ctas={[
-          { label: "Book a Free Meet & Greet", href: MEET_GREET_URL, external: true, variant: "primary" },
+          { label: WAITLIST_CTA, href: MEET_GREET_URL, external: true, variant: "primary" },
           { label: "Learn About DPC Membership", href: "/direct-primary-care", variant: "ghost" },
         ]}
       />
@@ -130,8 +130,8 @@ export default function AllergySlit() {
         service="dpc"
         heading="Ready to find relief?"
         body="Schedule a free meet and greet to discuss whether allergy testing and SLIT therapy is right for you."
-        primaryCta={{ label: "Book a Free Meet & Greet", href: bookingUrl("meetGreet", "allergy-slit-footer"), external: true }}
-        analytics={{ page: "allergy-slit", source: "allergy-slit-footer", service: "dpc", label: "Book a Free Meet & Greet", appt: "meetGreet" }}
+        primaryCta={{ label: WAITLIST_CTA, href: bookingUrl("meetGreet", "allergy-slit-footer"), external: true }}
+        analytics={{ page: "allergy-slit", source: "allergy-slit-footer", service: "dpc", label: WAITLIST_CTA, appt: "meetGreet" }}
       />
     </div>
   );

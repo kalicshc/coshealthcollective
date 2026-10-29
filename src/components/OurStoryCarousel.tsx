@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { bookingUrl } from "@/lib/bookingLinks";
+import { WAITLIST_CTA, bookingUrl } from "@/lib/bookingLinks";
 
 const slides = [
   {
@@ -64,7 +64,7 @@ const slides = [
     alt: "Baby with German Shepherds Henry and Mila on the salt flats",
     cta: {
       primary: {
-        text: "Book a Free Meet & Greet",
+        text: WAITLIST_CTA,
         href: bookingUrl("meetGreet", "our-story-carousel"),
       },
       secondary: {

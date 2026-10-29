@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { submitLongevityToolkit } from "@/lib/api";
 import { Download, Sparkles, CheckCircle, Heart, Moon, Apple, Dumbbell, Brain } from "lucide-react";
-import { bookingUrl } from "@/lib/bookingLinks";
+import { WAITLIST_CTA, bookingUrl } from "@/lib/bookingLinks";
 import { ACCENTS } from "@/lib/accents";
 import { ServiceHero } from "@/components/ServiceHero";
 import { GlassCard } from "@/components/GlassCard";
@@ -82,7 +82,7 @@ export default function LongevityToolkitDownload() {
         <PageCtaFooter
           service="brand"
           heading="Ready to take the next step?"
-          primaryCta={{ label: "Book a Free Meet & Greet", href: MEET_GREET_URL, external: true }}
+          primaryCta={{ label: WAITLIST_CTA, href: MEET_GREET_URL, external: true }}
         />
       </div>
     );

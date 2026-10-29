@@ -137,7 +137,7 @@ const structuredData = {
             itemOffered: {
               "@type": "MedicalTherapy",
               name: "Hyperbaric Oxygen Therapy",
-              description: `${clinicFacts.hbot.pressure} hyperbaric oxygen therapy opening ${clinicFacts.hbot.openingDate} in Colorado Springs.`,
+              description: `${clinicFacts.hbot.pressure} hyperbaric oxygen therapy coming to Colorado Springs — opening date ${clinicFacts.hbot.openingDate}.`,
             },
           },
         ],

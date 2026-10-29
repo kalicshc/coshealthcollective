@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { submitHbotEarlyAccess, submitDpcInquiry } from "@/lib/api";
-import { bookingUrl } from "@/lib/bookingLinks";
+import { WAITLIST_CTA, bookingUrl } from "@/lib/bookingLinks";
 import { clinicFacts } from "@/lib/clinicFacts";
 
 const MEET_GREET_URL =
@@ -32,12 +32,12 @@ const PILLARS: Pillar[] = [
   {
     id: "dpc",
     href: "/direct-primary-care",
-    eyebrow: "Now Enrolling",
+    eyebrow: "Waitlist",
     clinic: "CSHC Direct Primary Care",
     headline: "$100/month clarity.",
     body: "Direct access to providers who actually know you.",
     facts: ["Unlimited visits", "Same/next-day access", "No surprise bills", "Labs and meds at cost"],
-    cta: "Book a Free Meet & Greet",
+    cta: WAITLIST_CTA,
     mode: "link",
     accent: "hsl(190, 90%, 56%)",
     line: "linear-gradient(90deg, hsl(190, 90%, 52%) 60%, hsl(330, 55%, 66%) 100%)",
@@ -52,7 +52,7 @@ const PILLARS: Pillar[] = [
     headline: "Dedicated to perimenopause & menopause care.",
     body: "A whole-person approach to women's health, men's health, and hormone replacement therapy.",
     facts: ["Perimenopause + menopause", "Men's health and TRT", "GLP-1 metabolic care", "Whole-person approach"],
-    cta: "Book a Free Consult",
+    cta: WAITLIST_CTA,
     mode: "link",
     accent: "hsl(330, 62%, 68%)",
     line: "linear-gradient(90deg, hsl(330, 62%, 62%) 30%, hsl(308, 58%, 60%) 70%, hsl(278, 60%, 60%) 100%)",
@@ -62,10 +62,10 @@ const PILLARS: Pillar[] = [
   {
     id: "hbot",
     href: "/hyperbaric",
-    eyebrow: `Opening ${clinicFacts.hbot.openingDate}`,
+    eyebrow: `Opening date ${clinicFacts.hbot.openingDate}`,
     clinic: "CSHC Hyperbaric",
     headline: "2.0 ATA oxygen therapy is coming.",
-    body: "A clinic-based chamber built around the pressure used in stronger HBOT research, with early access pricing locked in before launch.",
+    body: "A clinic-based chamber built around the pressure used in stronger HBOT research. We don't have an opening date yet.",
     facts: ["Fibromyalgia pain", "UC + Crohn's", "Long COVID", "Sports injury & recovery"],
     cta: "Join the Waitlist",
     mode: "waitlist",
@@ -268,8 +268,9 @@ export default function PortalPillars() {
                 <a
                   className="clinic-pillars__cta"
                   href={pillar.id === "hormone" ? HORMONE_URL : MEET_GREET_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  {...(/^https?:\/\//.test(pillar.id === "hormone" ? HORMONE_URL : MEET_GREET_URL)
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
                   onClick={(event) => event.stopPropagation()}
                 >
                   {pillar.cta}

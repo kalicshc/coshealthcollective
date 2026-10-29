@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { trackEvent } from "@/lib/analytics";
+import { WAITLIST_CTA } from "@/lib/bookingLinks";
 import {
   GREENE_ITEMS,
   GREENE_SECTIONS,
@@ -1109,15 +1110,16 @@ export default function WomensHormonePathway() {
                   <div className="mt-3 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
                     <Link
                       href={WOMENS_BOOKING_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      {...(/^https?:\/\//.test(WOMENS_BOOKING_URL)
+                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        : {})}
                       className="inline-flex items-center rounded-full px-7 py-3 text-sm font-semibold text-white transition hover:scale-[1.02] hover:opacity-90"
                       style={{
                         background:
                           "linear-gradient(135deg, hsl(331,95%,72%), hsl(271,74%,55%))",
                       }}
                     >
-                      Book a Free Consult
+                      {WAITLIST_CTA}
                     </Link>
                     <Link
                       href="/hormone"

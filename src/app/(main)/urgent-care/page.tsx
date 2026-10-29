@@ -6,9 +6,10 @@ import { ServiceHero, gradientTextStyle } from "@/components/ServiceHero";
 import { GlassCard } from "@/components/GlassCard";
 import { PageCtaFooter } from "@/components/PageCtaFooter";
 import { ReviewStrip } from "@/components/ReviewStrip";
-import { bookingUrl } from "@/lib/bookingLinks";
+import { WAITLIST_CTA, bookingUrl } from "@/lib/bookingLinks";
 import { serviceSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/JsonLd";
+import { WaitlistNotice } from "@/components/WaitlistNotice";
 
 const { telehealth, inPerson } = clinicFacts.urgentCare;
 const ACCENT = ACCENTS.dpc;
@@ -86,15 +87,16 @@ export default function UrgentCare() {
           </>
         }
         ctas={[
-          { label: `Book In Person · ${usd(inPerson)}`, href: bookingUrl("urgentCareInPerson", "urgent-care"), external: true, variant: "primary" },
-          { label: `Book Telehealth · ${usd(telehealth)}`, href: bookingUrl("telehealth", "urgent-care"), external: true, variant: "ghost" },
+          { label: WAITLIST_CTA, href: bookingUrl("urgentCareInPerson", "urgent-care"), external: true, variant: "primary" },
+          { label: "See what we treat", href: "#what-we-treat", variant: "ghost" },
         ]}
       />
 
+      <WaitlistNotice service="dpc" interest="urgent-care" source="urgent-care-notice" />
       <div className="section-divider" />
 
       {/* What We Treat */}
-      <section className="py-16 lg:py-24">
+      <section id="what-we-treat" className="scroll-mt-20 py-16 lg:py-24">
         <div className="mx-auto max-w-5xl px-5 lg:px-8">
           <div className="text-center mb-12">
             <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: `rgb(${ACCENT.rgb})` }}>
@@ -187,14 +189,14 @@ export default function UrgentCare() {
 
       <PageCtaFooter
         service="dpc"
-        heading="Ready to book your visit?"
-        body="Schedule online in minutes, or reach out and we'll help you pick the right visit type."
+        heading="Not taking new visits right now."
+        body="Join the waitlist and we'll reach out as soon as we have availability. Call or text us if you need help finding care sooner."
         primaryCta={{
-          label: "Book Your Visit",
+          label: WAITLIST_CTA,
           href: bookingUrl("urgentCareInPerson", "urgent-care-footer"),
           external: true,
         }}
-        analytics={{ page: "urgent-care", source: "urgent-care-footer", service: "dpc", label: "Book Your Visit" }}
+        analytics={{ page: "urgent-care", source: "urgent-care-footer", service: "dpc", label: WAITLIST_CTA }}
       />
     </div>
   );
